@@ -1,0 +1,27 @@
+## Overall seed job template for all jobs to make use of
+
+.seed_template:
+  needs: []
+  rules:
+    - when: manual
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  before_script:
+    - git clone https://invent.kde.org/dkazakov/ci-utilities
+    - git clone https://invent.kde.org/sysadmin/repo-metadata ci-utilities/repo-metadata/
+
+
+.windows_qt515:
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder:latest
+  tags:
+    - Windows
+  variables:
+    KDECI_CC_CACHE: "C:\\Gitlab\\Caches\\krita-windows"
+    KDECI_CACHE_PATH: "C:\\Gitlab\\Artifacts\\krita-windows"
+    KDECI_GITLAB_SERVER: https://invent.kde.org/
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/windows-qt5.15
+  interruptible: true
+  before_script:
+    
+
+include:
+  - /pipelines/seed-deps.yml

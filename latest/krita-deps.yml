@@ -1,0 +1,3 @@
+- 'on': ['Windows']
+  'require':
+    "base/patch": "master"
