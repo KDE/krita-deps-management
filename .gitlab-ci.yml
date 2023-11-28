@@ -7,7 +7,7 @@
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
   before_script:
     - git clone https://invent.kde.org/dkazakov/ci-utilities
-    - git clone https://invent.kde.org/sysadmin/repo-metadata ci-utilities/repo-metadata/
+    - git clone https://invent.kde.org/dkazakov/krita-deps-repo-metadata.git ci-utilities/repo-metadata/
 
 
 .windows_qt515:
@@ -19,10 +19,8 @@
     KDECI_CACHE_PATH: "C:\\Gitlab\\Artifacts\\krita-windows"
     KDECI_GITLAB_SERVER: https://invent.kde.org/
     KDECI_PACKAGE_PROJECT: teams/ci-artifacts/windows-qt5.15
-    EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\d"
+    EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\downloads"
   interruptible: true
-  before_script:
-    
 
 include:
   - /pipelines/seed-deps.yml
