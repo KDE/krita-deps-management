@@ -1,3 +1,4 @@
 - 'on': ['Windows']
   'require':
     "base/patch": "master"
+    "base/zlib": "master"

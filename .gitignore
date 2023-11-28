@@ -1,3 +1,5 @@
 PythonEnv
-ci-utilities
-ci-management
+#ci-utilities
+#ci-management
+**/_build
+**/_install

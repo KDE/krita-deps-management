@@ -1,14 +1,21 @@
-SET(PREFIX_ext_patch "${EXTPREFIX}" )
+project(ext_patch)
+cmake_minimum_required(VERSION 3.21)
+if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
+include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
+
 ExternalProject_Add( ext_patch
 	DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 	URL http://files.kde.org/krita/build/dependencies/patch-2.5.9-7-bin.zip
 	URL_MD5 b9c8b31d62f4b2e4f1887bbb63e8a905
-	INSTALL_DIR ${PREFIX_ext_patch}
+	INSTALL_DIR ${EXTPREFIX}
 	CONFIGURE_COMMAND ""
 	BUILD_COMMAND ${CMAKE_COMMAND} -E echo deploying patch.exe binary
-	INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory ${PREFIX_ext_patch}/bin
-		COMMAND ${CMAKE_COMMAND} -E copy bin/patch.exe ${PREFIX_ext_patch}/bin/patch.exe
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/patch.exe.manifest ${PREFIX_ext_patch}/bin/patch.exe.manifest
+	INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory ${EXTPREFIX}/bin
+		COMMAND ${CMAKE_COMMAND} -DSRC=bin/patch.exe -DPREFIX=${EXTPREFIX} -P ${CMAKE_SOURCE_DIR}/../cmake/install_custom.cmake
+		COMMAND ${CMAKE_COMMAND} -DSRC=${CMAKE_CURRENT_SOURCE_DIR}/patch.exe.manifest -DPREFIX=${EXTPREFIX} -DDST=${EXTPREFIX}/bin/patch.exe.manifest -P ${CMAKE_SOURCE_DIR}/../cmake/install_custom.cmake
 	UPDATE_COMMAND ""
 	BUILD_IN_SOURCE 1
 )
