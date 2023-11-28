@@ -1,0 +1,5 @@
+Dependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': 'master'
+    'base/iconv': 'master'

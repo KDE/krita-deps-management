@@ -2,3 +2,5 @@
   'require':
     "base/patch": "master"
     "base/zlib": "master"
+    "base/iconv": "master"
+    "base/gettext": "master"
