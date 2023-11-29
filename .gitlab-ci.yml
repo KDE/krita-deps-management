@@ -28,3 +28,4 @@ stages:
 
 include:
   - /pipelines/seed-deps.yml
+  - /pipelines/registry-cleanup.yml
