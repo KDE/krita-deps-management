@@ -1,5 +1,9 @@
 ## Overall seed job template for all jobs to make use of
 
+stages:
+  - Dependencies
+  - SystemMaintenance
+
 .seed_template:
   needs: []
   rules:

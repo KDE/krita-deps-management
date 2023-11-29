@@ -1,4 +1,5 @@
 seed_windows_qt515:
+  stage: Dependencies
   extends:
   - .seed_template
   - .windows_qt515
