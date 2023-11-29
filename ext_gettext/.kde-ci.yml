@@ -1,5 +1,5 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': 'master'
-    'base/iconv': 'master'
+    'base/patch': '@same'
+    'base/iconv': '@same'
