@@ -1,6 +1,6 @@
 - 'on': ['Windows']
   'require':
-    "base/patch": "master"
-    "base/zlib": "master"
-    "base/iconv": "master"
-    "base/gettext": "master"
+    "base/patch": "@stable"
+    "base/zlib": "@stable"
+    "base/iconv": "@stable"
+    "base/gettext": "@stable"
