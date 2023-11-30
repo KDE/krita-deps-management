@@ -58,6 +58,12 @@ LIST (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR})
 include (KritaToNativePath)
 include (KritaExternalProject)
 
+include (KritaAddToCiTargets)
+
+# set property on the root directory to make sure that all external projects
+# have separate build and install targets (to be used in krita_add_to_ci_targets())
+set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY EP_STEP_TARGETS "build;install")
+
 # allow specification of a directory with pre-downloaded
 # requirements
 if(DEFINED ENV{EXTERNALS_DOWNLOAD_DIR})

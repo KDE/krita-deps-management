@@ -19,3 +19,5 @@ ExternalProject_Add( ext_patch
 	UPDATE_COMMAND ""
 	BUILD_IN_SOURCE 1
 )
+
+krita_add_to_ci_targets(ext_patch)

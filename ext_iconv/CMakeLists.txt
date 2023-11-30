@@ -33,3 +33,5 @@ else ()
 	)
 
 endif ()
+
+krita_add_to_ci_targets(ext_iconv)

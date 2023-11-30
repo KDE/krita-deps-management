@@ -1,4 +1,4 @@
-- 'on': ['Windows']
+- 'on': ['@all']
   'require':
     "base/patch": "master"
     "base/zlib": "master"
