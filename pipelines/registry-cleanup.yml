@@ -22,9 +22,9 @@
 registry_cleanup_windows_qt515:
   extends:
   - .registry_cleanup_base
-  environment: windows_qt515
+  environment: windows-qt515
 
 registry_cleanup_appimage_qt515:
   extends:
   - .registry_cleanup_base
-  environment: appimage_qt515
+  environment: appimage-qt515
