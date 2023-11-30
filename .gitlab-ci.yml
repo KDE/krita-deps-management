@@ -22,6 +22,7 @@ stages:
   image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder:latest
   tags:
     - Windows
+  environment: windows-qt5.15
   variables:
     KDECI_CC_CACHE: "C:\\Gitlab\\Caches\\krita-windows"
     KDECI_CACHE_PATH: "C:\\Gitlab\\Artifacts\\krita-windows"
@@ -34,6 +35,7 @@ stages:
   image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder:latest
   tags:
     - Linux
+  environment: appimage-qt5.15
   variables:
     KDECI_CC_CACHE: /mnt/caches/krita-appimage/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-appimage/
