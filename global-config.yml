@@ -1,0 +1,7 @@
+Options:
+  use-ccache: True
+  run-tests: False
+  build-tests: False
+  run-cppcheck: False
+  run-gcovr: False
+  use-asan: False
