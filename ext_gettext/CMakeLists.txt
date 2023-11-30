@@ -4,7 +4,6 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
 endif()
 
 project(ext_gettext)
-
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 if (WIN32)
