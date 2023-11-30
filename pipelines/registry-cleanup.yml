@@ -1,6 +1,6 @@
 ## Cleanup job for the registries
 
-registry_cleanup:
+.registry_cleanup_base:
   stage: SystemMaintenance
   needs: []
   image: invent-registry.kde.org/sysadmin/ci-images/suse-qt515:latest
@@ -16,5 +16,15 @@ registry_cleanup:
     - git clone https://invent.kde.org/dkazakov/ci-utilities.git
     - git clone https://invent.kde.org/dkazakov/krita-deps-repo-metadata.git ci-utilities/repo-metadata/
   script:
-    - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-windows-qt5.15
-    - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-appimage-qt5.15
+    - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-${CI_ENVIRONMENT_NAME}
+
+
+registry_cleanup_windows_qt515:
+  extends:
+  - .registry_cleanup_base
+  environment: windows_qt515
+
+registry_cleanup_appimage_qt515:
+  extends:
+  - .registry_cleanup_base
+  environment: appimage_qt515
