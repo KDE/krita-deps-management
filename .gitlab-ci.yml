@@ -30,6 +30,19 @@ stages:
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
   interruptible: true
 
+.appimage_qt515:
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder:latest
+  tags:
+    - Linux
+  variables:
+    KDECI_CC_CACHE: /mnt/caches/krita-appimage/
+    KDECI_CACHE_PATH: /mnt/artifacts/krita-appimage/
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-appimage-qt5.15
+    EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads
+    KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
+    KDECI_BUILD_TYPE: Release
+  interruptible: true
+
 include:
   - /pipelines/seed-deps.yml
   - /pipelines/registry-cleanup.yml

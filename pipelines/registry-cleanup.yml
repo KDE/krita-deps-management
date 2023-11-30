@@ -17,3 +17,4 @@ registry_cleanup:
     - git clone https://invent.kde.org/dkazakov/krita-deps-repo-metadata.git ci-utilities/repo-metadata/
   script:
     - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-windows-qt5.15
+    - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-appimage-qt5.15
