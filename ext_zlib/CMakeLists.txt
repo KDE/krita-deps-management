@@ -26,18 +26,18 @@ if(WIN32)
     if (MINGW)
         ExternalProject_Add_Step(
             ext_zlib
-            post_install
+            pre_install
             COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/libzlib.dll.a <BINARY_DIR>/libz.dll.a
             COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/libz.dll.a -DPREFIX=${EXTPREFIX} -DDST=lib/libz.dll.a -P ${CMAKE_SOURCE_DIR}/../cmake/install_custom.cmake
-            DEPENDEES install
+            DEPENDERS install
         )
     elseif(MSVC)
         ExternalProject_Add_Step(
             ext_zlib
-            post_install
+            pre_install
             COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/zlib.lib <BINARY_DIR>/z.lib
             COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/z.lib -DPREFIX=${EXTPREFIX} -DDST=lib/z.lib -P ${CMAKE_SOURCE_DIR}/../cmake/install_custom.cmake
-            DEPENDEES install
+            DEPENDERS install
         )
     endif()
 endif()
