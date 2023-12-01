@@ -47,4 +47,5 @@ stages:
 
 include:
   - /pipelines/seed-deps.yml
+  - /pipelines/seed-staging.yml
   - /pipelines/registry-cleanup.yml
