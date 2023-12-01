@@ -16,7 +16,7 @@ if (WIN32)
         BUILD_COMMAND ${CMAKE_COMMAND} -E echo Deploying gettext 64-bit dependencies
         CONFIGURE_COMMAND ""
 
-        INSTALL_COMMAND COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR> -DPREFIX=${EXTPREFIX} -DDST="" -P ${CMAKE_SOURCE_DIR}/../cmake/install_directory_custom.cmake
+        INSTALL_COMMAND COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR> -DDST=${EXTPREFIX} -P ${KRITA_CI_INSTALL_DIRECTORY}
 
         UPDATE_COMMAND ""
     )

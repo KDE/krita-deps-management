@@ -28,7 +28,7 @@ if(WIN32)
             ext_zlib
             pre_install
             COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/libzlib.dll.a <BINARY_DIR>/libz.dll.a
-            COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/libz.dll.a -DPREFIX=${EXTPREFIX} -DDST=lib/libz.dll.a -P ${CMAKE_SOURCE_DIR}/../cmake/install_custom.cmake
+            COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/libz.dll.a -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL}
             DEPENDERS install
         )
     elseif(MSVC)
@@ -36,7 +36,7 @@ if(WIN32)
             ext_zlib
             pre_install
             COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/zlib.lib <BINARY_DIR>/z.lib
-            COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/z.lib -DPREFIX=${EXTPREFIX} -DDST=lib/z.lib -P ${CMAKE_SOURCE_DIR}/../cmake/install_custom.cmake
+            COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/z.lib -DDST=${EXTPREFIX}/lib-P  ${KRITA_CI_INSTALL}
             DEPENDERS install
         )
     endif()

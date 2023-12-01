@@ -14,8 +14,8 @@ ExternalProject_Add( ext_patch
 	CONFIGURE_COMMAND ""
 	BUILD_COMMAND ${CMAKE_COMMAND} -E echo deploying patch.exe binary
 	INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory ${EXTPREFIX}/bin
-		COMMAND ${CMAKE_COMMAND} -DSRC=bin/patch.exe -DPREFIX=${EXTPREFIX} -P ${CMAKE_SOURCE_DIR}/../cmake/install_custom.cmake
-		COMMAND ${CMAKE_COMMAND} -DSRC=${CMAKE_CURRENT_SOURCE_DIR}/patch.exe.manifest -DPREFIX=${EXTPREFIX} -DDST=${EXTPREFIX}/bin/patch.exe.manifest -P ${CMAKE_SOURCE_DIR}/../cmake/install_custom.cmake
+		COMMAND ${CMAKE_COMMAND} -DSRC=bin/patch.exe -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+		COMMAND ${CMAKE_COMMAND} -DSRC=${CMAKE_CURRENT_SOURCE_DIR}/patch.exe.manifest -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
 	UPDATE_COMMAND ""
 	BUILD_IN_SOURCE 1
 )
