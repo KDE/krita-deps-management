@@ -65,12 +65,14 @@ elseif (ANDROID)
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env
             PATH=${ANDROID_TOOLCHAIN_ROOT}/bin:$ENV{PATH}
             CXXFLAGS=-D__ANDROID_API__=${ANDROID_PLATFORM_LEVEL}
-            make install_sw SHLIB_VERSION_NUMBER= SHLIB_EXT=_1_1.so
+            # OpenSSL cannot handle DESTDIR as an environment variable. Instead,
+            # it expects it to be passed as an explicit make argument
+            ${CMAKE_COMMAND} -DARGS="install_sw SHLIB_VERSION_NUMBER= SHLIB_EXT=_1_1.so" -P ${CMAKE_SOURCE_DIR}/run-make-with-destdir.cmake
 
         UPDATE_COMMAND ""
 )
 else (WIN32)
-    
+
     kis_ExternalProject_Add_with_separate_builds_apple(
         ext_openssl
 
@@ -82,7 +84,10 @@ else (WIN32)
         CONFIGURE_COMMAND <SOURCE_DIR>/config --prefix=${EXTPREFIX} --openssldir=ssl
         
         BUILD_COMMAND make clean COMMAND make -j${SUBMAKE_JOBS} depend COMMAND make -j${SUBMAKE_JOBS}
-        INSTALL_COMMAND make install
+
+        # OpenSSL cannot handle DESTDIR as an environment variable. Instead,
+        # it expects it to be passed as an explicit make argument
+        INSTALL_COMMAND ${CMAKE_COMMAND} -DARGS=install -P ${CMAKE_SOURCE_DIR}/run-make-with-destdir.cmake
         
         UPDATE_COMMAND ""
     )
