@@ -1,4 +1,4 @@
 Dependencies:
-- 'on': ['@Windows']
+- 'on': ['Windows']
   'require':
     'base/patch': '@same'
