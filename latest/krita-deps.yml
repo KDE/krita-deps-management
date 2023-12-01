@@ -5,3 +5,4 @@
     "base/iconv": "master"
     "base/gettext": "master"
     "base/openssl": "master"
+    "base/boost": "master"
