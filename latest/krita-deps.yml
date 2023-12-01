@@ -4,3 +4,4 @@
     "base/zlib": "master"
     "base/iconv": "master"
     "base/gettext": "master"
+    "base/openssl": "master"

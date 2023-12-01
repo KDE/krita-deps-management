@@ -1,0 +1,17 @@
+seed_staging_qt515:
+  stage: Dependencies
+  extends:
+  - .seed_template
+  - .windows_qt515
+  script:
+    # TODO: bake this variable into the docker image
+    - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
+    - python -u ci-utilities/seed-package-registry.py --seed-file latest/staging-deps.yml --platform Windows/Qt5/Shared
+
+seed_staging_qt515:
+  stage: Dependencies
+  extends:
+  - .seed_template
+  - .appimage_qt515
+  script:
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/staging-deps.yml --platform Linux/Qt5/Shared
