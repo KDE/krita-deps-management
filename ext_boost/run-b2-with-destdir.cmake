@@ -12,6 +12,11 @@ if (DEFINED ENV{DESTDIR})
     # message("finalprefix ${PREFIX}")
 endif()
 
+if(WIN32)
+    set(B2_COMMAND "b2")
+else()
+    set(B2_COMMAND "./b2")
+endif()
 
 set(FOUND_SEPARATOR FALSE)
 
@@ -27,4 +32,4 @@ endforeach()
 
 message ("Running b2 with args: --prefix=${PREFIX} ${EXTRA_ARGS}")
 
-exec_program(b2 ARGS --prefix=${PREFIX} ${EXTRA_ARGS})
+exec_program(${B2_COMMAND} ARGS --prefix=${PREFIX} ${EXTRA_ARGS})
