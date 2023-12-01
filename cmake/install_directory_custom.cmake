@@ -6,6 +6,6 @@
 
 file(GLOB ALL_SUBDIRS "${SRC}/*")
 foreach (SUBDIR ${ALL_SUBDIRS})
-    file(INSTALL ${SUBDIR} DESTINATION ${PREFIX})
+    file(INSTALL ${SUBDIR} DESTINATION ${DST})
 endforeach()
 
