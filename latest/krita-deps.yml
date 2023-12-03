@@ -9,6 +9,7 @@
     "base/png": "master"
     "base/nasm": "master"
     "base/eigen3": "master"
+    "base/expat": "master"
 
 - 'on': ['Windows']
   'require':
