@@ -122,6 +122,3 @@ if (WIN32 OR LINUX)
 option(QT_ENABLE_DEBUG_INFO "Build Qt with full debug info included" OFF)
 option(QT_ENABLE_ASAN "Build Qt with ASAN" OFF)
 endif()
-
-# fake install step to make sure that ninja install doesn't crash
-install(FILES __fake_file OPTIONAL DESTINATION ${CMAKE_INSTALL_PREFIX})
