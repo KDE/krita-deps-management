@@ -8,6 +8,7 @@
     "base/lcms2": "master"
     "base/png": "master"
     "base/nasm": "master"
+    "base/eigen3": "master"
 
 - 'on': ['Windows']
   'require':
