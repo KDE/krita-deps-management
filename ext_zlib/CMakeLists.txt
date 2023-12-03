@@ -36,7 +36,7 @@ if(WIN32)
             ext_zlib
             pre_install
             COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/zlib.lib <BINARY_DIR>/z.lib
-            COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/z.lib -DDST=${EXTPREFIX}/lib-P  ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/z.lib -DDST=${EXTPREFIX}/lib -P  ${KRITA_CI_INSTALL}
             DEPENDERS install
         )
     endif()
