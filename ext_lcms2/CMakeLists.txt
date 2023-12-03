@@ -3,7 +3,7 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-project(ext_zlib)
+project(ext_lcms2)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 ExternalProject_Add( ext_lcms2
