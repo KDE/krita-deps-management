@@ -1,0 +1,12 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/expat': '@same'
+- 'on': ['Linux']
+  'require':
+    'base/iconv': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+    'base/iconv': '@same'
+    'base/zlib': '@same'
