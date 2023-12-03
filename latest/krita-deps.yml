@@ -6,6 +6,7 @@
     "base/openssl": "master"
     "base/boost": "master"
     "base/lcms2": "master"
+    "base/png": "master"
 
 - 'on': ['Windows']
   'require':

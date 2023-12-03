@@ -1,3 +1,3 @@
 - 'on': ['@all']
   'require':
-    "base/lcms2": "master"
+    "base/png": "master"
