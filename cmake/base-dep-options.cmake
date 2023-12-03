@@ -61,6 +61,7 @@ include (KritaExternalProject)
 include (KritaAddToCiTargets)
 set (KRITA_CI_INSTALL ${CMAKE_CURRENT_LIST_DIR}/install_custom.cmake)
 set (KRITA_CI_INSTALL_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/install_directory_custom.cmake)
+set (KRITA_CI_REMOVE_AT_PREFIX ${CMAKE_CURRENT_LIST_DIR}/remove-at-prefix.cmake)
 
 # set property on the root directory to make sure that all external projects
 # have separate build and install targets (to be used in krita_add_to_ci_targets())

@@ -11,3 +11,4 @@
 - 'on': ['Windows']
   'require':
     "base/patch": "master"
+    "base/strawberryperl": "master"
