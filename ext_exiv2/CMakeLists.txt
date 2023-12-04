@@ -10,7 +10,7 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-project(ext_expat)
+project(ext_exiv2)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 if (ANDROID)
