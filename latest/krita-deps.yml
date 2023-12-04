@@ -1,8 +1,6 @@
 - 'on': ['@all']
   'require':
-    "base/zlib": "master"
     "base/iconv": "master"
-    "base/gettext": "master"
     "base/openssl": "master"
     "base/boost": "master"
     "base/lcms2": "master"
@@ -16,3 +14,6 @@
   'require':
     "base/patch": "master"
     "base/strawberryperl": "master"
+    "base/gettext": "master"
+    "base/zlib": "master"
+
