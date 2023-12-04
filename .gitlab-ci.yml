@@ -29,6 +29,7 @@ stages:
     KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-windows-qt5.15
     EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\downloads"
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
+    KDECI_WORKDIR_PATH: "C:\\_"
   interruptible: true
 
 .appimage_qt515:
