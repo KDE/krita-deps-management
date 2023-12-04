@@ -1,0 +1,8 @@
+description: Library files for aom
+hasrepo: false
+identifier: ext_libaom
+name: libaom
+projectpath: krita-deps/heif/libaom
+repoactive: false
+repopath: heif/libaom
+

@@ -1,0 +1,8 @@
+description: A library for conversiond between different character encodings
+hasrepo: false
+identifier: ext_iconv
+name: iconv
+projectpath: krita-deps/base/iconv
+repoactive: false
+repopath: base/iconv
+

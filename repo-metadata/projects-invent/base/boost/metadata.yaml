@@ -1,0 +1,8 @@
+description: The free peer-reviewed portable C++ source libraries
+hasrepo: false
+identifier: ext_boost
+name: Boost
+projectpath: krita-deps/base/boost
+repoactive: false
+repopath: base/boost
+

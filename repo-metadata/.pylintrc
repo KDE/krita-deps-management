@@ -1,0 +1,13 @@
+[MAIN]
+
+extension-pkg-whitelist=pydantic
+
+[MESSAGES CONTROL]
+disable=
+    duplicate-code,
+    fixme,
+    invalid-name,
+    line-too-long,
+    missing-class-docstring,
+    missing-module-docstring,
+    too-many-locals,

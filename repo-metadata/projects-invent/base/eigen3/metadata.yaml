@@ -1,0 +1,8 @@
+description: "Eigen is a C++ template library for linear algebra: matrices, vectors, numerical solvers, and related algorithms."
+hasrepo: false
+identifier: ext_eigen3
+name: eigen3
+projectpath: krita-deps/base/eigen3
+repoactive: false
+repopath: base/eigen3
+

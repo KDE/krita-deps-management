@@ -29,6 +29,7 @@ stages:
     KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-windows-qt5.15
     EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\downloads"
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
     KDECI_WORKDIR_PATH: "C:\\_"
   interruptible: true
 
@@ -43,6 +44,7 @@ stages:
     KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-appimage-qt5.15
     EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
   interruptible: true
 

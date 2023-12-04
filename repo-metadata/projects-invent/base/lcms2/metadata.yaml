@@ -1,0 +1,8 @@
+description: Little CMS Engine - A color management library and tools
+hasrepo: false
+identifier: ext_lcms2
+name: lcms2
+projectpath: krita-deps/base/lcms2
+repoactive: false
+repopath: base/lcms2
+

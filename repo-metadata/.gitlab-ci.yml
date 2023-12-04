@@ -1,0 +1,38 @@
+image: python:latest
+
+# Change pip's cache directory to be inside the project directory since we can
+# only cache local items.
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+# Pip's cache doesn't store the python packages
+# https://pip.pypa.io/en/stable/reference/pip_install/#caching
+#
+# If you want to also cache the installed packages, you have to install
+# them in a virtualenv and cache it as well.
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+before_script:
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip3 install -r requirements.txt
+
+check:
+  stage: test
+  script:
+    - python3 verify-repo-metadata.py --metadata-path projects-invent
+
+lint:
+  stage: test
+  script:
+    - pip3 install pylint mypy networkx types-PyYAML types-regex
+    - FILES="*.py"
+    - pylint $FILES
+    - mypy --strict verify-repo-metadata.py
+
+include:
+  - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/json-validation.yml

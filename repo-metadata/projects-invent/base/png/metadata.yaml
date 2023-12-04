@@ -1,0 +1,8 @@
+description: A library of functions for manipulating PNG image format files
+hasrepo: false
+identifier: ext_png
+name: png
+projectpath: krita-deps/base/png
+repoactive: false
+repopath: base/png
+
