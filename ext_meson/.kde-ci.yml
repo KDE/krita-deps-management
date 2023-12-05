@@ -1,0 +1,4 @@
+Dependencies:
+- 'on': ['Linux, MacOS']
+  'require':
+    'base/python': '@same'

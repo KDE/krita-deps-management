@@ -1,0 +1,8 @@
+description: Python-based build system
+hasrepo: false
+identifier: ext_meson
+name: meson
+projectpath: krita-deps/base/meson
+repoactive: false
+repopath: base/meson
+
