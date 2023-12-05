@@ -1,0 +1,8 @@
+description: An implementation of the Unicode BiDi algorithm
+hasrepo: false
+identifier: ext_fribidi
+name: fribidi
+projectpath: krita-deps/base/fribidi
+repoactive: false
+repopath: base/fribidi
+
