@@ -1,0 +1,5 @@
+Dependencies:
+- 'on': ['MacOS', 'Linux']
+  'require':
+    'base/patch': '@same'
+    'base/openssl': '@same'

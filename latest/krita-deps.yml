@@ -10,6 +10,7 @@
     "base/nasm": "master"
     "base/eigen3": "master"
     "base/expat": "master"
+    "base/python": "master"
 
 - 'on': ['Windows']
   'require':
