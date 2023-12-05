@@ -9,6 +9,7 @@
     "base/eigen3": "master"
     "base/expat": "master"
     "base/exiv2": "master"
+    "base/python": "master"
 
 - 'on': ['Windows']
   'require':
