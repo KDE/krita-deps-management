@@ -2,3 +2,7 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
+- 'on': ['Windows', 'MacOS']
+  'require':
+    'base/zlib': '@same'
+
