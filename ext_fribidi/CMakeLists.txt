@@ -18,8 +18,6 @@ kis_ExternalProject_Add_with_separate_builds_apple(
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             ${EXTRA_MESON_FLAGS}
-
-    DEPENDS ${MESON_DEP} ${PKG_CONFIG_DEP}
 )
 
 krita_add_to_ci_targets(ext_fribidi)
