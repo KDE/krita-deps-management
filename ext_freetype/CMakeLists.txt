@@ -51,6 +51,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         -Dtests=disabled
         -Dfreetype=enabled
         -Dpkgconfig.relocatable=true
+        -Dcmake_prefix_path=${BOOTSTRAP_PREFIX}
         ${EXTRA_MESON_FLAGS}
 
     UPDATE_COMMAND ""
