@@ -20,7 +20,7 @@
     "base/gettext": "master"
     "base/zlib": "master"
 
-- 'on': ['Windows, MacOS']
+- 'on': ['Windows', 'MacOS']
   'require':
     # on Linux we use meson provided by the distribution
     "base/meson": "master"
