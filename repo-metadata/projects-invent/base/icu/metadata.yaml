@@ -1,0 +1,7 @@
+description: International Components for Unicode
+hasrepo: false
+identifier: ext_icu
+name: icu
+projectpath: krita-deps/base/icu
+repoactive: false
+repopath: base/icu
