@@ -121,7 +121,7 @@ if (NOT PKG_CONFIG_FOUND OR WIN32)
     endif()
 
     if (NOT EXISTS ${PKG_CONFIG_EXECUTABLE})
-        message(FATAL_ERROR "pkgconfig is NOT found in the 3rdparty prefix!")
+        message("WARNING: pkgconfig is NOT found in the 3rdparty prefix! This is normal only when builing pkgconfig itself.")
     endif()
 endif()
 
