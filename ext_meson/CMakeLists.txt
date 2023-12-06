@@ -10,6 +10,16 @@ include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 if (WIN32)
     krita_to_native_path("${EXTPREFIX}" _meson_prefix)
 
+    ExternalProject_Add( ext_meson_launcher
+        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/meson-launcher
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/discard -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
+        INSTALL_COMMAND ""
+        UPDATE_COMMAND ""
+    )
+
+    ExternalProject_Get_property(ext_meson_launcher BINARY_DIR)
+    set(LAUNCHER_BINARY_BIR ${BINARY_DIR})
+
     ExternalProject_Add( ext_meson
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         URL https://github.com/mesonbuild/meson/releases/download/1.1.0/meson-1.1.0.tar.gz
@@ -24,12 +34,16 @@ if (WIN32)
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}
             ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                -P ${CMAKE_CURRENT_SOURCE_DIR}/run-python-setup-with-destdir.cmake -- --skip-build --prefix=${_meson_prefix} --optimize=1  --install-scripts=${_meson_prefix}\\bin --install-lib=${_meson_prefix}\\lib\\site-packages
+                        -P ${CMAKE_CURRENT_SOURCE_DIR}/run-python-setup-with-destdir.cmake -- --skip-build --prefix=${_meson_prefix} --optimize=1  --install-scripts=${_meson_prefix}\\bin --install-lib=${_meson_prefix}\\lib\\site-packages
+                    COMMAND ${CMAKE_COMMAND} -E echo "Installing custom relocatable launcher for meson"
+                    COMMAND ${CMAKE_COMMAND} -DSRC=${LAUNCHER_BINARY_BIR}/meson.exe -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
 
         BUILD_IN_SOURCE 1
 
         UPDATE_COMMAND ""
+        DEPENDS ext_meson_launcher
     )
+
 elseif(NOT CMAKE_CROSSCOMPILING)
     set(_meson_prefix "${EXTPREFIX}")
 
