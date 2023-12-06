@@ -10,6 +10,8 @@
     "base/expat": "master"
     "base/exiv2": "master"
     "base/python": "master"
+    "base/fribidi": "master"
+    "heif/libaom": "master"
 
 - 'on': ['Windows']
   'require':
