@@ -113,11 +113,18 @@ set(GLOBAL_BUILD_TYPE RelWithDebInfo)
 set(GLOBAL_PROFILE ${GLOBAL_PROFILE} -DBUILD_TESTING=false)
 
 if (UNIX AND NOT APPLE)
-        set(LINUX true)
-    set(PATCH_COMMAND patch)
-elseif (WIN32)
-    set(PATCH_COMMAND patch)
+    set(LINUX true)
 endif ()
+
+find_program(Patch_EXECUTABLE patch)
+if (Patch_EXECUTABLE)
+    message(STATUS "Found patch: ${Patch_EXECUTABLE}")
+
+    set(PATCH_COMMAND ${Patch_EXECUTABLE})
+else()
+    message(STATUS "Patch command is NOT found!")
+    set(PATCH_COMMAND patch)
+endif()
 
 if (WIN32 OR LINUX)
 option(QT_ENABLE_DEBUG_INFO "Build Qt with full debug info included" OFF)
