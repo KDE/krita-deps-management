@@ -13,7 +13,7 @@ if(WIN32)
         string(REGEX REPLACE "([0-9])\\.([0-9])(\\.[0-9])?" "\\1"
             KRITA_boost_COMPILER_VERSION ${CMAKE_CXX_COMPILER_VERSION})
 
-        set (BUILD_ARGS -j${SUBMAKE_JOBS} linkflags=${SECURITY_SHARED_LINKER_FLAGS} --with-system --build-dir=build-dir toolset=gcc variant=release link=shared threading=multi architecture=x86 address-model=64)
+        set (BUILD_ARGS -j${SUBMAKE_JOBS} linkflags="${SECURITY_SHARED_LINKER_FLAGS}" --with-system --build-dir=build-dir toolset=gcc variant=release link=shared threading=multi architecture=x86 address-model=64)
 
         ExternalProject_Add(
             ext_boost
