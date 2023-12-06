@@ -111,19 +111,21 @@ endif()
 
 set(MESON_NASM_PATH "${EXTPREFIX}/bin/nasm${CMAKE_EXECUTABLE_SUFFIX}")
 
-# if (NOT PKG_CONFIG_FOUND OR WIN32)
-#     set(PKG_CONFIG_DEP ext_pkgconfig)
-#     if (NOT WIN32)
-#         set(ENV{PKG_CONFIG} ${EXTPREFIX}/bin/pkg-config)
-#     else()
-#         set(ENV{PKG_CONFIG} ${EXTPREFIX}/bin/pkgconf)
-#     endif()
-#     # meson currently reads from the variable directly
-#     set(PKG_CONFIG_EXECUTABLE $ENV{PKG_CONFIG})
-#     message(STATUS "pkg-config not available, building 3rdparty version.")
-#     message(STATUS "$PKG_CONFIG is set to $ENV{PKG_CONFIG}")
-#     add_subdirectory(ext_pkgconfig)
-# endif()
+find_package(PkgConfig)
+
+if (NOT PKG_CONFIG_FOUND OR WIN32)
+    if (NOT WIN32)
+        set(PKG_CONFIG_EXECUTABLE ${EXTPREFIX}/bin/pkg-config)
+    else()
+        set(PKG_CONFIG_EXECUTABLE ${EXTPREFIX}/bin/pkgconf.exe)
+    endif()
+
+    if (NOT EXISTS ${PKG_CONFIG_EXECUTABLE})
+        message(FATAL_ERROR "pkgconfig is NOT found in the 3rdparty prefix!")
+    endif()
+endif()
+
+message(STATUS "Using pkgconfig at: ${PKG_CONFIG_EXECUTABLE}")
 
 configure_file(
     ${CMAKE_CURRENT_LIST_DIR}/meson-compiler.ini.in
