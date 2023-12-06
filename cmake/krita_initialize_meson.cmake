@@ -87,8 +87,26 @@ if (MSVC)
 endif()
 
 if (NOT MESON_BINARY_PATH)
-    set(MESON_BINARY_PATH ${EXTPREFIX}/bin/meson)
-    message(STATUS "Meson not available, using 3rdparty version.")
+    find_program(Meson_EXECUTABLE meson)
+
+    if (Meson_EXECUTABLE)
+        execute_process(COMMAND meson --version OUTPUT_VARIABLE Meson_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+        message(STATUS "Found meson (${Meson_VERSION}): ${Meson_EXECUTABLE}")
+
+        if (${Meson_VERSION} VERSION_LESS "1.1.0")
+            message(FATAL_ERROR "Meson executable is too old! Krita requires at least meson 1.1.0")
+        endif()
+
+        set(MESON_BINARY_PATH ${Meson_EXECUTABLE})
+    else()
+        set(MESON_BINARY_PATH ${EXTPREFIX}/bin/meson)
+        message(STATUS "Meson not available, using 3rdparty version.")
+
+        if (NOT EXISTS ${MESON_BINARY_PATH})
+            message(FATAL_ERROR "Meson executable is not found in 3rdparty install directory!")
+        endif()
+    endif()
 endif()
 
 set(MESON_NASM_PATH "${EXTPREFIX}/bin/nasm${CMAKE_EXECUTABLE_SUFFIX}")
