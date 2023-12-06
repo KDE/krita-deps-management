@@ -12,6 +12,7 @@
     "base/python": "master"
     "base/fribidi": "master"
     "heif/libaom": "master"
+    "base/fftw3": "master"
 
 - 'on': ['Windows']
   'require':
