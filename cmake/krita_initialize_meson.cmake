@@ -81,6 +81,8 @@ else()
     set(CROSSCOMPILING)
 endif()
 
+set(EXTRA_MESON_FLAGS ${EXTRA_MESON_FLAGS} -Dpkgconfig.relocatable=true)
+
 if (MSVC)
     set(_c_ld "c_ld = ['${CMAKE_LINKER}'] + cross_link_args")
     set(_cpp_ld "cpp_ld = ['${CMAKE_LINKER}'] + cross_link_args")
