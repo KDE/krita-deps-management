@@ -1,0 +1,17 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/icu': '@same'
+    'base/openssl': '@same'
+#    'base/freetype': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+    'base/strawberryperl': '@same'
+    'base/googleangle': '@same'
+#    'base/jom': '@same' # only for msvc builds
+- 'on': ['Windows', 'MacOS']
+  'require':
+    'base/zlib': '@same'
+#    'base/pkgconfig': '@same'
+#    'base/gettext': '@same'
