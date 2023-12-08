@@ -15,3 +15,7 @@ Dependencies:
     'base/zlib': '@same'
 #    'base/pkgconfig': '@same'
 #    'base/gettext': '@same'
+
+Options:
+- 'on': ['Windows']
+  generator: 'MinGW Makefiles'
