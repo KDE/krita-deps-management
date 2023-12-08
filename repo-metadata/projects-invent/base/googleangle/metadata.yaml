@@ -1,0 +1,8 @@
+description: A conformant OpenGL ES implementation
+hasrepo: false
+identifier: ext_googleangle
+name: googleangle
+projectpath: krita-deps/base/googleangle
+repoactive: false
+repopath: base/googleangle
+
