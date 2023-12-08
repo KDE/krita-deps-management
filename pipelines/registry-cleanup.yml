@@ -13,7 +13,7 @@
     KDECI_CACHE_PATH: /mnt/artifacts/suse-qt5.15/
     KDECI_GITLAB_SERVER: https://invent.kde.org/
   before_script:
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git -b work/split-ci-branch
     - git clone https://invent.kde.org/dkazakov/krita-deps-repo-metadata.git ci-utilities/repo-metadata/
   script:
     - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-${CI_ENVIRONMENT_NAME}

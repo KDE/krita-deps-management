@@ -129,6 +129,13 @@ if (WIN32)
       list(APPEND QT_EXTRA_DEPS ext_strawberryperl)
     endif()
 
+    # we store our patch perl separately in Krita
+    if (EXISTS ${EXTPREFIX}/Strawberry/perl/bin/perl.exe)
+      set(EXTRA_PERL_ENV $ENV{PATH};${EXTPREFIX}/Strawberry/perl/bin/)
+    else()
+      set(EXTRA_PERL_ENV $ENV{PATH})
+    endif()
+    list(JOIN EXTRA_PERL_ENV $<SEMICOLON> PERL_PATH)
 
   ExternalProject_Add(
       ext_qt
@@ -141,11 +148,11 @@ if (WIN32)
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
       INSTALL_DIR ${EXTPREFIX}
-      CONFIGURE_COMMAND <SOURCE_DIR>/configure.bat ${_QT_conf}
+      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} <SOURCE_DIR>/configure.bat ${_QT_conf}
 
-      BUILD_COMMAND ${QT_BUILD_COMMAND}
+      BUILD_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} ${QT_BUILD_COMMAND}
 
-      INSTALL_COMMAND ${QT_INSTALL_COMMAND}
+      INSTALL_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} ${QT_INSTALL_COMMAND}
       UPDATE_COMMAND ""
       # Use a short name to reduce the chance of exceeding path length limit
       SOURCE_DIR s

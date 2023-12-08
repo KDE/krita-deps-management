@@ -7,8 +7,8 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
-    'base/strawberryperl': '@same'
     'base/googleangle': '@same'
+    'base/strawberryperl': '@same'
 #    'base/jom': '@same' # only for msvc builds
 - 'on': ['Windows', 'MacOS']
   'require':
@@ -17,5 +17,4 @@ Dependencies:
 #    'base/gettext': '@same'
 
 Options:
-- 'on': ['Windows']
-  generator: 'MinGW Makefiles'
+  force-ninja-on-windows: False
