@@ -15,7 +15,6 @@
     "base/fftw3": "master"
     "base/freetype": "master"
     "base/fontconfig": "master"
-    "base/googleangle": "master"
 
 - 'on': ['Windows']
   'require':
@@ -23,6 +22,7 @@
     "base/strawberryperl": "master"
     "base/gettext": "master"
     "base/zlib": "master"
+    "base/googleangle": "master"
 
 - 'on': ['Windows', 'MacOS']
   'require':
