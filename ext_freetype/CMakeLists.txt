@@ -23,6 +23,8 @@ ExternalProject_Add(ext_freetype_bootstrap
     URL ${FREETYPE_URL}
     URL_HASH SHA256=${FREETYPE_SHA256}
 
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-freetype-Fix-pkgconfig-files-to-be-relocatable.patch
+
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${BOOTSTRAP_PREFIX}
         -DFT_DISABLE_BZIP2=ON
         -DFT_DISABLE_BROTLI=ON
@@ -51,7 +53,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         -Dtests=disabled
         -Dfreetype=enabled
         -Dpkgconfig.relocatable=true
-        -Dcmake_prefix_path=${BOOTSTRAP_PREFIX}
+
         ${EXTRA_MESON_FLAGS}
 
     UPDATE_COMMAND ""
@@ -64,6 +66,8 @@ ExternalProject_Add( ext_freetype
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     URL ${FREETYPE_URL}
     URL_HASH SHA256=${FREETYPE_SHA256}
+
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-freetype-Fix-pkgconfig-files-to-be-relocatable.patch
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${BOOTSTRAP_PREFIX}
         -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
