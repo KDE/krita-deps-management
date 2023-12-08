@@ -13,6 +13,8 @@
     "base/fribidi": "master"
     "heif/libaom": "master"
     "base/fftw3": "master"
+    "base/freetype": "master"
+    "base/fontconfig": "master"
 
 - 'on': ['Windows']
   'require':

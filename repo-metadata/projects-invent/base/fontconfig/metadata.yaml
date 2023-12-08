@@ -1,0 +1,7 @@
+description: Font configuration and customization library
+hasrepo: false
+identifier: ext_fontconfig
+name: fontconfig
+projectpath: krita-deps/base/fontconfig
+repoactive: false
+repopath: base/fontconfig

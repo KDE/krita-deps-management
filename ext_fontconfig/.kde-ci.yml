@@ -1,0 +1,14 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/freetype': '@same'
+    'base/expat': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+- 'on': ['Windows', 'MacOS']
+  'require':
+    # on Linux we use meson provided by the distribution
+    'base/meson': '@same'
+    'base/pkgconfig': '@same'
+    'base/gettext': '@same'
