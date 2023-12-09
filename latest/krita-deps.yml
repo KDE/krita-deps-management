@@ -17,6 +17,7 @@
     "base/fontconfig": "master"
     "base/qt": "master"
     "base/openexr": "master"
+    "base/ocio": "master"
 
 - 'on': ['Windows']
   'require':

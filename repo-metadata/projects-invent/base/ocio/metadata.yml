@@ -1,0 +1,7 @@
+description: OpenColorIO
+hasrepo: false
+identifier: ext_ocio
+name: OpenColorIO
+projectpath: krita-deps/base/ocio
+repoactive: false
+repopath: base/ocio
