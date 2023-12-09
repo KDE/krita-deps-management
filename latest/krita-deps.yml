@@ -24,6 +24,7 @@
     "base/lzma": "master"
     "base/openjpeg": "master"
     "base/json_c": "master"
+    "base/xsimd": "master"
 
 - 'on': ['Windows']
   'require':
