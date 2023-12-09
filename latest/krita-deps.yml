@@ -23,6 +23,7 @@
     "base/giflib": "master"
     "base/lzma": "master"
     "base/openjpeg": "master"
+    "base/json_c": "master"
 
 - 'on': ['Windows']
   'require':
