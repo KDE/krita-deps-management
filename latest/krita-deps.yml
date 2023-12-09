@@ -19,6 +19,7 @@
     "base/openexr": "master"
     "base/ocio": "master"
     "base/tiff": "master"
+    "base/gsl": "master"
 
 - 'on': ['Windows']
   'require':
