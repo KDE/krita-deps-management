@@ -22,6 +22,7 @@
     "base/gsl": "master"
     "base/giflib": "master"
     "base/lzma": "master"
+    "base/openjpeg": "master"
 
 - 'on': ['Windows']
   'require':
