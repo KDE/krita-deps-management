@@ -25,6 +25,7 @@
     "base/openjpeg": "master"
     "base/json_c": "master"
     "base/xsimd": "master"
+    "base/unibreak": "master"
 
 - 'on': ['Windows']
   'require':

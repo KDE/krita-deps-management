@@ -1,0 +1,7 @@
+description: Implementation of the line breaking and word breaking algorithms as described in Unicode Standard Annex 14 and Unicode Standard Annex 29
+hasrepo: false
+identifier: ext_unibreak
+name: libunibreak
+projectpath: krita-deps/base/unibreak
+repoactive: false
+repopath: base/unibreak
