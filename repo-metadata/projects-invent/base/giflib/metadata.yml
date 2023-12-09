@@ -1,0 +1,7 @@
+description: Library for loading and saving gif files.
+hasrepo: false
+identifier: ext_giflib
+name: GIFLIB
+projectpath: krita-deps/base/giflib
+repoactive: false
+repopath: base/giflib

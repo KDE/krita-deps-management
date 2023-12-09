@@ -20,6 +20,7 @@
     "base/ocio": "master"
     "base/tiff": "master"
     "base/gsl": "master"
+    "base/giflib": "master"
 
 - 'on': ['Windows']
   'require':
