@@ -16,6 +16,7 @@
     "base/freetype": "master"
     "base/fontconfig": "master"
     "base/qt": "master"
+    "base/openexr": "master"
 
 - 'on': ['Windows']
   'require':

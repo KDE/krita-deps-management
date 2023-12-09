@@ -1,0 +1,7 @@
+description: A library for handling OpenEXR high dynamic-range image files
+hasrepo: false
+identifier: ext_openexr
+name: OpenEXR
+projectpath: krita-deps/base/openexr
+repoactive: false
+repopath: base/openexr
