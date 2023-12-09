@@ -6,7 +6,7 @@ endif()
 project(ext_eigen3)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-kis_ExternalProject_Add_with_separate_builds_apple(
+ExternalProject_Add(
     ext_eigen3
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     URL https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz

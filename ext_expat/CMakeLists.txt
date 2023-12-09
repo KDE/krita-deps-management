@@ -6,7 +6,7 @@ endif()
 project(ext_expat)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-kis_ExternalProject_Add_with_separate_builds_apple(
+ExternalProject_Add(
     ext_expat
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     URL https://github.com/libexpat/libexpat/releases/download/R_2_4_8/expat-2.4.8.tar.xz

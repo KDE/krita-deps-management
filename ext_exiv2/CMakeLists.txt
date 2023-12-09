@@ -33,7 +33,7 @@ elseif(WIN32)
         ${WINDOWS_PATCH_COMMAND}
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/01_fpermissive_error.patch)
 
-    kis_ExternalProject_Add_with_separate_builds_apple(
+    ExternalProject_Add(
         ext_exiv2
         
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
@@ -47,7 +47,7 @@ elseif(WIN32)
         UPDATE_COMMAND ""
     )
 else()
-    kis_ExternalProject_Add_with_separate_builds_apple(
+    ExternalProject_Add(
         ext_exiv2
 
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
