@@ -1,0 +1,7 @@
+description: Support for xz compressed files and data streams
+hasrepo: false
+identifier: ext_lzma
+name: LibLZMA
+projectpath: krita-deps/base/lzma
+repoactive: false
+repopath: base/lzma

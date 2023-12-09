@@ -21,6 +21,7 @@
     "base/tiff": "master"
     "base/gsl": "master"
     "base/giflib": "master"
+    "base/lzma": "master"
 
 - 'on': ['Windows']
   'require':
