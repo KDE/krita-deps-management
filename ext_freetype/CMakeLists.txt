@@ -53,8 +53,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         -Dtests=disabled
         -Dfreetype=enabled
         -Dpkgconfig.relocatable=true
-        --pkg-config-path ${BOOTSTRAP_PREFIX}/lib/pkgconfig
         --pkg-config-path ${EXTPREFIX}/lib/pkgconfig
+        --pkg-config-path ${BOOTSTRAP_PREFIX}/lib/pkgconfig
         ${EXTRA_MESON_FLAGS}
 
     UPDATE_COMMAND ""
