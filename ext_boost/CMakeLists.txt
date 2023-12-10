@@ -29,7 +29,7 @@ if(WIN32)
 
             CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat gcc --prefix=${EXTPREFIX}
             BUILD_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${BUILD_ARGS}
-            INSTALL_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${BUILD_ARGS} install
+            INSTALL_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${BUILD_ARGS} -d0 install
 
             UPDATE_COMMAND ""
             BUILD_IN_SOURCE 1
@@ -134,7 +134,7 @@ else()
         CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh --prefix=${EXTPREFIX} --with-libraries=system
         
         BUILD_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${MACOS_BOOST_ARGS}
-        INSTALL_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${MACOS_BOOST_ARGS} install
+        INSTALL_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${MACOS_BOOST_ARGS} -d0 install
 
         UPDATE_COMMAND ""
         BUILD_IN_SOURCE 1
