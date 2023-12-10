@@ -37,6 +37,12 @@ ExternalProject_Add(ext_freetype_bootstrap
     UPDATE_COMMAND ""
 )
 
+set(harfbuzz_pkg_config_path ${BOOTSTRAP_PREFIX}/lib/pkgconfig ${EXTPREFIX}/lib/pkgconfig)
+krita_to_native_environment_path_list("${harfbuzz_pkg_config_path}" harfbuzz_pkg_config_path_native)
+
+message(STATUS "path: ${harfbuzz_pkg_config_path}")
+message(STATUS "native path: ${harfbuzz_pkg_config_path_native}")
+
 kis_ExternalProject_Add_with_separate_builds_apple(
     ext_harfbuzz
     MESON
@@ -53,19 +59,13 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         -Dtests=disabled
         -Dfreetype=enabled
         -Dpkgconfig.relocatable=true
-
+        --pkg-config-path ${harfbuzz_pkg_config_path_native}
         ${EXTRA_MESON_FLAGS}
 
     UPDATE_COMMAND ""
 
     DEPENDS ext_freetype_bootstrap
 )
-
-set(harfbuzz_pkg_config_path ${BOOTSTRAP_PREFIX}/lib/pkgconfig ${EXTPREFIX}/lib/pkgconfig)
-krita_to_native_environment_path_list("${harfbuzz_pkg_config_path}" harfbuzz_pkg_config_path_native)
-
-message(STATUS "path: ${harfbuzz_pkg_config_path}")
-message(STATUS "native path: ${harfbuzz_pkg_config_path_native}")
 
 # Amyspark: just run roughshod!
 ExternalProject_Add( ext_freetype
@@ -82,7 +82,6 @@ ExternalProject_Add( ext_freetype
         -DFT_REQUIRE_HARFBUZZ=ON
         -DFT_REQUIRE_PNG=ON
         -DBUILD_SHARED_LIBS=TRUE
-        --pkg-config-path ${harfbuzz_pkg_config_path_native}
         ${GLOBAL_PROFILE}
 
     UPDATE_COMMAND ""
