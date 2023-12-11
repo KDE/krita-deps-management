@@ -11,7 +11,16 @@ seed_windows_qt515_staging:
     - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
     - git config --global --add safe.directory $CI_PROJECT_DIR
     - cd $KRITA_STAGE_DEP
-    - python -u ..\ci-utilities\run-ci-build.py --project $KRITA_STAGE_DEP --branch master --platform Windows/Qt5/Shared --only-build --fail-on-leaked-stage-files
+    - python -u ..\ci-utilities\run-ci-build.py --project $KRITA_STAGE_DEP --branch master --platform Windows/Qt5/Shared --only-build --fail-on-leaked-stage-files | Tee-Object -FilePath "build-$KRITA_STAGE_DEP-win64.log"
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - ".\\**\\meson-logs\\meson-log.txt"
+      - ".\\**\\CMakeCache.txt"
+      - ".\\**\\CMakeFiles\\CMakeOutput.log"
+      - "$KRITA_STAGE_DEP\\build-*.log"
+    exclude:
+      - "./**/meson-private/**/*"
 
 seed_appimage_qt515_staging:
   stage: Dependencies
@@ -24,4 +33,13 @@ seed_appimage_qt515_staging:
   script:
     - git config --global --add safe.directory $CI_PROJECT_DIR
     - cd $KRITA_STAGE_DEP
-    - python3 -u ../ci-utilities/run-ci-build.py --project $KRITA_STAGE_DEP --branch master --platform Linux/Qt5/Shared --only-build --fail-on-leaked-stage-files
+    - python3 -u ../ci-utilities/run-ci-build.py --project $KRITA_STAGE_DEP --branch master --platform Linux/Qt5/Shared --only-build --fail-on-leaked-stage-files | tee "build-$KRITA_STAGE_DEP-linux.log"
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - "./**/meson-logs/meson-log.txt"
+      - "./**/CMakeCache.txt"
+      - "./**/CMakeFiles/CMakeOutput.log"
+      - "./$KRITA_STAGE_DEP/build-*.log"
+    exclude:
+      - "./**/meson-private/**/*"
