@@ -1,0 +1,7 @@
+description: A library for manipulating JPEG image files
+hasrepo: false
+identifier: ext_jpeg
+name: libjpeg
+projectpath: krita-deps/base/jpeg
+repoactive: false
+repopath: base/jpeg
