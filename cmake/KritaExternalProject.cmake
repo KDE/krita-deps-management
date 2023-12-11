@@ -69,6 +69,7 @@ macro(kis_ExternalProject_Add_meson EXT_NAME)
 
         BUILD_COMMAND ${CMAKE_COMMAND} -E env
             PYTHONPATH=${_krita_pythonpath}
+            PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
             ${MESON_BINARY_PATH} compile -C <BINARY_DIR> -j${SUBMAKE_JOBS}
 
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env
