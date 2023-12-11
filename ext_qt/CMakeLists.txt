@@ -59,7 +59,7 @@ if (WIN32)
         -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus
         -skip qtspeech -skip qtvirtualkeyboard -qt-sqlite
         #
-        -system-zlib -qt-pcre -qt-libpng -qt-libjpeg -openssl-linked -qt-freetype -qt-harfbuzz
+        -system-zlib -qt-pcre -system-libpng -system-libjpeg -openssl-linked -system-freetype -system-harfbuzz
         -I ${EXTPREFIX}/include
         -L ${EXTPREFIX}/lib
         #
@@ -213,7 +213,19 @@ elseif (NOT APPLE)
 
       CMAKE_ARGS -DOPENSSL_LIBS='-L${EXTPREFIX}/lib -lssl -lcrypto'
 
-      CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -feature-relocatable -openssl-linked -verbose -nomake examples -skip qt3d -skip qtactiveqt -skip qtcanvas3d -skip qtconnectivity -skip qtlocation -skip qtwayland -skip qtwebchannel -skip qtwebengine -skip qtwebsockets -skip qtwebview -skip qtandroidextras -skip qtserialport -skip qtdatavis3d -skip qtvirtualkeyboard -skip qtspeech -skip qtsensors -skip qtgamepad -skip qtscxml -skip qtremoteobjects -skip qtxmlpatterns -skip qtnetworkauth  -skip qtcharts -skip qtdatavis3d -skip qtgamepad -skip qtpurchasing -skip qtscxml -skip qtserialbus -skip qtspeech -skip qtvirtualkeyboard -qt-sqlite -system-zlib ${QT_DEBUG_OPTIONS}
+      CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX}
+          -opensource -confirm-license
+          -feature-relocatable -openssl-linked -verbose -nomake examples
+          -skip qt3d -skip qtactiveqt -skip qtcanvas3d -skip qtconnectivity
+          -skip qtlocation -skip qtwayland -skip qtwebchannel -skip qtwebengine
+          -skip qtwebsockets -skip qtwebview -skip qtandroidextras -skip qtserialport
+          -skip qtdatavis3d -skip qtvirtualkeyboard -skip qtspeech -skip qtsensors
+          -skip qtgamepad -skip qtscxml -skip qtremoteobjects -skip qtxmlpatterns
+          -skip qtnetworkauth  -skip qtcharts -skip qtdatavis3d -skip qtgamepad
+          -skip qtpurchasing -skip qtscxml -skip qtserialbus -skip qtspeech
+          -skip qtvirtualkeyboard -qt-sqlite
+          -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
+          ${QT_DEBUG_OPTIONS}
 
       BUILD_COMMAND ${QT_BUILD_COMMAND}
       INSTALL_COMMAND ${QT_INSTALL_COMMAND}
@@ -228,7 +240,9 @@ else( APPLE )
         -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtwebengine -skip qtxmlpatterns
         -skip qtcharts -skip qtdatavis3d  -skip qtgamepad -skip qtnetworkauth
         -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus -skip qtspeech -skip qtvirtualkeyboard -nomake examples -nomake tools -no-compile-examples
-        -no-dbus -no-iconv -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev -system-zlib -qt-pcre -qt-sqlite
+        -no-dbus -no-iconv -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev
+        -system-zlib -qt-pcre -qt-sqlite
+        -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
         -opensource -confirm-license -openssl-linked -prefix ${EXTPREFIX}
     )
 

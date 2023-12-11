@@ -3,7 +3,13 @@ Dependencies:
   'require':
     'base/icu': '@same'
     'base/openssl': '@same'
-#    'base/freetype': '@same'
+    'base/freetype': '@same'
+    'base/png': '@same'
+    'base/jpeg': '@same'
+- 'on': ['Linux']
+  'require':
+    'base/tiff': '@same' # can be fetched with pkgconfig only, so not on Windows
+    'base/webp': '@same' # can be fetched with pkgconfig only, so not on Windows
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
@@ -13,7 +19,7 @@ Dependencies:
 - 'on': ['Windows', 'MacOS']
   'require':
     'base/zlib': '@same'
-#    'base/pkgconfig': '@same'
+#    'base/pkgconfig': '@same' # supported on linux only
 #    'base/gettext': '@same'
 
 Options:
