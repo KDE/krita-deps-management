@@ -37,6 +37,12 @@ ExternalProject_Add(ext_freetype_bootstrap
     UPDATE_COMMAND ""
 )
 
+set (_pkg_config_path "${BOOTSTRAP_PREFIX}/lib/pkgconfig")
+cmake_path(CONVERT $ENV{PKG_CONFIG_PATH} TO_CMAKE_PATH_LIST _global_pkg_config_path)
+list (APPEND _pkg_config_path ${_global_pkg_config_path})
+
+mesonify(_pkg_config_path _mesonified_pkg_config_path)
+
 kis_ExternalProject_Add_with_separate_builds_apple(
     ext_harfbuzz
     MESON
@@ -53,7 +59,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         -Dtests=disabled
         -Dfreetype=enabled
         -Dpkgconfig.relocatable=true
-        --pkg-config-path ${BOOTSTRAP_PREFIX}/lib/pkgconfig
+        --pkg-config-path ${_mesonified_pkg_config_path}
         ${EXTRA_MESON_FLAGS}
 
     UPDATE_COMMAND ""
