@@ -1,0 +1,7 @@
+description: JPEG XL is a royalty-free raster-graphics file format that supports both lossy and lossless compression
+hasrepo: false
+identifier: ext_jpegxl
+name: JPEG XL
+projectpath: krita-deps/base/jpegxl
+repoactive: false
+repopath: base/jpegxl

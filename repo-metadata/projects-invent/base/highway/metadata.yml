@@ -1,0 +1,7 @@
+description: Highway is a C++ library that provides portable SIMD/vector intrinsics.
+hasrepo: false
+identifier: ext_highway
+name: Highway
+projectpath: krita-deps/base/highway
+repoactive: false
+repopath: base/highway

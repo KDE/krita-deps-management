@@ -1,0 +1,6 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/highway': '@same'
+    'base/brotli': '@same'
+    'base/lcms2': '@same'

@@ -36,6 +36,9 @@
     "base/immer": "master"
     "base/lager": "master"
     "base/libraw": "master"
+    "base/highway": "master"
+    "base/brotli": "master"
+    "base/jpegxl": "master"
 
 - 'on': ['Windows']
   'require':
