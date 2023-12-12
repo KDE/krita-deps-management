@@ -1,0 +1,31 @@
+From 17b14ef3416ddc4caf94304cbbbdce6c833d5454 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Tue, 12 Dec 2023 09:34:25 +0100
+Subject: [PATCH] Make pkgconifg file for libpng relocatable
+
+---
+ CMakeLists.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8652564..517449e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -933,10 +933,10 @@ endif()
+ # Only do this on Windows for Cygwin - the files don't make much sense
+ # outside of a UNIX look-alike.
+ if(NOT WIN32 OR CYGWIN OR MINGW)
+-  set(prefix      ${CMAKE_INSTALL_PREFIX})
+-  set(exec_prefix ${CMAKE_INSTALL_PREFIX})
+-  set(libdir      ${CMAKE_INSTALL_FULL_LIBDIR})
+-  set(includedir  ${CMAKE_INSTALL_FULL_INCLUDEDIR})
++  set(prefix      "\${pcfiledir}/../..")
++  set(exec_prefix "\${prefix}")
++  set(libdir      "\${prefix}/lib")
++  set(includedir  "\${prefix}/include")
+   set(LIBS        "-lz -lm")
+   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libpng.pc.in
+                  ${CMAKE_CURRENT_BINARY_DIR}/${PNGLIB_NAME}.pc
+-- 
+2.25.1
+
