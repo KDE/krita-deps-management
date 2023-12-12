@@ -147,7 +147,7 @@ if (WIN32)
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
-      PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
+      PATCH_COMMAND ${PATCH_COMMAND} -p1 -d qtbase -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
 
       INSTALL_DIR ${EXTPREFIX}
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} <SOURCE_DIR>/configure.bat ${_QT_conf}
@@ -171,7 +171,7 @@ elseif (ANDROID)
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
-      PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
+      PATCH_COMMAND ${PATCH_COMMAND} -p1 -d qtbase -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
 
       # TODO(sh_zam): We can probably skip the skipping now.
       CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -verbose
@@ -217,7 +217,7 @@ elseif (NOT APPLE)
 
       CMAKE_ARGS -DOPENSSL_LIBS='-L${EXTPREFIX}/lib -lssl -lcrypto'
 
-      PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
+      PATCH_COMMAND ${PATCH_COMMAND} -p1 -d qtbase -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
 
       CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX}
           -opensource -confirm-license
@@ -264,7 +264,7 @@ else( APPLE )
 
       WORKING_DIRECTORY <BINARY_DIR>-@ARCH@
 
-      PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
+      PATCH_COMMAND ${PATCH_COMMAND} -p1 -d qtbase -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
 
       CONFIGURE_COMMAND -e "OPENSSL_LIBS=-L${EXTPREFIX}/lib -lssl -lcrypto"
           <SOURCE_DIR>/configure

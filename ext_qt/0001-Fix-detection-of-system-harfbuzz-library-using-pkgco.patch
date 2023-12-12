@@ -1,23 +1,20 @@
-From 354989e41d2aeba7e47768a9b1fcef62cdc6cac1 Mon Sep 17 00:00:00 2001
+From d193d0edd599795f2c7782e3805cf9437dfec75c Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Tue, 12 Dec 2023 09:14:58 +0100
 Subject: [PATCH] Fix detection of system harfbuzz library using pkgconfig on
  Linux
 
 ---
- src/gui/configure.json | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ src/gui/configure.json | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/gui/configure.json b/src/gui/configure.json
-index 46fd390309..5264f83258 100644
+index 46fd390309..30597c7b1e 100644
 --- a/src/gui/configure.json
 +++ b/src/gui/configure.json
-@@ -301,9 +301,10 @@
-                     "hb_buffer_destroy(buffer);"
-                 ]
+@@ -303,7 +303,8 @@
              },
--            "headers": "harfbuzz/hb.h",
-+            "headers": "hb.h",
+             "headers": "harfbuzz/hb.h",
              "sources": [
 -                "-lharfbuzz"
 +                { "type": "pkgConfig", "args": "harfbuzz" },
