@@ -1,0 +1,5 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/lcms2': '@same'
+    'base/jpeg': '@same'

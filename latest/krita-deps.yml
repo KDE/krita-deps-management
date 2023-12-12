@@ -35,6 +35,7 @@
     "base/zug": "master"
     "base/immer": "master"
     "base/lager": "master"
+    "base/libraw": "master"
 
 - 'on': ['Windows']
   'require':
