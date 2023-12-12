@@ -1,0 +1,7 @@
+description: zug is a C++ library providing transducers.
+hasrepo: false
+identifier: ext_zug
+name: zug
+projectpath: krita-deps/base/zug
+repoactive: false
+repopath: base/zug

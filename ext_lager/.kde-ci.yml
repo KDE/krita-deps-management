@@ -1,0 +1,5 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/zug': '@same'
+    'base/immer': '@same'

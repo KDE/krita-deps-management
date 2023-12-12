@@ -32,6 +32,9 @@
     "base/pyqt5-sip": "master"
     "base/webp": "master"
     "base/quazip": "master"
+    "base/zug": "master"
+    "base/immer": "master"
+    "base/lager": "master"
 
 - 'on': ['Windows']
   'require':
