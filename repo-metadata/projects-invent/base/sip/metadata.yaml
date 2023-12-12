@@ -1,0 +1,8 @@
+description: SIP - Python/C++ Bindings Generator
+hasrepo: false
+identifier: ext_sip
+name: sip
+projectpath: krita-deps/base/sip
+repoactive: false
+repopath: base/sip
+
