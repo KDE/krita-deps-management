@@ -30,6 +30,7 @@
     "base/pyqt-builder": "master"
     "base/pyqt5": "master"
     "base/pyqt5-sip": "master"
+    "base/webp": "master"
 
 - 'on': ['Windows']
   'require':

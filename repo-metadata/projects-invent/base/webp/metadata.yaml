@@ -1,0 +1,7 @@
+description: WebP
+hasrepo: false
+identifier: ext_webp
+name: WebP
+projectpath: krita-deps/base/webp
+repoactive: false
+repopath: base/webp
