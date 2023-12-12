@@ -6,7 +6,7 @@ include(ExternalProject)
 set(KRITA_MACOS_EXTERNAL_PACKAGE_NAME "package_build_fat.tar.gz")
 # used always for stepped universal or non universal builds.
 set(PARENT_CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
-set(KRITA_MACOS_CONSOLIDATE_SCRIPT ${PARENT_CMAKE_SOURCE_DIR}/tools/macos_consolidate.sh)
+set(KRITA_MACOS_CONSOLIDATE_SCRIPT ${PARENT_CMAKE_SOURCE_DIR}/../tools/macos_consolidate.sh)
 
 set(kis_ONE_VALUE_ARGS URL URL_HASH DOWNLOAD_DIR WORKING_DIRECTORY
     GIT_REPOSITORY GIT_TAG GIT_REMOTE_UPDATE_STRATEGY GIT_SUBMODULES_RECURSE GIT_PROGRESS
@@ -208,7 +208,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
             INSTALL_COMMAND tar -xzf <TMP_DIR>/${KRITA_MACOS_EXTERNAL_PACKAGE_NAME} -C "/"
             UPDATE_COMMAND ""
 
-            DEPENDS ${EXT_DEPENDS}
+            # DEPENDS ${EXT_DEPENDS}
         )
     else()
         ExternalProject_Add( ${EXT_NAME}
@@ -227,8 +227,15 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
             INSTALL_COMMAND tar -xzf <TMP_DIR>/${KRITA_MACOS_EXTERNAL_PACKAGE_NAME} -C "/"
             UPDATE_COMMAND ""
 
-            DEPENDS ${EXT_DEPENDS}
+            # DEPENDS ${EXT_DEPENDS}
         )
+    endif()
+
+    # FIXME: Since this var isn't set, setting to universal
+    if(NOT CMAKE_OSX_ARCHITECTURES)
+        set(CMAKE_OSX_ARCHITECTURES)
+        list(APPEND CMAKE_OSX_ARCHITECTURES "x86_64")
+        list(APPEND CMAKE_OSX_ARCHITECTURES "arm64")
     endif()
 
     set(step_depend configure)
