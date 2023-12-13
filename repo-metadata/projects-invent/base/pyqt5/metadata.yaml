@@ -1,0 +1,8 @@
+description: Python bindings for Qt5
+hasrepo: false
+identifier: ext_pyqt5
+name: pyqt5
+projectpath: krita-deps/base/pyqt5
+repoactive: false
+repopath: base/pyqt5
+
