@@ -1,7 +1,4 @@
 Dependencies:
-- 'on': ['@all']
-  'require':
-    'base/lcms2': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
