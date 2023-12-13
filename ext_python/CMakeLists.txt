@@ -61,6 +61,8 @@ if (UNIX)
             DEPENDEES update_sip
         )
 
+        message(FATAL_ERROR "TODO: configure targets with krita_add_to_ci_targets")
+
     else()
 
     ExternalProject_Add( ext_python
@@ -81,6 +83,29 @@ if (UNIX)
         COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/python -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
         DEPENDERS install
     )
+
+    ExternalProject_Add_Step(
+        ext_python
+        post_install
+        COMMAND ${CMAKE_COMMAND} -E env --unset=PYTHONPATH
+                ${CMAKE_COMMAND} -DCOMMAND=bin/python3.10 -DPREFIX=${EXTPREFIX} -P  ${CMAKE_CURRENT_SOURCE_DIR}/run-command-in-destdir.cmake -- -m ensurepip
+        COMMAND ${CMAKE_COMMAND} -E env --unset=PYTHONPATH
+                ${CMAKE_COMMAND} -DCOMMAND=bin/python3.10 -DPREFIX=${EXTPREFIX} -P  ${CMAKE_CURRENT_SOURCE_DIR}/run-command-in-destdir.cmake -- -m pip install -r ${CMAKE_CURRENT_SOURCE_DIR}/../requirements-sip.txt
+        DEPENDEES install
+    )
+
+    ExternalProject_Add_StepTargets(ext_python post_install)
+
+    if (NOT TARGET ext_build)
+        add_custom_target(ext_build)
+    endif()
+    add_dependencies(ext_build ext_python-build)
+
+    if (NOT TARGET ext_install)
+        add_custom_target(ext_install)
+    endif()
+    add_dependencies(ext_install ext_python-post_install)
+
     endif()
 elseif(WIN32)
     ExternalProject_Add( ext_python
@@ -101,6 +126,6 @@ elseif(WIN32)
                 COMMAND ${CMAKE_COMMAND} -DSRC=${CMAKE_CURRENT_SOURCE_DIR}/_distutils_system_mod.py -DDST=${EXTPREFIX}/lib/site-packages/ -P  ${KRITA_CI_INSTALL}
         UPDATE_COMMAND ""
     )
-endif()
 
-krita_add_to_ci_targets(ext_python)
+    krita_add_to_ci_targets(ext_python)
+endif()
