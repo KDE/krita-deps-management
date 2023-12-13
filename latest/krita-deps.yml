@@ -26,6 +26,10 @@
     "base/json_c": "master"
     "base/xsimd": "master"
     "base/unibreak": "master"
+    "base/sip": "master"
+    "base/pyqt-builder": "master"
+    "base/pyqt5": "master"
+    "base/pyqt5-sip": "master"
 
 - 'on': ['Windows']
   'require':
