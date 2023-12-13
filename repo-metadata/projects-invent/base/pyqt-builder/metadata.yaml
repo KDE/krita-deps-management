@@ -1,0 +1,8 @@
+description: The PEP 517 compliant PyQt build system
+hasrepo: false
+identifier: ext_pyqt-builder
+name: pyqt-builder
+projectpath: krita-deps/base/pyqt-builder
+repoactive: false
+repopath: base/pyqt-builder
+
