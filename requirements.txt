@@ -1,0 +1,7 @@
+lxml
+pyyaml
+python-gitlab
+setuptools >= 59.8.0
+packaging
+toml
+ply
