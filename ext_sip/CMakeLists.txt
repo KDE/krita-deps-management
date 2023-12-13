@@ -88,6 +88,8 @@ elseif (WIN32)
         URL https://pypi.python.org/packages/source/s/sip/sip-6.6.2.tar.gz
         URL_HASH SHA256=0e3efac1c5dfd8e525ae57140927df26993e13f58b89d1577c314f4105bfd90d
 
+        PATCH_COMMAND ${PATCH_COMMAND} -p1 ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-distinfo.py-to-support-prefix-option-on-Windows-.patch
+
         CONFIGURE_COMMAND ""
 
         BUILD_COMMAND ${CMAKE_COMMAND} -E env 
