@@ -2,3 +2,4 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/openexr': '@same'
+    'base/expat': '@same'
