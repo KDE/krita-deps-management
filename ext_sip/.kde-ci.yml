@@ -5,4 +5,5 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/python': '@same'
+    'base/python-modules': '@same'
 

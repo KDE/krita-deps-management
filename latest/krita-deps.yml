@@ -10,6 +10,7 @@
     "base/expat": "master"
     "base/exiv2": "master"
     "base/python": "master"
+    "base/python-modules": "master"
     "base/fribidi": "master"
     "heif/libaom": "master"
     "base/fftw3": "master"

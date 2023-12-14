@@ -1,0 +1,8 @@
+description: Python modules for Krita (packaging, toml, ply)
+hasrepo: false
+identifier: ext_python-modules
+name: python3-modules
+projectpath: krita-deps/base/python-modules
+repoactive: false
+repopath: base/python-modules
+
