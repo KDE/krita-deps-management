@@ -30,6 +30,11 @@ stages:
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
     KDECI_WORKDIR_PATH: "C:\\_"
   interruptible: true
+  before_script:
+    - python -m venv venv
+    - . venv\Scripts\Activate.ps1
+    - pip install -r requirements.txt
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git -b work/split-ci-branch
 
 .appimage_qt515:
   image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder:latest
