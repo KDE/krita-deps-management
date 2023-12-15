@@ -10,7 +10,6 @@
     "base/expat": "master"
     "base/exiv2": "master"
     "base/python": "master"
-    "base/python-modules": "master"
     "base/fribidi": "master"
     "heif/libaom": "master"
     "base/fftw3": "master"
@@ -47,3 +46,7 @@
     # on Linux we use meson provided by the distribution, on Android the use
     # of pkgconfig is explicitly prohibited
     "base/pkgconfig": "master"
+
+- 'on': ['Linux', 'MacOS']
+  'require':
+    "base/python-modules": "master"

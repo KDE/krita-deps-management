@@ -1,0 +1,11 @@
+- 'on': ['@all']
+  'require':
+    "base/python": "master"
+    "base/sip": "master"
+    "base/pyqt-builder": "master"
+    "base/pyqt5": "master"
+    "base/pyqt5-sip": "master"
+
+- 'on': ['Linux', 'MacOS']
+  'require':
+    "base/python-modules": "master"

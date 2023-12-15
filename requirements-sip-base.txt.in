@@ -1,2 +1,4 @@
+packaging
+ply
+toml
 -r requirements-setuptools.txt
--r requirements-base.txt

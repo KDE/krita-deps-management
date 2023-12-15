@@ -1,3 +1,2 @@
-packaging
-ply
-toml
+-r requirements-sip-base.txt
+-r requirements-setuptools.txt
