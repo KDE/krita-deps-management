@@ -21,6 +21,11 @@ endforeach()
 
 # message("extra args: ${EXTRA_ARGS}")
 
+exec_program(${Python_EXECUTABLE} ARGS -m ensurepip ${DESTDIR_ARGS} RETURN_VALUE RETVAL)
+if (RETVAL)
+    message(FATAL_ERROR "failed to execute python -m ensurepip")
+endif()
+
 message ("Running setup with args: ${Python_EXECUTABLE} -m pip install ${DESTDIR_ARGS} ${EXTRA_DESTDIR_ARGS} ${EXTRA_ARGS}")
 exec_program(${Python_EXECUTABLE} ARGS -m pip install ${DESTDIR_ARGS} ${EXTRA_ARGS} RETURN_VALUE RETVAL)
 if (RETVAL)
