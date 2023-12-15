@@ -9,5 +9,5 @@ Dependencies:
     'base/qt': '@same'
     'base/pyqt5': '@same'
 - 'on': ['Linux', 'MacOS']
-  require':
+  'require':
     'base/python-modules': '@same'

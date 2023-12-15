@@ -6,6 +6,6 @@ Dependencies:
   'require':
     'base/python': '@same'
 - 'on': ['Linux', 'MacOS']
-  require':
+  'require':
     'base/python-modules': '@same'
 

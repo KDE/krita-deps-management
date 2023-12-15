@@ -7,7 +7,7 @@ Dependencies:
     'base/python': '@same'
     'base/qt': '@same'
 - 'on': ['Linux', 'MacOS']
-  require':
+  'require':
     'base/python-modules': '@same'
 
 

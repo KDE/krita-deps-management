@@ -9,5 +9,5 @@ Dependencies:
     'base/pyqt-builder': '@same'
     'base/sip': '@same'
 - 'on': ['Linux', 'MacOS']
-  require':
+  'require':
     'base/python-modules': '@same'
