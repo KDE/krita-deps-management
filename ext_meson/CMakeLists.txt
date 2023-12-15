@@ -10,15 +10,7 @@ include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 if (WIN32)
     krita_to_native_path("${EXTPREFIX}" _meson_prefix)
 
-    ExternalProject_Add( ext_meson_launcher
-        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/meson-launcher
-        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/discard -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
-        INSTALL_COMMAND ""
-        UPDATE_COMMAND ""
-    )
-
-    ExternalProject_Get_property(ext_meson_launcher BINARY_DIR)
-    set(LAUNCHER_BINARY_BIR ${BINARY_DIR})
+    add_subdirectory(${CMAKE_SOURCE_DIR}/../tools/setuptools-launcher/ ${CMAKE_CURRENT_BINARY_DIR}/setuptools-launcher-build EXCLUDE_FROM_ALL)
 
     ExternalProject_Add( ext_meson
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
@@ -36,12 +28,12 @@ if (WIN32)
             ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
                         -P ${CMAKE_CURRENT_SOURCE_DIR}/run-python-setup-with-destdir.cmake -- --skip-build --prefix=${_meson_prefix} --optimize=1  --install-scripts=${_meson_prefix}\\bin --install-lib=${_meson_prefix}\\lib\\site-packages
                     COMMAND ${CMAKE_COMMAND} -E echo "Installing custom relocatable launcher for meson"
-                    COMMAND ${CMAKE_COMMAND} -DSRC=${LAUNCHER_BINARY_BIR}/meson.exe -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
+                    COMMAND ${CMAKE_COMMAND} -DSRC=$<TARGET_FILE:setuptools-launcher> -DRENAME=meson${CMAKE_EXECUTABLE_SUFFIX} -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
 
         BUILD_IN_SOURCE 1
 
         UPDATE_COMMAND ""
-        DEPENDS ext_meson_launcher
+        DEPENDS setuptools-launcher
     )
 
 elseif(NOT CMAKE_CROSSCOMPILING)

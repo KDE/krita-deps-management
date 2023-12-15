@@ -78,6 +78,8 @@ elseif (WIN32)
         message(FATAL_ERROR "setuptools python module is too old!")
     endif()
 
+    add_subdirectory(${CMAKE_SOURCE_DIR}/../tools/setuptools-launcher/ ${CMAKE_CURRENT_BINARY_DIR}/setuptools-launcher-build EXCLUDE_FROM_ALL)
+
     krita_to_native_path("${EXTPREFIX}" _sip_prefix)
     krita_to_native_path("${KRITA_PYTHONPATH}" _krita_pythonpath)
     string(TOLOWER ${_krita_pythonpath} _krita_pythonpath)
@@ -105,10 +107,18 @@ elseif (WIN32)
                 SETUPTOOLS_USE_DISTUTILS=local
                 ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
                     -P ${CMAKE_CURRENT_SOURCE_DIR}/run-python-setup-with-destdir.cmake -- --skip-build --prefix=${_sip_prefix} --optimize=1  --install-scripts=${_sip_prefix}\\bin --install-lib=${_sip_prefix}\\lib\\site-packages
+            COMMAND ${CMAKE_COMMAND} -E echo "Installing custom relocatable launchers for sip tools"
+            COMMAND ${CMAKE_COMMAND} -DSRC=$<TARGET_FILE:setuptools-launcher> -DRENAME=sip-build${CMAKE_EXECUTABLE_SUFFIX} -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=$<TARGET_FILE:setuptools-launcher> -DRENAME=sip-distinfo${CMAKE_EXECUTABLE_SUFFIX} -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=$<TARGET_FILE:setuptools-launcher> -DRENAME=sip-install${CMAKE_EXECUTABLE_SUFFIX} -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=$<TARGET_FILE:setuptools-launcher> -DRENAME=sip-module${CMAKE_EXECUTABLE_SUFFIX} -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=$<TARGET_FILE:setuptools-launcher> -DRENAME=sip-sdist${CMAKE_EXECUTABLE_SUFFIX} -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=$<TARGET_FILE:setuptools-launcher> -DRENAME=sip-wheel${CMAKE_EXECUTABLE_SUFFIX} -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
 
         BUILD_IN_SOURCE 1
 
         UPDATE_COMMAND ""
+        DEPENDS setuptools-launcher
     )
 endif()
 
