@@ -31,7 +31,7 @@ stages:
     KDECI_WORKDIR_PATH: "C:\\_"
   interruptible: true
   before_script:
-    - python -m venv venv
+    - python -m venv venv --upgrade-deps
     - . venv\Scripts\Activate.ps1
     - pip install -r requirements.txt
     - git clone https://invent.kde.org/dkazakov/ci-utilities.git -b work/split-ci-branch
