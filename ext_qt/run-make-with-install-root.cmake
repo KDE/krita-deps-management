@@ -27,4 +27,7 @@ foreach(i RANGE 0 ${CMAKE_ARGC})
     endif()
 endforeach()
 
-exec_program(${MAKE_COMMAND} ARGS ${DESTDIR_ARGS} ${EXTRA_ARGS})
+exec_program(${MAKE_COMMAND} ARGS ${DESTDIR_ARGS} ${EXTRA_ARGS} RETURN_VALUE RETVAL)
+if (RETVAL)
+    message(FATAL_ERROR "failed to execute make")
+endif()

@@ -32,4 +32,7 @@ endforeach()
 
 message ("Running b2 with args: --prefix=${PREFIX} ${EXTRA_ARGS}")
 
-exec_program(${B2_COMMAND} ARGS --prefix=${PREFIX} ${EXTRA_ARGS})
+exec_program(${B2_COMMAND} ARGS --prefix=${PREFIX} ${EXTRA_ARGS} RETURN_VALUE RETVAL)
+if (RETVAL)
+    message(FATAL_ERROR "failed to run b2")
+endif()

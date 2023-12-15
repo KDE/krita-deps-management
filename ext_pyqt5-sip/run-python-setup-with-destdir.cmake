@@ -23,4 +23,7 @@ endforeach()
 
 message ("Running setup with args: ${Python_EXECUTABLE} ${SCRIPT} install ${DESTDIR_ARGS} ${EXTRA_DESTDIR_ARGS} ${EXTRA_ARGS}")
 
-exec_program(${Python_EXECUTABLE} ARGS ${SCRIPT} install ${DESTDIR_ARGS} ${EXTRA_ARGS})
+exec_program(${Python_EXECUTABLE} ARGS ${SCRIPT} install ${DESTDIR_ARGS} ${EXTRA_ARGS} RETURN_VALUE RETVAL)
+if (RETVAL)
+    message(FATAL_ERROR "failed to execute the setup script")
+endif()

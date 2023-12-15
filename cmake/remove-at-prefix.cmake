@@ -20,4 +20,7 @@ cmake_path(APPEND REAL_FILE ${PREFIX} ${SRC})
 
 message ("Removing: ${REAL_FILE}")
 
-exec_program(${CMAKE_COMMAND} ARGS -E rm -r ${REAL_FILE})
+exec_program(${CMAKE_COMMAND} ARGS -E rm -r ${REAL_FILE} RETURN_VALUE RETVAL)
+if (RETVAL)
+    message(FATAL_ERROR "failed to remove a file")
+endif()

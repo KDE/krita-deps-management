@@ -24,4 +24,7 @@ endforeach()
 
 message ("Running ${PREFIX}/${COMMAND} with args: ${EXTRA_ARGS}")
 
-exec_program(${PREFIX}/${COMMAND} ARGS ${EXTRA_ARGS})
+exec_program(${PREFIX}/${COMMAND} ARGS ${EXTRA_ARGS} RETURN_VALUE RETVAL)
+if (RETVAL)
+    message(FATAL_ERROR "failed to execute command in destdir")
+endif()
