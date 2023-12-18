@@ -40,6 +40,7 @@ if(UNIX)
             "PYTHONPATH=${KRITA_PYTHONPATH}"
             ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/build
             ${CMAKE_COMMAND} -DMAKE_COMMAND=make -P ${CMAKE_CURRENT_SOURCE_DIR}/run-make-with-install-root.cmake -- -j1 install
+            COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
 
         BUILD_IN_SOURCE 1
 
