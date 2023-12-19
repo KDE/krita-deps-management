@@ -3,3 +3,6 @@ Dependencies:
   'require':
     'base/zug': '@same'
     'base/immer': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
