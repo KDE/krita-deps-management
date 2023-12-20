@@ -42,16 +42,41 @@ seed_appimage_qt515_custom:
     exclude:
       - "./**/meson-private/**/*"
 
-seed_windows_qt515_custom_shared:
-  stage: Dependencies
-  extends:
-  - seed_windows_qt515_custom
+.shared_job_template:
   variables:
     KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
 
+seed_windows_qt515_custom_shared:
+  extends:
+  - seed_windows_qt515_custom
+  - .shared_job_template
+
+
 seed_appimage_qt515_custom_shared:
-  stage: Dependencies
   extends:
   - seed_appimage_qt515_custom
-  variables:
-    KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
+  - .shared_job_template
+
+seed_windows_qt515_dirty:
+  extends:
+  - seed_windows_qt515_custom
+  script:
+    # TODO: bake this variable into the docker image
+  - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
+  - python -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch master | Tee-Object -FilePath "seed-packages-win64.log"
+
+seed_appimage_qt515_dirty:
+  extends:
+    - seed_appimage_qt515_custom
+  script:
+    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Linux/Qt5/Shared --branch master | tee "seed-packages-linux.log"
+
+seed_windows_qt515_dirty_shared:
+  extends:
+    - seed_windows_qt515_dirty
+    - .shared_job_template
+
+seed_appimage_qt515_dirty_shared:
+  extends:
+    - seed_appimage_qt515_dirty
+    - .shared_job_template
