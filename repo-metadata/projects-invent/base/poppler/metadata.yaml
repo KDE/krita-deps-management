@@ -1,0 +1,7 @@
+description: A library for rendering PDF files
+hasrepo: false
+identifier: ext_poppler
+name: Poppler
+projectpath: krita-deps/base/poppler
+repoactive: false
+repopath: base/poppler

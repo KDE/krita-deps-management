@@ -58,6 +58,7 @@
     "base/libheif": "master"
     "base/mypaint": "master"
     "base/kdcraw": "master"
+    "base/poppler": "master"
 
 - 'on': ['Windows']
   'require':

@@ -1,0 +1,8 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/freetype': '@same'
+    'base/fontconfig': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
