@@ -1,0 +1,7 @@
+description: MyPaint brush engine API for C/C++
+hasrepo: false
+identifier: ext_mypaint
+name: LibMyPaint
+projectpath: krita-deps/base/mypaint
+repoactive: false
+repopath: base/mypaint

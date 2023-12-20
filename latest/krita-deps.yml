@@ -56,6 +56,7 @@
     "heif/libx265_12bit": "master"
     "heif/libx265": "master"
     "base/libheif": "master"
+    "base/mypaint": "master"
 
 - 'on': ['Windows']
   'require':
