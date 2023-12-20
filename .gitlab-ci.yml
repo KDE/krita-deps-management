@@ -55,4 +55,5 @@ include:
   - /pipelines/seed-deps.yml
   - /pipelines/seed-staging.yml
   - /pipelines/seed-pyqtsip.yml
+  - /pipelines/seed-custom.yml
   - /pipelines/registry-cleanup.yml
