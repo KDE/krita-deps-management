@@ -9,7 +9,7 @@ Dependencies:
 - 'on': ['Linux']
   'require':
     'base/tiff': '@same' # can be fetched with pkgconfig only, so not on Windows
-    'base/webp': '@same' # can be fetched with pkgconfig only, so not on Windows
+    # 'base/webp': '@same' # can be fetched with pkgconfig only, so not on Windows
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
