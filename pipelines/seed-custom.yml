@@ -42,20 +42,24 @@ seed_appimage_qt515_custom:
     exclude:
       - "./**/meson-private/**/*"
 
-.shared_job_template:
+.shared_job_template_windows:
+  variables:
+    KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR\\_shared_install
+
+.shared_job_template_unix:
   variables:
     KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
 
 seed_windows_qt515_custom_shared:
   extends:
   - seed_windows_qt515_custom
-  - .shared_job_template
+  - .shared_job_template_windows
 
 
 seed_appimage_qt515_custom_shared:
   extends:
   - seed_appimage_qt515_custom
-  - .shared_job_template
+  - .shared_job_template_unix
 
 seed_windows_qt515_dirty:
   extends:
@@ -74,9 +78,9 @@ seed_appimage_qt515_dirty:
 seed_windows_qt515_dirty_shared:
   extends:
     - seed_windows_qt515_dirty
-    - .shared_job_template
+    - .shared_job_template_windows
 
 seed_appimage_qt515_dirty_shared:
   extends:
     - seed_appimage_qt515_dirty
-    - .shared_job_template
+    - .shared_job_template_unix
