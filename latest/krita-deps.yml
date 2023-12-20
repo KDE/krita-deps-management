@@ -59,6 +59,7 @@
     "base/mypaint": "master"
     "base/kdcraw": "master"
     "base/poppler": "master"
+    "base/seexpr": "master"
 
 - 'on': ['Windows']
   'require':
