@@ -1,0 +1,7 @@
+description: libde265 is an open source implementation of the h.265 video codec.
+hasrepo: false
+identifier: ext_libde265
+name: libde265
+projectpath: krita-deps/heif/libde265
+repoactive: false
+repopath: heif/libde265

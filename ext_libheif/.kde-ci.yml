@@ -1,0 +1,9 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'heif/libaom': '@same'
+    'heif/libde265': '@same'
+    'heif/libx265': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

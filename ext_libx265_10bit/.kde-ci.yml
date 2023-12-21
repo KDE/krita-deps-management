@@ -1,0 +1,7 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/nasm': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

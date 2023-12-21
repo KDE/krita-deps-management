@@ -1,0 +1,7 @@
+description: HEIF and AVIF file format decoder and encoder.
+hasrepo: false
+identifier: ext_libheif
+name: libheif
+projectpath: krita-deps/base/libheif
+repoactive: false
+repopath: base/libheif

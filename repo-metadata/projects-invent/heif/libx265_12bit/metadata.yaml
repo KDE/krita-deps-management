@@ -1,0 +1,7 @@
+description: x265 is an open source HEVC encoder.
+hasrepo: false
+identifier: ext_libx265_12bit
+name: libx265_12bit
+projectpath: krita-deps/heif/libx265_12bit
+repoactive: false
+repopath: heif/libx265_12bit

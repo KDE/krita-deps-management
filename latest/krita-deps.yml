@@ -51,6 +51,11 @@
     "base/kitemviews": "master"
     "base/kimageformats": "master"
     "base/kwindowsystem": "master"
+    "heif/libde265": "master"
+    "heif/libx265_10bit": "master"
+    "heif/libx265_12bit": "master"
+    "heif/libx265": "master"
+    "base/libheif": "master"
 
 - 'on': ['Windows']
   'require':
