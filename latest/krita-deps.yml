@@ -39,6 +39,18 @@
     "base/highway": "master"
     "base/brotli": "master"
     "base/jpegxl": "master"
+    "base/extra_cmake_modules": "master"
+    "base/kconfig": "master"
+    "base/karchive": "master"
+    "base/kwidgetsaddons": "master"
+    "base/kcompletion": "master"
+    "base/kcoreaddons": "master"
+    "base/kguiaddons": "master"
+    "base/ki18n": "master"
+    "base/kitemmodels": "master"
+    "base/kitemviews": "master"
+    "base/kimageformats": "master"
+    "base/kwindowsystem": "master"
 
 - 'on': ['Windows']
   'require':
@@ -61,3 +73,7 @@
 - 'on': ['Linux', 'MacOS']
   'require':
     "base/python-modules": "master"
+
+- 'on': ['Linux']
+  'require':
+    "base/kcrash": "master"

@@ -1,0 +1,7 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/qt': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

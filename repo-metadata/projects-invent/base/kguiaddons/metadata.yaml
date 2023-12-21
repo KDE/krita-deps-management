@@ -1,0 +1,7 @@
+description: Addons to QtGui
+hasrepo: false
+identifier: ext_kguiaddons
+name: KGuiAddons
+projectpath: krita-deps/base/kguiaddons
+repoactive: false
+repopath: base/kguiaddons

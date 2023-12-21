@@ -1,0 +1,14 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/qt': '@same'
+    'base/kguiaddons': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+- 'on': ['MacOS']
+  'require':
+    'base/gettext': '@same'
+- 'on': ['Android']
+  'require':
+    'base/libintl-lite': '@same'

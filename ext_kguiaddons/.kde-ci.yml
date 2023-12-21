@@ -1,0 +1,8 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/qt': '@same'
+    'base/kcoreaddons': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

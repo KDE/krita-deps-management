@@ -1,0 +1,5 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/qt': '@same'
+    'base/kitemmodels': '@same'

@@ -1,0 +1,6 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/qt': '@same'
+    'base/karchive': '@same'
+    'base/kitemviews': '@same'

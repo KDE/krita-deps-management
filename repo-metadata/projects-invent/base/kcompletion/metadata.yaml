@@ -1,0 +1,7 @@
+description: Text completion helpers and widgets
+hasrepo: false
+identifier: ext_kcompletion
+name: KCompletion
+projectpath: krita-deps/base/kcompletion
+repoactive: false
+repopath: base/kcompletion

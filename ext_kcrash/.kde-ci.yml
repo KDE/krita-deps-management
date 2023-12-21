@@ -1,0 +1,5 @@
+Dependencies:
+- 'on': ['Linux']
+  'require':
+    'base/qt': '@same'
+    'base/kwindowsystem': '@same'
