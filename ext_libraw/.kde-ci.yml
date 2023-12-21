@@ -6,3 +6,4 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
+    'base/zlib': '@same'

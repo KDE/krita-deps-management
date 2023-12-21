@@ -1,7 +1,9 @@
 Dependencies:
 - 'on': ['@all']
   'require':
+    'base/qt': '@same'
     'base/zlib': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
+    'base/zlib': '@same'
