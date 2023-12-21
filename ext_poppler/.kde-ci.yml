@@ -8,6 +8,8 @@ Dependencies:
     'base/png': '@same'
     'base/tiff': '@same'
     'base/boost': '@same'
+    'base/lcms2': '@same'
+    'base/iconv': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
