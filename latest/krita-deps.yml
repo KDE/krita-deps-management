@@ -87,3 +87,4 @@
 - 'on': ['Linux']
   'require':
     "base/kcrash": "master"
+    "base/fcitx-qt": "master"
