@@ -15,6 +15,7 @@ stages:
     KDECI_GITLAB_SERVER: https://invent.kde.org/
   before_script:
     - git clone https://invent.kde.org/dkazakov/ci-utilities.git -b work/split-ci-branch
+    - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .windows_qt515:
   image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder:latest
@@ -35,6 +36,7 @@ stages:
     - . venv\Scripts\Activate.ps1
     - pip install -r requirements.txt
     - git clone https://invent.kde.org/dkazakov/ci-utilities.git -b work/split-ci-branch
+    - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_qt515:
   image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder:latest
