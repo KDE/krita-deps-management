@@ -2,7 +2,7 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/qt': '@same'
-    'base/kcoreaddons': '@same'
+    'base/extra_cmake_modules': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'

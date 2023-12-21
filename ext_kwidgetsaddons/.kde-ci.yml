@@ -2,4 +2,4 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/qt': '@same'
-    'base/kconfig': '@same'
+    'base/extra_cmake_modules': '@same'

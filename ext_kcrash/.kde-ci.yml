@@ -1,5 +1,7 @@
 Dependencies:
-- 'on': ['Linux']
+- 'on': ['@all']
   'require':
     'base/qt': '@same'
+    'base/extra_cmake_modules': '@same'
+    'base/kcoreaddons': '@same'
     'base/kwindowsystem': '@same'

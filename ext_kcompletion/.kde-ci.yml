@@ -1,5 +1,6 @@
 Dependencies:
 - 'on': ['@all']
   'require':
+    'base/extra_cmake_modules': '@same'
     'base/qt': '@same'
     'base/kwidgetsaddons': '@same'

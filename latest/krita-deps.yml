@@ -56,7 +56,6 @@
   'require':
     "base/patch": "master"
     "base/strawberryperl": "master"
-    "base/gettext": "master"
     "base/zlib": "master"
     "base/googleangle": "master"
     "base/drmingw": "master"
@@ -69,6 +68,8 @@
     # on Linux we use meson provided by the distribution, on Android the use
     # of pkgconfig is explicitly prohibited
     "base/pkgconfig": "master"
+    # TODO: check if we actually need that on macOS (required by ki18n)
+    "base/gettext": "master"
 
 - 'on': ['Linux', 'MacOS']
   'require':
