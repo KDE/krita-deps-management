@@ -1,0 +1,7 @@
+description: "Dr. Mingw is a Just-in-Time debugger for Windows."
+hasrepo: false
+identifier: ext_drmingw
+name: drmingw
+projectpath: krita-deps/base/drmingw
+repoactive: false
+repopath: base/drmingw
