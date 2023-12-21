@@ -3,4 +3,5 @@ Dependencies:
   'require':
     'base/extra_cmake_modules': '@same'
     'base/qt': '@same'
+    'base/kconfig': '@same'
     'base/kwidgetsaddons': '@same'
