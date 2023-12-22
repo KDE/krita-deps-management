@@ -60,6 +60,9 @@
     "base/kdcraw": "master"
     "base/poppler": "master"
     "base/seexpr": "master"
+    "base/icu": "master"
+    "base/jpeg": "master"
+
 
 - 'on': ['Windows']
   'require':
