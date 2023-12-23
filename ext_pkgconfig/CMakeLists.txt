@@ -5,8 +5,6 @@ endif()
 
 project(ext_pkgconfig)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
-include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
-include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_meson.cmake)
 
 # we build pkgconfig only on MacOS and Windows
 if (APPLE)
@@ -22,6 +20,8 @@ if (APPLE)
     )
 else(WIN32)
 
+    include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
+    include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_meson.cmake)
     ExternalProject_Add( ext_pkgconfig
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         GIT_REPOSITORY https://github.com/pkgconf/pkgconf.git
