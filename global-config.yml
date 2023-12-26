@@ -5,3 +5,4 @@ Options:
   run-cppcheck: False
   run-gcovr: False
   use-asan: False
+  pkg-config-sanity-check: 'warning'
