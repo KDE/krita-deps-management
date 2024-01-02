@@ -78,9 +78,10 @@ if (UNIX)
     ExternalProject_Add_Step( 
         ext_python 
         pre_install
-        # python renames the binary on installation, so let's jest copy the original file
-        # TODO: write a script for symlinking at destination folder and make it postinstall again
-        COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/python -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
+        # presumably something actually needs this symlink?
+        COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink python3.10 python
+        COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/python -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
+
         DEPENDERS install
     )
     
