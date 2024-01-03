@@ -10,8 +10,8 @@ ExternalProject_Add(
     ext_libheif
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-    URL https://github.com/strukturag/libheif/releases/download/v1.13.0/libheif-1.13.0.tar.gz
-    URL_HASH SHA256=c20ae01bace39e89298f6352f1ff4a54b415b33b9743902da798e8a1e51d7ca1
+    URL https://github.com/strukturag/libheif/releases/download/v1.15.2/libheif-1.15.2.tar.gz
+    URL_HASH SHA256=7A4C6077F45180926583E2087571371BDD9CB21B6E6FADA85A6FBD544F26A0E2
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/clang-aom-link-pthread.patch
 
