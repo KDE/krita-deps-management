@@ -87,7 +87,7 @@ else (WIN32)
 
         # OpenSSL cannot handle DESTDIR as an environment variable. Instead,
         # it expects it to be passed as an explicit make argument
-        INSTALL_COMMAND ${CMAKE_COMMAND} -DARGS=install -P ${CMAKE_SOURCE_DIR}/run-make-with-destdir.cmake
+        INSTALL_COMMAND ${CMAKE_COMMAND} -DARGS=install_sw -P ${CMAKE_SOURCE_DIR}/run-make-with-destdir.cmake
         
         UPDATE_COMMAND ""
     )
