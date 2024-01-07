@@ -68,6 +68,10 @@ if len(arguments.projects) == 1 and ' ' in arguments.projects[0]:
     print("Fixing the projects list: {} -> {}", arguments.projects, fixedProjects)
     arguments.projects = fixedProjects
 
+# This is a giant speedup on @same dependency lookup, especially on Windows
+if not 'CI_MERGE_REQUEST_TARGET_BRANCH_NAME' in os.environ:
+    os.environ['CI_MERGE_REQUEST_TARGET_BRANCH_NAME'] = arguments.branch
+
 workingDirectory = os.getcwd()
 
 dependencyResolver = prepareDependenciesResolver(platform)
