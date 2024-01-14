@@ -92,11 +92,15 @@ extraPathValues = [os.path.abspath(path) for path in arguments.path]
 for value in extraPathValues:
     print ('PATH += {}'.format(value))
 
+environmentAppend = {}
+if extraPathValues:
+    environmentAppend = {'PATH': extraPathValues}
+
 EnvFileUtils.writeEnvFile(workingDirectory, arguments.output_file,
             environmentUpdate,
             extraActivationScripts = activationScripts,
             extraDeactivationScripts = deactivationScripts,
-            environmentAppend={'PATH': extraPathValues})
+            environmentAppend=environmentAppend)
 
 if arguments.generate_deps_file:
     commandToRun = '{python} -s {script} -o {outFile} -s {seedFile}'.format(
