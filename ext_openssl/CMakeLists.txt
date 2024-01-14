@@ -3,7 +3,8 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-
+# OpenSSL has an alternate install target called "install_sw" that skips installing the manual (which is fairly large).
+# We use this on android and macos/linux.
 project(ext_openssl)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
