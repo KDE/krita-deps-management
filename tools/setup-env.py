@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import os
-#import yaml
+import subprocess
 import argparse
 import sys
 import platform
@@ -10,9 +10,10 @@ from components import CommonUtils, EnvFileUtils
 # Capture our command line parameters
 parser = argparse.ArgumentParser(description='Utility to set up the environment for the split deps build')
 parser.add_argument('-r','--root', type=str, help='Root directory for the environment (default: current working directory)')
-parser.add_argument('-p','--path', action='append', help='Extra path to be added to the environment')
+parser.add_argument('-p','--path', action='append', help='Extra path to be added to the environment', default = [])
 parser.add_argument('-v','--venv', type=str, help='Path to the venv python environment')
 parser.add_argument('-s','--shared-install', type=str, help='Path to the shared install folder (default: no shared install enabled)')
+parser.add_argument('-d','--generate-deps-file', action='store_true', help='Generate .kde-ci.yml file with all the required Krita deps')
 parser.add_argument('-o','--output-file', type=str, help='Output file base name for the environment file (.bat suffix is added automatically)', default='base-env')
 arguments = parser.parse_args()
 
@@ -70,12 +71,16 @@ for var, value in environmentUpdate.items():
 activationScripts = []
 deactivationScripts = []
 
+effectivePythonExecutable = sys.executable
+
 if not arguments.venv is None:
     if platform.system() == "Windows":
         activationScripts.append(os.path.join(arguments.venv, 'Scripts', 'activate.bat'))
         deactivationScripts.append(os.path.join(arguments.venv, 'Scripts', 'deactivate.bat'))
+        effectivePythonExecutable = os.path.abspath(os.path.join(arguments.venv, 'Scripts', 'python.exe'))
     else:
         activationScripts.append(os.path.join(arguments.venv, 'bin', 'activate'))
+        effectivePythonExecutable = os.path.abspath(os.path.join(arguments.venv, 'bin', 'python'))
 
     for script in activationScripts + deactivationScripts:
         if not os.path.exists(script):
@@ -92,3 +97,18 @@ EnvFileUtils.writeEnvFile(workingDirectory, arguments.output_file,
             extraActivationScripts = activationScripts,
             extraDeactivationScripts = deactivationScripts,
             environmentAppend={'PATH': extraPathValues})
+
+if arguments.generate_deps_file:
+    commandToRun = '{python} -s {script} -o {outFile} -s {seedFile}'.format(
+        python = effectivePythonExecutable,
+        script = os.path.join(os.path.dirname(__file__), 'generate-deps-file.py'),
+        outFile = os.path.join(workingDirectory, '.kde-ci.yml'),
+        seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml'))
+
+    # Run post-install scripts
+    try:
+        print('## RUNNING DEPS GENERATION SCRIPT: {}'.format(commandToRun))
+        subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=os.getcwd())
+    except Exception:
+        print("## Failed to run deps generation script")
+        sys.exit(1)
