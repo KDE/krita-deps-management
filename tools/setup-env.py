@@ -59,6 +59,7 @@ environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-window
 environmentUpdate['KDECI_BUILD_TYPE'] = 'Release'
 environmentUpdate['KDECI_BUILD_TARGET'] = 'ext_build'
 environmentUpdate['KDECI_INSTALL_TARGET'] = 'ext_install'
+environmentUpdate['KDECI_COMPRESS_PACKAGES_ON_DOWNLOAD'] = '1'
 environmentUpdate['KDECI_GLOBAL_CONFIG_OVERRIDE_PATH'] = os.path.join(repoBaseDirectory, 'global-config.yml')
 environmentUpdate['KDECI_REPO_METADATA_PATH'] = os.path.join(repoBaseDirectory, 'repo-metadata')
 
