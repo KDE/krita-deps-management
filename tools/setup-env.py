@@ -54,7 +54,11 @@ environmentUpdate['KDECI_CC_CACHE'] = os.path.join(workingDirectory, 'ccache')
 environmentUpdate['EXTERNALS_DOWNLOAD_DIR'] = os.path.join(workingDirectory, 'cache', 'downloads')
 
 environmentUpdate['KDECI_GITLAB_SERVER'] = 'https://invent.kde.org/'
-environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-windows-qt5.15'
+
+if platform.system() == "Windows":
+    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-windows-qt5.15'
+else:
+    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-appimage-qt5.15'
 
 environmentUpdate['KDECI_BUILD_TYPE'] = 'Release'
 environmentUpdate['KDECI_BUILD_TARGET'] = 'ext_build'
