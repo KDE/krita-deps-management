@@ -63,6 +63,10 @@ set (KRITA_CI_INSTALL ${CMAKE_CURRENT_LIST_DIR}/install_custom.cmake)
 set (KRITA_CI_INSTALL_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/install_directory_custom.cmake)
 set (KRITA_CI_REMOVE_AT_PREFIX ${CMAKE_CURRENT_LIST_DIR}/remove-at-prefix.cmake)
 set (KRITA_CI_FIX_PYTHON_SHEBANG_LINES ${CMAKE_CURRENT_LIST_DIR}/fixup-shebang-lines.cmake)
+set (KRITA_CI_RUN_MAKE_WITH_INSTALL_ROOT ${CMAKE_CURRENT_LIST_DIR}/run-make-with-install-root.cmake)
+set (KRITA_CI_RUN_MAKE_WITH_DESTDIR ${CMAKE_CURRENT_LIST_DIR}/run-make-with-destdir.cmake)
+set (KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR ${CMAKE_CURRENT_LIST_DIR}/run-pip-install-with-destdir.cmake)
+set (KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR ${CMAKE_CURRENT_LIST_DIR}/run-python-setup-with-destdir.cmake)
 
 
 # set property on the root directory to make sure that all external projects

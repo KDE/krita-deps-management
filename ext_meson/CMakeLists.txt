@@ -24,7 +24,7 @@ if (WIN32)
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}
             ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                        -P ${CMAKE_CURRENT_SOURCE_DIR}/run-python-setup-with-destdir.cmake -- --skip-build --prefix=${_meson_prefix} --optimize=1  --install-scripts=${_meson_prefix}\\bin --install-lib=${_meson_prefix}\\lib\\site-packages
+                        -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${_meson_prefix} --optimize=1  --install-scripts=${_meson_prefix}\\bin --install-lib=${_meson_prefix}\\lib\\site-packages
 
         BUILD_IN_SOURCE 1
 
@@ -50,7 +50,7 @@ elseif(NOT CMAKE_CROSSCOMPILING)
             PYTHONPATH=${_krita_pythonpath}
             SETUPTOOLS_USE_DISTUTILS=local
             ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT="<SOURCE_DIR>/setup.py"
-                -P ${CMAKE_CURRENT_SOURCE_DIR}/run-python-setup-with-destdir.cmake -- --skip-build --prefix=${_meson_prefix} --optimize=1 --install-scripts=${_meson_prefix}/bin
+                -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${_meson_prefix} --optimize=1 --install-scripts=${_meson_prefix}/bin
 
         BUILD_IN_SOURCE 1
 
@@ -67,7 +67,7 @@ else()
                 COMMAND ${CMAKE_COMMAND} -E env
                     PYTHONUSERBASE=${_meson_prefix}
                     ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
-                        -P ${CMAKE_CURRENT_SOURCE_DIR}/run-pip-install-with-destdir.cmake -- --upgrade meson==1.1.0 --user --ignore-installed --verbose
+                        -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade meson==1.1.0 --user --ignore-installed --verbose
 
                 # logging doesn't work when we are installing meson with DESTDIR
                 # COMMAND ${Python_EXECUTABLE} -m pip show -f meson

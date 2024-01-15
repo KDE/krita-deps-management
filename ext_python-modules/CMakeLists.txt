@@ -17,7 +17,7 @@ ExternalProject_Add(ext_python-modules
             COMMAND ${CMAKE_COMMAND} -E echo "Installing python-modules natively"
             COMMAND ${CMAKE_COMMAND} -E env
                 ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
-                    -P ${CMAKE_CURRENT_SOURCE_DIR}/run-pip-install-with-destdir.cmake -- --upgrade -r ${CMAKE_CURRENT_SOURCE_DIR}/../requirements-sip.txt --prefix ${EXTPREFIX} --ignore-installed --verbose
+                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade -r ${CMAKE_CURRENT_SOURCE_DIR}/../requirements-sip.txt --prefix ${EXTPREFIX} --ignore-installed --verbose
     UPDATE_COMMAND ""
 )
 

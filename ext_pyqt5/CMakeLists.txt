@@ -39,7 +39,7 @@ if(UNIX)
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
             ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/build
-            ${CMAKE_COMMAND} -DMAKE_COMMAND=make -P ${CMAKE_CURRENT_SOURCE_DIR}/run-make-with-install-root.cmake -- -j1 install
+            ${CMAKE_COMMAND} -DMAKE_COMMAND=make -P ${KRITA_CI_RUN_MAKE_WITH_INSTALL_ROOT} -- -j1 install
             COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
 
         BUILD_IN_SOURCE 1
@@ -88,7 +88,7 @@ elseif(WIN32)
         INSTALL_COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/build
             ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}
-            ${CMAKE_COMMAND} -DMAKE_COMMAND=${_make_command} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-make-with-install-root.cmake -- -j1 install
+            ${CMAKE_COMMAND} -DMAKE_COMMAND=${_make_command} -P ${KRITA_CI_RUN_MAKE_WITH_INSTALL_ROOT} -- -j1 install
 
         BUILD_IN_SOURCE 1
 

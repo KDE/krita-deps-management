@@ -29,7 +29,7 @@ if(UNIX)
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
             ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                -P ${CMAKE_CURRENT_SOURCE_DIR}/run-python-setup-with-destdir.cmake -- --skip-build --prefix=${EXTPREFIX} --optimize=1
+                -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${EXTPREFIX} --optimize=1
             COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
 
         BUILD_IN_SOURCE 1
@@ -77,7 +77,7 @@ elseif(WIN32)
             PYTHONPATH=${_krita_pythonpath}
             SETUPTOOLS_USE_DISTUTILS=local
             ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                -P ${CMAKE_CURRENT_SOURCE_DIR}/run-python-setup-with-destdir.cmake -- --skip-build --prefix=${_pyqt_prefix} --optimize=1  --install-scripts=${_pyqt_prefix}\\bin --install-lib=${_pyqt_prefix}\\lib\\site-packages
+                -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${_pyqt_prefix} --optimize=1  --install-scripts=${_pyqt_prefix}\\bin --install-lib=${_pyqt_prefix}\\lib\\site-packages
 
         BUILD_IN_SOURCE 1
 
