@@ -201,7 +201,7 @@ elseif (NOT APPLE)
         set(QT_DEBUG_OPTIONS -force-debug-info)
     endif()
     if (QT_ENABLE_ASAN)
-        list(APPEND _QT_conf -sanitize address)
+        list(APPEND QT_DEBUG_OPTIONS -sanitize address)
     endif ()
 
 
