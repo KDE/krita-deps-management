@@ -221,7 +221,7 @@ elseif (NOT APPLE)
 
       CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX}
           -opensource -confirm-license
-          -feature-relocatable -openssl-linked -verbose -nomake examples
+          -feature-relocatable -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -verbose -nomake examples
           -skip qt3d -skip qtactiveqt -skip qtcanvas3d -skip qtconnectivity
           -skip qtlocation -skip qtwayland -skip qtwebchannel -skip qtwebengine
           -skip qtwebsockets -skip qtwebview -skip qtandroidextras -skip qtserialport
