@@ -30,7 +30,8 @@ stages:
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
     KDECI_WORKDIR_PATH: "C:\\_"
-  interruptible: true
+  # different commits may build different deps, so they should not be cancellable
+  interruptible: false
   before_script:
     - python -m venv venv --upgrade-deps
     - . venv\Scripts\Activate.ps1
@@ -51,7 +52,8 @@ stages:
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
-  interruptible: true
+  # different commits may build different deps, so they should not be cancellable
+  interruptible: false
 
 include:
   - /pipelines/seed-staging.yml
