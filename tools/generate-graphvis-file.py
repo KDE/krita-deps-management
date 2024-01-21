@@ -7,13 +7,7 @@ import argparse
 import subprocess
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'ci-utilities'))
 from components import CommonUtils, Dependencies, PlatformFlavor
-
-#
-# TODO: 
-# 1) Implement option for the seed file
-# 2) Implement ignore arg to skip some deps (e.g. qt and patch)
-# 3) Deduplicate
-#
+import graphviz
 
 ####
 # Load the project configuration
@@ -59,19 +53,25 @@ def prepareDependenciesResolver(platform):
     return Dependencies.Resolver( projectsMetadataPath, branchRulesPath, platform )
 
 
-
 # Capture our command line parameters
 parser = argparse.ArgumentParser(description='Utility to run builds for multiple projects and their dependencies on CI')
-#parser.add_argument('-p','--projects', nargs='+', help='Dirty projects that has been changed', required=True)
 parser.add_argument('--branch', type=str, required=True)
-parser.add_argument('--platform', type=str, required=True)
-parser.add_argument('--skip-dependencies-fetch', default=False, action='store_true')
+parser.add_argument('--seed-file', type=str, required=True)
+parser.add_argument('-s','--skip-deps', nargs='+', help='A space-separated list of dependencies to skip from the graph (\'ext_foo\' format); when combined with --only-deps removes deps from the --only-deps subset', required=False)
+parser.add_argument('-d','--only-deps', nargs='+', help='A space-separated list of dependencies to include into the graph, all other deps are ignored (\'ext_foo\' format)', required=False)
+parser.add_argument('-o','--output', type=str, help='Name of the output file', required=False, default='dependencies.png')
 arguments = parser.parse_args()
 
-# if len(arguments.projects) == 1 and ' ' in arguments.projects[0]:
-#     fixedProjects = arguments.projects[0].split();
-#     print("Fixing the projects list: {} -> {}", arguments.projects, fixedProjects)
-#     arguments.projects = fixedProjects
+if not arguments.skip_deps is None and \
+    not arguments.only_deps is None:
+
+    skipSet = set(arguments.skip_deps)
+    onlySet = set(arguments.only_deps)
+    intersection = skipSet & onlySet
+
+    if intersection:
+        print ('ERROR: --skip-deps and --only-deps sets of dependencies intersect: {}'.format(intersection))
+        sys.exit(1)
 
 # This is a giant speedup on @same dependency lookup, especially on Windows
 if not 'CI_MERGE_REQUEST_TARGET_BRANCH_NAME' in os.environ:
@@ -79,14 +79,7 @@ if not 'CI_MERGE_REQUEST_TARGET_BRANCH_NAME' in os.environ:
 
 workingDirectory = os.getcwd()
 
-
-
-
-print ('##')
-print ('## Start building dependencies tree...')
-print ('##')
-
-def genReverseDeps(workingDirectory, dependencyResolver):
+def genReverseDeps(workingDirectory, dependencyResolver, debug = False):
     reverseDeps = {}
     for subdir, dirs, files in os.walk(workingDirectory):
         relative = os.path.relpath(subdir, workingDirectory)
@@ -109,7 +102,9 @@ def genReverseDeps(workingDirectory, dependencyResolver):
         if os.path.exists(os.path.join(subdir, 'CMakeLists.txt')):
             configuration = loadProjectConfiguration(subdir, projectName)
             projectBuildDependencies = dependencyResolver.resolve( configuration['Dependencies'], arguments.branch )
-            print ("##  project: {} depends: {}".format(projectName, list(projectBuildDependencies.keys())))
+
+            if debug:
+                print ("##  project: {} depends: {}".format(projectName, list(projectBuildDependencies.keys())))
 
             # found the project, don't check subdirs anymore
             dirs.clear()
@@ -129,26 +124,44 @@ windowsPlatform = PlatformFlavor.PlatformFlavor('Windows')
 windowsDependencyResolver = prepareDependenciesResolver(windowsPlatform)
 windowsReverseDeps = genReverseDeps(workingDirectory, windowsDependencyResolver)
 
-import graphviz
+onlyLegengLine = ''
+skipLegendLine = ''
 
-dot = graphviz.Digraph(comment='Krita Dependencies', engine = 'neato', graph_attr= {'root':'ext_qt', 'overlap':'false', 'splines':'true'})
+if not arguments.only_deps is None:
+    onlyLegengLine = '<tr><td colspan=\"3\">Only: {}</td></tr>'.format(', '.join(arguments.only_deps))
+if not arguments.skip_deps is None:
+    skipLegendLine = '<tr><td colspan=\"3\">Skip: {}</td></tr>'.format(', '.join(arguments.skip_deps))
 
-# color coding:
-# red - Linux only
-# blue - Windows only
-# black - both
+dot = graphviz.Digraph(comment='Krita Dependencies', engine = 'neato')
+dot.attr(overlap='false')
+dot.attr(splines='true')
+dot.attr(root='ext_qt')
+dot.attr(pack='true')
+dot.attr(packMode='clust')
+dot.attr(labelloc='t')
+dot.attr(labeljust='l')
+dot.attr(label='<\
+         <table>\
+         <tr><td colspan=\"3\">Krita dependencies</td></tr>\
+         <tr>\
+            <td><font color=\"black\">All</font></td>\
+            <td><font color=\"magenta\">Linux</font></td>\
+            <td><font color=\"blue\">Windows</font></td>\
+         </tr>\
+         {}{}\
+         </table>>'.format(onlyLegengLine, skipLegendLine))
 
 knownNodes = {}
 knownEdges = {}
 
-seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml')
+seedFile = arguments.seed_file
+
+if not os.path.isabs(seedFile) and not os.path.exists(seedFile):
+    seedFile = os.path.abspath(os.path.join(workingDirectory, seedFile))
 
 dependencies = []
 with open(seedFile, 'r') as f:
     dependencies = yaml.safe_load(f)
-
-print ('len: {}'.format(len(dependencies)))
-print (dependencies)
 
 for rule in dependencies:
     if '@all' in rule['on']:
@@ -170,25 +183,21 @@ for rule in dependencies:
             else:
                 knownNodes[projectId] = 'blue'
 
-def addLinuxNode(projectName):
-    if not projectName in knownNodes:
-        knownNodes[projectName] = 'red'
-
-def addWindowsNode(projectName):
+def addNodeWithSanityCheck(projectName):
     if not projectName in knownNodes:
         knownNodes[projectName] = 'red'
 
 for projectName, dependants in linuxReverseDeps.items():
-    addLinuxNode(projectName)
+    addNodeWithSanityCheck(projectName)
     
     for dep in dependants:
-        addLinuxNode(dep)
+        addNodeWithSanityCheck(dep)
         knownEdges[(projectName, dep)] = 'magenta'
 
 for projectName, dependants in windowsReverseDeps.items():
-    addWindowsNode(projectName)
+    addNodeWithSanityCheck(projectName)
     for dep in dependants:
-        addWindowsNode(dep)
+        addNodeWithSanityCheck(dep)
 
         color = 'blue'
 
@@ -197,14 +206,45 @@ for projectName, dependants in windowsReverseDeps.items():
         
         knownEdges[(projectName, dep)] = color
 
+skippedProjects = set(arguments.skip_deps if not arguments.skip_deps is None else [])
+onlyProjects = set(arguments.only_deps if not arguments.only_deps is None else [])
+
+def allowDep(projectId):
+    if skippedProjects and projectId in skippedProjects:
+        return False
+    if onlyProjects:
+        if projectId in onlyProjects:
+            return True
+
+        edge = next(((a,b) for a, b in knownEdges.keys()
+                     if
+                     (a == projectId and b in onlyProjects) or
+                     (b == projectId and a in onlyProjects)),
+                     None)
+
+        return not edge is None
+
+    return True
+
+
 for projectName, color in knownNodes.items():
+    if not allowDep(projectName):
+        continue
+
     dot.node(projectName, color = color)
 
 for (projectName, dep), color in knownEdges.items():
-    print ('{} -> {}: {}'.format(projectName, dep, color))
+    if not allowDep(projectName) or not allowDep(dep):
+        continue
+
+    # print ('{} -> {}: {}'.format(projectName, dep, color))
     dot.edge(projectName, dep, color = color)
 
-print(dot.source)
+# print(dot.source)
 
-dot.format = 'png'
-dot.render(directory='doctest-output').replace('\\', '/')
+outputFile = arguments.output
+
+if not os.path.isabs(outputFile):
+    outputFile = os.path.abspath(os.path.join(workingDirectory, outputFile))
+
+dot.render(outfile=outputFile, cleanup=True).replace('\\', '/')
