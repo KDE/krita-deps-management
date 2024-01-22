@@ -16,6 +16,7 @@
 import os
 import re
 import sys
+import argparse
 from collections import defaultdict
 import glob
 
@@ -45,6 +46,20 @@ myvars = defaultdict(lambda: "")
 DESTDIR = ""
 PATH_TO_ARCHIVE = ""
 installPath = ""
+
+def fix_abs_path(destdir, path):
+    #print("fix_abs_path: path={}, destdir={}".format(path, destdir))
+    outpath = path
+    if os.path.isabs(path):
+        if destdir:
+            normedPath = os.path.normpath(path)
+            normedPath = os.path.splitdrive(normedPath)[1]
+            if normedPath.startswith(os.sep):
+                normedPath = normedPath[1:]
+            outpath = os.path.join(destdir, normedPath)
+        else:
+            outpath = path
+    return outpath
 
 # copied from https://invent.kde.org/sysadmin/ci-utilities/-/blob/master/components/CommonUtils.py
 # Converts a path to a relative one, to allow for it to be passed to os.path.join
@@ -90,7 +105,7 @@ def norm(path):
     return os.path.normcase(path).replace('\\', '/')
 
 def norm_abs(path):
-    return norm(os.path.normpath(path))
+    return norm(os.path.abspath(os.path.normpath(path)))
 
 def error(msg):
     print("ERROR:", msg)
@@ -211,15 +226,27 @@ def assign(lhs, rhs):
 ignoredDefs = ["conflicts", "name", "description", "version", "requires", "url"]
 handledDefs = ["libs", "cflags"]
 
-if not 'DESTDIR' in os.environ:
+parser = argparse.ArgumentParser(description='Utility to perform a CI run for a KDE project.')
+parser.add_argument('--destdir', type=str, required=False)
+parser.add_argument('--prefix', type=str, required=True)
+arguments = parser.parse_args()
+
+if not arguments.destdir is None:
+    DESTDIR = norm_abs(arguments.destdir)
+elif 'DESTDIR' in os.environ:
+    DESTDIR = norm_abs(os.environ['DESTDIR'])
+else:
     print("ERROR: DESTDIR not set")
     sys.exit(-1)
-DESTDIR = norm_abs(os.environ['DESTDIR'])
 
-if not 'KDECI_PATH_TO_ARCHIVE' in os.environ:
+if not arguments.prefix is None:
+    print("normabs prefix: {}".format(norm_abs(arguments.prefix)))
+    PATH_TO_ARCHIVE = fix_abs_path(DESTDIR, norm_abs(arguments.prefix))
+elif 'KDECI_PATH_TO_ARCHIVE' in os.environ:
+    PATH_TO_ARCHIVE = norm_abs(os.environ['KDECI_PATH_TO_ARCHIVE'])
+else:
     print("ERROR: KDECI_PATH_TO_ARCHIVE not set")
     sys.exit(-1)
-PATH_TO_ARCHIVE = norm_abs(os.environ['KDECI_PATH_TO_ARCHIVE'])
 
 installPath = (sys.platform == 'win32' and PATH_TO_ARCHIVE[:2] or "") + PATH_TO_ARCHIVE[len(DESTDIR):]
 
