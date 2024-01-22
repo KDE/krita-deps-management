@@ -51,6 +51,9 @@ elseif(NOT CMAKE_CROSSCOMPILING)
             SETUPTOOLS_USE_DISTUTILS=local
             ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT="<SOURCE_DIR>/setup.py"
                 -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${_meson_prefix} --optimize=1 --install-scripts=${_meson_prefix}/bin
+            COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
+
+
 
         BUILD_IN_SOURCE 1
 
@@ -68,6 +71,7 @@ else()
                     PYTHONUSERBASE=${_meson_prefix}
                     ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
                         -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade meson==1.1.0 --user --ignore-installed --verbose
+                COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
 
                 # logging doesn't work when we are installing meson with DESTDIR
                 # COMMAND ${Python_EXECUTABLE} -m pip show -f meson
