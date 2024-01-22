@@ -24,7 +24,7 @@ import glob
 # we are not going to handle devious cases like " or ' in file names
 # we are also ignoring the possibility of escaped whitespace in unquoted filenames ("\ ")
 
-# so.. the idea for this mask is to use it after all other masks, and then check if the characters immediately preceeding it are ".." or a ${var}. if neither, check if its a path inside the install prefix and if so, we actually have path we need to handle. if it's not within the install prefix, we have to ignore it, as it might not be a path at all (and we cannot test it because it may be a path that does not yet exist)
+# so.. the idea for this mask is to use it after all other masks, and then check if the characters immediately preceeding it are ".." or a ${var}. if neither, check if its a path inside the install prefix and if so, we actually have path we need to handle. if it's not within the install prefix and not a currently existing file, we have to ignore it, as it might not be a path at all
 unquotedAbsPathCandidate = re.compile("(/[^\\s]+)")
 
 quotedAbsPath = re.compile("([\"'])(/[^\"]*)\\1")
@@ -191,7 +191,7 @@ def make_relocatable(s):
                 if m and m[1]:
                     prefix = remaining[:m.start(1)]
                     m2 = pcVarPrefixRegex.search(prefix)
-                    if not m2 and not prefix.endswith("..") and m[1].startswith(installPath):
+                    if not m2 and not prefix.endswith("..") and (m[1].startswith(installPath) or os.path.exists(m[1])):
                         match = m
                     else:
                         pos = pos + m.end(0)
