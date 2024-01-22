@@ -228,7 +228,7 @@ handledDefs = ["libs", "cflags"]
 
 parser = argparse.ArgumentParser(description='Utility to perform a CI run for a KDE project.')
 parser.add_argument('--destdir', type=str, required=False)
-parser.add_argument('--prefix', type=str, required=True)
+parser.add_argument('--prefix', type=str, required=False)
 arguments = parser.parse_args()
 
 if not arguments.destdir is None:
