@@ -34,10 +34,19 @@ macro(kis_ExternalProject_Add_with_separate_builds_apple)
         else()
             # parsed arguments will not pass to child macro
             set(oneValueArgs WORKING_DIRECTORY)
-            set(multiValueArgs CONFIGURE_ARGS)
+            set(multiValueArgs CONFIGURE_ARGS UPDATE_COMMAND)
             cmake_parse_arguments(EXT "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-            ExternalProject_Add(${EXT_UNPARSED_ARGUMENTS})
+            if (EXT_UPDATE_COMMAND)
+                # There is some issue with passing an empty UPDATE_COMMAND via the macro arguments
+                # so we just forbid that for now; noone uses updates currently anyway
+                # If you'd like to recover this feature, test an external project with
+                # GIT_REPOSITORY tag **and** try calling make ext_foo twice, it should not
+                # fail
+                message(FATAL_ERROR "separate build macro cannot handle non-empty UPDATE_COMMAND argument: ${EXT_UPDATE_COMMAND}")
+            endif()
+
+            ExternalProject_Add(${EXT_UNPARSED_ARGUMENTS} UPDATE_COMMAND "")
         endif()
     endif()
 endmacro()
