@@ -1,0 +1,7 @@
+description: The Ogg bitstream file format library
+hasrepo: false
+identifier: ext_libogg
+name: libogg
+projectpath: krita-deps/ffmpeg/libogg
+repoactive: false
+repopath: ffmpeg/libogg

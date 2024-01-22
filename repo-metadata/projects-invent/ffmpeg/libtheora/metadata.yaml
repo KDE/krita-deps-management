@@ -1,0 +1,7 @@
+description: Theora Video Compression Codec
+hasrepo: false
+identifier: ext_libtheora
+name: libtheora
+projectpath: krita-deps/ffmpeg/libtheora
+repoactive: false
+repopath: ffmpeg/libtheora

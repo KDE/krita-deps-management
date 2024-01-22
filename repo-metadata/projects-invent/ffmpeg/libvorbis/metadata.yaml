@@ -1,0 +1,7 @@
+description: The Vorbis General Audio Compression Codec
+hasrepo: false
+identifier: ext_libvorbis
+name: libvorbis
+projectpath: krita-deps/ffmpeg/libvorbis
+repoactive: false
+repopath: ffmpeg/libvorbis

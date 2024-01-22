@@ -1,0 +1,11 @@
+Dependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+    'base/pkgconfig': '@same'
+- 'on': ['@all']
+  'require':
+    'ffmpeg/libogg': '@same'
+    'ffmpeg/libvorbis': '@same'
+    'base/png': '@same'
+    'base/meson': '@same'

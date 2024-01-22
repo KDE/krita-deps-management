@@ -1,0 +1,7 @@
+Dependencies:
+- 'on': ['Windows']
+  'require':
+    'base/pkgconfig': '@same' # TODO: do we need that? Test on Windows, not needed on Linux
+- 'on': ['@all']
+  'require':
+    'ffmpeg/libogg': '@same'
