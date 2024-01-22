@@ -62,6 +62,16 @@
     "base/seexpr": "master"
     "base/icu": "master"
     "base/jpeg": "master"
+    "ffmpeg/flac": "master"
+    "ffmpeg/libogg": "master"
+    "ffmpeg/opus": "master"
+    "ffmpeg/sdl2": "master"
+    "ffmpeg/vpx": "master"
+    "ffmpeg/libvorbis": "master"
+    "ffmpeg/libtheora": "master"
+    "ffmpeg/openh264": "master"
+    "ffmpeg/lame": "master"
+    "ffmpeg/ffmpeg": "master"
 
 
 - 'on': ['Windows']
