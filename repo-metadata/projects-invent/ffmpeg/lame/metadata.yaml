@@ -1,0 +1,7 @@
+description: The LAME MP3 encoder
+hasrepo: false
+identifier: ext_lame
+name: lame
+projectpath: krita-deps/ffmpeg/lame
+repoactive: false
+repopath: ffmpeg/lame

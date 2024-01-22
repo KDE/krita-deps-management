@@ -1,0 +1,7 @@
+description: Hyper fast MPEG1/MPEG4/H263/H264/H265/RV and AC3/MPEG audio encoder
+hasrepo: false
+identifier: ext_ffmpeg
+name: ffmpeg
+projectpath: krita-deps/ffmpeg/ffmpeg
+repoactive: false
+repopath: ffmpeg/ffmpeg

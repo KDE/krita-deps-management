@@ -1,0 +1,20 @@
+Dependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+    'base/pkgconfig': '@same'
+- 'on': ['@all']
+  'require':
+    'base/meson': '@same'
+    'ffmpeg/flac': '@same'
+    'ffmpeg/opus': '@same'
+    'ffmpeg/sdl2': '@same'
+    'ffmpeg/vpx': '@same'
+    'ffmpeg/libvorbis': '@same'
+    'ffmpeg/libtheora': '@same'
+    'ffmpeg/openh264': '@same'
+    'ffmpeg/lame': '@same'
+    'heif/libaom': '@same'
+    'base/webp': '@same'
+    'base/png': '@same'
+    'base/jpeg': '@same'

@@ -1,0 +1,8 @@
+Dependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+    'base/pkgconfig': '@same'
+- 'on': ['@all']
+  'require':
+    'base/meson': '@same'
