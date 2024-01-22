@@ -72,6 +72,7 @@
     "ffmpeg/openh264": "master"
     "ffmpeg/lame": "master"
     "ffmpeg/ffmpeg": "master"
+    "base/mlt": "master"
 
 
 - 'on': ['Windows']
@@ -82,6 +83,7 @@
     "base/googleangle": "master"
     "base/drmingw": "master"
     "base/icoutils": "master"
+    "base/dlfcn_win32": "master"
 
 - 'on': ['Windows', 'MacOS']
   'require':

@@ -1,0 +1,7 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/ffmpeg': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/dlfcn_win32': '@same'

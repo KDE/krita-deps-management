@@ -1,0 +1,8 @@
+description: dlfcn_win32
+hasrepo: false
+identifier: ext_dlfcn_win32
+name: dlfcn_win32
+projectpath: krita-deps/base/dlfcn_win32
+repoactive: false
+repopath: base/dlfcn_win32
+
