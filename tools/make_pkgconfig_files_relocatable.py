@@ -191,7 +191,7 @@ def make_relocatable(s):
                 if m and m[1]:
                     prefix = remaining[:m.start(1)]
                     m2 = pcVarPrefixRegex.search(prefix)
-                    if not m2 and not prefix.endswith("..") and (m[1].startswith(installPath) or os.path.exists(m[1])):
+                    if not m2 and not prefix.endswith("..") and not prefix.endswith("'") and not prefix.endswith('"') and (m[1].startswith(installPath) or os.path.exists(m[1])):
                         match = m
                     else:
                         pos = pos + m.end(0)
