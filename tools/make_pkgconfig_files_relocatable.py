@@ -145,7 +145,7 @@ def best_prefix(path):
     return "${" + bestVar + "}" + separator + bestRelPath
 
 def make_path_relocatable(path):
-    testpath = norm(os.path.normpath(path))
+    testpath = norm_abs(path)
 
     if len(os.path.normpath(os.path.commonprefix([testpath, installPath]))) != len(installPath):
         # on windows, QT references the _build directory in some places for unknown reasons, we just strip that down to the raw library file name and hope for the best
@@ -249,6 +249,7 @@ else:
     sys.exit(-1)
 
 installPath = (sys.platform == 'win32' and PATH_TO_ARCHIVE[:2] or "") + PATH_TO_ARCHIVE[len(DESTDIR):]
+installPath = norm_abs(installPath)
 
 for subDir in ["lib/pkgconfig", "share/pkgconfig"]:
     stagingPcFileDir = norm(os.path.join(PATH_TO_ARCHIVE, subDir))
