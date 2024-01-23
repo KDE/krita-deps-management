@@ -3,6 +3,7 @@ Dependencies:
   'require':
     'base/patch': '@same'
     'base/pkgconfig': '@same'
+    'base/zlib': '@same'
 - 'on': ['@all']
   'require':
     'base/meson': '@same'
@@ -18,3 +19,4 @@ Dependencies:
     'base/webp': '@same'
     'base/png': '@same'
     'base/jpeg': '@same'
+    'base/lzma': '@same'
