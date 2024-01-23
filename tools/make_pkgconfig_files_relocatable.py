@@ -242,8 +242,8 @@ else:
 if not arguments.prefix is None:
     print("normabs prefix: {}".format(norm_abs(arguments.prefix)))
     PATH_TO_ARCHIVE = fix_abs_path(DESTDIR, norm_abs(arguments.prefix))
-elif 'KDECI_PATH_TO_ARCHIVE' in os.environ:
-    PATH_TO_ARCHIVE = norm_abs(os.environ['KDECI_PATH_TO_ARCHIVE'])
+elif 'KDECI_REAL_PREFIX_PATH' in os.environ:
+    PATH_TO_ARCHIVE = fix_abs_path(DESTDIR, norm_abs(os.environ['KDECI_REAL_PREFIX_PATH']))
 else:
     print("ERROR: KDECI_PATH_TO_ARCHIVE not set")
     sys.exit(-1)
