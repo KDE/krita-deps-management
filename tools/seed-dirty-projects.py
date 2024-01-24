@@ -16,6 +16,9 @@ parser.add_argument('-p','--projects', nargs='+', help='Dirty projects that has 
 parser.add_argument('--branch', type=str, required=True)
 parser.add_argument('--platform', type=str, required=True)
 parser.add_argument('--skip-dependencies-fetch', default=False, action='store_true')
+parser.add_argument('--publish-to-cache', default=False, action='store_true')
+parser.add_argument('--missing-only', default=False, action='store_true')
+
 arguments = parser.parse_args()
 
 platform = PlatformFlavor.PlatformFlavor(arguments.platform)
@@ -91,6 +94,13 @@ commandToRun = "{0} -u {1}/seed-multiple-projects.py -p {2} --platform {3} --bra
 
 if arguments.skip_dependencies_fetch:
     commandToRun += " --skip-dependencies-fetch"
+
+if arguments.publish_to_cache:
+     commandToRun += ' --publish-to-cache'
+
+if arguments.missing_only:
+     commandToRun += ' --missing-only'
+
 
 print('## Run the build for the requested projects: {}'.format(commandToRun))
 
