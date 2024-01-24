@@ -4,11 +4,9 @@ Dependencies:
     'base/qt': '@same'
     'base/extra_cmake_modules': '@same'
     'base/karchive': '@same'
+    'base/jpegxl': '@same'
 #    'base/libraw': '@same'
 #    'base/openexr': '@same' # TODO: openexr is not detected, because 3.0 is required!
 #    'base/avif': '@same'
 #    'base/heif': '@same'
 #TODO: add pkgconfig on windows
-- 'on': ['Windows']
-  'require':
-    'base/jpegxl': '@same' # fails on Linux because of relocation issue in pkgconfig
