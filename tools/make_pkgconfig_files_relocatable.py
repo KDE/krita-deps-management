@@ -168,6 +168,12 @@ def make_path_relocatable(path):
         m = re.search("/libbz2\\.(a|so)$", testpath)
         if m:
             return "-lbz2"
+        m = re.search("/libbcrypt\\.(a|so)$", testpath)
+        if m:
+            return "-lbcrypt"
+        m = re.search("/libgdi32\\.a$", testpath)
+        if m:
+            return "-lgdi32"
 
         error("path not within install prefix[" + installPath + "]:\n" + path)
 
