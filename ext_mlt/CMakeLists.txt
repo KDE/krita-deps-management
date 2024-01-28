@@ -19,11 +19,14 @@ endif()
 kis_ExternalProject_Add_with_separate_builds_apple(
   ext_mlt
   DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-  GIT_REPOSITORY https://github.com/Eoin-ONeill-Yokai/mlt.git
-  GIT_TAG 1924f3712e3dc0f7a1e5a1aa658dbbbf0e863754
-  PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macOS-allow-finding-plugins-outside-bundles.patch
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-MLT-check-pointers-before-dereferencing.patch
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-producer_krita-to-stop-at-the-end-of-the-stream.patch
+  URL https://github.com/mltframework/mlt/releases/download/v7.22.0/mlt-7.22.0.tar.gz
+  URL_HASH MD5=9f747ae1b7388937be6328b4c234431b
+  #GIT_REPOSITORY https://github.com/emmetoneillpdx/mlt.git
+  #GIT_TAG origin/master
+
+  PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-on-Windows-with-Clang-15-965.patch
+        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macOS-allow-finding-plugins-outside-bundles.patch
+        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-MLT-check-pointers-before-dereferencing.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-installing-melt-manpage-when-DESTDIR-is-active.patch
 
   CMAKE_ARGS ${GLOBAL_PROFILE} -DMOD_OPENCV=OFF -DMOD_QT=OFF -DMOD_QT6=OFF ${WIN32_CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} ${BUILD_EXTRA_OPTS}
