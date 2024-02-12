@@ -57,6 +57,8 @@ environmentUpdate['KDECI_GITLAB_SERVER'] = 'https://invent.kde.org/'
 
 if platform.system() == "Windows":
     environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-windows-qt5.15'
+elif platform.system() == "darwin":
+    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-macos-qt5.15'
 else:
     environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-appimage-qt5.15'
 
