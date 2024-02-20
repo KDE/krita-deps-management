@@ -19,10 +19,8 @@ endif()
 
 ExternalProject_Add( ext_brotli
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://github.com/google/brotli/archive/v1.0.9.tar.gz
-    URL_HASH SHA512=b8e2df955e8796ac1f022eb4ebad29532cb7e3aa6a4b6aee91dbd2c7d637eee84d9a144d3e878895bb5e62800875c2c01c8f737a1261020c54feacf9f676b5f5
-
-    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-PATCH-revert-add-runtime-linker-path.patch
+    URL https://github.com/google/brotli/archive/v1.1.0.tar.gz
+    URL_HASH SHA256=e720a6ca29428b803f4ad165371771f5398faba397edf6778837a18599ea13ff
 
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE} 
