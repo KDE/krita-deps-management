@@ -131,6 +131,8 @@ else()
         URL https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
         URL_HASH SHA256=4b2136f98bdd1f5857f1c3dea9ac2018effe65286cf251534b6ae20cc45e1847
 
+        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch
+
         CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh --prefix=${EXTPREFIX} --with-libraries=system
         
         BUILD_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${MACOS_BOOST_ARGS}
