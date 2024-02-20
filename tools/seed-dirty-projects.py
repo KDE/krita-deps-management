@@ -33,15 +33,39 @@ if not 'CI_MERGE_REQUEST_TARGET_BRANCH_NAME' in os.environ:
     os.environ['CI_MERGE_REQUEST_TARGET_BRANCH_NAME'] = arguments.branch
 
 workingDirectory = os.getcwd()
+seedFile = os.path.join(workingDirectory, 'latest', 'krita-deps.yml')
 
 dependencyResolver = prepareDependenciesResolver(platform)
+
+allSeededDeps = []
+with open(seedFile, 'r') as f:
+    allSeededDeps = yaml.safe_load(f)
+
+platformDeps = []
+
+for rule in allSeededDeps:
+    if '@all' in rule['on']:
+        for dep in rule['require'].keys():
+            projectId = dependencyResolver.projects[dep]['identifier']
+            platformDeps.append(projectId)
+    if platform in rule['on']:
+        for dep in rule['require'].keys():
+            projectId = dependencyResolver.projects[dep]['identifier']
+            platformDeps.append(projectId)
+
+print("## plaform deps: {}".format(platformDeps))
+
 reverseDeps = {}
 
 print ('##')
 print ('## Start building dependencies tree...')
 print ('##')
 
-reverseDeps = genReverseDeps(workingDirectory, dependencyResolver, arguments.branch, debug = True)
+reverseDeps = genReverseDeps(workingDirectory,
+                             dependencyResolver,
+                             arguments.branch,
+                             debug = True,
+                             onlyPlatformDeps = platformDeps)
 
 print ('##')
 print ('## Reverse dependency tree:')
