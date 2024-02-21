@@ -1,6 +1,10 @@
 # SPDX-FileCopyrightText: 2023 Ivan Santa Maria <ghevan@gmail.com>
 # SPDX-License-Ref: BSD-3-Clause
 
+if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
 include(ExternalProject)
 
 set(KRITA_MACOS_EXTERNAL_PACKAGE_NAME "package_build_fat.tar.gz")
@@ -141,7 +145,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
                     -Dbuildtype=$<IF:$<CONFIG:Debug>,debug,debugoptimized>
                     ${EXT_CONFIGURE_ARGS}
                     ${EXT_CMAKE_ARGS}
-                    --native-file=${CMAKE_CURRENT_BINARY_DIR}/../meson-compiler_${ARCH}.ini
+                    --native-file=${CMAKE_CURRENT_BINARY_DIR}/meson-compiler_${ARCH}.ini
             )
             set(MAC_BUILD_COMMAND
                 ${CMAKE_COMMAND} -E env
@@ -213,11 +217,12 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
             PATCH_COMMAND ${EXT_PATCH_COMMAND}
 
             CONFIGURE_COMMAND ""
-            BUILD_COMMAND ${CMAKE_COMMAND} -E env ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
-            INSTALL_COMMAND tar -xzf <TMP_DIR>/${KRITA_MACOS_EXTERNAL_PACKAGE_NAME} -C "/"
+            BUILD_COMMAND ${CMAKE_COMMAND} -E env DESTDIR=${DESTDIR} ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
+            INSTALL_COMMAND ""
+            
             UPDATE_COMMAND ""
 
-            # DEPENDS ${EXT_DEPENDS}
+            DEPENDS ${EXT_DEPENDS}
         )
     else()
         ExternalProject_Add( ${EXT_NAME}
@@ -232,11 +237,12 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
             PATCH_COMMAND ${EXT_PATCH_COMMAND}
 
             CONFIGURE_COMMAND ""
-            BUILD_COMMAND ${CMAKE_COMMAND} -E env ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
-            INSTALL_COMMAND tar -xzf <TMP_DIR>/${KRITA_MACOS_EXTERNAL_PACKAGE_NAME} -C "/"
+            BUILD_COMMAND ${CMAKE_COMMAND} -E env DESTDIR=${DESTDIR} ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
+            INSTALL_COMMAND ""
+            
             UPDATE_COMMAND ""
 
-            # DEPENDS ${EXT_DEPENDS}
+            DEPENDS ${EXT_DEPENDS}
         )
     endif()
 
