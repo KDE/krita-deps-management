@@ -2,7 +2,6 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/icu': '@same'
-    'base/openssl': '@same'
     'base/freetype': '@same'
     'base/png': '@same'
     'base/jpeg': '@same'
@@ -19,6 +18,7 @@ Dependencies:
 - 'on': ['Windows', 'MacOS']
   'require':
     'base/zlib': '@same'
+    'base/openssl': '@same' # TODO: do we actually need that on MacOS?
 #    'base/pkgconfig': '@same' # supported on linux only
 #    'base/gettext': '@same'
 

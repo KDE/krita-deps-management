@@ -1,7 +1,6 @@
 - 'on': ['@all']
   'require':
     "base/iconv": "master"
-    "base/openssl": "master"
     "base/boost": "master"
     "base/lcms2": "master"
     "base/png": "master"
@@ -94,6 +93,8 @@
     "base/pkgconfig": "master"
     # TODO: check if we actually need that on macOS (required by ki18n)
     "base/gettext": "master"
+    # TODO: check if we actually need that on macOS (required by Qt and python)
+    "base/openssl": "master"
 
 - 'on': ['Linux', 'MacOS']
   'require':

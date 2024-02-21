@@ -1,4 +1,4 @@
 Dependencies:
-- 'on': ['MacOS', 'Linux']
+- 'on': ['MacOS']
   'require':
-    'base/openssl': '@same'
+    'base/openssl': '@same' # TODO: do we need that on macOS?
