@@ -6,6 +6,7 @@ import sys
 import platform
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'ci-utilities'))
 from components import CommonUtils, EnvFileUtils
+import copy
 
 # Capture our command line parameters
 parser = argparse.ArgumentParser(description='Utility to set up the environment for the split deps build')
@@ -14,10 +15,14 @@ parser.add_argument('-p','--path', action='append', help='Extra path to be added
 parser.add_argument('-v','--venv', type=str, help='Path to the venv python environment')
 parser.add_argument('-s','--shared-install', type=str, help='Path to the shared install folder (default: no shared install enabled)')
 parser.add_argument('-d','--generate-deps-file', action='store_true', help='Generate .kde-ci.yml file with all the required Krita deps')
+parser.add_argument('--full-krita-env', action='store_true', help='Fetch all deps for Krita and generate the environment (implies -d)')
 parser.add_argument('-o','--output-file', type=str, help='Output file base name for the environment file (.bat suffix is added automatically)', default='base-env')
 arguments = parser.parse_args()
 
 workingDirectory = os.getcwd()
+
+if arguments.full_krita_env:
+    arguments.generate_deps_file = True
 
 if not arguments.root is None:
     workingDirectory = os.path.abspath(arguments.root)
@@ -116,10 +121,40 @@ if arguments.generate_deps_file:
         outFile = os.path.join(workingDirectory, '.kde-ci.yml'),
         seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml'))
 
-    # Run post-install scripts
     try:
         print('## RUNNING DEPS GENERATION SCRIPT: {}'.format(commandToRun))
         subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=os.getcwd())
+    except Exception:
+        print("## Failed to run deps generation script")
+        sys.exit(1)
+
+platformString = 'Linux'
+
+if platform.system() == "Windows":
+    platformString = 'Windows'
+elif platform.system() == "darwin":
+    platformString = 'MacOS'
+
+
+if arguments.full_krita_env:
+    commandToRun = '{python} -s {script} --only-env -e env --project krita --branch master --platform {platform}'.format(
+        python = effectivePythonExecutable,
+        script = os.path.join(os.path.dirname(__file__), '..', 'ci-utilities', 'run-ci-build.py'),
+        platform = platformString)
+
+    runEnvironment = copy.deepcopy(dict(os.environ))
+    for key, value in environmentUpdate.items():
+        runEnvironment[key] = value
+
+    for key, value in environmentAppend.items():
+        if key in runEnvironment:
+            runEnvironment[key] += os.pathsep + os.pathsep.join(value)
+        else:
+            runEnvironment[key] = os.pathsep.join(value)
+
+    try:
+        print('## RUNNING DEPS FETCH SCRIPT: {}'.format(commandToRun))
+        subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=os.getcwd(), env=runEnvironment)
     except Exception:
         print("## Failed to run deps generation script")
         sys.exit(1)
