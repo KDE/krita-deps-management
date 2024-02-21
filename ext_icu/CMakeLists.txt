@@ -3,7 +3,7 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-project(ext_fribidi)
+project(ext_icu)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_meson.cmake)
