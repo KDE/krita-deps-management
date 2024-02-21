@@ -86,9 +86,17 @@ environmentUpdate['KDECI_COMPRESS_PACKAGES_ON_DOWNLOAD'] = '1'
 environmentUpdate['KDECI_GLOBAL_CONFIG_OVERRIDE_PATH'] = os.path.join(repoBaseDirectory, 'global-config.yml')
 environmentUpdate['KDECI_REPO_METADATA_PATH'] = os.path.join(repoBaseDirectory, 'repo-metadata')
 
+
 if not sharedInstallDirectory is None:
     environmentUpdate['KDECI_SHARED_INSTALL_PATH'] = sharedInstallDirectory
 
+if platform.system() == "darwin":
+    environmentUpdate['C_INCLUDE_PATH'] = 'KDECI_SHARED_INSTALL_PATH' + '/include'
+    environmentUpdate['CPLUS_INCLUDE_PATH'] = 'KDECI_SHARED_INSTALL_PATH' + '/include'
+    environmentUpdate['LIBRARY_PATH'] = 'KDECI_SHARED_INSTALL_PATH' + '/lib:/usr/lib'
+    environmentUpdate['FRAMEWORK_PATH'] = 'KDECI_SHARED_INSTALL_PATH' + '/lib'
+
+    
 for var, value in environmentUpdate.items():
     print ('{} -> {}'.format(var, value))
 
