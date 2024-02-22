@@ -39,6 +39,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-lame-Install-pkg-config-file.patch
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
+            -Dtools=disabled
             ${EXTRA_MESON_FLAGS}
     
     DEPENDS ext_lame_meson
