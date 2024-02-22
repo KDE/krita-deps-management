@@ -67,7 +67,7 @@ cd "${dir_uni}"
 find . '(' -type f -o -type l ')' -print > ../files.lst
 tar zcvf "${build_tar}" --files-from "../files.lst"
 mv ${build_tar} ../
-rsync -a . "${DESTDIR}/"
+rsync -a ".${DESTDIR_SRC}" "${DESTDIR}/"
 
 echo "env destdir ${DESTDIR}"
 echo "consolidate end"

@@ -16,6 +16,10 @@ set(FREETYPE_URL https://downloads.sourceforge.net/project/freetype/freetype2/2.
 set(FREETYPE_SHA256 4766f20157cc4cf0cd292f80bf917f92d1c439b243ac3018debf6b9140c41a7f)
 
 set(BOOTSTRAP_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/bootstrap_prefix)
+if(APPLE) # we need to override DESTDIR variable used on consolidate script
+    set(DESTDIR_SRC "${BOOTSTRAP_PREFIX}/")
+    set(DESTDIR ${BOOTSTRAP_PREFIX})
+endif(APPLE)
 
 ExternalProject_Add(ext_freetype_bootstrap
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
