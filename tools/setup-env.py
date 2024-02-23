@@ -90,11 +90,12 @@ environmentUpdate['KDECI_REPO_METADATA_PATH'] = os.path.join(repoBaseDirectory, 
 if not sharedInstallDirectory is None:
     environmentUpdate['KDECI_SHARED_INSTALL_PATH'] = sharedInstallDirectory
 
-if platform.system() == "darwin":
-    environmentUpdate['C_INCLUDE_PATH'] = 'KDECI_SHARED_INSTALL_PATH' + '/include'
-    environmentUpdate['CPLUS_INCLUDE_PATH'] = 'KDECI_SHARED_INSTALL_PATH' + '/include'
-    environmentUpdate['LIBRARY_PATH'] = 'KDECI_SHARED_INSTALL_PATH' + '/lib:/usr/lib'
-    environmentUpdate['FRAMEWORK_PATH'] = 'KDECI_SHARED_INSTALL_PATH' + '/lib'
+if platform.system().lower() == "darwin":
+    print("we are on darwin")
+    environmentUpdate['C_INCLUDE_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/include'
+    environmentUpdate['CPLUS_INCLUDE_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/include'
+    environmentUpdate['LIBRARY_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/lib:/usr/lib'
+    environmentUpdate['FRAMEWORK_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/lib'
 
     
 for var, value in environmentUpdate.items():
