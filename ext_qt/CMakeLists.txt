@@ -6,7 +6,7 @@ endif()
 project(ext_qt)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "6d099d35da4958861ea62e2f54271a1dd8ea7707")
+set(QT_GIT_TAG "b73dc3b49c8da6489acdc2ed2a99be9358277d9c")
 
 if (MINGW)
   set(QT_BUILD_COMMAND   mingw32-make -j${SUBMAKE_JOBS})
@@ -147,8 +147,6 @@ if (WIN32)
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
-      PATCH_COMMAND ${PATCH_COMMAND} -p1 -d qtbase -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
-
       INSTALL_DIR ${EXTPREFIX}
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} <SOURCE_DIR>/configure.bat ${_QT_conf}
 
@@ -170,8 +168,6 @@ elseif (ANDROID)
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
-
-      PATCH_COMMAND ${PATCH_COMMAND} -p1 -d qtbase -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
 
       # TODO(sh_zam): We can probably skip the skipping now.
       CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -verbose
@@ -217,8 +213,6 @@ elseif (NOT APPLE)
 
       CMAKE_ARGS -DOPENSSL_LIBS='-L${EXTPREFIX}/lib -lssl -lcrypto'
 
-      PATCH_COMMAND ${PATCH_COMMAND} -p1 -d qtbase -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
-
       CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX}
           -opensource -confirm-license
           -feature-relocatable -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -verbose -nomake examples
@@ -263,8 +257,6 @@ else( APPLE )
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
       WORKING_DIRECTORY <BINARY_DIR>-@ARCH@
-
-      PATCH_COMMAND ${PATCH_COMMAND} -p1 -d qtbase -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-system-harfbuzz-library-using-pkgco.patch
 
       CONFIGURE_COMMAND -e "OPENSSL_LIBS=-L${EXTPREFIX}/lib -lssl -lcrypto"
           <SOURCE_DIR>/configure
