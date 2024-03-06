@@ -22,6 +22,7 @@ if (UNIX)
             URL_MD5 b8094f007b3a835ca3be6bdf8116cccc
 
             PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/osx_fixappinstall.diff
+                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macOS_do_not_create_easy_install_link.patch
 
             # Setuptools needs OpenSSL 1.1, the stock libssl isn't enough
             CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
