@@ -91,11 +91,14 @@ if not sharedInstallDirectory is None:
     environmentUpdate['KDECI_SHARED_INSTALL_PATH'] = sharedInstallDirectory
 
 if platform.system().lower() == "darwin":
-    print("we are on darwin")
+    macosDeployTarget = '10.14'
+    environmentUpdate['MACOSX_DEPLOYMENT_TARGET'] = macosDeployTarget
+    environmentUpdate['QMAKE_MACOSX_DEPLOYMENT_TARGET'] = macosDeployTarget
     environmentUpdate['C_INCLUDE_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/include'
     environmentUpdate['CPLUS_INCLUDE_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/include'
     environmentUpdate['LIBRARY_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/lib:/usr/lib'
     environmentUpdate['FRAMEWORK_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/lib'
+    environmentUpdate['PKG_CONFIG_PATH'] = os.environ['KDECI_SHARED_INSTALL_PATH'] + '/share/pkgconfig'
 
     
 for var, value in environmentUpdate.items():
