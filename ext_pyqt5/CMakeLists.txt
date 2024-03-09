@@ -31,8 +31,7 @@ if(UNIX)
 
         BUILD_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
-            ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/build
-            make -j${SUBMAKE_JOBS}
+            make -C <SOURCE_DIR>/build -j${SUBMAKE_JOBS}
 
         # force single-threaded installation to avoid
         # race conditions in post-install .py script
