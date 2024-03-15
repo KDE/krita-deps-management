@@ -98,7 +98,7 @@ if(WIN32)
         )
     endif()
 elseif(ANDROID)
-    message( FATAL_ERROR "Building Boost on Android is not implemented yet! You need to implement handling of DESTDIR like it happens on other platforms")
+    set (BUILD_ARGS --with-libraries=system --boost=1.80.0 --arch=${ANDROID_ABI} ${CMAKE_ANDROID_NDK})
 
     ExternalProject_Add( ext_boost
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
@@ -108,20 +108,25 @@ elseif(ANDROID)
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Support-Android-NDK-r22b.patch
 
         CONFIGURE_COMMAND ""
-        # TODO: do NOT install on the build step
-        BUILD_COMMAND <SOURCE_DIR>/build-android.sh --prefix=${EXTPREFIX} --with-libraries=system --boost=1.80.0 --arch=${ANDROID_ABI} ${CMAKE_ANDROID_NDK}
-        INSTALL_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ${CMAKE_COMMAND}
+            -DPREFIX=${EXTPREFIX}
+            -DB2_COMMAND=<SOURCE_DIR>/build-android.sh
+            -DLAZY_CREATE_PREFIX=TRUE
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${BUILD_ARGS}
 
         UPDATE_COMMAND ""
         BUILD_IN_SOURCE 1
     )
-    # TODO: replace with pre_install
-    ExternalProject_Add_Step(
-        ext_boost
-        post_install
-        COMMAND sh -c "cp ${EXTPREFIX}/${ANDROID_ABI}/lib/libboost_system-*-1_80.a ${EXTPREFIX}/${ANDROID_ABI}/lib/libboost_system.a"
-        DEPENDEES install
-    )
+
+    # TODO: is it needed at all?
+    # ExternalProject_Add_Step(
+    #     ext_boost
+    #     pre_install
+    #     COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build/build/x86_64/boost/bin.v2/libs/system/build/clang-linux-x8664/release/link-static/target-os-android/threading-multi/visibility-hidden/libboost_system-clang-mt-x64-1_80.a -DRENAME=TRUE -DDST=${EXTPREFIX}/x86_64/lib/libboost_system.a -P ${KRITA_CI_INSTALL}
+    #     DEPENDERS install
+    # )
+
 else()
     if(APPLE)
         set(MACOS_BOOST_ARGS architecture=arm+x86 cxxflags=${MACOS_ARCH_FLAGS})
