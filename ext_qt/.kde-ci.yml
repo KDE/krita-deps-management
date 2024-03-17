@@ -17,10 +17,13 @@ Dependencies:
 #    'base/jom': '@same' # only for msvc builds
 - 'on': ['Windows', 'MacOS']
   'require':
-    'base/zlib': '@same'
     'base/openssl': '@same' # TODO: do we actually need that on MacOS?
 #    'base/pkgconfig': '@same' # supported on linux only
-#    'base/gettext': '@same'
-
+- 'on': ['Android']
+  'require':
+    'base/openssl': '@same'
+- 'on': ['Windows', 'MacOS', 'Android']
+  'require':
+    'base/zlib': '@same'
 Options:
   force-ninja-on-windows: False

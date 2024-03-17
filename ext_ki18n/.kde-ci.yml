@@ -6,7 +6,7 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
-- 'on': ['MacOS', 'Windows']
+- 'on': ['MacOS', 'Windows', 'Android']
   'require':
     'base/gettext': '@same'
 - 'on': ['Android']

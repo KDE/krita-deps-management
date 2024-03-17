@@ -2,10 +2,13 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
-    'base/pkgconfig': '@same'
 - 'on': ['@all']
   'require':
     'ffmpeg/libogg': '@same'
     'ffmpeg/libvorbis': '@same'
     'base/png': '@same'
+- 'on': ['Windows', 'MacOS']
+  'require':
+    # on Linux we use meson provided by the distribution
     'base/meson': '@same'
+    'base/pkgconfig': '@same'

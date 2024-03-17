@@ -1,9 +1,12 @@
 Dependencies:
-- 'on': ['Windows']
-  'require':
-    'base/patch': '@same'
-    'base/pkgconfig': '@same'
 - 'on': ['@all']
   'require':
     'base/nasm': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+- 'on': ['Windows', 'MacOS']
+  'require':
+    # on Linux we use meson provided by the distribution
     'base/meson': '@same'
+    'base/pkgconfig': '@same'

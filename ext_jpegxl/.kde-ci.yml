@@ -6,6 +6,6 @@ Dependencies:
     'base/lcms2': '@same'
     'base/jpeg': '@same'
     'base/png': '@same'
-- 'on': ['Windows']
+- 'on': ['Windows', 'MacOS', 'Android']
   'require':
     'base/zlib': '@same'

@@ -8,7 +8,6 @@
     "base/eigen3": "master"
     "base/expat": "master"
     "base/exiv2": "master"
-    "base/python": "master"
     "base/fribidi": "master"
     "heif/libaom": "master"
     "base/fftw3": "master"
@@ -25,10 +24,6 @@
     "base/json_c": "master"
     "base/xsimd": "master"
     "base/unibreak": "master"
-    "base/sip": "master"
-    "base/pyqt-builder": "master"
-    "base/pyqt5": "master"
-    "base/pyqt5-sip": "master"
     "base/webp": "master"
     "base/quazip": "master"
     "base/zug": "master"
@@ -57,7 +52,6 @@
     "base/libheif": "master"
     "base/mypaint": "master"
     "base/kdcraw": "master"
-    "base/poppler": "master"
     "base/seexpr": "master"
     "base/icu": "master"
     "base/jpeg": "master"
@@ -73,6 +67,21 @@
     "ffmpeg/ffmpeg": "master"
     "base/mlt": "master"
 
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/python": "master"
+    "base/sip": "master"
+    "base/pyqt-builder": "master"
+    "base/pyqt5": "master"
+    "base/pyqt5-sip": "master"
+    "base/poppler": "master"
+
+- 'on': ['Android']
+  'require':
+    "base/zlib": "master"
+    "base/gettext": "master"
+    "base/openssl": "master"
+    "base/libintl-lite": "master"
 
 - 'on': ['Windows']
   'require':

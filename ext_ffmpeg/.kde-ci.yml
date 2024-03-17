@@ -2,11 +2,8 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
-    'base/pkgconfig': '@same'
-    'base/zlib': '@same'
 - 'on': ['@all']
   'require':
-    'base/meson': '@same'
     'ffmpeg/flac': '@same'
     'ffmpeg/opus': '@same'
     'ffmpeg/sdl2': '@same'
@@ -20,3 +17,11 @@ Dependencies:
     'base/png': '@same'
     'base/jpeg': '@same'
     'base/lzma': '@same'
+- 'on': ['Windows', 'MacOS']
+  'require':
+    # on Linux we use meson provided by the distribution
+    'base/meson': '@same'
+    'base/pkgconfig': '@same'
+- 'on': ['Windows', 'MacOS', 'Android']
+  'require':
+    'base/zlib': '@same'
