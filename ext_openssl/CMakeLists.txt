@@ -68,7 +68,7 @@ elseif (ANDROID)
             CXXFLAGS=-D__ANDROID_API__=${ANDROID_PLATFORM_LEVEL}
             # OpenSSL cannot handle DESTDIR as an environment variable. Instead,
             # it expects it to be passed as an explicit make argument
-            ${CMAKE_COMMAND} -DARGS="install_sw SHLIB_VERSION_NUMBER= SHLIB_EXT=_1_1.so" -P ${KRITA_CI_RUN_MAKE_WITH_DESTDIR}
+            ${CMAKE_COMMAND} -P ${KRITA_CI_RUN_MAKE_WITH_DESTDIR} -- install_sw SHLIB_VERSION_NUMBER= SHLIB_EXT=_1_1.so
 
         UPDATE_COMMAND ""
 )
@@ -88,7 +88,7 @@ else (WIN32)
 
         # OpenSSL cannot handle DESTDIR as an environment variable. Instead,
         # it expects it to be passed as an explicit make argument
-        INSTALL_COMMAND ${CMAKE_COMMAND} -DARGS=install_sw -P ${KRITA_CI_RUN_MAKE_WITH_DESTDIR}
+        INSTALL_COMMAND ${CMAKE_COMMAND} -P ${KRITA_CI_RUN_MAKE_WITH_DESTDIR} -- install_sw
         
         UPDATE_COMMAND ""
     )
