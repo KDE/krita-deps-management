@@ -1,0 +1,7 @@
+description: ibintl-lite is a simple (but less powerful) GNU gettext libintl replacement
+hasrepo: false
+identifier: ext_libintl-lite
+name: libintl-lite
+projectpath: krita-deps/base/libintl-lite
+repoactive: false
+repopath: base/libintl-lite
