@@ -32,12 +32,13 @@ ExternalProject_Add(ext_freetype_bootstrap
         -DFT_DISABLE_HARFBUZZ=ON
         -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
         -DBUILD_SHARED_LIBS=TRUE
+        -DCMAKE_PREFIX_PATH=${EXTPREFIX}
         ${GLOBAL_PROFILE}
 
     UPDATE_COMMAND ""
 )
 
-set (_pkg_config_path "${BOOTSTRAP_PREFIX}/lib/pkgconfig")
+set (_pkg_config_path "${BOOTSTRAP_PREFIX}/lib/pkgconfig" "${BOOTSTRAP_PREFIX}/share/pkgconfig")
 cmake_path(CONVERT $ENV{PKG_CONFIG_PATH} TO_CMAKE_PATH_LIST _global_pkg_config_path)
 list (APPEND _pkg_config_path ${_global_pkg_config_path})
 
@@ -83,6 +84,7 @@ ExternalProject_Add( ext_freetype
         -DFT_REQUIRE_HARFBUZZ=ON
         -DFT_REQUIRE_PNG=ON
         -DBUILD_SHARED_LIBS=TRUE
+        -DCMAKE_PREFIX_PATH=${EXTPREFIX}
         ${GLOBAL_PROFILE}
 
     UPDATE_COMMAND ""
