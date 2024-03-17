@@ -174,6 +174,9 @@ def make_path_relocatable(path):
         m = re.search("/libgdi32\\.a$", testpath)
         if m:
             return "-lgdi32"
+        m = re.search("/libandroid\\.(a|so)$", testpath)
+        if m:
+            return "-landroid"
 
         error("path not within install prefix[" + installPath + "]:\n" + path)
 
