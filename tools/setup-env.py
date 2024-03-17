@@ -17,6 +17,7 @@ parser.add_argument('-s','--shared-install', type=str, help='Path to the shared 
 parser.add_argument('-d','--generate-deps-file', action='store_true', help='Generate .kde-ci.yml file with all the required Krita deps')
 parser.add_argument('--full-krita-env', action='store_true', help='Fetch all deps for Krita and generate the environment (implies -d)')
 parser.add_argument('-o','--output-file', type=str, help='Output file base name for the environment file (.bat suffix is added automatically)', default='base-env')
+parser.add_argument('--android-abi', type=str, choices=['x86-64', 'armeabi-v7a', 'arm64-v8a'], default = None, help='Target Android ABI to use for building')
 arguments = parser.parse_args()
 
 workingDirectory = os.getcwd()
@@ -60,12 +61,15 @@ environmentUpdate['EXTERNALS_DOWNLOAD_DIR'] = os.path.join(workingDirectory, 'ca
 
 environmentUpdate['KDECI_GITLAB_SERVER'] = 'https://invent.kde.org/'
 
-if platform.system() == "Windows":
-    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-windows-qt5.15'
-elif platform.system() == "darwin":
-    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-macos-qt5.15'
+if not arguments.android_abi is None:
+    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-android-{}-qt5.15'.format(arguments.android_abi)
 else:
-    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-appimage-qt5.15'
+    if platform.system() == "Windows":
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-windows-qt5.15'
+    elif platform.system() == "darwin":
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-macos-qt5.15'
+    else:
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-appimage-qt5.15'
 
 environmentUpdate['KDECI_BUILD_TYPE'] = 'Release'
 environmentUpdate['KDECI_BUILD_TARGET'] = 'ext_build'
@@ -130,10 +134,13 @@ if arguments.generate_deps_file:
 
 platformString = 'Linux'
 
-if platform.system() == "Windows":
-    platformString = 'Windows'
-elif platform.system() == "darwin":
-    platformString = 'MacOS'
+if not arguments.android_abi is None:
+    platformString = 'Android-{}'.format(arguments.android_abi)
+else:
+    if platform.system() == "Windows":
+        platformString = 'Windows'
+    elif platform.system() == "darwin":
+        platformString = 'MacOS'
 
 
 if arguments.full_krita_env:
