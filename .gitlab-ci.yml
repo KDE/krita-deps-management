@@ -55,6 +55,25 @@ stages:
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
 
+.android_qt515:
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-android-builder:latest
+  tags:
+    - Linux
+  variables:
+    KDECI_CC_CACHE: /mnt/caches/krita-android/
+    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/
+    EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads # reuse appimage caches!
+    KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
+    KDECI_BUILD_TYPE: Release
+    KDECI_ANDROID_SDK_ROOT=/opt/android-tooling/sdk
+    KDECI_ANDROID_NDK_ROOT=/opt/android-tooling/android-ndk-r22b/
+    KDECI_EXTRA_CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/android-toolchain.cmake"
+
+  # different commits may build different deps, so they should not be cancellable
+  interruptible: false
+
+
 include:
   - /pipelines/seed-deps.yml
   - /pipelines/seed-staging.yml
