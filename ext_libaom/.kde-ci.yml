@@ -3,6 +3,6 @@ Dependencies:
   'require':
     'base/patch': '@same'
     'base/strawberryperl': '@same'
-- 'on': ['@all']
+- 'on': ['Windows', 'Linux', 'MacOS', 'Android/x86_64']
   'require':
     'base/nasm': '@same'

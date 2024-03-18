@@ -1,8 +1,10 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/nasm': '@same'
     'heif/libx265_12bit': '@same'
+- 'on': ['Windows', 'Linux', 'MacOS', 'Android/x86_64']
+  'require':
+    'base/nasm': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
