@@ -45,11 +45,6 @@
     "base/kitemviews": "master"
     "base/kimageformats": "master"
     "base/kwindowsystem": "master"
-    "heif/libde265": "master"
-    "heif/libx265_10bit": "master"
-    "heif/libx265_12bit": "master"
-    "heif/libx265": "master"
-    "base/libheif": "master"
     "base/mypaint": "master"
     "base/kdcraw": "master"
     "base/seexpr": "master"
@@ -66,6 +61,15 @@
     "ffmpeg/lame": "master"
     "ffmpeg/ffmpeg": "master"
     "base/mlt": "master"
+
+# TODO: port heif deps into Anroid-arm64
+- 'on': ['Windows', 'MacOS', 'Linux', 'Android/x86_64']
+  'require':
+    "heif/libde265": "master"
+    "heif/libx265_10bit": "master"
+    "heif/libx265_12bit": "master"
+    "heif/libx265": "master"
+    "base/libheif": "master"
 
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
