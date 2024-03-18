@@ -66,8 +66,9 @@ stages:
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
-    KDECI_ANDROID_SDK_ROOT=/opt/android-tooling/sdk
-    KDECI_ANDROID_NDK_ROOT=/opt/android-tooling/android-ndk-r22b/
+    # ANDROID_HOME=/opt/android-tooling # <-- set up in the base image!
+    # KDECI_ANDROID_SDK_ROOT=$ANDROID_HOME/sdk # <-- set up in the base image!
+    # KDECI_ANDROID_NDK_ROOT=$ANDROID_HOME/android-ndk-r22b/ # <-- set up in the base image!
     KDECI_EXTRA_CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/android-toolchain.cmake"
 
   # different commits may build different deps, so they should not be cancellable
