@@ -29,7 +29,6 @@
     "base/zug": "master"
     "base/immer": "master"
     "base/lager": "master"
-    "base/libraw": "master"
     "base/highway": "master"
     "base/brotli": "master"
     "base/jpegxl": "master"
@@ -46,7 +45,6 @@
     "base/kimageformats": "master"
     "base/kwindowsystem": "master"
     "base/mypaint": "master"
-    "base/kdcraw": "master"
     "base/seexpr": "master"
     "base/icu": "master"
     "base/jpeg": "master"
@@ -70,6 +68,12 @@
     "heif/libx265_12bit": "master"
     "heif/libx265": "master"
     "base/libheif": "master"
+
+# fseek call in libraw is not supported on 32-bit systems
+- 'on': ['Windows', 'MacOS', 'Linux', 'Android/x86_64', 'Android/arm64-v8a']
+  'require':
+    "base/libraw": "master"
+    "base/kdcraw": "master"
 
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
