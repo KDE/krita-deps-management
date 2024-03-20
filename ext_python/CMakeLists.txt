@@ -65,12 +65,16 @@ if (UNIX)
 
     else()
 
+    if (ANDROID)
+        message (FATAL_ERROR "TODO: the build of Python on Android is not implemented! It should use --with-openssl=${EXTPREFIX} to use proper openssl")
+    endif()
+
     ExternalProject_Add( ext_python
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         URL https://www.python.org/ftp/python/3.10.7/Python-3.10.7.tar.xz
         URL_MD5 b8094f007b3a835ca3be6bdf8116cccc
 
-        CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --enable-shared --with-openssl=${EXTPREFIX}
+        CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --enable-shared
 
         UPDATE_COMMAND ""
     )
