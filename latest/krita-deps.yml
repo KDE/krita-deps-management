@@ -18,7 +18,6 @@
     "base/tiff": "master"
     "base/gsl": "master"
     "base/giflib": "master"
-    "base/lzma": "master"
     "base/openjpeg": "master"
     "base/json_c": "master"
     "base/xsimd": "master"
@@ -69,6 +68,16 @@
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
     "base/iconv": "master"
+
+# lzma library still uses Automake, hence cannot be cross-compiled,
+# hence cannot be used on Android
+
+# TODO: check if it can actually be used on macOS with
+# cross-compilation?
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/lzma": "master"
+
 
 # TODO: port heif deps into Anroid-arm64
 - 'on': ['Windows', 'MacOS', 'Linux', 'Android/x86_64']
