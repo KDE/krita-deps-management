@@ -1,6 +1,5 @@
 - 'on': ['@all']
   'require':
-    "base/iconv": "master"
     "base/boost": "master"
     "base/lcms2": "master"
     "base/png": "master"
@@ -59,6 +58,17 @@
     "ffmpeg/lame": "master"
     "ffmpeg/ffmpeg": "master"
     "base/mlt": "master"
+
+# libiconv cannot be cross-compiled for Android as of now. It uses
+# automake, hence it needs some special handling. It means that
+# EXIV2 will not be able to convert character encoding in the
+# file's metadata
+#
+# Here is a link explaining how to build it for Android:
+# https://medium.com/@zw3rk/building-iconv-for-android-e3581a52668f
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/iconv": "master"
 
 # TODO: port heif deps into Anroid-arm64
 - 'on': ['Windows', 'MacOS', 'Linux', 'Android/x86_64']

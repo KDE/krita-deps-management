@@ -2,12 +2,11 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/expat': '@same'
-- 'on': ['Linux']
-  'require':
-    'base/iconv': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
     'base/iconv': '@same'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
