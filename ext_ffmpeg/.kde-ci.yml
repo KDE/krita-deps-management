@@ -26,7 +26,7 @@ Dependencies:
 
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
-  'base/lzma': '@same'
+    'base/lzma': '@same'
 
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
