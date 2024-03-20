@@ -39,7 +39,7 @@ ExternalProject_Add(ext_freetype_bootstrap
 )
 
 set (_pkg_config_path "${BOOTSTRAP_PREFIX}/lib/pkgconfig" "${BOOTSTRAP_PREFIX}/share/pkgconfig")
-cmake_path(CONVERT $ENV{PKG_CONFIG_PATH} TO_CMAKE_PATH_LIST _global_pkg_config_path)
+cmake_path(CONVERT "$ENV{PKG_CONFIG_PATH}" TO_CMAKE_PATH_LIST _global_pkg_config_path)
 list (APPEND _pkg_config_path ${_global_pkg_config_path})
 
 mesonify(_pkg_config_path _mesonified_pkg_config_path)
