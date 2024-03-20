@@ -52,7 +52,7 @@ seed_appimage_qt515:
       - "./**/meson-private/**/*"
 
 seed_android_x86_64_qt515:
-extends:
+  extends:
   - .seed_android_qt515
   environment: android-x86_64-qt5.15
   variables:
@@ -60,7 +60,7 @@ extends:
     KDECI_ANDROID_ABI: x86_64
 
 seed_android_arm64-v8a_qt515:
-extends:
+  extends:
   - .seed_android_qt515
   environment: android-arm64-v8a-qt5.15
   variables:
@@ -68,7 +68,7 @@ extends:
     KDECI_ANDROID_ABI: arm64-v8a
 
 seed_android_armeabi-v7a_qt515:
-extends:
+  extends:
   - .seed_android_qt515
   environment: android-armeabi-v7a-qt5.15
   variables:
