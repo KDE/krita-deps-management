@@ -40,7 +40,7 @@ seed_appimage_qt515:
   - .seed_template
   - .android_qt515
   script:
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Linux/Qt5/Shared | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
   artifacts:
     expire_in: 1 week
     paths:
