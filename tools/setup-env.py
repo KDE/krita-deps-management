@@ -139,7 +139,7 @@ if arguments.generate_deps_file:
 platformString = 'Linux'
 
 if not arguments.android_abi is None:
-    platformString = 'Android-{}'.format(arguments.android_abi)
+    platformString = 'Android/{}'.format(arguments.android_abi)
 else:
     if platform.system() == "Windows":
         platformString = 'Windows'
