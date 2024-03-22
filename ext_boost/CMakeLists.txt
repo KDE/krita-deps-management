@@ -108,24 +108,21 @@ elseif(ANDROID)
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Support-Android-NDK-r22b.patch
 
         CONFIGURE_COMMAND ""
-        BUILD_COMMAND ""
-        INSTALL_COMMAND ${CMAKE_COMMAND}
-            -DPREFIX=${EXTPREFIX}
-            -DB2_COMMAND=<SOURCE_DIR>/build-android.sh
-            -DLAZY_CREATE_PREFIX=TRUE
-            -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${BUILD_ARGS}
+        # no prefix is passed, we will install it ourselves!
+        BUILD_COMMAND <SOURCE_DIR>/build-android.sh ${BUILD_ARGS}
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Installing Boost..."
 
         UPDATE_COMMAND ""
         BUILD_IN_SOURCE 1
     )
 
-    # TODO: is it needed at all?
-    # ExternalProject_Add_Step(
-    #     ext_boost
-    #     pre_install
-    #     COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build/build/x86_64/boost/bin.v2/libs/system/build/clang-linux-x8664/release/link-static/target-os-android/threading-multi/visibility-hidden/libboost_system-clang-mt-x64-1_80.a -DRENAME=TRUE -DDST=${EXTPREFIX}/x86_64/lib/libboost_system.a -P ${KRITA_CI_INSTALL}
-    #     DEPENDERS install
-    # )
+    ExternalProject_Add_Step(
+        ext_boost
+        pre_install
+        COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build/out/${ANDROID_ABI}/lib -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL_DIRECTORY}
+        COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build/out/${ANDROID_ABI}/include -DDST=${EXTPREFIX}/include -P ${KRITA_CI_INSTALL_DIRECTORY}
+        DEPENDERS install
+    )
 
 else()
     if(APPLE)
