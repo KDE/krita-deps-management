@@ -1,0 +1,9 @@
+description: Patched libunwindstack from Android sources
+hasrepo: false
+identifier: ext_libunwindstack-ndk
+name: libunwindstack-ndk
+projectpath: krita-deps/base/libunwindstack-ndk
+repoactive: false
+repopath: base/libunwindstack-ndk
+
+
