@@ -78,8 +78,6 @@ seed_appimage_qt515:
     KDECI_ANDROID_ABI: arm64-v8a
 
 .seed_android_armeabi-v7a_qt515:
-  extends:
-  - .seed_android_qt515
   environment: android-armeabi-v7a-qt5.15
   variables:
     KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-armeabi-v7a-qt5.15
