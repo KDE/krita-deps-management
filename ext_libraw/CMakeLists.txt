@@ -6,8 +6,10 @@ endif()
 project(ext_libraw)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-if(APPLE)
-    # There is no OPENMP support on apple's clang
+if(APPLE or ANDROID)
+    # * There is no OPENMP support on apple's clang
+    # * Android's cmake has OPENMP, but androiddeployqt
+    #   fails to package it
     set(LIBRAW_CMAKE_FLAGS "-DENABLE_OPENMP=OFF")
 endif()
 
