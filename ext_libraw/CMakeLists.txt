@@ -6,7 +6,7 @@ endif()
 project(ext_libraw)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-if(APPLE or ANDROID)
+if(APPLE OR ANDROID)
     # * There is no OPENMP support on apple's clang
     # * Android's cmake has OPENMP, but androiddeployqt
     #   fails to package it
