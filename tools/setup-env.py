@@ -64,7 +64,10 @@ environmentUpdate['KDECI_GITLAB_SERVER'] = 'https://invent.kde.org/'
 if not arguments.android_abi is None:
     environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-android-{}-qt5.15'.format(arguments.android_abi)
     # run-ci-build uses this variable to detect if we are building android target
-    environmentUpdate['ANDROID_HOME'] = 'some-non-existing-directory'
+    # our docker image usually sets this environment variable properly,
+    # but the script may run in some other (e.g. host) environments
+    if not 'ANDROID_HOME' in os.environ:
+        environmentUpdate['ANDROID_HOME'] = 'some-non-existing-directory'
     # disable KDE-wide toolchain files (Krita uses its own one)
     environmentUpdate['KDECI_SKIP_ECM_ANDROID_TOOLCHAIN'] = 'True'
 else:
