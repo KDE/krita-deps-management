@@ -17,7 +17,7 @@ parser.add_argument('-s','--shared-install', type=str, help='Path to the shared 
 parser.add_argument('-d','--generate-deps-file', action='store_true', help='Generate .kde-ci.yml file with all the required Krita deps')
 parser.add_argument('--full-krita-env', action='store_true', help='Fetch all deps for Krita and generate the environment (implies -d)')
 parser.add_argument('-o','--output-file', type=str, help='Output file base name for the environment file (.bat suffix is added automatically)', default='base-env')
-parser.add_argument('--android-abi', type=str, choices=['x86-64', 'armeabi-v7a', 'arm64-v8a'], default = None, help='Target Android ABI to use for building')
+parser.add_argument('--android-abi', type=str, choices=['x86_64', 'armeabi-v7a', 'arm64-v8a'], default = None, help='Target Android ABI to use for building')
 arguments = parser.parse_args()
 
 workingDirectory = os.getcwd()
