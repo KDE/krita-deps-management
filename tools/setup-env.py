@@ -63,6 +63,7 @@ environmentUpdate['KDECI_GITLAB_SERVER'] = 'https://invent.kde.org/'
 
 if not arguments.android_abi is None:
     environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-android-{}-qt5.15'.format(arguments.android_abi)
+    environmentUpdate['KDECI_ANDROID_ABI'] = arguments.android_abi
     # run-ci-build uses this variable to detect if we are building android target
     # our docker image usually sets this environment variable properly,
     # but the script may run in some other (e.g. host) environments
