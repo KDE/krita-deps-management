@@ -1,0 +1,26 @@
+From c8bb36e80decbf9fa7257e1fd8cfc40bb4f84f43 Mon Sep 17 00:00:00 2001
+From: Ivan Yossi <ghevan@gmail.com>
+Date: Fri, 29 Mar 2024 14:05:28 -0600
+Subject: [PATCH 2/2] make links relative
+
+---
+ Mac/Makefile.in | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Mac/Makefile.in b/Mac/Makefile.in
+index 69ab419..f1ebc4b 100644
+--- a/Mac/Makefile.in
++++ b/Mac/Makefile.in
+@@ -28,7 +28,8 @@ export MACOSX_DEPLOYMENT_TARGET
+ 
+ 
+ # These are normally glimpsed from the previous set
+-BINDIR=		@bindir@
++# BINDIR=		@bindir@
++BINDIR=$(shell perl -le 'use File::Spec; print File::Spec->abs2rel(@ARGV)' @bindir@ $(FRAMEWORKUNIXTOOLSPREFIX)/bin)
+ PYTHONAPPSDIR=@FRAMEWORKINSTALLAPPSPREFIX@/$(PYTHONFRAMEWORK) $(VERSION)
+ APPINSTALLDIR=$(prefix)/Resources/Python.app
+ 
+-- 
+2.37.1 (Apple Git-137.1)
+

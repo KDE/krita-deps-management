@@ -6,11 +6,10 @@ endif()
 project(ext_python)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-message(WARNING "prefix ${EXTPREFIX}")
-
 if (UNIX)
     if (APPLE)
-        set(PYTHON_VERSION "3.10")
+        set(PYTHON_SHORT_VERSION "3.10")
+        set(PYTHON_VERSION "3.10.7")
 
         if(MACOS_ARCHS GREATER 1)
             set(PYTHON_MACOS_CONFIG "--enable-universalsdk" "--with-universal-archs=universal2")
@@ -18,57 +17,46 @@ if (UNIX)
         
         ExternalProject_Add( ext_python
             DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-            URL https://www.python.org/ftp/python/${PYTHON_VERSION}.7/Python-3.10.7.tar.xz
+            URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tar.xz
             URL_MD5 b8094f007b3a835ca3be6bdf8116cccc
 
             PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/osx_fixappinstall.diff
                   COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macOS_do_not_create_easy_install_link.patch
+                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-make-links-relative.patch
+                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-adjusting-scripts-shebangs-for-relocatable-installs.patch
 
             # Setuptools needs OpenSSL 1.1, the stock libssl isn't enough
             CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
                 PATH="${EXTPREFIX}/lib/Python.framework/Versions/Current/bin:$ENV{PATH}"
-                <SOURCE_DIR>/configure MACOSX_DEPLOYMENT_TARGET=10.13 --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --with-openssl=${EXTPREFIX}
+                <SOURCE_DIR>/configure MACOSX_DEPLOYMENT_TARGET=$ENV{MACOSX_DEPLOYMENT_TARGET} --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --with-openssl=${EXTPREFIX}
                 --enable-framework=${EXTPREFIX}/lib --enable-optimizations --with-suffix=no
                 ${PYTHON_MACOS_CONFIG}
 
-            # force single-threaded installation to avoid race conditions
-            # INSTALL_COMMAND ${CMAKE_COMMAND} -E env
-            #     PATH="${EXTPREFIX}/lib/Python.framework/Versions/Current/bin:$ENV{PATH}"
-            #     make -j1 install
-
             UPDATE_COMMAND ""
 
-            # DEPENDS ext_openssl
         )
+
         ExternalProject_Add_Step( ext_python create_symlink
             COMMENT "Creating helper symlinks"
             COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink python3 python
             COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/python -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
-            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./Python.framework/Python libpython${PYTHON_VERSION}.dylib
-            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/libpython${PYTHON_VERSION}.dylib -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL}
-            COMMAND ${CMAKE_COMMAND} -DSRC=${CMAKE_CURRENT_SOURCE_DIR}/sitecustomize.py -DDST=${EXTPREFIX}/lib/Python.framework/Versions/${PYTHON_VERSION}/lib/python${PYTHON_VERSION}/ -P ${KRITA_CI_INSTALL}
+            
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./Python.framework/Python libpython${PYTHON_SHORT_VERSION}.dylib
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/libpython${PYTHON_SHORT_VERSION}.dylib -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=${CMAKE_CURRENT_SOURCE_DIR}/sitecustomize.py -DDST=${EXTPREFIX}/lib/Python.framework/Versions/${PYTHON_SHORT_VERSION}/lib/python${PYTHON_SHORT_VERSION}/ -P ${KRITA_CI_INSTALL}
 
-            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./Python.framework/Versions/${PYTHON_VERSION}/lib/python${PYTHON_VERSION} python${PYTHON_VERSION}
-            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/python${PYTHON_VERSION} -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./Python.framework/Versions/${PYTHON_SHORT_VERSION}/lib/python${PYTHON_SHORT_VERSION} python${PYTHON_SHORT_VERSION}
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/python${PYTHON_SHORT_VERSION} -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL}
 
             COMMAND ${CMAKE_COMMAND} -E make_directory <TMP_DIR>/include
-            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR>/include ${CMAKE_COMMAND} -E create_symlink ../lib/Python.framework/Versions/${PYTHON_VERSION}/include/python${PYTHON_VERSION} python${PYTHON_VERSION}
-            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/include/python${PYTHON_VERSION} -DDST=${EXTPREFIX}/include -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR>/include ${CMAKE_COMMAND} -E create_symlink ../lib/Python.framework/Versions/${PYTHON_SHORT_VERSION}/include/python${PYTHON_SHORT_VERSION} python${PYTHON_SHORT_VERSION}
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/include/python${PYTHON_SHORT_VERSION} -DDST=${EXTPREFIX}/include -P ${KRITA_CI_INSTALL}
 
-            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./lib/python${PYTHON_VERSION}/site-packages site-packages
-            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/site-packages -DDST=${EXTPREFIX}/lib/Python.framework/Versions/${PYTHON_VERSION}/ -P ${KRITA_CI_INSTALL}
-
-            # COMMAND ${CMAKE_COMMAND} -E create_symlink ${EXTPREFIX}/lib/Python.framework/Versions/Current/lib/python${PYTHON_VERSION} ${EXTPREFIX}/lib/python${PYTHON_VERSION}
-            # COMMAND ${CMAKE_COMMAND} -E create_symlink ${EXTPREFIX}/lib/Python.framework/Versions/Current/include/python${PYTHON_VERSION} ${EXTPREFIX}/include/python${PYTHON_VERSION}
-            # COMMAND ${CMAKE_COMMAND} -E create_symlink ./lib/python${PYTHON_VERSION}/site-packages ${EXTPREFIX}/lib/Python.framework/Versions/Current/site-packages
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./lib/python${PYTHON_SHORT_VERSION}/site-packages site-packages
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/site-packages -DDST=${EXTPREFIX}/lib/Python.framework/Versions/${PYTHON_SHORT_VERSION}/ -P ${KRITA_CI_INSTALL}
             
             DEPENDERS install
         )
-        # ExternalProject_Add_Step( ext_python update_pip
-        #     COMMENT "Updating pip"
-        #     COMMAND ${EXTPREFIX}/bin/python3 -m pip install --upgrade pip
-        #     DEPENDS install
-        # )
         # TODO: modify krita_add_to_ci_targets to use other targets, not normal install!
         # ExternalProject_Add_Step( ext_python update_certifi
         #     COMMENT "Deploying certifi to our OpenSSL CApath"
