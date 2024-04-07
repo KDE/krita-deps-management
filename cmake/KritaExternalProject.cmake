@@ -142,6 +142,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
                 arch -${ARCH} ${MESON_BINARY_PATH} setup <BINARY_DIR>-${ARCH} <SOURCE_DIR>
                     --libdir=lib
                     -Dbuildtype=$<IF:$<CONFIG:Debug>,debug,debugoptimized>
+                    -Dpkgconfig.relocatable=true
                     ${EXT_CONFIGURE_ARGS}
                     ${EXT_CMAKE_ARGS}
                     --native-file=${CMAKE_CURRENT_BINARY_DIR}/meson-compiler_${ARCH}.ini
