@@ -141,3 +141,7 @@
   'require':
     "base/kcrash": "master"
     "base/fcitx-qt": "master"
+
+- 'on': ['MacOS']
+  'require':
+    "base/zlib": "master"
