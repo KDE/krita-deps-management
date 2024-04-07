@@ -7,7 +7,6 @@ endif()
 
 include(ExternalProject)
 
-set(KRITA_MACOS_EXTERNAL_PACKAGE_NAME "package_build_fat.tar.gz")
 # used always for stepped universal or non universal builds.
 set(PARENT_CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
 set(KRITA_MACOS_CONSOLIDATE_SCRIPT ${PARENT_CMAKE_SOURCE_DIR}/../tools/macos_consolidate.sh)
