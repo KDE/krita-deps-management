@@ -9,3 +9,4 @@ Options:
   run-gcovr: False
   use-asan: False
   pkg-config-sanity-check: 'warning'
+  macos-rpath-fix: True
