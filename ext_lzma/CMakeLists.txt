@@ -6,6 +6,11 @@ endif()
 project(ext_lzma)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
+##
+# Be careful when updating LZMA:
+# Versions 5.6.0 and 5.6.1 are backdored (CVE-2024-3094)
+##
+
 if (WIN32)
     ExternalProject_Add( ext_lzma
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
