@@ -17,7 +17,7 @@ seed_windows_qt515_custom:
       - ".\\**\\meson-logs\\meson-log.txt"
       - ".\\**\\CMakeCache.txt"
       - ".\\**\\CMakeFiles\\CMakeOutput.log"
-      - seed-packages-win64.log
+      - seed-packages-*.log
     exclude:
       - "./**/meson-private/**/*"
 
@@ -38,9 +38,39 @@ seed_appimage_qt515_custom:
       - "./**/meson-logs/meson-log.txt"
       - "./**/CMakeCache.txt"
       - "./**/CMakeFiles/CMakeOutput.log"
-      - seed-packages-linux.log
+      - seed-packages-*.log
     exclude:
       - "./**/meson-private/**/*"
+
+seed_macos_qt515_custom:
+  stage: Dependencies
+  extends:
+  - .seed_template
+  - .macos_qt515
+  variables:
+    KRITA_STAGE_DEP:
+      value: "ext_unknown"
+  script:
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch master | tee "seed-packages-macos.log"
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - "./**/meson-logs/meson-log.txt"
+      - "./**/CMakeCache.txt"
+      - "./**/CMakeFiles/CMakeOutput.log"
+      - seed-packages-*.log
+    exclude:
+      - "./**/meson-private/**/*"
+
+seed_macos_qt515_custom_local_cache:
+  extends:
+  - seed_macos_qt515_custom
+  variables:
+    KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
+  script:
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch master --publish-to-cache | tee "seed-packages-macos.log"
+
 
 .shared_job_template_windows:
   variables:
@@ -61,6 +91,11 @@ seed_appimage_qt515_custom_shared:
   - seed_appimage_qt515_custom
   - .shared_job_template_unix
 
+seed_macos_qt515_custom_shared:
+  extends:
+  - seed_macos_qt515_custom
+  - .shared_job_template_unix
+
 seed_windows_qt515_dirty:
   extends:
   - seed_windows_qt515_custom
@@ -75,6 +110,12 @@ seed_appimage_qt515_dirty:
   script:
     - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Linux/Qt5/Shared --branch master | tee "seed-packages-linux.log"
 
+seed_macos_qt515_dirty:
+  extends:
+    - seed_macos_qt515_custom
+  script:
+    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch master | tee "seed-packages-macos.log"
+
 seed_windows_qt515_dirty_shared:
   extends:
     - seed_windows_qt515_dirty
@@ -83,4 +124,9 @@ seed_windows_qt515_dirty_shared:
 seed_appimage_qt515_dirty_shared:
   extends:
     - seed_appimage_qt515_dirty
+    - .shared_job_template_unix
+
+seed_macos_qt515_dirty_shared:
+  extends:
+    - seed_macos_qt515_dirty
     - .shared_job_template_unix
