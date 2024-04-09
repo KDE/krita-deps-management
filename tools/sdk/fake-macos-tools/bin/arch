@@ -1,0 +1,49 @@
+#!/bin/bash
+
+usage=\
+"Usage: $(basename "$0") [OPTION]...\n
+Fake arch script for testing macos builds
+\n
+where:\n
+    -h,      --help              show this help text\n
+    -arm64 \n
+    -x86_64 \n
+\n
+"
+
+# Call getopt to validate the provided input.
+options=$(getopt -a -o "+h" --long "help arm64 x86_64" -- "$@")
+[ $? -eq 0 ] || {
+    echo "Incorrect options provided"
+    exit 1
+}
+
+SELECTED_ARCH=
+
+eval set -- "$options"
+while true; do
+    case "$1" in
+    --x86_64)
+        SELECTED_ARCH="x86_64"
+        ;;
+    --arm64)
+        SELECTED_ARCH="arm64"
+        ;;
+    -h | --help)
+        echo -e $usage >&2
+        exit 1
+        ;;
+    --)
+        shift
+        break
+        ;;
+    esac
+    shift
+done
+
+if [ -z "$SELECTED_ARCH" ]; then
+    echo x86_64
+else
+    echo "## Running ($SELECTED_ARCH): $*"
+    $*
+fi

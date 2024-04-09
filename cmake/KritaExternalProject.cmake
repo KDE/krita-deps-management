@@ -26,7 +26,7 @@ set(kis_MULTI_VALUE_ARGS PATCH_COMMAND CONFIGURE_ARGS CMAKE_ARGS DEPENDS
 #    or if MESON given, make use of kis_ExternalProject_Add_meson
 macro(kis_ExternalProject_Add_with_separate_builds_apple)
 
-    if(APPLE)
+    if(APPLE OR DEFINED ENV{FAKE_MACOS_ENVIRONMENT})
         kis_ExternalProject_Add_macos(${ARGN})
     else()
         set(options MESON AUTOMAKE)

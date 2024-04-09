@@ -151,7 +151,9 @@ configure_file(
 # Prepare file for crosscompile multiple archs
 if (CMAKE_OSX_ARCHITECTURES)
     foreach(arch ${CMAKE_OSX_ARCHITECTURES})
-        mesonify(CROSS_COMPILE_FLAGS_${arch} _cross_compile_flags)
+        if (NOT DEFINED ENV{FAKE_MACOS_ENVIRONMENT})
+            mesonify(CROSS_COMPILE_FLAGS_${arch} _cross_compile_flags)
+        endif()
         configure_file(
             ${CMAKE_CURRENT_LIST_DIR}/meson-compiler.ini.in
             ${CMAKE_CURRENT_BINARY_DIR}/meson-compiler_${arch}.ini
