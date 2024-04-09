@@ -59,16 +59,3 @@ else
         rsync -aq "${dir_arm}/" "${dir_uni}"
     fi
 fi
-
-# from https://www.gnu.org/software/automake/manual/html_node/DESTDIR.html
-build_tar=package_build_fat.tar.gz
-
-cd "${dir_uni}"
-find . '(' -type f -o -type l ')' -print > ../files.lst
-tar zcvf "${build_tar}" --files-from "../files.lst"
-mv ${build_tar} ../
-rsync -a ".${MACOS_DESTDIR_SRC}" "${MACOS_DESTDIR}/"
-
-echo "env ==# MACOS_DESTDIR: ${MACOS_DESTDIR}"
-echo "env ==# MACOS_DESTDIR_SRC: ${MACOS_DESTDI_SRC}"
-echo "consolidate end"

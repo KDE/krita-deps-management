@@ -10,6 +10,6 @@ endif()
 
 file(GLOB ALL_SUBDIRS "${SRC}/*")
 foreach (SUBDIR ${ALL_SUBDIRS})
-    file(INSTALL ${SUBDIR} DESTINATION ${DST})
+    file(INSTALL ${SUBDIR} DESTINATION ${DST} USE_SOURCE_PERMISSIONS)
 endforeach()
 

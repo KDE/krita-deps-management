@@ -110,16 +110,6 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
     )
     cmake_parse_arguments(EXT "${options}" "${onValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    # since env does not contain the final destination
-    # we created it with a hardcoded location
-    # construct MACOS_DESTDIR from CMAKE_PREFIX_PATH
-    if(NOT DEFINED MACOS_DESTDIR)
-        cmake_path(GET CMAKE_PREFIX_PATH PARENT_PATH PREFIX_PATH_PARENT)
-        cmake_path(APPEND PREFIX_PATH_PARENT "_staging" OUTPUT_VARIABLE MACOS_DESTDIR)
-    endif()
-    message(STATUS "MACOS_DESTDIR set to ${MACOS_DESTDIR}")
-
-
     macro(compile_arch ARCH DEPENDEES EXT_MESON)
         # Some packages need special configure to set architecture
         string(REPLACE "@ARCH@" ${ARCH} EXT_CONFIGURE_COMMAND_ARCH "${EXT_CONFIGURE_COMMAND}")
@@ -226,7 +216,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
             PATCH_COMMAND ${EXT_PATCH_COMMAND}
 
             CONFIGURE_COMMAND ""
-            BUILD_COMMAND ${CMAKE_COMMAND} -E env MACOS_DESTDIR=${MACOS_DESTDIR} MACOS_DESTDIR_SRC=${MACOS_DESTDIR_SRC} ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
+            BUILD_COMMAND ${CMAKE_COMMAND} -E env ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
             INSTALL_COMMAND ""
             
             UPDATE_COMMAND ""
@@ -246,7 +236,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
             PATCH_COMMAND ${EXT_PATCH_COMMAND}
 
             CONFIGURE_COMMAND ""
-            BUILD_COMMAND ${CMAKE_COMMAND} -E env MACOS_DESTDIR=${MACOS_DESTDIR} MACOS_DESTDIR_SRC=${MACOS_DESTDIR_SRC} ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
+            BUILD_COMMAND ${CMAKE_COMMAND} -E env ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
             INSTALL_COMMAND ""
             
             UPDATE_COMMAND ""
@@ -267,6 +257,52 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
         compile_arch(${ARCH} ${step_depend} ${EXT_MESON})
         set(step_depend build-${ARCH})
     endforeach()
+
+    # Add pre-install step that installs consolidated binaries
+    # using DESTDIR handling
+
+    if(${EXT_MESON} OR ${EXT_AUTOMAKE} OR EXT_BUILD_COMMAND)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_automake_like_prefix.cmake)
+        find_automake_like_prefix("${EXT_CONFIGURE_ARGS}" FINAL_PREFIX)
+    endif()
+
+    if(NOT FINAL_PREFIX AND EXT_CONFIGURE_ARGS)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_qt_like_prefix.cmake)
+        find_qt_like_prefix("${EXT_CONFIGURE_ARGS}" FINAL_PREFIX)
+    endif()
+
+    if(NOT FINAL_PREFIX AND EXT_CONFIGURE_COMMAND)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_qt_like_prefix.cmake)
+        find_qt_like_prefix("${EXT_CONFIGURE_COMMAND}" FINAL_PREFIX)
+    endif()
+
+    if(NOT FINAL_PREFIX AND EXT_CONFIGURE_COMMAND)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_automake_like_prefix.cmake)
+        find_automake_like_prefix("${EXT_CONFIGURE_COMMAND}" FINAL_PREFIX)
+    endif()
+
+    if(NOT FINAL_PREFIX AND EXT_CMAKE_ARGS)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_cmake_like_prefix.cmake)
+        find_cmake_like_prefix("${EXT_CMAKE_ARGS}" FINAL_PREFIX)
+    endif()
+
+    if (NOT FINAL_PREFIX)
+        message(FATAL_ERROR "Cannot detect the final prefix from meson configuration string")
+    endif()
+
+    ExternalProject_Get_Property(${EXT_NAME} TMP_DIR)
+
+    include(${CMAKE_SOURCE_DIR}/../cmake/offset_prefix_with_destdir.cmake)
+    offset_prefix_with_destdir(${TMP_DIR}/build_uni ${FINAL_PREFIX} OFFSET_PREFIX)
+
+    ExternalProject_Add_Step( ${EXT_NAME} pre-install
+            # newline space is important
+            COMMENT "Installing consolidated binaries for ${EXT_NAME}"
+
+            COMMAND ${CMAKE_COMMAND} -DSRC=${OFFSET_PREFIX} -DDST=${FINAL_PREFIX} -P ${KRITA_CI_INSTALL_DIRECTORY}
+
+            DEPENDERS install
+        )
 endmacro()
 
 macro(mkdir_build_arch_dir ARCH)
