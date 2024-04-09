@@ -110,6 +110,15 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
     )
     cmake_parse_arguments(EXT "${options}" "${onValueArgs}" "${multiValueArgs}" ${ARGN})
 
+    # since env does not contain the final destination
+    # we created it with a hardcoded location
+    # construct MACOS_DESTDIR from CMAKE_PREFIX_PATH
+    if(NOT DEFINED MACOS_DESTDIR)
+        cmake_path(GET CMAKE_PREFIX_PATH PARENT_PATH PREFIX_PATH_PARENT)
+        cmake_path(APPEND PREFIX_PATH_PARENT "_staging" OUTPUT_VARIABLE MACOS_DESTDIR)
+    endif()
+    message(STATUS "MACOS_DESTDIR set to ${MACOS_DESTDIR}")
+
 
     macro(compile_arch ARCH DEPENDEES EXT_MESON)
         # Some packages need special configure to set architecture
