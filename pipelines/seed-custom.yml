@@ -51,7 +51,7 @@ seed_macos_qt515_custom:
     KRITA_STAGE_DEP:
       value: "ext_unknown"
   script:
-    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch master | tee "seed-packages-macos.log"
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch master 2>&1 | tee "seed-packages-macos.log"
   artifacts:
     when: always
     expire_in: 1 week
@@ -59,6 +59,7 @@ seed_macos_qt515_custom:
       - "./**/meson-logs/meson-log.txt"
       - "./**/CMakeCache.txt"
       - "./**/CMakeFiles/CMakeOutput.log"
+      - "./**/config.log"
       - seed-packages-*.log
     exclude:
       - "./**/meson-private/**/*"
@@ -69,7 +70,7 @@ seed_macos_qt515_custom_local_cache:
   variables:
     KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
   script:
-    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch master --publish-to-cache | tee "seed-packages-macos.log"
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch master --publish-to-cache 2>&1 | tee "seed-packages-macos.log"
 
 
 .shared_job_template_windows:
