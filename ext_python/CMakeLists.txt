@@ -24,11 +24,13 @@ if (UNIX)
                   COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macOS_do_not_create_easy_install_link.patch
                   COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-make-links-relative.patch
                   COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-adjusting-scripts-shebangs-for-relocatable-installs.patch
+                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-fix-rpath-for-macOS.patch
 
             # Setuptools needs OpenSSL 1.1, the stock libssl isn't enough
             CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
                 PATH="${EXTPREFIX}/lib/Python.framework/Versions/Current/bin:$ENV{PATH}"
-                <SOURCE_DIR>/configure MACOSX_DEPLOYMENT_TARGET=$ENV{MACOSX_DEPLOYMENT_TARGET} --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --with-openssl=${EXTPREFIX}
+                <SOURCE_DIR>/configure MACOSX_DEPLOYMENT_TARGET=$ENV{MACOSX_DEPLOYMENT_TARGET} --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE}
+                --with-openssl=${EXTPREFIX} --with-openssl-rpath=${EXTPREFIX}/lib
                 --enable-framework=${EXTPREFIX}/lib --enable-optimizations --with-suffix=no
                 ${PYTHON_MACOS_CONFIG}
 
