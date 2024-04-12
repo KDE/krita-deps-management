@@ -95,6 +95,8 @@ stages:
     KDECI_CRAFT_PROJECT_CONFIG: $CI_PROJECT_DIR/.craft.ini
     KDECI_CRAFT_PLATFORM: macos-arm-clang
 
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
+
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
   before_script:
