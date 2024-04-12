@@ -64,6 +64,17 @@ if (UNIX)
         #     DEPENDS install
         # )
 
+        add_custom_target( clean_install_dir
+            COMMENT "removing Applications IDLE.app"
+            COMMAND ${CMAKE_COMMAND} -DSRC="Applications" -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_REMOVE_AT_PREFIX}
+            DEPENDS ext_python
+        )
+
+        if (NOT TARGET ext_install)
+            add_custom_target(ext_install)
+        endif()
+        add_dependencies(ext_install clean_install_dir)
+
         krita_add_to_ci_targets(ext_python)
 
     else()
