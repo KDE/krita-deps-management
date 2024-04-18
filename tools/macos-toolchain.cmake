@@ -19,4 +19,11 @@ if (NOT DEFINED ENV{MACOSX_DEPLOYMENT_TARGET})
     message(FATAL_ERROR "MACOSX_DEPLOYMENT_TARGET environment variable is not set!")
 endif()
 
+# it seems like the usage of a toolchain file resets cmake's ability
+# to initialize CMAKE_PREFIX_PATH from an environment variable, so
+# we should set it up manually
+if (DEFINED ENV{CMAKE_PREFIX_PATH})
+    set(CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH})
+endif()
+
 set(CMAKE_OSX_DEPLOYMENT_TARGET "$ENV{MACOSX_DEPLOYMENT_TARGET}")
