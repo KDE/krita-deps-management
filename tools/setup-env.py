@@ -3,7 +3,6 @@ import os
 import subprocess
 import argparse
 import sys
-import platform
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'ci-utilities'))
 from components import CommonUtils, EnvFileUtils
 import copy
@@ -72,9 +71,9 @@ if not arguments.android_abi is None:
     # disable KDE-wide toolchain files (Krita uses its own one)
     environmentUpdate['KDECI_SKIP_ECM_ANDROID_TOOLCHAIN'] = 'True'
 else:
-    if platform.system() == "Windows":
+    if sys.platform == 'win32':
         environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-windows-qt5.15'
-    elif platform.system() == "darwin":
+    elif sys.platform == "darwin":
         environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-macos-qt5.15'
     else:
         environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-appimage-qt5.15'
@@ -90,7 +89,7 @@ environmentUpdate['KDECI_REPO_METADATA_PATH'] = os.path.join(repoBaseDirectory, 
 if not sharedInstallDirectory is None:
     environmentUpdate['KDECI_SHARED_INSTALL_PATH'] = sharedInstallDirectory
 
-if platform.system().lower() == "darwin":
+if sys.platform == "darwin":
     macosDeployTarget = '10.14'
     environmentUpdate['MACOSX_DEPLOYMENT_TARGET'] = macosDeployTarget
     environmentUpdate['QMAKE_MACOSX_DEPLOYMENT_TARGET'] = macosDeployTarget
@@ -105,7 +104,7 @@ deactivationScripts = []
 effectivePythonExecutable = sys.executable
 
 if not arguments.venv is None:
-    if platform.system() == "Windows":
+    if sys.platform == 'win32':
         activationScripts.append(os.path.join(arguments.venv, 'Scripts', 'activate.bat'))
         deactivationScripts.append(os.path.join(arguments.venv, 'Scripts', 'deactivate.bat'))
         effectivePythonExecutable = os.path.abspath(os.path.join(arguments.venv, 'Scripts', 'python.exe'))
@@ -152,9 +151,9 @@ platformString = 'Linux'
 if not arguments.android_abi is None:
     platformString = 'Android/{}'.format(arguments.android_abi)
 else:
-    if platform.system() == "Windows":
+    if sys.platform == 'win32':
         platformString = 'Windows'
-    elif platform.system() == "darwin":
+    elif sys.platform == "darwin":
         platformString = 'MacOS'
 
 
