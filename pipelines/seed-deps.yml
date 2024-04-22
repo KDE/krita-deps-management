@@ -8,12 +8,13 @@ seed_windows_qt515:
     - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
     - python -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Windows/Qt5/Shared | Tee-Object -FilePath "seed-packages-win64.log"
   artifacts:
+    when: always
     expire_in: 1 week
     paths:
       - ".\\**\\meson-logs\\meson-log.txt"
       - ".\\**\\CMakeCache.txt"
       - ".\\**\\CMakeFiles\\CMakeOutput.log"
-      - seed-packages-win64.log
+      - seed-packages-*.log
     exclude:
       - "./**/meson-private/**/*"
 
@@ -25,14 +26,41 @@ seed_appimage_qt515:
   script:
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Linux/Qt5/Shared | tee "seed-packages-linux.log"
   artifacts:
+    when: always
     expire_in: 1 week
     paths:
       - "./**/meson-logs/meson-log.txt"
       - "./**/CMakeCache.txt"
       - "./**/CMakeFiles/CMakeOutput.log"
-      - seed-packages-linux.log
+      - seed-packages-*.log
     exclude:
       - "./**/meson-private/**/*"
+
+seed_macos_qt515:
+  stage: Dependencies
+  extends:
+  - .seed_template
+  - .macos_qt515
+  script:
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform MacOS/Qt5/Shared | tee "seed-packages-macos.log"
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - "./**/meson-logs/meson-log.txt"
+      - "./**/CMakeCache.txt"
+      - "./**/CMakeFiles/CMakeOutput.log"
+      - seed-packages-*.log
+    exclude:
+      - "./**/meson-private/**/*"
+
+seed_macos_qt515_local_cache:
+  extends:
+  - seed_macos_qt515
+  variables:
+    KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
+  script:
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform MacOS/Qt5/Shared --publish-to-cache| tee "seed-packages-macos.log"
 
 .seed_android_qt515:
   stage: Dependencies
@@ -42,6 +70,7 @@ seed_appimage_qt515:
   script:
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
   artifacts:
+    when: always
     expire_in: 1 week
     paths:
       - "./**/meson-logs/meson-log.txt"

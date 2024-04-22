@@ -244,6 +244,9 @@ else( APPLE )
         -system-zlib -qt-pcre -qt-sqlite
         -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
         -opensource -confirm-license -openssl-linked -prefix ${EXTPREFIX}
+        OPENSSL_PREFIX=${EXTPREFIX}
+        -I ${EXTPREFIX}/include
+        -L ${EXTPREFIX}/lib
     )
 
     kis_ExternalProject_Add_macos(

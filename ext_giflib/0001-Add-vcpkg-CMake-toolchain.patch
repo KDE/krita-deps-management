@@ -34,7 +34,7 @@ index 0000000..b877947
 +    set(APPLE_SUPPRESS_X11_WARNING TRUE)
 +    set(CMAKE_MACOSX_RPATH 1)
 +    set(BUILD_WITH_INSTALL_RPATH 1)
-+    add_definitions(-mmacosx-version-min=10.13 -Wno-macro-redefined -Wno-deprecated-register)
++    add_definitions(-mmacosx-version-min=$ENV{MACOSX_DEPLOYMENT_TARGET} -Wno-macro-redefined -Wno-deprecated-register)
 +endif()
 +
 +option(BUILD_utils "build also some small helper executables to transform gif files into other formats" OFF)

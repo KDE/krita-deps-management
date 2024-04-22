@@ -1,4 +1,5 @@
 Dependencies:
 - 'on': ['MacOS']
   'require':
-    'base/openssl': '@same' # TODO: do we need that on macOS?
+    'base/lzma' : '@same'
+    'base/openssl': '@same'

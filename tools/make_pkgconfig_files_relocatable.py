@@ -260,7 +260,7 @@ else:
 installPath = (sys.platform == 'win32' and PATH_TO_ARCHIVE[:2] or "") + PATH_TO_ARCHIVE[len(DESTDIR):]
 installPath = norm_abs(installPath)
 
-for subDir in ["lib/pkgconfig", "share/pkgconfig"]:
+for subDir in ["lib/pkgconfig", "share/pkgconfig", "lib/Python.framework/Versions/Current/lib/pkgconfig"]:
     stagingPcFileDir = norm(os.path.join(PATH_TO_ARCHIVE, subDir))
     if not os.path.exists(stagingPcFileDir):
         continue

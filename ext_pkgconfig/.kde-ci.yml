@@ -1,4 +1,4 @@
 Dependencies:
-- 'on': ['Windows', 'MacOS']
+- 'on': ['Windows']
   'require':
     'base/meson': '@same'

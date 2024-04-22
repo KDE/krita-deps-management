@@ -73,6 +73,50 @@ stages:
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
 
+.macos_qt515:
+  tags:
+    - macOS
+  environment: macos-qt5.15
+  variables:
+    # ccache is not present on macOS
+    # KDECI_CC_CACHE: /Users/gitlab/caches/krita-macos/cache
+    KDECI_CACHE_PATH: /Users/gitlab/caches/krita-macos/artifacts
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-macos-qt5.15
+    EXTERNALS_DOWNLOAD_DIR: /Users/gitlab/caches/krita-macos/downloads
+    KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
+    KDECI_BUILD_TYPE: Release
+    MACOSX_DEPLOYMENT_TARGET: "10.14"
+    QMAKE_MACOSX_DEPLOYMENT_TARGET: "10.14"
+    KDECI_EXTRA_CMAKE_ARGS: "-DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/macos-toolchain.cmake"
+
+    KDECI_CRAFT_DOWNLOADS: /Users/gitlab/caches/krita-macos/craft-downloads
+    KDECI_CRAFT_CONFIG: $CI_PROJECT_DIR/upstream-ci-utilities/craft/qt5/CraftConfig.ini
+    KDECI_CRAFT_PROJECT_CONFIG: $CI_PROJECT_DIR/.craft.ini
+    KDECI_CRAFT_PLATFORM: macos-arm-clang
+
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
+
+  # different commits may build different deps, so they should not be cancellable
+  interruptible: false
+  before_script:
+    - python3 -m venv venv --upgrade-deps
+    - . venv/bin/activate
+    - pip install -r requirements.txt
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git -b work/split-ci-branch --depth=1
+    - git clone https://invent.kde.org/packaging/craftmaster.git --depth=1
+    - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1 upstream-ci-utilities
+
+    - touch $KDECI_CRAFT_PROJECT_CONFIG
+    - function craftmaster { python3 craftmaster/CraftMaster.py --config $KDECI_CRAFT_CONFIG --config-override $KDECI_CRAFT_PROJECT_CONFIG --target $KDECI_CRAFT_PLATFORM --variables DownloadDir=$KDECI_CRAFT_DOWNLOADS $@; }
+
+    - craftmaster --setup
+    - craftmaster -c -i --options virtual.ignored=True --update craft
+    - craftmaster -c -i core/cacert dev-utils/7zip-base dev-utils/cmake-base dev-utils/7zip dev-utils/cmake dev-utils/patchelf dev-utils/ninja
+
+    - export PATH=$CI_PROJECT_DIR/$KDECI_CRAFT_PLATFORM/dev-utils/bin/:$PATH
+
+    - git config --global --add safe.directory $CI_PROJECT_DIR
 
 include:
   - /pipelines/seed-deps.yml

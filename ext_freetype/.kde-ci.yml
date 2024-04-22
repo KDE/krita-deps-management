@@ -11,3 +11,6 @@ Dependencies:
     # on Linux we use meson provided by the distribution
     'base/meson': '@same'
     'base/pkgconfig': '@same'
+- 'on': ['MacOS']
+  'require':
+    'base/zlib':  '@same'

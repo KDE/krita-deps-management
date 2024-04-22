@@ -8,60 +8,76 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 if (UNIX)
     if (APPLE)
-        message (FATAL_ERROR "ext_python is not yet ported on MacOS!")
+        set(PYTHON_SHORT_VERSION "3.10")
+        set(PYTHON_VERSION "3.10.7")
 
         if(MACOS_ARCHS GREATER 1)
             set(PYTHON_MACOS_CONFIG "--enable-universalsdk" "--with-universal-archs=universal2")
         endif()
+        
         ExternalProject_Add( ext_python
             DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-            URL https://www.python.org/ftp/python/3.10.7/Python-3.10.7.tar.xz
+            URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tar.xz
             URL_MD5 b8094f007b3a835ca3be6bdf8116cccc
 
             PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/osx_fixappinstall.diff
+                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macOS_do_not_create_easy_install_link.patch
+                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-make-links-relative.patch
+                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-adjusting-scripts-shebangs-for-relocatable-installs.patch
+                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-fix-rpath-for-macOS.patch
 
             # Setuptools needs OpenSSL 1.1, the stock libssl isn't enough
             CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
                 PATH="${EXTPREFIX}/lib/Python.framework/Versions/Current/bin:$ENV{PATH}"
-                <SOURCE_DIR>/configure MACOSX_DEPLOYMENT_TARGET=10.13 --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --with-openssl=${EXTPREFIX}
+                <SOURCE_DIR>/configure MACOSX_DEPLOYMENT_TARGET=$ENV{MACOSX_DEPLOYMENT_TARGET} --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE}
+                --with-openssl=${EXTPREFIX} --with-openssl-rpath=${EXTPREFIX}/lib
                 --enable-framework=${EXTPREFIX}/lib --enable-optimizations --with-suffix=no
                 ${PYTHON_MACOS_CONFIG}
 
-            # force single-threaded installation to avoid race conditions
-            INSTALL_COMMAND ${CMAKE_COMMAND} -E env
-                PATH="${EXTPREFIX}/lib/Python.framework/Versions/Current/bin:$ENV{PATH}"
-                make -j1 install
-
             UPDATE_COMMAND ""
 
-            DEPENDS ext_openssl
-        )
-        ExternalProject_Add_Step( ext_python create_symlink
-            COMMENT "Creating helper symlinks"
-            COMMAND ${CMAKE_COMMAND} -E copy ${EXTPREFIX}/bin/python3 ${EXTPREFIX}/bin/python
-            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/sitecustomize.py ${EXTPREFIX}/lib/Python.framework/Versions/Current/lib/python${PYTHON_VERSION}/
-            COMMAND ${CMAKE_COMMAND} -E create_symlink ${EXTPREFIX}/lib/Python.framework/Versions/Current/lib/python${PYTHON_VERSION} ${EXTPREFIX}/lib/python${PYTHON_VERSION}
-            COMMAND ${CMAKE_COMMAND} -E create_symlink ${EXTPREFIX}/lib/Python.framework/Versions/Current/include/python${PYTHON_VERSION} ${EXTPREFIX}/include/python${PYTHON_VERSION}
-            COMMAND ${CMAKE_COMMAND} -E create_symlink ./lib/python${PYTHON_VERSION}/site-packages ${EXTPREFIX}/lib/Python.framework/Versions/Current/site-packages
-            # CMake FindPythonLib can't find framework libraries, lack of maintainer for Python
-            COMMAND find ${EXTPREFIX}/lib/Python.framework/Versions/Current/lib -type l -d 1
-            | grep -o "[^/]*$"
-            | xargs -I FILE ${CMAKE_COMMAND} -E create_symlink ./Python.framework/Python ${EXTPREFIX}/lib/FILE
-            DEPENDEES install
-        )
-        ExternalProject_Add_Step( ext_python update_sip
-            COMMENT "Updating pip"
-            COMMAND COMMAND ${EXTPREFIX}/bin/python3 -m pip install --upgrade pip
-            DEPENDEES install
-        )
-        # TODO: modify krita_add_to_ci_targets to use other targets, not normal install!
-        ExternalProject_Add_Step( ext_python update_certifi
-            COMMENT "Deploying certifi to our OpenSSL CApath"
-            COMMAND ${EXTPREFIX}/bin/python3 ${CMAKE_CURRENT_SOURCE_DIR}/install_certificates.py
-            DEPENDEES update_sip
         )
 
-        message(FATAL_ERROR "TODO: configure targets with krita_add_to_ci_targets")
+        ExternalProject_Add_Step( ext_python create_symlink
+            COMMENT "Creating helper symlinks"
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink python3 python
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/python -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./Python.framework/Python libpython${PYTHON_SHORT_VERSION}.dylib
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/libpython${PYTHON_SHORT_VERSION}.dylib -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=${CMAKE_CURRENT_SOURCE_DIR}/sitecustomize.py -DDST=${EXTPREFIX}/lib/Python.framework/Versions/${PYTHON_SHORT_VERSION}/lib/python${PYTHON_SHORT_VERSION}/ -P ${KRITA_CI_INSTALL}
+
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./Python.framework/Versions/${PYTHON_SHORT_VERSION}/lib/python${PYTHON_SHORT_VERSION} python${PYTHON_SHORT_VERSION}
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/python${PYTHON_SHORT_VERSION} -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL}
+
+            COMMAND ${CMAKE_COMMAND} -E make_directory <TMP_DIR>/include
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR>/include ${CMAKE_COMMAND} -E create_symlink ../lib/Python.framework/Versions/${PYTHON_SHORT_VERSION}/include/python${PYTHON_SHORT_VERSION} python${PYTHON_SHORT_VERSION}
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/include/python${PYTHON_SHORT_VERSION} -DDST=${EXTPREFIX}/include -P ${KRITA_CI_INSTALL}
+
+            COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink ./lib/python${PYTHON_SHORT_VERSION}/site-packages site-packages
+            COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/site-packages -DDST=${EXTPREFIX}/lib/Python.framework/Versions/${PYTHON_SHORT_VERSION}/ -P ${KRITA_CI_INSTALL}
+            
+            DEPENDERS install
+        )
+        # TODO: modify krita_add_to_ci_targets to use other targets, not normal install!
+        # ExternalProject_Add_Step( ext_python update_certifi
+        #     COMMENT "Deploying certifi to our OpenSSL CApath"
+        #     COMMAND ${EXTPREFIX}/bin/python3 ${CMAKE_CURRENT_SOURCE_DIR}/install_certificates.py
+        #     DEPENDS install
+        # )
+
+        add_custom_target( clean_install_dir
+            COMMENT "removing Applications IDLE.app"
+            COMMAND ${CMAKE_COMMAND} -DSRC="Applications" -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_REMOVE_AT_PREFIX}
+            DEPENDS ext_python
+        )
+
+        if (NOT TARGET ext_install)
+            add_custom_target(ext_install)
+        endif()
+        add_dependencies(ext_install clean_install_dir)
+
+        krita_add_to_ci_targets(ext_python)
 
     else()
 

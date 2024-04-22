@@ -1,0 +1,24 @@
+From a96010924d02c9f0bbd0455b427f44fe03fbe1b9 Mon Sep 17 00:00:00 2001
+From: Ivan Yossi <ghevan@gmail.com>
+Date: Fri, 1 Mar 2024 14:15:41 -0600
+Subject: [PATCH] macOS_do_not_create_easy_install_link
+
+---
+ Mac/Makefile.in | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Mac/Makefile.in b/Mac/Makefile.in
+index f969128..69ab419 100644
+--- a/Mac/Makefile.in
++++ b/Mac/Makefile.in
+@@ -166,7 +166,6 @@ altinstallunixtools:
+ 	-if test "x$(ENSUREPIP)" != "xno"  ; then \
+ 		cd "$(DESTDIR)$(FRAMEWORKUNIXTOOLSPREFIX)/bin" && \
+ 		for fn in \
+-				easy_install-$(VERSION) \
+ 				pip$(VERSION) \
+ 				; \
+ 		do \
+-- 
+2.37.1 (Apple Git-137.1)
+

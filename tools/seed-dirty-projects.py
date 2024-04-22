@@ -44,15 +44,12 @@ with open(seedFile, 'r') as f:
 platformDeps = []
 
 for rule in allSeededDeps:
-    if '@all' in rule['on']:
-        for dep in rule['require'].keys():
-            projectId = dependencyResolver.projects[dep]['identifier']
-            platformDeps.append(projectId)
-    if platform in rule['on']:
+    if platform.matches(rule['on']):
         for dep in rule['require'].keys():
             projectId = dependencyResolver.projects[dep]['identifier']
             platformDeps.append(projectId)
 
+print("## plaform: {}".format(platform))
 print("## plaform deps: {}".format(platformDeps))
 
 reverseDeps = {}
