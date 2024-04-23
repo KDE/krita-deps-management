@@ -95,6 +95,7 @@ seed_macos_qt515_local_cache:
 
 .shared_job_template_android:
   variables:
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: False
     KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
 
 .seed_android_x86_64_qt515:

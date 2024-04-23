@@ -77,10 +77,12 @@ seed_macos_qt515_custom_local_cache:
 
 .shared_job_template_windows:
   variables:
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: False
     KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR\_shared_install
 
 .shared_job_template_unix:
   variables:
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: False
     KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
 
 seed_windows_qt515_custom_shared:

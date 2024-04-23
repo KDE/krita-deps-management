@@ -13,6 +13,9 @@ stages:
     KDECI_BUILD_TARGET: ext_build
     KDECI_INSTALL_TARGET: ext_install
     KDECI_GITLAB_SERVER: https://invent.kde.org/
+    # we need to make sure that the packages of the same batch don't try
+    # to link to each other's build prefix
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
   before_script:
     - git clone https://invent.kde.org/dkazakov/ci-utilities.git -b work/split-ci-branch
     - git config --global --add safe.directory $CI_PROJECT_DIR
@@ -94,8 +97,6 @@ stages:
     KDECI_CRAFT_CONFIG: $CI_PROJECT_DIR/upstream-ci-utilities/craft/qt5/CraftConfig.ini
     KDECI_CRAFT_PROJECT_CONFIG: $CI_PROJECT_DIR/.craft.ini
     KDECI_CRAFT_PLATFORM: macos-arm-clang
-
-    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
 
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
