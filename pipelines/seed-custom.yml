@@ -17,6 +17,7 @@ seed_windows_qt515_custom:
       - ".\\**\\meson-logs\\meson-log.txt"
       - ".\\**\\CMakeCache.txt"
       - ".\\**\\CMakeFiles\\CMakeOutput.log"
+      - ".\\**\\config.log"
       - "*.log"
     exclude:
       - "./**/meson-private/**/*"
@@ -38,6 +39,7 @@ seed_appimage_qt515_custom:
       - "./**/meson-logs/meson-log.txt"
       - "./**/CMakeCache.txt"
       - "./**/CMakeFiles/CMakeOutput.log"
+      - "./**/config.log"
       - "*.log"
     exclude:
       - "./**/meson-private/**/*"
