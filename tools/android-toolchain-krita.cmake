@@ -1,6 +1,11 @@
-if ($ENV{KRITACI_RELEASE})
+if ($ENV{KRITACI_ANDROID_RELEASE_MODE})
+    # Activation of the release disables signing the packages
+    # with the debug key. The release is going to be signed with
+    # a proper key anyway
+    message (STATUS "Setting Android Release Mode")
     set(ANDROIDDEPLOYQT_EXTRA_ARGS "--release")
 else()
+    message (STATUS "Setting Android Debug Mode")
     set(ANDROIDDEPLOYQT_EXTRA_ARGS "--no-gdbserver")
 endif()
 
