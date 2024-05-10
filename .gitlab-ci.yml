@@ -10,8 +10,6 @@ stages:
     - when: manual
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
   variables:
-    KDECI_BUILD_TARGET: ext_build
-    KDECI_INSTALL_TARGET: ext_install
     KDECI_GITLAB_SERVER: https://invent.kde.org/
     # we need to make sure that the packages of the same batch don't try
     # to link to each other's build prefix
