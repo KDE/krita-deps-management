@@ -102,6 +102,7 @@ elseif(ANDROID)
 
     ExternalProject_Add( ext_boost
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
+        DOWNLOAD_NAME boost-4067aed71278e292d1b78d8a13431f01f80012f1.tar.gz
         URL https://github.com/moritz-wundke/Boost-for-Android/archive/4067aed71278e292d1b78d8a13431f01f80012f1.tar.gz
         URL_HASH SHA256=e43f43b33e79741c393cb84c277ff0a5fdb38e775f082d576c62938ef08fb3b3
 

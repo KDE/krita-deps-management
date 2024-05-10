@@ -14,6 +14,7 @@ if (UNIX)
 ExternalProject_Add( ext_gsl
 
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
+    DOWNLOAD_NAME gsl-8eac3b0b5cffb90004a729f0675011e718f41379.zip
     URL https://github.com/ampl/gsl/archive/8eac3b0b5cffb90004a729f0675011e718f41379.zip
     URL_HASH SHA256=124bf79bfd2c3cb07df02a2b0e80e13d29a94cab8acae1c2c1e086474381a6c2
 
@@ -27,6 +28,7 @@ else()
 ExternalProject_Add( ext_gsl
 
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
+    DOWNLOAD_NAME gsl-8eac3b0b5cffb90004a729f0675011e718f41379.zip
     URL https://github.com/ampl/gsl/archive/8eac3b0b5cffb90004a729f0675011e718f41379.zip
     URL_HASH SHA256=124bf79bfd2c3cb07df02a2b0e80e13d29a94cab8acae1c2c1e086474381a6c2
 

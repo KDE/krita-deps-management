@@ -19,6 +19,7 @@ endif()
 
 ExternalProject_Add( ext_highway
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
+    DOWNLOAD_NAME highway-1.0.7.tar.gz
     URL https://github.com/google/highway/archive/refs/tags/1.0.7.tar.gz
     URL_HASH SHA256=5434488108186c170a5e2fca5e3c9b6ef59a1caa4d520b008a9b8be6b8abe6c5
 

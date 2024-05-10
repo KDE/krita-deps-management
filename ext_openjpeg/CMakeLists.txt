@@ -8,6 +8,7 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 ExternalProject_Add( ext_openjpeg
 	DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
+    DOWNLOAD_NAME openjpeg-v2.5.0.tar.gz
     URL https://github.com/uclouvain/openjpeg/archive/v2.5.0.tar.gz
     URL_HASH SHA256=0333806d6adecc6f7a91243b2b839ff4d2053823634d4f6ed7a59bc87409122a
 

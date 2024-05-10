@@ -19,7 +19,7 @@ endif()
 
 ExternalProject_Add( ext_jpegxl
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-
+    DOWNLOAD_NAME libjxl-v0.10.0.tar.gz
     URL https://github.com/libjxl/libjxl/archive/refs/tags/v0.10.0.tar.gz
     URL_HASH SHA256=ab32d52b033c814d24762db4942a3b45315d9db37bf5c8a9741ccc1bb0a52d97
 
