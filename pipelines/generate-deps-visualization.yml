@@ -3,6 +3,8 @@ generate-visualization:
   extends:
   - .appimage_qt515
   rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
     - when: always
   before_script:
     - pip install -r requirements.txt

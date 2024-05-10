@@ -4,11 +4,17 @@ stages:
   - Dependencies
   - SystemMaintenance
 
+.nightly-repo-cleanup:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $KRITACI_SCHEDULED_JOB_NAME == "repo-cleanup"
+      when: always
+
 .seed_template:
   needs: []
   rules:
-    - when: manual
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - when: manual
   variables:
     KDECI_GITLAB_SERVER: https://invent.kde.org/
     # we need to make sure that the packages of the same batch don't try

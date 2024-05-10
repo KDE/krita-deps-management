@@ -2,11 +2,10 @@
 
 .registry_cleanup_base:
   stage: SystemMaintenance
+  extends:
+  - .nightly-repo-cleanup
   needs: []
   image: invent-registry.kde.org/sysadmin/ci-images/suse-qt515:latest
-  rules:
-    - when: manual
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
   tags:
     - Linux
   variables:
