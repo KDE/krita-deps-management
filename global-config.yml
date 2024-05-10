@@ -10,3 +10,5 @@ Options:
   use-asan: False
   pkg-config-sanity-check: 'warning'
   macos-rpath-fix: True
+  force-build-target: ext_build
+  force-install-target: ext_install
