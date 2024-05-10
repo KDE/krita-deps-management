@@ -148,7 +148,10 @@ if (WIN32)
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
       INSTALL_DIR ${EXTPREFIX}
-      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} <SOURCE_DIR>/configure.bat ${_QT_conf}
+
+      # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
+      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} --unset=QMAKEFEATURES
+          <SOURCE_DIR>/configure.bat ${_QT_conf}
 
       BUILD_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} ${QT_BUILD_COMMAND}
 
@@ -169,8 +172,10 @@ elseif (ANDROID)
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
+      # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
       # TODO(sh_zam): We can probably skip the skipping now.
-      CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -verbose
+      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env --unset=QMAKEFEATURES
+          <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -verbose
           -android-sdk ${ANDROID_SDK_ROOT} -android-ndk ${CMAKE_ANDROID_NDK} -android-arch ${ANDROID_ABI}
           -xplatform android-clang -android-ndk-platform android-23
           -make libs -qt-sqlite -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -system-zlib
@@ -213,7 +218,9 @@ elseif (NOT APPLE)
 
       CMAKE_ARGS -DOPENSSL_LIBS='-L${EXTPREFIX}/lib -lssl -lcrypto'
 
-      CONFIGURE_COMMAND <SOURCE_DIR>/configure -prefix ${EXTPREFIX}
+      # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
+      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env --unset=QMAKEFEATURES
+          <SOURCE_DIR>/configure -prefix ${EXTPREFIX}
           -opensource -confirm-license
           -feature-relocatable -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -verbose -nomake examples
           -skip qt3d -skip qtactiveqt -skip qtcanvas3d -skip qtconnectivity
@@ -261,7 +268,8 @@ else( APPLE )
 
       WORKING_DIRECTORY <BINARY_DIR>-@ARCH@
 
-      CONFIGURE_COMMAND -e "OPENSSL_LIBS=-L${EXTPREFIX}/lib -lssl -lcrypto"
+      # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
+      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env "OPENSSL_LIBS=-L${EXTPREFIX}/lib -lssl -lcrypto" --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure
           ${MACOS_QT_CONFIGURE_OPS}
           -device-option QMAKE_APPLE_DEVICE_ARCHS=@ARCH@
