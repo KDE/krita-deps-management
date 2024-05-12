@@ -94,8 +94,12 @@
     "heif/libx265": "master"
     "base/libheif": "master"
 
-# fseek call in libraw is not supported on 32-bit systems
-- 'on': ['Windows', 'MacOS', 'Linux', 'Android/x86_64', 'Android/arm64-v8a']
+# Note1: fseek call in libraw is not supported on 32-bit systems
+# Note2: RAW support is currently disabled on ['Android/x86_64',
+#        'Android/arm64-v8a'], since it doesn't work in Krita for
+#        some reason. libraw and Krita build fine, but it doesn't
+#        work in the runtime.
+- 'on': ['Windows', 'MacOS', 'Linux']
   'require':
     "base/libraw": "master"
     "base/kdcraw": "master"
