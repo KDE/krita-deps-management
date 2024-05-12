@@ -16,11 +16,9 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 ExternalProject_Add( ext_quazip
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    DOWNLOAD_NAME quazip-v0.9.1.tar.gz
-    URL https://github.com/stachenov/quazip/archive/v0.9.1.tar.gz
-    URL_HASH SHA256=5d36b745cb94da440432690050e6db45b99b477cfe9bc3b82fd1a9d36fff95f5
-
-    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/liblocation.diff
+    DOWNLOAD_NAME quazip-v1.4.tar.gz
+    URL https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz
+    URL_HASH SHA256=79633fd3a18e2d11a7d5c40c4c79c1786ba0c74b59ad752e8429746fe1781dd6
 
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
