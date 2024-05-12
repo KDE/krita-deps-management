@@ -6,6 +6,14 @@ endif()
 project(ext_quazip)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
+##
+## WARNING: quazip project lost its maintainer after 2022! Please manually review
+##          all the incoming commits when updating version!
+##
+##          The last version of quazip released with the old maintainer was
+##          quazip-v1.4
+##
+
 ExternalProject_Add( ext_quazip
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     DOWNLOAD_NAME quazip-v0.9.1.tar.gz
