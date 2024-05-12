@@ -4,7 +4,7 @@ Dependencies:
     'base/qt': '@same'
     'base/extra_cmake_modules': '@same'
     'base/karchive': '@same'
-    'base/jpegxl': '@same'
+#    'base/jpegxl': '@same' # disabled due to API breakage in jxl 0.9.0+
 #    'base/libraw': '@same'
 #    'base/openexr': '@same' # TODO: openexr is not detected, because 3.0 is required!
 #    'base/avif': '@same'
