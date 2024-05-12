@@ -14,7 +14,6 @@
     "base/fontconfig": "master"
     "base/qt": "master"
     "base/openexr": "master"
-    "base/ocio": "master"
     "base/tiff": "master"
     "base/gsl": "master"
     "base/giflib": "master"
@@ -78,6 +77,13 @@
   'require':
     "base/lzma": "master"
 
+# OpenColorIO is not supported on Android by Krita,
+# the whole plugin is disabled. OCIO **can** be built
+# for Android, it is just Krita that cannot use it on
+# that platform
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/ocio": "master"
 
 # TODO: port heif deps into Anroid-arm64
 - 'on': ['Windows', 'MacOS', 'Linux', 'Android/x86_64']
