@@ -98,6 +98,14 @@ seed_macos_qt515_local_cache:
     KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: False
     KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
 
+.seed_android_x86_qt515:
+  environment: android-x86-qt5.15
+  variables:
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-x86-qt5.15
+    KDECI_ANDROID_ABI: x86
+    KDECI_CC_CACHE: /mnt/caches/krita-android/x86/
+    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/x86/
+
 .seed_android_x86_64_qt515:
   environment: android-x86_64-qt5.15
   variables:
@@ -122,6 +130,11 @@ seed_macos_qt515_local_cache:
     KDECI_CC_CACHE: /mnt/caches/krita-android/armeabi-v7a/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-android/armeabi-v7a/
 
+seed_android_x86_qt515:
+  extends:
+  - .seed_android_qt515
+  - .seed_android_x86_qt515
+
 seed_android_x86_64_qt515:
   extends:
   - .seed_android_qt515
@@ -136,6 +149,11 @@ seed_android_armeabi-v7a_qt515:
   extends:
   - .seed_android_qt515
   - .seed_android_armeabi-v7a_qt515
+
+seed_android_x86_qt515_shared:
+  extends:
+  - seed_android_x86_qt515
+  - .shared_job_template_android
 
 seed_android_x86_64_qt515_shared:
   extends:
@@ -152,6 +170,11 @@ seed_android_armeabi-v7a_qt515_shared:
   - seed_android_armeabi-v7a_qt515
   - .shared_job_template_android
 
+seed_android_x86_qt515_dirty:
+  extends:
+  - .seed_android_qt515_dirty
+  - .seed_android_x86_qt515
+
 seed_android_x86_64_qt515_dirty:
   extends:
   - .seed_android_qt515_dirty
@@ -166,6 +189,11 @@ seed_android_armeabi-v7a_qt515_dirty:
   extends:
   - .seed_android_qt515_dirty
   - .seed_android_armeabi-v7a_qt515
+
+seed_android_x86_qt515_dirty_shared:
+  extends:
+  - seed_android_x86_qt515_dirty
+  - .shared_job_template_android
 
 seed_android_x86_64_qt515_dirty_shared:
   extends:

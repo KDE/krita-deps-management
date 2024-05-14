@@ -3,7 +3,7 @@ if (DEFINED ENV{KDECI_ANDROID_ABI})
 endif()
 
 if (NOT ANDROID_ABI)
-    message(FATAL_ERROR "ANDROID_ABI option is not set! (options are: x86_64 armeabi-v7a arm64-v8a)")
+    message(FATAL_ERROR "ANDROID_ABI option is not set! (options are: x86 x86_64 armeabi-v7a arm64-v8a)")
 endif()
 
 if (NOT DEFINED ENV{KDECI_ANDROID_SDK_ROOT})

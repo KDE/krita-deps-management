@@ -90,6 +90,7 @@
     "base/ocio": "master"
 
 # TODO: port heif deps into Anroid-arm64
+# TODO: heif/libx265_10bit does not compile on Android/x86
 - 'on': ['Windows', 'MacOS', 'Linux', 'Android/x86_64']
   'require':
     "heif/libde265": "master"
