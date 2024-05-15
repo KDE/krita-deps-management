@@ -17,7 +17,7 @@ endif()
 set(KRITA_ANDROID_NATIVE_API_LEVEL 23)
 set(KRITA_ANDROID_SDK_API_LEVEL 33)
 
-if (${ANDROID_ABI} STREQUAL "armeabi-v7a")
+if (${ANDROID_ABI} STREQUAL "armeabi-v7a" OR ${ANDROID_ABI} STREQUAL "x86")
     # Meson injects -D_FILE_OFFSET_BITS=64 which triggers off_t functions.
     # Alternatively, increase API level to 24.
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LIBCPP_HAS_NO_OFF_T_FUNCTIONS")
