@@ -30,3 +30,9 @@ set(CMAKE_FIND_ROOT_PATH "${CMAKE_INSTALL_PREFIX}" "${CMAKE_FIND_ROOT_PATH}")
 set(ANDROID_STL c++_shared)
 
 include ("$ENV{KDECI_ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake" REQUIRED)
+
+# for some reason Android toolchain doesn't set ASM compiler path
+# on x86 platform, so let's just reuse C-compiler for that
+if (${ANDROID_ABI} STREQUAL "x86" AND NOT CMAKE_ASM_COMPILER)
+    set(CMAKE_ASM_COMPILER ${CMAKE_C_COMPILER})
+endif()
