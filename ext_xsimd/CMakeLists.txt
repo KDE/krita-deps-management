@@ -18,6 +18,8 @@ ExternalProject_Add( ext_xsimd
     URL https://github.com/xtensor-stack/xsimd/archive/5647254635ea6f590b7366e0848a8a0ab3007efa.tar.gz
     URL_HASH SHA256=5b175c8b671d4287343b0e79e9e3a8070992815f5e0ed44bfc9bce01f8880814
 
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-detection-of-SSE-AVX-AVX512-when-they-are-explic.patch
+
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
 
     UPDATE_COMMAND ""
