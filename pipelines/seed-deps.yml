@@ -60,10 +60,7 @@ seed_macos_qt515:
 seed_macos_qt515_local_cache:
   extends:
   - seed_macos_qt515
-  variables:
-    KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
-  script:
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform MacOS/Qt5/Shared --publish-to-cache 2>&1 | tee "seed-packages-macos.log"
+  - .local_cache_mixin
 
 .seed_android_qt515:
   stage: Dependencies

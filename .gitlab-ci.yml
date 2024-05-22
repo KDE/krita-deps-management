@@ -9,6 +9,11 @@ stages:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $KRITACI_SCHEDULED_JOB_NAME == "repo-cleanup"
       when: always
 
+.local_cache_mixin:
+  variables:
+    KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
+    KDECI_PUBLISH_TO_CACHE: True
+
 .seed_template:
   needs: []
   rules:

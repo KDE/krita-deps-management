@@ -69,11 +69,7 @@ seed_macos_qt515_custom:
 seed_macos_qt515_custom_local_cache:
   extends:
   - seed_macos_qt515_custom
-  variables:
-    KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
-  script:
-    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch master --publish-to-cache 2>&1 | tee "seed-packages-macos.log"
-
+  - .local_cache_mixin
 
 .shared_job_template_windows:
   variables:
