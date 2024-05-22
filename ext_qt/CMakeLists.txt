@@ -23,6 +23,11 @@ else()
   set(QT_INSTALL_COMMAND ${CMAKE_COMMAND} -DMAKE_COMMAND=make -P ${KRITA_CI_RUN_MAKE_WITH_INSTALL_ROOT} -- install)
 endif()
 
+set(EXTRA_QT_SUBMODULES)
+if (QT_ENABLE_QUICKCONTROLS2)
+  set(EXTRA_QT_SUBMODULES qtquickcontrols2 qtgraphicaleffects)
+endif()
+
 if (WIN32)
 
     if(MINGW)
@@ -142,7 +147,7 @@ if (WIN32)
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
       GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
       GIT_TAG ${QT_GIT_TAG}
-      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtwinextras qttranslations
+      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtwinextras qttranslations ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
@@ -167,7 +172,7 @@ elseif (ANDROID)
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
       GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
       GIT_TAG ${QT_GIT_TAG}
-      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qtandroidextras
+      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qtandroidextras ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
@@ -211,7 +216,7 @@ elseif (NOT APPLE)
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
       GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
       GIT_TAG ${QT_GIT_TAG}
-      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtx11extras qttranslations
+      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtx11extras qttranslations ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
@@ -261,7 +266,7 @@ else( APPLE )
 
       GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
       GIT_TAG ${QT_GIT_TAG}
-      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtmacextras qttranslations
+      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtmacextras qttranslations ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
