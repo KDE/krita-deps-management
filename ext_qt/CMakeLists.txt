@@ -145,7 +145,7 @@ if (WIN32)
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
+      GIT_REPOSITORY https://invent.kde.org/greenblub/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtwinextras qttranslations ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
@@ -170,7 +170,7 @@ elseif (ANDROID)
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
+      GIT_REPOSITORY https://invent.kde.org/greenblub/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qtandroidextras ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
@@ -214,7 +214,7 @@ elseif (NOT APPLE)
     ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
+      GIT_REPOSITORY https://invent.kde.org/greenblub/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtx11extras qttranslations ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
@@ -264,7 +264,7 @@ else( APPLE )
     kis_ExternalProject_Add_macos(
       ext_qt
 
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
+      GIT_REPOSITORY https://invent.kde.org/greenblub/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtmacextras qttranslations ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
