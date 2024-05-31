@@ -61,7 +61,7 @@ environmentUpdate['EXTERNALS_DOWNLOAD_DIR'] = os.path.join(workingDirectory, 'ca
 environmentUpdate['KDECI_GITLAB_SERVER'] = 'https://invent.kde.org/'
 
 if not arguments.android_abi is None:
-    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-android-{}-qt5.15'.format(arguments.android_abi)
+    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'greenblub/krita-ci-artifacts-android-{}-qt5.15'.format(arguments.android_abi)
     environmentUpdate['KDECI_ANDROID_ABI'] = arguments.android_abi
     # run-ci-build uses this variable to detect if we are building android target
     # our docker image usually sets this environment variable properly,
@@ -72,11 +72,11 @@ if not arguments.android_abi is None:
     environmentUpdate['KDECI_SKIP_ECM_ANDROID_TOOLCHAIN'] = 'True'
 else:
     if sys.platform == 'win32':
-        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-windows-qt5.15'
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'greenblub/krita-ci-artifacts-windows-qt5.15'
     elif sys.platform == "darwin":
-        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-macos-qt5.15'
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'greenblub/krita-ci-artifacts-macos-qt5.15'
     else:
-        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-appimage-qt5.15'
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'greenblub/krita-ci-artifacts-appimage-qt5.15'
 
 environmentUpdate['KDECI_BUILD_TYPE'] = 'Release'
 environmentUpdate['KDECI_COMPRESS_PACKAGES_ON_DOWNLOAD'] = '1'

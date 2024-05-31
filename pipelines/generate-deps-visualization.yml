@@ -9,7 +9,7 @@ generate-visualization:
   before_script:
     - pip install -r requirements.txt
     - pip install graphviz
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/greenblub/ci-utilities.git --depth=1
     - git config --global --add safe.directory $CI_PROJECT_DIR
   script:
     - LD_LIBRARY_PATH= python3 -u tools/generate-graphvis-file.py --branch master --seed-file latest/krita-deps.yml -o deps_all.png

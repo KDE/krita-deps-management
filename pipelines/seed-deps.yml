@@ -98,7 +98,7 @@ seed_macos_qt515_local_cache:
 .seed_android_x86_qt515:
   environment: android-x86-qt5.15
   variables:
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-x86-qt5.15
+    KDECI_PACKAGE_PROJECT: greenblub/krita-ci-artifacts-android-x86-qt5.15
     KDECI_ANDROID_ABI: x86
     KDECI_CC_CACHE: /mnt/caches/krita-android/x86/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-android/x86/
@@ -106,7 +106,7 @@ seed_macos_qt515_local_cache:
 .seed_android_x86_64_qt515:
   environment: android-x86_64-qt5.15
   variables:
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-x86_64-qt5.15
+    KDECI_PACKAGE_PROJECT: greenblub/krita-ci-artifacts-android-x86_64-qt5.15
     KDECI_ANDROID_ABI: x86_64
     KDECI_CC_CACHE: /mnt/caches/krita-android/x86_64/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-android/x86_64/
@@ -114,7 +114,7 @@ seed_macos_qt515_local_cache:
 .seed_android_arm64-v8a_qt515:
   environment: android-arm64-v8a-qt5.15
   variables:
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-arm64-v8a-qt5.15
+    KDECI_PACKAGE_PROJECT: greenblub/krita-ci-artifacts-android-arm64-v8a-qt5.15
     KDECI_ANDROID_ABI: arm64-v8a
     KDECI_CC_CACHE: /mnt/caches/krita-android/arm64-v8a/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-android/arm64-v8a/
@@ -122,7 +122,7 @@ seed_macos_qt515_local_cache:
 .seed_android_armeabi-v7a_qt515:
   environment: android-armeabi-v7a-qt5.15
   variables:
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-armeabi-v7a-qt5.15
+    KDECI_PACKAGE_PROJECT: greenblub/krita-ci-artifacts-android-armeabi-v7a-qt5.15
     KDECI_ANDROID_ABI: armeabi-v7a
     KDECI_CC_CACHE: /mnt/caches/krita-android/armeabi-v7a/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-android/armeabi-v7a/
