@@ -22,5 +22,6 @@ if (ANDROID)
       UPDATE_COMMAND ""
       BUILD_IN_SOURCE 0
 )
+endif()
 
 krita_add_to_ci_targets(ext_sonarpen)
