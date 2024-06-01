@@ -22,6 +22,7 @@ Dependencies:
 - 'on': ['Android']
   'require':
     'base/openssl': '@same'
+    'base/sonarpen': '@same'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
     'base/zlib': '@same'

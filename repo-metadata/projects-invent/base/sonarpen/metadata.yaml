@@ -1,0 +1,8 @@
+description: Library for SonarPen support
+hasrepo: false
+identifier: ext_sonarpen
+name: sonarpen
+projectpath: krita-deps/base/sonarpen
+repoactive: false
+repopath: base/sonarpen
+
