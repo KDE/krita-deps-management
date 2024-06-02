@@ -6,22 +6,22 @@ endif()
 project(ext_sonarpen)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "c260a15fc0be875ace42fd58a8d3c2bf986953a8")
+set(QT_GIT_TAG "8dd31117a3282237af6b708ccbecdcc9da4170d8")
 
 if (ANDROID)
-  ExternalProject_Add(
-      ext_sonarpen
-      DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/greenblub/sonarpen.git
-      GIT_TAG ${QT_GIT_TAG}
-      GIT_PROGRESS true
-      GIT_REMOTE_UPDATE_STRATEGY REBASE
+    ExternalProject_Add(
+        ext_sonarpen
+        DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
+        GIT_REPOSITORY https://invent.kde.org/greenblub/sonarpen.git
+        GIT_TAG ${QT_GIT_TAG}
+        GIT_PROGRESS true
+        GIT_REMOTE_UPDATE_STRATEGY REBASE
 
-      INSTALL_DIR ${EXTPREFIX}
+        INSTALL_DIR ${EXTPREFIX_sonarpen}
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX_sonarpen} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
 
-      UPDATE_COMMAND ""
-      BUILD_IN_SOURCE 0
-)
+        UPDATE_COMMAND ""
+    )
 endif()
 
 krita_add_to_ci_targets(ext_sonarpen)
