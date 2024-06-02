@@ -6,14 +6,14 @@ endif()
 project(ext_sonarpen)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "9f36e84b97d67726a7ed84de5f616b5a4a5e3653")
+set(SONARPEN_GIT_TAG "4c1a6f85112b5d203e7e7af3ea72b36d2d018bba")
 
 if (ANDROID)
     ExternalProject_Add(
         ext_sonarpen
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         GIT_REPOSITORY https://invent.kde.org/greenblub/sonarpen.git
-        GIT_TAG ${QT_GIT_TAG}
+        GIT_TAG ${SONARPEN_GIT_TAG}
         GIT_PROGRESS true
         GIT_REMOTE_UPDATE_STRATEGY REBASE
 
