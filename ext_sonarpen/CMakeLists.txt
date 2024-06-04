@@ -6,7 +6,7 @@ endif()
 project(ext_sonarpen)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(SONARPEN_GIT_TAG "35894c5530c221c5b50a225b03457efba9379527")
+set(SONARPEN_GIT_TAG "ef66dd0e61b090a4ff8daacdc7cf0fe3c76271d3")
 
 if (ANDROID)
     ExternalProject_Add(
