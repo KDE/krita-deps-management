@@ -97,7 +97,7 @@ seed_macos_qt515_local_cache:
     KRITA_STAGE_DEP:
       value: "ext_unknown"
   script:
-    - python3 -u tools/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared --branch master 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared --branch master 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
 
 .shared_job_template_android:
   variables:
