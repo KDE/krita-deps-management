@@ -200,3 +200,13 @@ seed_windows_qt515_qt-quickcontrols2:
   variables:
     KRITACI_QT_FLAVOUR: quickcontrols2
     KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON'
+
+seed_android_x86_64_qt515_qt-quickcontrols2:
+  extends:
+    - .seed_android_qt515_custom
+    - .seed_android_x86_64_qt515
+    - .qt_flavour_build_mixin_unix
+  variables:
+    KRITACI_QT_PLATFORM: Android/x86_64
+    KRITACI_QT_FLAVOUR: quickcontrols2
+    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON -DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/android-toolchain.cmake'
