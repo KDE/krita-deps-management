@@ -12,7 +12,7 @@
     "base/fftw3": "master"
     "base/freetype": "master"
     "base/fontconfig": "master"
-    "base/sonarpen": "master"
+    "base/sonarpen-sdk-cpp": "master"
     "base/qt": "master"
     # TODO: Krita fails to open openEXR files on Android,
     #       but we still require openEXR library for float-16

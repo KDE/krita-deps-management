@@ -22,7 +22,7 @@ Dependencies:
 - 'on': ['Android']
   'require':
     'base/openssl': '@same'
-    'base/sonarpen': '@same'
+    'base/sonarpen-sdk-cpp': '@same'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
     'base/zlib': '@same'
