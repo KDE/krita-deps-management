@@ -1,5 +1,6 @@
 - 'on': ['@all']
   'require':
+    "base/sonarpen-sdk-cpp": "master"
     "base/boost": "master"
     "base/lcms2": "master"
     "base/png": "master"
@@ -12,7 +13,6 @@
     "base/fftw3": "master"
     "base/freetype": "master"
     "base/fontconfig": "master"
-    "base/sonarpen-sdk-cpp": "master"
     "base/qt": "master"
     # TODO: Krita fails to open openEXR files on Android,
     #       but we still require openEXR library for float-16
