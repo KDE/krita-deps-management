@@ -13,7 +13,7 @@ if (ANDROID)
         ext_sonarpen-sdk-cpp
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         GIT_REPOSITORY https://invent.kde.org/greenblub/sonarpen-sdk-cpp.git
-        GIT_TAG ${SONARPEN_SDK_CPP_GIT_TAG}
+        # GIT_TAG ${SONARPEN_SDK_CPP_GIT_TAG}
         GIT_PROGRESS true
         GIT_REMOTE_UPDATE_STRATEGY REBASE
 
