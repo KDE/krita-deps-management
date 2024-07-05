@@ -193,6 +193,8 @@ elseif (ANDROID)
           -I ${EXTPREFIX}/include
           -L ${EXTPREFIX}/lib
 
+      CMAKE_ARGS -DSONARPEN_ENABLE=ON
+
       BUILD_COMMAND ${QT_BUILD_COMMAND}
       INSTALL_COMMAND ${QT_INSTALL_COMMAND}
 
