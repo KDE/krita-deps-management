@@ -171,7 +171,7 @@ elseif (ANDROID)
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
       GIT_REPOSITORY https://invent.kde.org/greenblub/qt5.git
-      GIT_TAG ${QT_GIT_TAG}
+      # GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qtandroidextras ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
