@@ -1,6 +1,5 @@
 - 'on': ['@all']
   'require':
-    "base/sonarpen-sdk-cpp": "master"
     "base/boost": "master"
     "base/lcms2": "master"
     "base/png": "master"
@@ -126,6 +125,7 @@
     "base/openssl": "master"
     "base/libintl-lite": "master"
     "base/libunwindstack-ndk": "master"
+    "base/sonarpen-sdk-cpp": "master"
 
 - 'on': ['Windows']
   'require':
