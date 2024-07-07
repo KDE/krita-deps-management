@@ -6,7 +6,7 @@ endif()
 project(ext_qt)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "3dde4a63e1a440a13d5aad2906d8c4c301f8070b")
+set(QT_GIT_TAG "c87d03076753cdfa084c1f6d68354f3ecf1dbdb1")
 
 if (MINGW)
   set(QT_BUILD_COMMAND   mingw32-make -j${SUBMAKE_JOBS})
@@ -171,7 +171,7 @@ elseif (ANDROID)
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
       GIT_REPOSITORY https://invent.kde.org/greenblub/qt5.git
-      # GIT_TAG ${QT_GIT_TAG}
+      GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qtandroidextras ${EXTRA_QT_SUBMODULES}
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
@@ -193,7 +193,6 @@ elseif (ANDROID)
           -I ${EXTPREFIX}/include
           -L ${EXTPREFIX}/lib
 
-      #CMAKE_ARGS -DSONARPEN_ENABLE=ON
 
       BUILD_COMMAND ${QT_BUILD_COMMAND}
       INSTALL_COMMAND ${QT_INSTALL_COMMAND}
