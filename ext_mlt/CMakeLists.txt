@@ -16,6 +16,10 @@ else()
   set(BUILD_EXTRA_OPTS)
 endif()
 
+if (MLT_ENABLE_DEBUG_INFO)
+  list(APPEND BUILD_EXTRA_OPTS -DCMAKE_BUILD_TYPE=RelWithDebInfo)
+endif()
+
 kis_ExternalProject_Add_with_separate_builds_apple(
   ext_mlt
   DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
