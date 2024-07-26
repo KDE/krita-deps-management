@@ -213,6 +213,15 @@ seed_android_x86_64_qt515_qt-quickcontrols2:
     KRITACI_QT_FLAVOUR: quickcontrols2
     KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON -DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/android-toolchain.cmake'
 
+seed_macos_qt515_qt-quickcontrols2:
+  extends:
+    - seed_macos_qt515_custom
+    - .qt_flavour_build_mixin_unix
+  variables:
+    KRITACI_QT_PLATFORM: MacOS
+    KRITACI_QT_FLAVOUR: quickcontrols2
+    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON -DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/macos-toolchain.cmake'
+
 seed_appimage_qt515_mlt-debug:
   extends:
     - seed_appimage_qt515_custom
