@@ -211,7 +211,7 @@ seed_android_x86_64_qt515_qt-quickcontrols2:
   variables:
     KRITACI_QT_PLATFORM: Android/x86_64
     KRITACI_QT_FLAVOUR: quickcontrols2
-    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON -DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/android-toolchain.cmake'
+    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON'
 
 seed_macos_qt515_qt-quickcontrols2:
   extends:
@@ -220,7 +220,7 @@ seed_macos_qt515_qt-quickcontrols2:
   variables:
     KRITACI_QT_PLATFORM: MacOS
     KRITACI_QT_FLAVOUR: quickcontrols2
-    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON -DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/macos-toolchain.cmake'
+    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON'
 
 seed_appimage_qt515_mlt-debug:
   extends:
@@ -250,7 +250,7 @@ seed_android_x86_64_qt515_mlt-debug:
     KRITACI_QT_PROJECT: ext_mlt
     KRITACI_QT_PLATFORM: Android/x86_64
     KRITACI_QT_FLAVOUR: debug
-    KDECI_EXTRA_CMAKE_ARGS: '-DMLT_ENABLE_DEBUG_INFO=ON -DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/android-toolchain.cmake'
+    KDECI_EXTRA_CMAKE_ARGS: '-DMLT_ENABLE_DEBUG_INFO=ON'
 
 seed_macos_qt515_mlt-debug:
   extends:
@@ -260,4 +260,4 @@ seed_macos_qt515_mlt-debug:
     KRITACI_QT_PROJECT: ext_mlt
     KRITACI_QT_PLATFORM: MacOS
     KRITACI_QT_FLAVOUR: debug
-    KDECI_EXTRA_CMAKE_ARGS: '-DMLT_ENABLE_DEBUG_INFO=ON -DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/macos-toolchain.cmake'
+    KDECI_EXTRA_CMAKE_ARGS: '-DMLT_ENABLE_DEBUG_INFO=ON'

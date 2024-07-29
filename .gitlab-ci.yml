@@ -77,10 +77,10 @@ stages:
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
     KDECI_SKIP_ECM_ANDROID_TOOLCHAIN: 'True'
+    CMAKE_TOOLCHAIN_FILE: $CI_PROJECT_DIR/tools/android-toolchain.cmake
     # ANDROID_HOME: /opt/android-tooling # <-- set up in the base image!
     # KDECI_ANDROID_SDK_ROOT: $ANDROID_HOME/sdk # <-- set up in the base image!
     # KDECI_ANDROID_NDK_ROOT: $ANDROID_HOME/android-ndk-r22b/ # <-- set up in the base image!
-    KDECI_EXTRA_CMAKE_ARGS: "-DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/android-toolchain.cmake"
 
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
@@ -100,7 +100,7 @@ stages:
     KDECI_BUILD_TYPE: Release
     MACOSX_DEPLOYMENT_TARGET: "10.14"
     QMAKE_MACOSX_DEPLOYMENT_TARGET: "10.14"
-    KDECI_EXTRA_CMAKE_ARGS: "-DCMAKE_TOOLCHAIN_FILE=$CI_PROJECT_DIR/tools/macos-toolchain.cmake"
+    CMAKE_TOOLCHAIN_FILE: $CI_PROJECT_DIR/tools/macos-toolchain.cmake"
 
     KDECI_CRAFT_DOWNLOADS: /Users/gitlab/caches/krita-macos/craft-downloads
     KDECI_CRAFT_CONFIG: $CI_PROJECT_DIR/upstream-ci-utilities/craft/qt5/CraftConfig.ini
