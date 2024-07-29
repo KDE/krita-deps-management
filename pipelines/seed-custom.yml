@@ -7,8 +7,6 @@ seed_windows_qt515_custom:
     KRITA_STAGE_DEP:
       value: "ext_unknown"
   script:
-    # TODO: bake this variable into the docker image
-    - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
     - python -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch master 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
   artifacts:
     when: always
@@ -101,8 +99,6 @@ seed_windows_qt515_dirty:
   extends:
   - seed_windows_qt515_custom
   script:
-    # TODO: bake this variable into the docker image
-  - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
   - python -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch master 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 seed_appimage_qt515_dirty:
@@ -147,8 +143,6 @@ seed_macos_qt515_dirty_shared:
     KRITACI_QT_PROJECT: ext_qt
     KRITACI_QT_FLAVOUR: undefined
   script:
-    # TODO: bake this variable into the docker image
-    - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
     - cd $KRITACI_QT_PROJECT
     - python -u ..\ci-utilities\run-ci-build.py --project $KRITACI_QT_PROJECT-$KRITACI_QT_FLAVOUR --platform Windows/Qt5/Shared --branch master 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
