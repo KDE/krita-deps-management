@@ -102,11 +102,6 @@ stages:
     QMAKE_MACOSX_DEPLOYMENT_TARGET: "10.14"
     CMAKE_TOOLCHAIN_FILE: $CI_PROJECT_DIR/tools/macos-toolchain.cmake"
 
-    KDECI_CRAFT_DOWNLOADS: /Users/gitlab/caches/krita-macos/craft-downloads
-    KDECI_CRAFT_CONFIG: $CI_PROJECT_DIR/upstream-ci-utilities/craft/qt5/CraftConfig.ini
-    KDECI_CRAFT_PROJECT_CONFIG: $CI_PROJECT_DIR/.craft.ini
-    KDECI_CRAFT_PLATFORM: macos-arm-clang
-
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
   before_script:
@@ -114,17 +109,10 @@ stages:
     - . venv/bin/activate
     - pip install -r requirements.txt
     - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
-    - git clone https://invent.kde.org/packaging/craftmaster.git --depth=1
     - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1 upstream-ci-utilities
 
-    - touch $KDECI_CRAFT_PROJECT_CONFIG
-    - function craftmaster { python3 craftmaster/CraftMaster.py --config $KDECI_CRAFT_CONFIG --config-override $KDECI_CRAFT_PROJECT_CONFIG --target $KDECI_CRAFT_PLATFORM --variables DownloadDir=$KDECI_CRAFT_DOWNLOADS $@; }
-
-    - craftmaster --setup
-    - craftmaster -c -i --options virtual.ignored=True --update craft
-    - craftmaster -c -i core/cacert dev-utils/7zip-base dev-utils/cmake-base dev-utils/7zip dev-utils/cmake dev-utils/patchelf dev-utils/ninja
-
-    - export PATH=$CI_PROJECT_DIR/$KDECI_CRAFT_PLATFORM/dev-utils/bin/:$PATH
+    - python3 -u build-tools/ci-scripts/download-macos-tools.py
+    - source _krita-tools/activate
 
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
