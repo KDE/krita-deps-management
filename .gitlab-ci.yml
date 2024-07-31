@@ -111,7 +111,7 @@ stages:
     - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
     - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1 upstream-ci-utilities
 
-    - python3 -u build-tools/ci-scripts/download-macos-tools.py
+    - python3 -u tools/download-macos-tools.py
     - source _krita-tools/activate
 
     - git config --global --add safe.directory $CI_PROJECT_DIR
