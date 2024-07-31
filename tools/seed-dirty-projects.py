@@ -73,6 +73,30 @@ for projectName, dependants in reverseDeps.items():
 print ('##')
 print ('##')
 
+def searchForCyclicDependencies(currentChain, reverseDeps):
+    if not currentChain[-1] in reverseDeps:
+        return []
+
+    dependants = reverseDeps[currentChain[-1]]
+    for dep in dependants:
+        chain = copy.copy(currentChain)
+        chain.append(dep)
+
+        if dep in currentChain:
+            return chain
+
+        foundChain = searchForCyclicDependencies(chain, reverseDeps)
+        if foundChain:
+            return foundChain
+
+    return []
+
+for project in reverseDeps.keys():
+    foundChain = searchForCyclicDependencies([project], reverseDeps)
+    if foundChain:
+        print('ERROR: found a cyclic dependency: {}'.format(' <- '.join(foundChain)))
+        sys.exit(1)
+
 projectsToRebuild = set()
 dirtyProjects = set()
 
