@@ -1,0 +1,9 @@
+Dependencies:
+- 'on': ['Windows', 'MacOS', 'Android']
+  'require':
+    'base/zlib': '@same'
+- 'on': ['@all']
+  'require':
+    'base/jpeg': '@same'
+    'base/webp': '@same'
+
