@@ -213,6 +213,36 @@ seed_android_x86_64_qt515_qt-quickcontrols2:
     KRITACI_QT_FLAVOUR: quickcontrols2
     KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON'
 
+seed_android_x86_qt515_qt-quickcontrols2:
+  extends:
+    - .seed_android_qt515_custom
+    - .seed_android_x86_qt515
+    - .qt_flavour_build_mixin_unix
+  variables:
+    KRITACI_QT_PLATFORM: Android/x86
+    KRITACI_QT_FLAVOUR: quickcontrols2
+    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON'
+
+seed_android_arm64-v8a_qt515_qt-quickcontrols2:
+  extends:
+    - .seed_android_qt515_custom
+    - .seed_android_arm64-v8a_qt515
+    - .qt_flavour_build_mixin_unix
+  variables:
+    KRITACI_QT_PLATFORM: Android/arm64-v8a
+    KRITACI_QT_FLAVOUR: quickcontrols2
+    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON'
+
+seed_android_armeabi-v7a_qt515_qt-quickcontrols2:
+  extends:
+    - .seed_android_qt515_custom
+    - .seed_android_armeabi-v7a_qt515
+    - .qt_flavour_build_mixin_unix
+  variables:
+    KRITACI_QT_PLATFORM: Android/armeabi-v7a
+    KRITACI_QT_FLAVOUR: quickcontrols2
+    KDECI_EXTRA_CMAKE_ARGS: '-DQT_ENABLE_QUICKCONTROLS2=ON'
+
 seed_macos_qt515_qt-quickcontrols2:
   extends:
     - seed_macos_qt515_custom
