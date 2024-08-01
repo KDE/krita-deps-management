@@ -16,6 +16,10 @@ ccacheArchive = 'ccache-4.9.1-darwin.tar.gz'
 
 downloadsDir = os.environ.pop('EXTERNALS_DOWNLOAD_DIR')
 
+# autocreate the downloads dialog, otherwise downloading will fail
+if not os.path.isdir(downloadsDir):
+    os.makedirs(downloadsDir)
+
 def download_url(url, filePath, useCompression = False):
     headers = {'Accept-Encoding': 'gzip, deflate'} if useCompression else {}
     
