@@ -1,0 +1,8 @@
+description: Multimedia framework designed for video editing (debug version)
+hasrepo: false
+identifier: ext_mlt-debug
+name: MLT
+projectpath: krita-deps/base/mlt-debug
+repoactive: false
+repopath: base/mlt-debug
+reuse-directory: ext_mlt
