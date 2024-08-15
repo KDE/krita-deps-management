@@ -1,0 +1,9 @@
+description: Qt toolkit with ASAN enabled
+hasrepo: false
+identifier: ext_qt-asan
+name: qt
+projectpath: krita-deps/base/qt-asan
+repoactive: false
+repopath: base/qt-asan
+reuse-directory: ext_qt
+

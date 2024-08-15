@@ -1,0 +1,2 @@
+Options:
+  cmake-options: '-DQT_ENABLE_DEBUG_INFO=ON'
