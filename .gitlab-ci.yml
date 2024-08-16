@@ -2,9 +2,9 @@
 
 variables:
   BRANCH_NAME_WINDOWS: 'transition/win-clang18'
-  BRANCH_NAME_LINUX: 'master-linux'
-  BRANCH_NAME_MACOS: 'master-macos'
-  BRANCH_NAME_ANDROID: 'master-android'
+  BRANCH_NAME_LINUX: 'master'
+  BRANCH_NAME_MACOS: 'master'
+  BRANCH_NAME_ANDROID: 'master'
 
 stages:
   - Dependencies
