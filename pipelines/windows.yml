@@ -6,6 +6,7 @@ all_publish_windows:
   script:
     # TODO: bake this variable into the docker image
     - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
+    - python -u tools/replace-branch-in-seed-file.py latest\krita-deps.yml --print --dst-branch $BRANCH_NAME_WINDOWS
     - python -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Windows/Qt5/Shared 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 all_local_cache_windows:
@@ -29,7 +30,7 @@ custom_publish_windows:
   script:
     # TODO: bake this variable into the docker image
     - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
-    - python -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch master 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+    - python -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 custom_local_cache_windows:
   extends:
@@ -42,7 +43,7 @@ dirty_publish_windows:
   script:
     # TODO: bake this variable into the docker image
   - $env:PATH = "c:\Program Files\CMake\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\bin;c:\tools\llvm-mingw-20220906-ucrt-x86_64\x86_64-w64-mingw32\bin;$env:PATH"
-  - python -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch master 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+  - python -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 dirty_local_cache_windows:
   extends:
