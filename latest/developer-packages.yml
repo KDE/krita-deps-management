@@ -1,0 +1,8 @@
+- 'on': ['@all']
+  'require':
+    "base/qt-debug": "master"
+    "base/mlt-debug": "master"
+
+- 'on': ['Windows', 'Linux']
+  'require':
+    "base/qt-asan": "master"
