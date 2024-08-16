@@ -27,13 +27,14 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     MESON
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     GIT_REPOSITORY https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg.git
-    GIT_TAG meson-4.4
+
+    # we use this branch as a source:
+    # https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/tree/meson-4.4
+    GIT_TAG c6e46e6e662742531a84b0d99f2772d9a4017c23
 
     # Workaround https://github.com/mesonbuild/meson/issues/11113
     # See https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/issues/31
-    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-meson-Fix-library-detection-in-prefixed-builds.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ffmpeg-Add-an-option-to-disable-UB-in-av_uninit.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-ffmpeg-Fix-crashes-in-ff_seek_frame_binary-if-built-with-la.patch
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ffmpeg-Add-an-option-to-disable-UB-in-av_uninit.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-ffmpeg-Add-options-for-SSP-and-CFGuard.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Disable-ebp_available-on-android.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-libavutil-Don-t-disable-PIC-on-x86_32.patch
