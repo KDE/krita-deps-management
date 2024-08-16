@@ -67,7 +67,7 @@ stages:
       - "./**/meson-private/**/*"
 
 .windows_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder:latest
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder-clang18:latest
   tags:
     - Windows
   environment: windows-qt5.15
