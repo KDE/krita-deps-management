@@ -27,30 +27,30 @@ Options:
 ```
 
 3) Create metadata for the new package flavour:
-	
-	1) Copy `repo-metadata/projects-invent/base/qt` folder into `repo-metadata/projects-invent/base/qt-myoption`
-	
-	2) Edit `metadata.yml` any replace all `qt` into `qt-myoption`
-	
-	3) Make sure that `repopath` is also changes, since this field is used as a unique key by the scripts internally
-	
-	4) Add line `reuse-directory: ext_qt` to make sure the project reuses the recipe of the main package
-	
-	   When package is being built, the build script will copy the content of `ext_qt` into `ext_qt-myoption` and apply the cahnges from `.kde-ci-override.yml` to `.kde-ci.yml`, which was copied from the original project.
+
+    1) Copy `repo-metadata/projects-invent/base/qt` folder into `repo-metadata/projects-invent/base/qt-myoption`
+
+    2) Edit `metadata.yml` any replace all `qt` into `qt-myoption`
+
+    3) Make sure that `repopath` is also changes, since this field is used as a unique key by the scripts internally
+
+    4) Add line `reuse-directory: ext_qt` to make sure the project reuses the recipe of the main package
+
+       When package is being built, the build script will copy the content of `ext_qt` into `ext_qt-myoption` and apply the cahnges from `.kde-ci-override.yml` to `.kde-ci.yml`, which was copied from the original project.
 
 4) Add the package flavour to `latest/developer-packages.yml` seed file, to make sure it is rebuilt on full rebuilds.
 
 5) Build the newly added package:
 
-	1) Open the pipeline job `custom_publish_<platform>` (click on the name, **not** on the "start" button)
+    1) Open the pipeline job `custom_publish_<platform>` (click on the name, **not** on the "start" button)
 
-	2) On the job's page add an environment variable:
+    2) On the job's page add an environment variable:
 
-		* var: `KRITA_STAGE_DEP`
-		* value: `base/qt-myoption`
-	
-	3) Start the job
-	
+        * var: `KRITA_STAGE_DEP`
+        * value: `base/qt-myoption`
+
+    3) Start the job
+
 ## Connect the package flavour to the Krita build
 
 After the package flavour has been built, you need to instruct Krita to deploy it during the build process.
@@ -61,7 +61,7 @@ After the package flavour has been built, you need to instruct Krita to deploy i
 
 ```yml
 PackageAliases:
-	ext_qt: ext_qt-myoption
+  ext_qt: ext_qt-myoption
 ```
 
 3) Save and push into your branch/MR. All CI jobs will now use `ext_qt-myoption` package when building your MR.
