@@ -43,3 +43,29 @@ All publicly available CI jobs have names in the following format:
 * `shared` --- this is the legacy method of building multiple backages in the same environment without uploading them into the package repository. Currently, it is available for debugging purposes only
 
 `<platform>` selects the platform for which we build the package. Please note that `android-x86` platform is kept only for debugging purposes. We don't provide Krita build for this platform anymore.
+
+## How to update/rebuild a dependency
+
+### Testing the changes
+
+1) Change the build recipes in `ext_foo` directory
+2) Create a branch/MR with the changes
+3) Open the auto-generate pipeline for the branch/MR
+4) Depending on the nature of your changes you may prefer to rebuild one specific package or a whole subtree of dependencies. To do that you need to open a corresponding job (open it by clicking on a name, **not** on the "play" button):
+
+    * rebuild a single package: open `custom_local_cache_<platform>`
+
+    * rebuild the sutree of deps: open `dirty_local_cache_<platform>`
+
+    Note: you need to use "local_cache" type of job, since publishing is not available from non-protected branches.
+
+5) On the job's page add an environment variable:
+
+    * var: `KRITA_STAGE_DEP`
+    * value: `base/foo base/bar` (space-separated list)
+
+6) After the environment variable is set, run the job to test if it builds fine.
+
+### Publishing the packages
+
+The packages can be published only from `master` and `transition/*` branches. After your MR is merged into master, you need to run `dirty_publish_<platform>` jobs for all related platforms to get the package published. The process of setting up `KRITA_STAGE_DEP` is the same as in the testing builds.
