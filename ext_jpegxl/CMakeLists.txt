@@ -19,13 +19,13 @@ endif()
 
 ExternalProject_Add( ext_jpegxl
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    DOWNLOAD_NAME libjxl-v0.10.0.tar.gz
-    URL https://github.com/libjxl/libjxl/archive/refs/tags/v0.10.0.tar.gz
-    URL_HASH SHA256=ab32d52b033c814d24762db4942a3b45315d9db37bf5c8a9741ccc1bb0a52d97
+    DOWNLOAD_NAME libjxl-v0.11.0.tar.gz
+    URL https://github.com/libjxl/libjxl/archive/refs/tags/v0.11.0.tar.gz
+    URL_HASH SHA256=7ce4ec8bb37a435a73ac18c4c9ff56c2dc6c98892bf3f53a328e3eca42efb9cf
 
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
-        -DJPEGXL_VERSION=0.10.0
+        -DJPEGXL_VERSION=0.11.0
         -DJPEGXL_ENABLE_BENCHMARK=OFF
         -DJPEGXL_ENABLE_COVERAGE=OFF
         -DJPEGXL_ENABLE_EXAMPLES=OFF
