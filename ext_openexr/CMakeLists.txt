@@ -8,9 +8,9 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 ExternalProject_Add( ext_openexr
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    DOWNLOAD_NAME openexr-v2.5.8.tar.gz
-    URL https://github.com/AcademySoftwareFoundation/openexr/archive/v2.5.8.tar.gz
-    URL_HASH SHA256=db261a7fcc046ec6634e4c5696a2fc2ce8b55f50aac6abe034308f54c8495f55
+    DOWNLOAD_NAME openexr-v2.5.9.tar.gz
+    URL https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.9.tar.gz
+    URL_HASH SHA256=05bb9c2da3ff3508eee51c30f59c7f2c59bf068f3b636d12d5991e8bbaf13e01
 
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} -DNAMESPACE_VERSIONING=OFF
