@@ -90,7 +90,7 @@ if (UNIX)
         URL https://www.python.org/ftp/python/3.10.7/Python-3.10.7.tar.xz
         URL_MD5 b8094f007b3a835ca3be6bdf8116cccc
 
-        CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --enable-shared
+        CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --enable-shared --without-static-libpython
 
         UPDATE_COMMAND ""
     )
