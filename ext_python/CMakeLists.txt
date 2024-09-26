@@ -29,6 +29,7 @@ if (UNIX)
             # Setuptools needs OpenSSL 1.1, the stock libssl isn't enough
             CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
                 PATH="${EXTPREFIX}/lib/Python.framework/Versions/Current/bin:$ENV{PATH}"
+                LDFLAGS=-headerpad_max_install_names
                 <SOURCE_DIR>/configure MACOSX_DEPLOYMENT_TARGET=$ENV{MACOSX_DEPLOYMENT_TARGET} --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE}
                 --with-openssl=${EXTPREFIX} --with-openssl-rpath=${EXTPREFIX}/lib
                 --enable-framework=${EXTPREFIX}/lib --enable-optimizations --with-suffix=no --without-static-libpython
