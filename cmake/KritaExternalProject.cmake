@@ -149,7 +149,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
             set(MAC_BUILD_COMMAND
                 ${CMAKE_COMMAND} -E env
                 PYTHONPATH=${_krita_pythonpath}
-                arch -${ARCH} ${MESON_BINARY_PATH} compile -C <BINARY_DIR>-${ARCH} -j${SUBMAKE_JOBS}
+                arch -${ARCH} ${MESON_BINARY_PATH} compile --verbose -C <BINARY_DIR>-${ARCH} -j${SUBMAKE_JOBS}
             )
             set(MAC_INSTALL_COMMAND
                 ${CMAKE_COMMAND} -E env
