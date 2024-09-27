@@ -41,6 +41,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ffmpeg-Be-more-forceful-when-setting-PIC-on-x86_32.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Copy-over-some-macros-from-libavutil-version.h.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-debugging-for-the-linker.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ffmpeg-Fix-compilation-on-MacOS.patch
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             --libdir=lib
