@@ -320,8 +320,8 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
         )
 endmacro()
 
-macro(mkdir_build_arch_dir ARCH)
-ExternalProject_Add_Step(ext_qt mkdir-build-${ARCH}
+macro(mkdir_build_arch_dir PROJECT_NAME ARCH)
+ExternalProject_Add_Step(${PROJECT_NAME} mkdir-build-${ARCH}
     COMMAND ${CMAKE_COMMAND} -E make_directory <BINARY_DIR>-${ARCH}
     DEPENDERS configure
 )

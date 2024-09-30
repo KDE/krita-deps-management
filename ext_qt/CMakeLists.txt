@@ -279,7 +279,7 @@ else( APPLE )
 
     # Qt needs separate builds for universal compilation before qt6
     foreach(ARCH ${CMAKE_OSX_ARCHITECTURES})
-        mkdir_build_arch_dir(${ARCH})
+        mkdir_build_arch_dir(ext_qt ${ARCH})
     endforeach()
 
 endif()
