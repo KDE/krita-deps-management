@@ -1,0 +1,37 @@
+From 22408ea5940d0d3f03766dd67f9d7f7fb3d67981 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Mon, 28 Oct 2024 15:48:41 +0100
+Subject: [PATCH 2/2] [android] Fix ranlib path for NDK 27
+
+---
+ mkspecs/android-clang/qmake.conf         | 1 +
+ mkspecs/features/android/default_pre.prf | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mkspecs/android-clang/qmake.conf b/mkspecs/android-clang/qmake.conf
+index d0a9a5a109..ee789eb042 100644
+--- a/mkspecs/android-clang/qmake.conf
++++ b/mkspecs/android-clang/qmake.conf
+@@ -54,6 +54,7 @@ QMAKE_OBJCOPY    = $$NDK_LLVM_PATH/bin/llvm-objcopy
+ QMAKE_AR         = $$NDK_LLVM_PATH/bin/llvm-ar cqs
+ QMAKE_OBJCOPY    = $$NDK_LLVM_PATH/bin/llvm-objcopy
+ QMAKE_NM         = $$NDK_LLVM_PATH/bin/llvm-nm -P
++QMAKE_RANLIB     = $$NDK_LLVM_PATH/bin/llvm-ranlib
+ 
+ QMAKE_CFLAGS_OPTIMIZE      = -Oz
+ QMAKE_CFLAGS_OPTIMIZE_FULL = -Oz
+diff --git a/mkspecs/features/android/default_pre.prf b/mkspecs/features/android/default_pre.prf
+index f3a17b9458..ffc18ea711 100644
+--- a/mkspecs/features/android/default_pre.prf
++++ b/mkspecs/features/android/default_pre.prf
+@@ -76,7 +76,6 @@ else: equals(QT_ARCH, x86_64): CROSS_COMPILE = $$NDK_LLVM_PATH/bin/x86_64-linux-
+ else: equals(QT_ARCH, arm64-v8a): CROSS_COMPILE = $$NDK_LLVM_PATH/bin/aarch64-linux-android-
+ else: CROSS_COMPILE = $$NDK_LLVM_PATH/bin/arm-linux-androideabi-
+ 
+-QMAKE_RANLIB            = $${CROSS_COMPILE}ranlib
+ QMAKE_LINK_SHLIB        = $$QMAKE_LINK
+ QMAKE_LFLAGS            =
+ 
+-- 
+2.34.1
+
