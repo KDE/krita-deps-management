@@ -209,33 +209,36 @@ elseif (NOT APPLE)
     ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
-      GIT_TAG ${QT_GIT_TAG}
-      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtx11extras qttranslations qtquickcontrols2 qtgraphicaleffects
+
+      # replace to avoid refetch on rebuilds
+      # SOURCE_DIR ext_qt-prefix/src/ext_qt
+
+      GIT_REPOSITORY https://code.qt.io/qt/qt5.git
+      GIT_TAG 6.8.0
+      # TODO: still need to be recovered: qtgraphicaleffects
+      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtwayland qtshadertools
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
-      CMAKE_ARGS -DOPENSSL_LIBS='-L${EXTPREFIX}/lib -lssl -lcrypto'
+      # TODO: docker image also needs libinput now (apt install libinput-dev )
+      # TODO: check if QMAKEFEATURES setting is still needed
 
       # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure -prefix ${EXTPREFIX}
-          -opensource -confirm-license
-          -feature-relocatable -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -verbose -nomake examples
-          -skip qt3d -skip qtactiveqt -skip qtcanvas3d -skip qtconnectivity
-          -skip qtlocation -skip qtwayland -skip qtwebchannel -skip qtwebengine
-          -skip qtwebsockets -skip qtwebview -skip qtandroidextras -skip qtserialport
-          -skip qtdatavis3d -skip qtvirtualkeyboard -skip qtspeech -skip qtsensors
-          -skip qtgamepad -skip qtscxml -skip qtremoteobjects -skip qtxmlpatterns
-          -skip qtnetworkauth  -skip qtcharts -skip qtdatavis3d -skip qtgamepad
-          -skip qtpurchasing -skip qtscxml -skip qtserialbus -skip qtspeech
-          -skip qtvirtualkeyboard -qt-sqlite
-          -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
+                -opensource -confirm-license
+                -feature-relocatable -openssl-linked -verbose -nomake examples
+                -qt-sqlite
+
+                -no-feature-assistant -no-feature-designer -no-feature-linguist
+                -no-feature-androiddeployqt -no-eglfs -no-linuxfb -no-feature-vnc -feature-xcb
+
+                -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
           ${QT_DEBUG_OPTIONS}
 
-      BUILD_COMMAND ${QT_BUILD_COMMAND}
-      INSTALL_COMMAND ${QT_INSTALL_COMMAND}
+      BUILD_COMMAND ${CMAKE_COMMAND} --build . --target all --parallel ${SUBMAKE_JOBS}
+      INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install
 
       UPDATE_COMMAND ""
       BUILD_IN_SOURCE OFF
