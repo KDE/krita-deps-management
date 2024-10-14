@@ -47,7 +47,7 @@
     "base/kimageformats": "master"
     "base/kwindowsystem": "master"
     "base/mypaint": "master"
-    "base/seexpr": "master"
+#    "base/seexpr": "master" # TODO: port to Qt6
     "base/icu": "master"
     "base/jpeg": "master"
     "ffmpeg/flac": "master"
@@ -113,10 +113,10 @@
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
     "base/python": "master"
-    "base/sip": "master"
-    "base/pyqt-builder": "master"
-    "base/pyqt5": "master"
-    "base/pyqt5-sip": "master"
+    # "base/sip": "master" # TODO: port to Qt6
+    # "base/pyqt-builder": "master" # TODO: port to Qt6
+    # "base/pyqt5": "master" # TODO: port to Qt6
+    # "base/pyqt5-sip": "master" # TODO: port to Qt6
     "base/poppler": "master"
 
 - 'on': ['Android']
