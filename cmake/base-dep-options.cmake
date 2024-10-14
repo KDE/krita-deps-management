@@ -8,6 +8,11 @@ cmake_minimum_required(VERSION 3.21)
 #
 # Example usage: cmake ..\kritadeposx -DEXTERNALS_DOWNLOAD_DIR=/dev2/d -DCMAKE_INSTALL_PREFIX=/dev2/i -DWIN64_BUILD=TRUE  -DBOOST_LIBRARYDIR=/dev2/i/lib   -G "Visual Studio 11 Win64"
 
+# Enable verbose build if requested via an environment variable
+if(DEFINED ENV{KRITACI_VERBOSE_MAKEFILE})
+    set(CMAKE_VERBOSE_MAKEFILE $ENV{KRITACI_VERBOSE_MAKEFILE})
+endif()
+
 if(APPLE)
         execute_process(COMMAND sysctl -n hw.optional.arm64 OUTPUT_VARIABLE apple_has_arm64_optional)
         if(apple_has_arm64_optional)

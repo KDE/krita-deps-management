@@ -29,9 +29,12 @@ if (UNIX)
             # Setuptools needs OpenSSL 1.1, the stock libssl isn't enough
             CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
                 PATH="${EXTPREFIX}/lib/Python.framework/Versions/Current/bin:$ENV{PATH}"
+                # on MacOS we should use `-headerpad_max_install_names` so that clang would reserve enough space in the headers section;
+                # otherwise, after we adjust rpath using post-install scripts, there will not be enough space for code signatures
+                LDFLAGS=-headerpad_max_install_names
                 <SOURCE_DIR>/configure MACOSX_DEPLOYMENT_TARGET=$ENV{MACOSX_DEPLOYMENT_TARGET} --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE}
                 --with-openssl=${EXTPREFIX} --with-openssl-rpath=${EXTPREFIX}/lib
-                --enable-framework=${EXTPREFIX}/lib --enable-optimizations --with-suffix=no
+                --enable-framework=${EXTPREFIX}/lib --enable-optimizations --with-suffix=no --without-static-libpython
                 ${PYTHON_MACOS_CONFIG}
 
             UPDATE_COMMAND ""
@@ -90,7 +93,7 @@ if (UNIX)
         URL https://www.python.org/ftp/python/3.10.7/Python-3.10.7.tar.xz
         URL_MD5 b8094f007b3a835ca3be6bdf8116cccc
 
-        CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --enable-shared
+        CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --enable-shared --without-static-libpython
 
         UPDATE_COMMAND ""
     )

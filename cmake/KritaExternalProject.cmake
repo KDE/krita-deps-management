@@ -6,6 +6,7 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
 endif()
 
 include(ExternalProject)
+include(MacroBoolToOnOff)
 
 # used always for stepped universal or non universal builds.
 set(PARENT_CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
@@ -19,6 +20,19 @@ set(kis_MULTI_VALUE_ARGS PATCH_COMMAND CONFIGURE_ARGS CMAKE_ARGS DEPENDS
     GIT_SUBMODULES
     CONFIGURE_COMMAND BUILD_COMMAND INSTALL_COMMAND UPDATE_COMMAND
     )
+
+if (CMAKE_VERBOSE_MAKEFILE)
+    set(KRITA_MESON_VERBOSE_OPTION --verbose)
+    set(KRITA_MAKE_VERBOSE_OPTION VERBOSE=1)
+    set(KRITA_CMAKE_VERBOSE_OPTION -DCMAKE_VERBOSE_MAKEFILE=ON)
+else()
+    set(KRITA_MESON_VERBOSE_OPTION)
+    set(KRITA_MAKE_VERBOSE_OPTION)
+    set(KRITA_CMAKE_VERBOSE_OPTION)
+endif()
+
+MACRO_BOOL_TO_ON_OFF(CMAKE_VERBOSE_MAKEFILE _str_verbose_makefile)
+message (STATUS "Verbose output for external projects (set with -DCMAKE_VERBOSE_MAKEFILE=ON): ${_str_verbose_makefile}")
 
 
 # If APPLE call the muti build arch macro
@@ -82,7 +96,7 @@ macro(kis_ExternalProject_Add_meson EXT_NAME)
         BUILD_COMMAND ${CMAKE_COMMAND} -E env
             PYTHONPATH=${_krita_pythonpath}
             PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
-            ${MESON_BINARY_PATH} compile -C <BINARY_DIR> -j${SUBMAKE_JOBS}
+            ${MESON_BINARY_PATH} compile ${KRITA_MESON_VERBOSE_OPTION} -C <BINARY_DIR> -j${SUBMAKE_JOBS}
 
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env
             PYTHONPATH=${_krita_pythonpath}
@@ -122,6 +136,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
         # CMake variant
         set(MAC_CONFIGURE_COMMAND
             arch -${ARCH} ${CMAKE_COMMAND} -S <SOURCE_DIR> -B <BINARY_DIR>-${ARCH}
+            ${KRITA_CMAKE_VERBOSE_OPTION}
             ${EXT_CONFIGURE_ARGS}
             ${EXT_CMAKE_ARGS}
             -DCMAKE_OSX_ARCHITECTURES:STRING=${ARCH}
@@ -149,7 +164,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
             set(MAC_BUILD_COMMAND
                 ${CMAKE_COMMAND} -E env
                 PYTHONPATH=${_krita_pythonpath}
-                arch -${ARCH} ${MESON_BINARY_PATH} compile -C <BINARY_DIR>-${ARCH} -j${SUBMAKE_JOBS}
+                arch -${ARCH} ${MESON_BINARY_PATH} compile ${KRITA_MESON_VERBOSE_OPTION} -C <BINARY_DIR>-${ARCH} -j${SUBMAKE_JOBS}
             )
             set(MAC_INSTALL_COMMAND
                 ${CMAKE_COMMAND} -E env
@@ -168,7 +183,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
                 ${EXT_CMAKE_ARGS}
             )
             set(MAC_BUILD_COMMAND
-                make clean COMMAND arch -${ARCH} make -j${SUBMAKE_JOBS}
+                make clean COMMAND arch -${ARCH} make -j${SUBMAKE_JOBS} ${KRITA_MAKE_VERBOSE_OPTION}
             )
             set(MAC_INSTALL_COMMAND
                 make install DESTDIR=<TMP_DIR>/build-${ARCH} INSTALL_ROOT=<TMP_DIR>/build-${ARCH}
@@ -305,8 +320,8 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
         )
 endmacro()
 
-macro(mkdir_build_arch_dir ARCH)
-ExternalProject_Add_Step(ext_qt mkdir-build-${ARCH}
+macro(mkdir_build_arch_dir PROJECT_NAME ARCH)
+ExternalProject_Add_Step(${PROJECT_NAME} mkdir-build-${ARCH}
     COMMAND ${CMAKE_COMMAND} -E make_directory <BINARY_DIR>-${ARCH}
     DEPENDERS configure
 )
