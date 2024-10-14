@@ -8,12 +8,14 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 ExternalProject_Add(ext_kdcraw
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/release-service/22.12.1/src/libkdcraw-22.12.1.tar.xz
-    URL_HASH SHA256=8b0a71937f7ed4926c2c047e0bd36001e5e98f52b1cf633d8bfbe4e4eeac65eb
+    URL https://download.kde.org/stable/release-service/24.08.2/src/libkdcraw-24.08.2.tar.xz
+    URL_HASH SHA256=4c8fe357f2fafb957e5320d61a55a9d746665a3eeafc24da285180eb71fbadee
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
         -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
         -DBUILD_SHARED_LIBS=OFF
+        -DQT_MAJOR_VERSION=6
+        -DBUILD_TESTING=OFF
         ${GLOBAL_PROFILE}
 
     UPDATE_COMMAND ""
