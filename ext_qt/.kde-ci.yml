@@ -9,6 +9,8 @@ Dependencies:
   'require':
     'base/tiff': '@same' # can be fetched with pkgconfig only, so not on Windows
     # 'base/webp': '@same' # can be fetched with pkgconfig only, so not on Windows
+    'base/wayland': '@same'
+    'base/wayland-protocols': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
