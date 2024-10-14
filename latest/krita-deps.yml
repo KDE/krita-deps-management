@@ -35,6 +35,7 @@
     "base/jpegxl": "master"
     "base/extra_cmake_modules": "master"
     "base/kconfig": "master"
+    "base/kcodecs": "master"
     "base/karchive": "master"
     "base/kwidgetsaddons": "master"
     "base/kcompletion": "master"
@@ -156,6 +157,14 @@
   'require':
     "base/kcrash": "master"
     "base/fcitx-qt": "master"
+
+# Wayland-specific dependencies
+- 'on': ['Linux']
+  'require':
+    "base/wayland": "master"
+    "base/wayland-protocols": "master"
+    "base/plasma-wayland-protocols": "master"
+
 
 - 'on': ['MacOS']
   'require':

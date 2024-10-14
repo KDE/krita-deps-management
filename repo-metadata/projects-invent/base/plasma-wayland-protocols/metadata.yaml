@@ -1,0 +1,7 @@
+description: Non-standard wayland protocols used in Plasma
+hasrepo: false
+identifier: ext_plasma-wayland-protocols
+name: plasma-wayland-protocols
+projectpath: krita-deps/base/plasma-wayland-protocols
+repoactive: false
+repopath: base/plasma-wayland-protocols

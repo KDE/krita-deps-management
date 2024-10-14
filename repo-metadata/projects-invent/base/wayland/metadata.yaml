@@ -1,0 +1,7 @@
+description: main Wayland libraries
+hasrepo: false
+identifier: ext_wayland
+name: wayland
+projectpath: krita-deps/base/wayland
+repoactive: false
+repopath: base/wayland

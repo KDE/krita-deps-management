@@ -1,0 +1,4 @@
+Dependencies:
+- 'on': ['Linux']
+  'require':
+    'base/extra_cmake_modules': '@same'
