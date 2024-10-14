@@ -3,3 +3,7 @@ Dependencies:
   'require':
     'base/qt': '@same'
     'base/extra_cmake_modules': '@same'
+- 'on': ['Linux']
+  'require':
+    'base/wayland-protocols': '@same'
+    'base/plasma-wayland-protocols': '@same'

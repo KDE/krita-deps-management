@@ -1,0 +1,7 @@
+description: Wayland protocols with functionality outside the Wayland core
+hasrepo: false
+identifier: ext_wayland-protocols
+name: wayland-protocols
+projectpath: krita-deps/base/wayland-protocols
+repoactive: false
+repopath: base/wayland-protocols

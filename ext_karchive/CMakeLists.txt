@@ -14,10 +14,14 @@ endif()
 ExternalProject_Add(
     ext_karchive
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/5.101/karchive-5.101.0.tar.xz
-    URL_HASH SHA256=58bcb6c61bc4a3fe48a0cbeaf392d42b6b8d33e1bc4c51faf24db0912ecfa9b0
+    URL https://download.kde.org/stable/frameworks/6.7/karchive-6.7.0.tar.xz
+    URL_HASH SHA256=eb4243e627f51f1224a99af5d0a6f8e309f9e5dbb7478f7a78e34e2b8541398a
 
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE} ${_karchive_extra_flags}
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
+        -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
+        -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
+        ${_karchive_extra_flags}
+        -DWITH_LIBZSTD=OFF
 
     UPDATE_COMMAND ""
 )

@@ -211,7 +211,7 @@ elseif (NOT APPLE)
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
       # replace to avoid refetch on rebuilds
-      # SOURCE_DIR ext_qt-prefix/src/ext_qt
+      #SOURCE_DIR ext_qt-prefix/src/ext_qt
 
       GIT_REPOSITORY https://code.qt.io/qt/qt5.git
       GIT_TAG 6.8.0
@@ -221,20 +221,19 @@ elseif (NOT APPLE)
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
-      # TODO: docker image also needs libinput now (apt install libinput-dev )
       # TODO: check if QMAKEFEATURES setting is still needed
 
       # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure -prefix ${EXTPREFIX}
-                -opensource -confirm-license
-                -feature-relocatable -openssl-linked -verbose -nomake examples
-                -qt-sqlite
+                  -opensource -confirm-license
+                  -feature-relocatable -openssl-linked -verbose -nomake examples
+                  -qt-sqlite
 
-                -no-feature-assistant -no-feature-designer -no-feature-linguist
-                -no-feature-androiddeployqt -no-eglfs -no-linuxfb -no-feature-vnc -feature-xcb
+                    -no-feature-assistant -no-feature-designer -feature-linguist
+                  -no-feature-androiddeployqt -no-eglfs -no-linuxfb -no-feature-vnc -feature-xcb
 
-                -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
+                  -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
           ${QT_DEBUG_OPTIONS}
 
       BUILD_COMMAND ${CMAKE_COMMAND} --build . --target all --parallel ${SUBMAKE_JOBS}

@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_kitemviews
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/5.101/kitemviews-5.101.0.tar.xz
-    URL_HASH SHA256=aca259eeff2dde1434cdf3ff3d979e9b17dd55bad15dd7341f92700cf8418fb1
+    URL https://download.kde.org/stable/frameworks/6.7/kitemviews-6.7.0.tar.xz
+    URL_HASH SHA256=5e635162993c9f1e15f3a1109ca3227d0d2ce57cf7070615651b65cf790db049
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
 

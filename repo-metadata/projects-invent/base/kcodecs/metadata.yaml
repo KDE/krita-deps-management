@@ -1,0 +1,7 @@
+description: A collection of methods to manipulate strings using various encodings
+hasrepo: false
+identifier: ext_kcodecs
+name: KCodecs
+projectpath: krita-deps/base/kcodecs
+repoactive: false
+repopath: base/kcodecs

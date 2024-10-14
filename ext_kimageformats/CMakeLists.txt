@@ -9,10 +9,14 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_kimageformats
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/5.101/kimageformats-5.101.0.tar.xz
-    URL_HASH SHA256=ae19b07141fdf977035e6decc50fa45855c0e635f57333a2443d3c24464c625f
+    URL https://download.kde.org/stable/frameworks/6.7/kimageformats-6.7.0.tar.xz
+    URL_HASH SHA256=722850648ac167e4c0ee631571fde49e9fd15d004a127dd804a14f9f579b731f
 
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF -DKIMAGEFORMATS_JXL=OFF ${GLOBAL_PROFILE}
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
+        -DBUILD_TESTING=OFF
+        -DKIMAGEFORMATS_JXL=OFF
+        -DCMAKE_DISABLE_FIND_PACKAGE_OpenEXR=TRUE
+        ${GLOBAL_PROFILE}
 
     UPDATE_COMMAND ""
 )

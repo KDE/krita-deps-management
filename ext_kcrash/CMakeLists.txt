@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_kcrash
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/5.101/kcrash-5.101.0.tar.xz
-    URL_HASH SHA256=6dd10951db01918681a8ce6e9e3a99d3f8b5170d2c5a0b5212007e68db0c937a
+    URL https://download.kde.org/stable/frameworks/6.7/kcrash-6.7.0.tar.xz
+    URL_HASH SHA256=1dc2c65d8ef62ef98457f8ab423b7686de3e713766c06e64d6322aa9db26eea4
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
 
