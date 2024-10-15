@@ -1,7 +1,7 @@
 ## Overall seed job template for all jobs to make use of
 
 variables:
-  BRANCH_NAME_WINDOWS: 'transition/win-clang18'
+  BRANCH_NAME_WINDOWS: 'master'
   BRANCH_NAME_LINUX: 'master'
   BRANCH_NAME_MACOS: 'master'
   BRANCH_NAME_ANDROID: 'master'
