@@ -2,7 +2,7 @@
 
 variables:
   BRANCH_NAME_WINDOWS: 'transition/win-clang18'
-  BRANCH_NAME_LINUX: 'master'
+  BRANCH_NAME_LINUX: 'transition/qt6'
   BRANCH_NAME_MACOS: 'master'
   BRANCH_NAME_ANDROID: 'master'
 
