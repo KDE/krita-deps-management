@@ -177,7 +177,7 @@ elseif (ANDROID)
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -verbose
           -android-sdk ${ANDROID_SDK_ROOT} -android-ndk ${CMAKE_ANDROID_NDK} -android-arch ${ANDROID_ABI}
-          -xplatform android-clang -android-ndk-platform android-23
+          -xplatform android-clang -android-ndk-platform android-24
           -make libs -qt-sqlite -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -system-zlib
           -nomake examples -nomake tests -nomake tools -skip qt3d -skip qtactiveqt -skip qtcanvas3d
           -skip qtconnectivity -skip qtlocation -skip qtwayland -skip qtwebchannel -skip qtwebengine
