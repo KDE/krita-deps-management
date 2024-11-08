@@ -26,8 +26,13 @@ endif()
 set(ANDROID_PLATFORM "android-${KRITA_ANDROID_NATIVE_API_LEVEL}")
 set(ANDROID_SDK_COMPILE_API "android-${KRITA_ANDROID_SDK_API_LEVEL}")
 set(ANDROID_SDK_ROOT "$ENV{KDECI_ANDROID_SDK_ROOT}")
+set(ANDROID_CPUFEATURES_PATH "$ENV{KDECI_ANDROID_NDK_ROOT}/sources/android/cpufeatures")
 set(CMAKE_FIND_ROOT_PATH "${CMAKE_INSTALL_PREFIX}" "${CMAKE_FIND_ROOT_PATH}")
 set(ANDROID_STL c++_shared)
+
+if(NOT EXISTS "${ANDROID_CPUFEATURES_PATH}" OR NOT IS_DIRECTORY "${ANDROID_CPUFEATURES_PATH}")
+    message(FATAL_ERROR "Android cpufeatures root directory doesn't exist!")
+endif()
 
 include ("$ENV{KDECI_ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake" REQUIRED)
 

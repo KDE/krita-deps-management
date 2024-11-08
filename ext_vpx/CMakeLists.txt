@@ -8,8 +8,14 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_meson.cmake)
 
+set (EXTRA_VPX_ANDROID_FLAGS)
+
 if (ANDROID AND ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "i686")
-    set (EXTRA_VPX_ANDROID_FLAGS -Dmultithread=disabled)
+    list (APPEND EXTRA_VPX_ANDROID_FLAGS -Dmultithread=disabled)
+endif()
+
+if (ANDROID)
+    list (APPEND EXTRA_VPX_ANDROID_FLAGS -Dcpu_features_path=${ANDROID_CPUFEATURES_PATH})
 endif()
 
 kis_ExternalProject_Add_with_separate_builds_apple(
