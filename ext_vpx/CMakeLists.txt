@@ -28,6 +28,11 @@ kis_ExternalProject_Add_with_separate_builds_apple(
 
     WORKING_DIRECTORY <BINARY_DIR>
 
+    # for some reason upstream version disables shared builds on Windows,
+    # I guess it is related to the MSVC support. Since we use clang for
+    # our builds, it should be fine just to ignore this check
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Allow-shared-libraries-everywhere.patch
+
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             -Ddefault_library=shared
             -Dunit_tests=disabled

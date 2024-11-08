@@ -1,0 +1,37 @@
+From e2a6f93f4640cef5ea516f5a3be97803055948a8 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Fri, 8 Nov 2024 17:14:52 +0100
+Subject: [PATCH] Allow shared libraries everywhere
+
+---
+ meson.build | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 3a023f00b..127a63124 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1568,13 +1568,13 @@ vpx_config_c = configure_file(
+ 
+ # libs.mk
+ 
+-if features.get('shared', false) and not ['linux', 'darwin', 'ios', 'iphonesimulator', 'android'].contains(tgt_os)
+-	if features.get('gnu', false)
+-		warn('Shared libraries are only supported on ELF; assuming this is OK')
+-	else
+-		error('Shared libraries are only supported on ELF, OS/2, and Darwin for now')
+-	endif
+-endif
++#if features.get('shared', false) and not ['linux', 'darwin', 'ios', 'iphonesimulator', 'android'].contains(tgt_os)
++#	if features.get('gnu', false)
++#		warn('Shared libraries are only supported on ELF; assuming this is OK')
++#	else
++#		error('Shared libraries are only supported on ELF, OS/2, and Darwin for now')
++#	endif
++#endif
+ 
+ rtcd_exe = find_program('build/make/rtcd.py', required: true)
+ 
+-- 
+2.23.0.windows.1
+
