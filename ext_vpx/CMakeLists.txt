@@ -18,7 +18,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
 
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     GIT_REPOSITORY https://github.com/dimula73/libvpx.git
-    GIT_TAG meson
+    GIT_TAG meson-2
 
     WORKING_DIRECTORY <BINARY_DIR>
 
