@@ -18,6 +18,17 @@ ExternalProject_Add(ext_python-modules
             COMMAND ${CMAKE_COMMAND} -E env
                 ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
                     -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade -r ${CMAKE_CURRENT_SOURCE_DIR}/../requirements-sip.txt --prefix ${EXTPREFIX} --ignore-installed --verbose
+					
+			COMMAND ${CMAKE_COMMAND} -E env
+                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} --  openvino --prefix ${EXTPREFIX} --ignore-installed --verbose
+			
+			COMMAND ${CMAKE_COMMAND} -E env
+                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} --  Pillow --prefix ${EXTPREFIX} --ignore-installed --verbose
+			
+					
+			
     UPDATE_COMMAND ""
 )
 
