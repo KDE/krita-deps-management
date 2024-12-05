@@ -1,0 +1,8 @@
+description: Openvino and Pillow Python modules for Krita
+hasrepo: false
+identifier: ext_python-openvino
+name: python3-openvino
+projectpath: krita-deps/base/python-openvino
+repoactive: false
+repopath: base/python-openvino
+
