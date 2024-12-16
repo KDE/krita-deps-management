@@ -6,7 +6,7 @@ endif()
 project(ext_qt)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "4b3b2a81b7a285e5705e70d11e5535fddc89b3e1")
+set(QT_GIT_TAG "kazakov/krita/5.15.16-lts-lgpl")
 
 if (MINGW)
   set(QT_BUILD_COMMAND   mingw32-make -j${SUBMAKE_JOBS})
@@ -140,7 +140,7 @@ if (WIN32)
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
+      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtwinextras qttranslations qtquickcontrols2 qtgraphicaleffects
       GIT_SUBMODULES_RECURSE false
@@ -165,7 +165,7 @@ elseif (ANDROID)
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
+      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qtandroidextras qtquickcontrols2 qtgraphicaleffects
       GIT_SUBMODULES_RECURSE false
@@ -213,7 +213,7 @@ elseif (NOT APPLE)
     ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
+      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtx11extras qttranslations qtquickcontrols2 qtgraphicaleffects
       GIT_SUBMODULES_RECURSE false
@@ -263,7 +263,7 @@ else( APPLE )
     kis_ExternalProject_Add_macos(
       ext_qt
 
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
+      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtmacextras qttranslations qtquickcontrols2 qtgraphicaleffects
       GIT_SUBMODULES_RECURSE false
