@@ -125,6 +125,7 @@
     "base/openssl": "master"
     "base/libintl-lite": "master"
     "base/libunwindstack-ndk": "master"
+    "base/sonarpen-sdk-cpp": "master"
 
 - 'on': ['Windows']
   'require':
