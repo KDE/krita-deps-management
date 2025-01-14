@@ -37,7 +37,7 @@ stages:
     # to link to each other's build prefix
     KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
   before_script:
-    - git clone https://invent.kde.org/greenblub/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .log_artifacts_windows:
@@ -76,7 +76,7 @@ stages:
   variables:
     KDECI_CC_CACHE: "C:\\Gitlab\\Caches\\krita-windows"
     KDECI_CACHE_PATH: "C:\\Gitlab\\Artifacts\\krita-windows"
-    KDECI_PACKAGE_PROJECT: greenblub/krita-ci-artifacts-windows-qt5.15
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-windows-qt5.15
     EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\downloads"
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
@@ -87,7 +87,7 @@ stages:
     - python -m venv venv --upgrade-deps
     - . venv\Scripts\Activate.ps1
     - pip install -r requirements.txt
-    - git clone https://invent.kde.org/greenblub/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_qt515:
@@ -100,7 +100,7 @@ stages:
   variables:
     KDECI_CC_CACHE: /mnt/caches/krita-appimage/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-appimage/
-    KDECI_PACKAGE_PROJECT: greenblub/krita-ci-artifacts-appimage-qt5.15
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-appimage-qt5.15
     EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
@@ -138,7 +138,7 @@ stages:
     # ccache is not present on macOS
     # KDECI_CC_CACHE: /Users/gitlab/caches/krita-macos/cache
     KDECI_CACHE_PATH: /Users/gitlab/caches/krita-macos/artifacts
-    KDECI_PACKAGE_PROJECT: greenblub/krita-ci-artifacts-macos-qt5.15
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-macos-qt5.15
     EXTERNALS_DOWNLOAD_DIR: /Users/gitlab/caches/krita-macos/downloads
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
