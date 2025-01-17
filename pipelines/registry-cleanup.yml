@@ -33,11 +33,6 @@ registry_cleanup_macos-qt5.15:
   - .registry_cleanup_base
   environment: macos-qt5.15
 
-registry_cleanup_android-x86-qt5.15:
-  extends:
-  - .registry_cleanup_base
-  environment: android-x86-qt5.15
-
 registry_cleanup_android-x86_64-qt5.15:
   extends:
   - .registry_cleanup_base

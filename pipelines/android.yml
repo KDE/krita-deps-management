@@ -30,14 +30,6 @@
   script:
     - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared --branch $BRANCH_NAME_ANDROID 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
 
-.android_x86_mixin:
-  environment: android-x86-qt5.15
-  variables:
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-x86-qt5.15
-    KDECI_ANDROID_ABI: x86
-    KDECI_CC_CACHE: /mnt/caches/krita-android/x86/
-    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/x86/
-
 .android_x86_64_mixin:
   environment: android-x86_64-qt5.15
   variables:
@@ -62,11 +54,6 @@
     KDECI_CC_CACHE: /mnt/caches/krita-android/armeabi-v7a/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-android/armeabi-v7a/
 
-all_publish_android_x86:
-  extends:
-  - .seed_all_android_base
-  - .android_x86_mixin
-
 all_publish_android_x86_64:
   extends:
   - .seed_all_android_base
@@ -81,11 +68,6 @@ all_publish_android_armeabi-v7a:
   extends:
   - .seed_all_android_base
   - .android_armeabi-v7a_mixin
-
-all_shared_android_x86:
-  extends:
-  - all_publish_android_x86
-  - .shared_build_mixin
 
 all_shared_android_x86_64:
   extends:
@@ -102,11 +84,6 @@ all_shared_android_armeabi-v7a:
   - all_publish_android_armeabi-v7a
   - .shared_build_mixin
 
-all_local_cache_android_x86:
-  extends:
-  - all_publish_android_x86
-  - .local_cache_mixin
-
 all_local_cache_android_x86_64:
   extends:
   - all_publish_android_x86_64
@@ -121,11 +98,6 @@ all_local_cache_android_armeabi-v7a:
   extends:
   - all_publish_android_armeabi-v7a
   - .local_cache_mixin
-
-dirty_publish_android_x86:
-  extends:
-  - .seed_dirty_android_base
-  - .android_x86_mixin
 
 dirty_publish_android_x86_64:
   extends:
@@ -142,11 +114,6 @@ dirty_publish_android_armeabi-v7a:
   - .seed_dirty_android_base
   - .android_armeabi-v7a_mixin
 
-dirty_local_cache_android_x86:
-  extends:
-  - dirty_publish_android_x86
-  - .local_cache_mixin
-
 dirty_local_cache_android_x86_64:
   extends:
   - dirty_publish_android_x86_64
@@ -162,11 +129,6 @@ dirty_local_cache_android_armeabi-v7a:
   - dirty_publish_android_armeabi-v7a
   - .local_cache_mixin
 
-custom_publish_android_x86:
-  extends:
-  - .seed_custom_android_base
-  - .android_x86_mixin
-
 custom_publish_android_x86_64:
   extends:
   - .seed_custom_android_base
@@ -181,11 +143,6 @@ custom_publish_android_armeabi-v7a:
   extends:
   - .seed_custom_android_base
   - .android_armeabi-v7a_mixin
-
-custom_local_cache_android_x86:
-  extends:
-  - custom_publish_android_x86
-  - .local_cache_mixin
 
 custom_local_cache_android_x86_64:
   extends:
