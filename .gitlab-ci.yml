@@ -75,7 +75,7 @@ stages:
   variables:
     KDECI_CC_CACHE: "C:\\Gitlab\\Caches\\krita-windows"
     KDECI_CACHE_PATH: "C:\\Gitlab\\Artifacts\\krita-windows"
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-windows-qt5.15
+    KDECI_PACKAGE_PROJECT: groups/teams/ci-artifacts/krita-windows
     EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\downloads"
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
@@ -98,7 +98,7 @@ stages:
   variables:
     KDECI_CC_CACHE: /mnt/caches/krita-appimage/
     KDECI_CACHE_PATH: /mnt/artifacts/krita-appimage/
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-appimage-qt5.15
+    KDECI_PACKAGE_PROJECT: groups/teams/ci-artifacts/krita-appimage
     EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
@@ -135,7 +135,7 @@ stages:
     # ccache is not present on macOS
     # KDECI_CC_CACHE: /Users/gitlab/caches/krita-macos/cache
     KDECI_CACHE_PATH: /Users/gitlab/caches/krita-macos/artifacts
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-macos-qt5.15
+    KDECI_PACKAGE_PROJECT: groups/teams/ci-artifacts/krita-macos
     EXTERNALS_DOWNLOAD_DIR: /Users/gitlab/caches/krita-macos/downloads
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"

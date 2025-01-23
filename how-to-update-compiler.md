@@ -65,6 +65,6 @@
 8) Remove all the "branched" packages from the corresponding repository
 
     * the packages will have suffix `-transition-win-clang18`
-    * link: https://invent.kde.org/dkazakov/krita-ci-artifacts-windows-qt5.15/-/packages
+    * link: https://invent.kde.org/groups/teams/ci-artifacts/krita-windows/-/packages
 
 9) Make a sysadmin ticket to remove the old docker image

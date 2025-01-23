@@ -15,29 +15,41 @@
   before_script:
     - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
   script:
-    - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-${CI_ENVIRONMENT_NAME}
+    - python3 -u ci-utilities/package-registry-cleanup.py --project groups/teams/ci-artifacts/krita-windows-${KRITACI_PLATFORM}
 
 
 registry_cleanup_windows_qt515:
+  variables:
+    KRITACI_PLATFORM: windows
   extends:
   - .registry_cleanup_base
 
 registry_cleanup_appimage_qt515:
+  variables:
+    KRITACI_PLATFORM: appimage
   extends:
   - .registry_cleanup_base
 
 registry_cleanup_macos-qt5.15:
+  variables:
+    KRITACI_PLATFORM: macos
   extends:
   - .registry_cleanup_base
 
 registry_cleanup_android-x86_64-qt5.15:
+  variables:
+    KRITACI_PLATFORM: android-x86_64
   extends:
   - .registry_cleanup_base
 
 registry_cleanup_android-arm64-v8a-qt5.15:
+  variables:
+    KRITACI_PLATFORM: android-arm64-v8a
   extends:
   - .registry_cleanup_base
 
 registry_cleanup_android-armeabi-v7a-qt5.15:
+  variables:
+    KRITACI_PLATFORM: android-armeabi-v7a
   extends:
   - .registry_cleanup_base

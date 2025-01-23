@@ -5,12 +5,12 @@
 * fork of ci-utilities repository: https://invent.kde.org/dkazakov/ci-utilities
 * ci-images repository: https://invent.kde.org/sysadmin/ci-images
 * artifacts:
-    * Windows: https://invent.kde.org/dkazakov/krita-ci-artifacts-windows-qt5.15
-    * Linux: https://invent.kde.org/dkazakov/krita-ci-artifacts-appimage-qt5.15
-    * MacOS: https://invent.kde.org/dkazakov/krita-ci-artifacts-macos-qt5.15
-    * Android-arm64-v8a: https://invent.kde.org/dkazakov/krita-ci-artifacts-android-arm64-v8a-qt5.15
-    * Android-armeabi-v7a: https://invent.kde.org/dkazakov/krita-ci-artifacts-android-armeabi-v7a-qt5.15
-    * Android-x86_64: https://invent.kde.org/dkazakov/krita-ci-artifacts-android-x86_64-qt5.15
+    * Windows: https://invent.kde.org/groups/teams/ci-artifacts/krita-windows
+    * Linux: https://invent.kde.org/groups/teams/ci-artifacts/krita-appimage
+    * MacOS: https://invent.kde.org/groups/teams/ci-artifacts/krita-macos
+    * Android-arm64-v8a: https://invent.kde.org/groups/teams/ci-artifacts/krita-android-arm64-v8a
+    * Android-armeabi-v7a: https://invent.kde.org/groups/teams/ci-artifacts/krita-android-armeabi-v7a
+    * Android-x86_64: https://invent.kde.org/groups/teams/ci-artifacts/krita-android-x86_64
 * Notary service repository: https://invent.kde.org/sysadmin/ci-notary-service
 * Configs for the notary service: https://invent.kde.org/sysadmin/ci-utilities/-/tree/master/signing
 
