@@ -69,3 +69,13 @@ All publicly available CI jobs have names in the following format:
 ### Publishing the packages
 
 The packages can be published only from `master` and `transition/*` branches. After your MR is merged into master, you need to run `dirty_publish_<platform>` jobs for all related platforms to get the package published. The process of setting up `KRITA_STAGE_DEP` is the same as in the testing builds.
+
+---
+**NOTE**
+
+Please note that our CI cannot publish packages from the branches with symbol `.` in the name, so you need to replace it with hyphen `-`:
+
+* `transition/port-to-qt-5.15.15` -> should be -> `transition/port-to-qt-5-15-15`
+* `krita/5.2` -> should be -> `krita/5-2`
+
+---
