@@ -21,29 +21,23 @@
 registry_cleanup_windows_qt515:
   extends:
   - .registry_cleanup_base
-  environment: windows-qt5.15
 
 registry_cleanup_appimage_qt515:
   extends:
   - .registry_cleanup_base
-  environment: appimage-qt5.15
 
 registry_cleanup_macos-qt5.15:
   extends:
   - .registry_cleanup_base
-  environment: macos-qt5.15
 
 registry_cleanup_android-x86_64-qt5.15:
   extends:
   - .registry_cleanup_base
-  environment: android-x86_64-qt5.15
 
 registry_cleanup_android-arm64-v8a-qt5.15:
   extends:
   - .registry_cleanup_base
-  environment: android-arm64-v8a-qt5.15
 
 registry_cleanup_android-armeabi-v7a-qt5.15:
   extends:
   - .registry_cleanup_base
-  environment: android-armeabi-v7a-qt5.15

@@ -70,7 +70,6 @@ stages:
   image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder-clang18:latest
   tags:
     - Windows
-  environment: windows-qt5.15
   extends:
     - .log_artifacts_windows
   variables:
@@ -94,7 +93,6 @@ stages:
   image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder:latest
   tags:
     - Linux
-  environment: appimage-qt5.15
   extends:
     - .log_artifacts_unix
   variables:
@@ -131,7 +129,6 @@ stages:
 .macos_qt515:
   tags:
     - macOS
-  environment: macos-qt5.15
   extends:
     - .log_artifacts_unix
   variables:
