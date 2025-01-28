@@ -1,0 +1,7 @@
+description: A thread-safe wrapper around libraw
+hasrepo: false
+identifier: ext_kdcraw
+name: KDcraw
+projectpath: krita-deps/base/kdcraw
+repoactive: false
+repopath: base/kdcraw

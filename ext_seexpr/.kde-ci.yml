@@ -1,0 +1,6 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/qt': '@same'
+    'base/extra_cmake_modules': '@same'
+    'base/ki18n': '@same'

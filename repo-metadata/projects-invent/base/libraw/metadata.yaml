@@ -1,0 +1,7 @@
+description: LibRaw is a library for reading RAW files from digital photo cameras.
+hasrepo: false
+identifier: ext_libraw
+name: LibRaw
+projectpath: krita-deps/base/libraw
+repoactive: false
+repopath: base/libraw

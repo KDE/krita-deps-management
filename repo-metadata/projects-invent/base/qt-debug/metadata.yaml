@@ -1,0 +1,9 @@
+description: Qt toolkit with debugging symbols
+hasrepo: false
+identifier: ext_qt-debug
+name: qt
+projectpath: krita-deps/base/qt-debug
+repoactive: false
+repopath: base/qt-debug
+reuse-directory: ext_qt
+

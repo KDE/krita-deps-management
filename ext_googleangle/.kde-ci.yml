@@ -1,0 +1,7 @@
+Dependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+- 'on': ['Windows', 'MacOS', 'Android']
+  'require':
+    'base/zlib': '@same'

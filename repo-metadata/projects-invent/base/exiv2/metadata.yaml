@@ -1,0 +1,7 @@
+description: "Exiv2 is a Cross-platform C++ library and a command line utility to manage image metadata."
+hasrepo: false
+identifier: ext_exiv2
+name: exiv2
+projectpath: krita-deps/base/exiv2
+repoactive: false
+repopath: base/exiv2

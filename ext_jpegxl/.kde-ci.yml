@@ -1,0 +1,11 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/highway': '@same'
+    'base/brotli': '@same'
+    'base/lcms2': '@same'
+    'base/jpeg': '@same'
+    'base/png': '@same'
+- 'on': ['Windows', 'MacOS', 'Android']
+  'require':
+    'base/zlib': '@same'

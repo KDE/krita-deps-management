@@ -1,0 +1,7 @@
+description: "FFTW is a C subroutine library for computing the discrete Fourier transform (DFT) in one or more dimensions, of arbitrary input size, and of both real and complex data."
+hasrepo: false
+identifier: ext_fftw3
+name: fftw3
+projectpath: krita-deps/base/fftw3
+repoactive: false
+repopath: base/fftw3

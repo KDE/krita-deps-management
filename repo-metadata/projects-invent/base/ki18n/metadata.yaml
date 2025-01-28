@@ -1,0 +1,7 @@
+description: Advanced internationalization framework
+hasrepo: false
+identifier: ext_ki18n
+name: KI18n
+projectpath: krita-deps/base/ki18n
+repoactive: false
+repopath: base/ki18n

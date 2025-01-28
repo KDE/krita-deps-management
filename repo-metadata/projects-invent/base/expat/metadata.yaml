@@ -1,0 +1,7 @@
+description: "Expat is a library, written in C, for parsing XML documents."
+hasrepo: false
+identifier: ext_expat
+name: expat
+projectpath: krita-deps/base/expat
+repoactive: false
+repopath: base/expat

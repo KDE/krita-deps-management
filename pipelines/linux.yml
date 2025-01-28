@@ -1,0 +1,49 @@
+all_publish_linux:
+  stage: Dependencies
+  extends:
+  - .seed_template
+  - .appimage_qt515
+  script:
+    - python3 -u tools/replace-branch-in-seed-file.py latest/krita-deps.yml --print --dst-branch $BRANCH_NAME_LINUX
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Linux/Qt5/Shared 2>&1 | tee "seed-packages-linux.log"
+    - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_LINUX
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Linux/Qt5/Shared 2>&1 | tee "seed-packages-linux-dev.log"
+    - python3 -u tools/replace-branch-in-seed-file.py latest/openvino-packages.yml --print --dst-branch $BRANCH_NAME_LINUX
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform Linux/Qt5/Shared 2>&1 | tee "seed-packages-linux-dev.log"
+
+all_local_cache_linux:
+  extends:
+  - all_publish_linux
+  - .local_cache_mixin
+
+all_shared_linux:
+  extends:
+  - all_publish_linux
+  - .shared_build_mixin
+
+custom_publish_linux:
+  stage: Dependencies
+  extends:
+  - .seed_template
+  - .appimage_qt515
+  variables:
+    KRITA_STAGE_DEP:
+      value: "ext_unknown"
+  script:
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Linux/Qt5/Shared --branch $BRANCH_NAME_LINUX 2>&1 | tee "seed-packages-linux.log"
+
+custom_local_cache_linux:
+  extends:
+  - custom_publish_linux
+  - .local_cache_mixin
+
+dirty_publish_linux:
+  extends:
+    - custom_publish_linux
+  script:
+    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Linux/Qt5/Shared --branch $BRANCH_NAME_LINUX 2>&1 | tee "seed-packages-linux.log"
+
+dirty_local_cache_linux:
+  extends:
+  - dirty_publish_linux
+  - .local_cache_mixin

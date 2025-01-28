@@ -1,0 +1,8 @@
+description: A stub for patch tool on Windows
+hasrepo: false
+identifier: ext_patch
+name: Patch
+projectpath: krita-deps/base/patch
+repoactive: false
+repopath: base/patch
+

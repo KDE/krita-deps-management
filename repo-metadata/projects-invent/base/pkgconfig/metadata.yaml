@@ -1,0 +1,8 @@
+description: A library management system
+hasrepo: false
+identifier: ext_pkgconfig
+name: pkgconfig
+projectpath: krita-deps/base/pkgconfig
+repoactive: false
+repopath: base/pkgconfig
+

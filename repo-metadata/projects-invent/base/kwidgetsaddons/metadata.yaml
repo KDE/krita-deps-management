@@ -1,0 +1,7 @@
+description: Addons to QtWidgets
+hasrepo: false
+identifier: ext_kwidgetsaddons
+name: KWidgetsAddons
+projectpath: krita-deps/base/kwidgetsaddons
+repoactive: false
+repopath: base/kwidgetsaddons

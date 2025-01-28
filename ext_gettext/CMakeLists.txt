@@ -1,11 +1,10 @@
-project(ext_gettext)
 cmake_minimum_required(VERSION 3.21)
 if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
     cmake_policy(SET CMP0135 NEW)
 endif()
 
+project(ext_gettext)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
-
 
 if (WIN32)
     ExternalProject_Add(ext_gettext_bin
@@ -17,7 +16,7 @@ if (WIN32)
         BUILD_COMMAND ${CMAKE_COMMAND} -E echo Deploying gettext 64-bit dependencies
         CONFIGURE_COMMAND ""
 
-        INSTALL_COMMAND COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR> -DPREFIX=${EXTPREFIX} -DDST="" -P ${CMAKE_SOURCE_DIR}/../cmake/install_directory_custom.cmake
+        INSTALL_COMMAND COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR> -DDST=${EXTPREFIX} -P ${KRITA_CI_INSTALL_DIRECTORY}
 
         UPDATE_COMMAND ""
     )
@@ -35,8 +34,10 @@ if (WIN32)
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
         UPDATE_COMMAND ""
     )
-    add_custom_target(ext_gettext)
-    add_dependencies(ext_gettext ext_gettext_bin ext_gettext_lib)
+
+    krita_add_to_ci_targets(ext_gettext_lib)
+    krita_add_to_ci_targets(ext_gettext_bin)
+
 else ()
 ExternalProject_Add( ext_gettext
     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
@@ -48,6 +49,8 @@ ExternalProject_Add( ext_gettext
     CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} --disable-java ${GLOBAL_AUTOMAKE_PROFILE} --disable-native-java 
 
     UPDATE_COMMAND ""
-
 )
+
+krita_add_to_ci_targets(ext_gettext)
+
 endif ()

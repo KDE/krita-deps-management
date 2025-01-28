@@ -1,0 +1,7 @@
+description: C++ wrappers for SIMD intrinsics
+hasrepo: false
+identifier: ext_xsimd
+name: xsimd
+projectpath: krita-deps/base/xsimd
+repoactive: false
+repopath: base/xsimd

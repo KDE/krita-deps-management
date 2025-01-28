@@ -1,0 +1,7 @@
+description: Addons to QtCore
+hasrepo: false
+identifier: ext_kcoreaddons
+name: KCoreAddons
+projectpath: krita-deps/base/kcoreaddons
+repoactive: false
+repopath: base/kcoreaddons

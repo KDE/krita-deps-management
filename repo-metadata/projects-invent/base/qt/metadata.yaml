@@ -1,0 +1,8 @@
+description: Qt toolkit
+hasrepo: false
+identifier: ext_qt
+name: qt
+projectpath: krita-deps/base/qt
+repoactive: false
+repopath: base/qt
+

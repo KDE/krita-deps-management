@@ -1,0 +1,8 @@
+description: A portable x86 assembler which uses Intel-like syntax
+hasrepo: false
+identifier: ext_nasm
+name: nasm
+projectpath: krita-deps/base/nasm
+repoactive: false
+repopath: base/nasm
+

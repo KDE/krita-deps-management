@@ -1,0 +1,16 @@
+if (DEFINED ENV{DESTDIR})
+    set(DESTDIR_ARGS "DESTDIR=$ENV{DESTDIR}")
+endif()
+
+foreach(i RANGE 0 ${CMAKE_ARGC})
+    if ("${CMAKE_ARGV${i}}" STREQUAL "--")
+        set(FOUND_SEPARATOR TRUE)
+    elseif (FOUND_SEPARATOR)
+        list(APPEND EXTRA_ARGS ${CMAKE_ARGV${i}})
+    endif()
+endforeach()
+
+exec_program(make ARGS ${DESTDIR_ARGS} ${EXTRA_ARGS} RETURN_VALUE RETVAL)
+if (RETVAL)
+    message(FATAL_ERROR "failed to execute make")
+endif()

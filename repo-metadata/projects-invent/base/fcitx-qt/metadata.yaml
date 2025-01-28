@@ -1,0 +1,7 @@
+description: fcitx-qt
+hasrepo: false
+identifier: ext_fcitx-qt
+name: fcitx-qt
+projectpath: krita-deps/base/fcitx-qt
+repoactive: false
+repopath: base/fcitx-qt

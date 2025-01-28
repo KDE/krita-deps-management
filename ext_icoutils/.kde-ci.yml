@@ -1,0 +1,5 @@
+Dependencies:
+- 'on': ['Windows']
+  'require':
+    'base/png': '@same'
+    'base/patch': '@same'

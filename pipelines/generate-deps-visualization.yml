@@ -1,0 +1,22 @@
+generate-visualization:
+  stage: Dependencies
+  extends:
+  - .appimage_qt515
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - when: always
+  before_script:
+    - pip install -r requirements.txt
+    - pip install graphviz
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git config --global --add safe.directory $CI_PROJECT_DIR
+  script:
+    - LD_LIBRARY_PATH= python3 -u tools/generate-graphvis-file.py --branch master --seed-file latest/krita-deps.yml -o deps_all.png
+    - LD_LIBRARY_PATH= python3 -u tools/generate-graphvis-file.py --branch master --seed-file latest/krita-deps.yml -s ext_qt ext_patch -o deps_no-qt-and-patch.png
+    - LD_LIBRARY_PATH= python3 -u tools/generate-graphvis-file.py --branch master --seed-file latest/krita-deps.yml -d ext_qt -s ext_patch -o deps_qt.png
+  artifacts:
+    expire_in: 4 week
+    paths:
+      - ./deps_*.png
+

@@ -1,0 +1,7 @@
+description: An embeddable expression evaluation engine
+hasrepo: false
+identifier: ext_seexpr
+name: KSeExpr
+projectpath: krita-deps/base/seexpr
+repoactive: false
+repopath: base/seexpr

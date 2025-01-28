@@ -1,0 +1,7 @@
+description: Library for loading and saving jp2000 files.
+hasrepo: false
+identifier: ext_openjpeg
+name: OpenJPEG
+projectpath: krita-deps/base/openjpeg
+repoactive: false
+repopath: base/openjpeg

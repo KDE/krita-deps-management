@@ -1,0 +1,7 @@
+description: File compression
+hasrepo: false
+identifier: ext_karchive
+name: KArchive
+projectpath: krita-deps/base/karchive
+repoactive: false
+repopath: base/karchive

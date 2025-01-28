@@ -1,31 +1,170 @@
 ## Overall seed job template for all jobs to make use of
 
+variables:
+  BRANCH_NAME_WINDOWS: 'master'
+  BRANCH_NAME_LINUX: 'master'
+  BRANCH_NAME_MACOS: 'master'
+  BRANCH_NAME_ANDROID: 'master'
+
 stages:
   - Dependencies
   - SystemMaintenance
 
+.nightly-repo-cleanup:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $KRITACI_SCHEDULED_JOB_NAME == "repo-cleanup"
+      when: always
+
+.local_cache_mixin:
+  variables:
+    KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
+    KDECI_PUBLISH_TO_CACHE: True
+
+.shared_build_mixin:
+  variables:
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: False
+    KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
+
 .seed_template:
   needs: []
   rules:
-    - when: manual
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - when: manual
+  variables:
+    KDECI_GITLAB_SERVER: https://invent.kde.org/
+    # we need to make sure that the packages of the same batch don't try
+    # to link to each other's build prefix
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
   before_script:
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git
-    - git clone https://invent.kde.org/dkazakov/krita-deps-repo-metadata.git ci-utilities/repo-metadata/
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git config --global --add safe.directory $CI_PROJECT_DIR
 
+.log_artifacts_windows:
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - ".\\**\\meson-logs\\meson-log.txt"
+      - ".\\**\\CMakeCache.txt"
+      - ".\\**\\CMakeFiles\\CMakeOutput.log"
+      - ".\\**\\config.log"
+      - "*.log"
+    exclude:
+      - "./**/meson-private/**/*"
+
+.log_artifacts_unix:
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - "./**/meson-logs/meson-log.txt"
+      - "./**/CMakeCache.txt"
+      - "./**/CMakeFiles/CMakeOutput.log"
+      - "./**/config.log"
+      - "*.log"
+    exclude:
+      - "./**/meson-private/**/*"
 
 .windows_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder:latest
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder-clang18:latest
   tags:
     - Windows
+  environment: windows-qt5.15
+  extends:
+    - .log_artifacts_windows
   variables:
     KDECI_CC_CACHE: "C:\\Gitlab\\Caches\\krita-windows"
     KDECI_CACHE_PATH: "C:\\Gitlab\\Artifacts\\krita-windows"
-    KDECI_GITLAB_SERVER: https://invent.kde.org/
     KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-windows-qt5.15
     EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\downloads"
-  interruptible: true
+    KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
+    KDECI_WORKDIR_PATH: "C:\\_"
+  # different commits may build different deps, so they should not be cancellable
+  interruptible: false
+  before_script:
+    - python -m venv venv --upgrade-deps
+    - . venv\Scripts\Activate.ps1
+    - pip install -r requirements.txt
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git config --global --add safe.directory $CI_PROJECT_DIR
+
+.appimage_qt515:
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder:latest
+  tags:
+    - Linux
+  environment: appimage-qt5.15
+  extends:
+    - .log_artifacts_unix
+  variables:
+    KDECI_CC_CACHE: /mnt/caches/krita-appimage/
+    KDECI_CACHE_PATH: /mnt/artifacts/krita-appimage/
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-appimage-qt5.15
+    EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads
+    KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
+    KDECI_BUILD_TYPE: Release
+  # different commits may build different deps, so they should not be cancellable
+  interruptible: false
+
+.android_qt515:
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-android-builder-sdk34:latest
+  tags:
+    - Linux
+  extends:
+    - .log_artifacts_unix
+  variables:
+    EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads # reuse appimage caches!
+    KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
+    KDECI_BUILD_TYPE: Release
+    KDECI_SKIP_ECM_ANDROID_TOOLCHAIN: 'True'
+    CMAKE_TOOLCHAIN_FILE: $CI_PROJECT_DIR/tools/android-toolchain.cmake
+    # ANDROID_HOME: /opt/android-tooling # <-- set up in the base image!
+    # KDECI_ANDROID_SDK_ROOT: $ANDROID_HOME/sdk # <-- set up in the base image!
+    # KDECI_ANDROID_NDK_ROOT: $ANDROID_HOME/android-ndk-r22b/ # <-- set up in the base image!
+
+  # different commits may build different deps, so they should not be cancellable
+  interruptible: false
+
+.macos_qt515:
+  tags:
+    - macOS
+  environment: macos-qt5.15
+  extends:
+    - .log_artifacts_unix
+  variables:
+    # ccache is not present on macOS
+    # KDECI_CC_CACHE: /Users/gitlab/caches/krita-macos/cache
+    KDECI_CACHE_PATH: /Users/gitlab/caches/krita-macos/artifacts
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-macos-qt5.15
+    EXTERNALS_DOWNLOAD_DIR: /Users/gitlab/caches/krita-macos/downloads
+    KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
+    KDECI_BUILD_TYPE: Release
+    MACOSX_DEPLOYMENT_TARGET: "10.14"
+    QMAKE_MACOSX_DEPLOYMENT_TARGET: "10.14"
+    CMAKE_TOOLCHAIN_FILE: $CI_PROJECT_DIR/tools/macos-toolchain.cmake
+
+  # different commits may build different deps, so they should not be cancellable
+  interruptible: false
+  before_script:
+    - python3 -m venv venv --upgrade-deps
+    - . venv/bin/activate
+    - pip install -r requirements.txt
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1 upstream-ci-utilities
+
+    - python3 -u tools/download-macos-tools.py
+    - source _krita-tools/activate
+
+    - git config --global --add safe.directory $CI_PROJECT_DIR
 
 include:
-  - /pipelines/seed-deps.yml
+  - /pipelines/linux.yml
+  - /pipelines/windows.yml
+  - /pipelines/macos.yml
+  - /pipelines/android.yml
   - /pipelines/registry-cleanup.yml
+  - /pipelines/generate-deps-visualization.yml

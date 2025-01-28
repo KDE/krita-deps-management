@@ -1,0 +1,8 @@
+'@latest':
+  'base/*': 'master'
+
+'@latest-kf6':
+  'base/*': 'master'
+
+'@stable':
+  'base/*': 'krita/5.2'

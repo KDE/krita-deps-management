@@ -1,0 +1,12 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'ffmpeg/ffmpeg': '@same'
+    'ffmpeg/sdl2': '@same'
+    'ffmpeg/libvorbis': '@same'
+    'base/fftw3': '@same'
+    'base/fontconfig': '@same'
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+    'base/dlfcn_win32': '@same'

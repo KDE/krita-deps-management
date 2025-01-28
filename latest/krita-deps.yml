@@ -1,6 +1,162 @@
+- 'on': ['@all']
+  'require':
+    "base/boost": "master"
+    "base/lcms2": "master"
+    "base/png": "master"
+    "base/nasm": "master"
+    "base/eigen3": "master"
+    "base/expat": "master"
+    "base/exiv2": "master"
+    "base/fribidi": "master"
+    "heif/libaom": "master"
+    "base/fftw3": "master"
+    "base/freetype": "master"
+    "base/fontconfig": "master"
+    "base/qt": "master"
+    # TODO: Krita fails to open openEXR files on Android,
+    #       but we still require openEXR library for float-16
+    #       support, so we don't disable it from the list of
+    #       dependencies
+    "base/openexr": "master"
+    "base/tiff": "master"
+    "base/gsl": "master"
+    "base/giflib": "master"
+    "base/openjpeg": "master"
+    "base/json_c": "master"
+    "base/xsimd": "master"
+    "base/unibreak": "master"
+    "base/webp": "master"
+    "base/quazip": "master"
+    "base/zug": "master"
+    "base/immer": "master"
+    "base/lager": "master"
+    "base/highway": "master"
+    "base/brotli": "master"
+    "base/jpegxl": "master"
+    "base/extra_cmake_modules": "master"
+    "base/kconfig": "master"
+    "base/karchive": "master"
+    "base/kwidgetsaddons": "master"
+    "base/kcompletion": "master"
+    "base/kcoreaddons": "master"
+    "base/kguiaddons": "master"
+    "base/ki18n": "master"
+    "base/kitemmodels": "master"
+    "base/kitemviews": "master"
+    "base/kimageformats": "master"
+    "base/kwindowsystem": "master"
+    "base/mypaint": "master"
+    "base/seexpr": "master"
+    "base/icu": "master"
+    "base/jpeg": "master"
+    "ffmpeg/flac": "master"
+    "ffmpeg/libogg": "master"
+    "ffmpeg/opus": "master"
+    "ffmpeg/sdl2": "master"
+    "ffmpeg/vpx": "master"
+    "ffmpeg/libvorbis": "master"
+    "ffmpeg/libtheora": "master"
+    "ffmpeg/openh264": "master"
+    "ffmpeg/lame": "master"
+    "ffmpeg/ffmpeg": "master"
+    "base/mlt": "master"
+
+# libiconv cannot be cross-compiled for Android as of now. It uses
+# automake, hence it needs some special handling. It means that
+# EXIV2 will not be able to convert character encoding in the
+# file's metadata
+#
+# Here is a link explaining how to build it for Android:
+# https://medium.com/@zw3rk/building-iconv-for-android-e3581a52668f
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/iconv": "master"
+
+# lzma library still uses Automake, hence cannot be cross-compiled,
+# hence cannot be used on Android
+
+# TODO: check if it can actually be used on macOS with
+# cross-compilation?
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/lzma": "master"
+
+# OpenColorIO is not supported on Android by Krita,
+# the whole plugin is disabled. OCIO **can** be built
+# for Android, it is just Krita that cannot use it on
+# that platform
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/ocio": "master"
+
+# TODO: port heif deps into Anroid-arm64
+# TODO: heif/libx265_10bit does not compile on Android/x86
+- 'on': ['Windows', 'MacOS', 'Linux', 'Android/x86_64']
+  'require':
+    "heif/libde265": "master"
+    "heif/libx265_10bit": "master"
+    "heif/libx265_12bit": "master"
+    "heif/libx265": "master"
+    "base/libheif": "master"
+
+# Note1: fseek call in libraw is not supported on 32-bit systems
+# Note2: RAW support is currently disabled on ['Android/x86_64',
+#        'Android/arm64-v8a'], since it doesn't work in Krita for
+#        some reason. libraw and Krita build fine, but it doesn't
+#        work in the runtime.
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/libraw": "master"
+    "base/kdcraw": "master"
+
+- 'on': ['Windows', 'MacOS', 'Linux']
+  'require':
+    "base/python": "master"
+    "base/sip": "master"
+    "base/pyqt-builder": "master"
+    "base/pyqt5": "master"
+    "base/pyqt5-sip": "master"
+    "base/poppler": "master"
+
+- 'on': ['Android']
+  'require':
+    "base/zlib": "master"
+    "base/gettext": "master"
+    "base/openssl": "master"
+    "base/libintl-lite": "master"
+    "base/libunwindstack-ndk": "master"
+
 - 'on': ['Windows']
   'require':
-    "base/patch": "@stable"
-    "base/zlib": "@stable"
-    "base/iconv": "@stable"
-    "base/gettext": "@stable"
+    "base/patch": "master"
+    "base/strawberryperl": "master"
+    "base/zlib": "master"
+    "base/googleangle": "master"
+    "base/drmingw": "master"
+    "base/icoutils": "master"
+    "base/dlfcn_win32": "master"
+
+- 'on': ['Windows', 'MacOS']
+  'require':
+    # on Linux we use meson provided by the distribution
+    "base/meson": "master"
+    # on Linux we use meson provided by the distribution, on Android the use
+    # of pkgconfig is explicitly prohibited
+    "base/pkgconfig": "master"
+    # TODO: check if we actually need that on macOS (required by ki18n)
+    "base/gettext": "master"
+    # TODO: check if we actually need that on macOS (required by Qt and python)
+    "base/openssl": "master"
+
+- 'on': ['Linux', 'MacOS']
+  'require':
+    "base/python-modules": "master"
+
+- 'on': ['Linux']
+  'require':
+    "base/kcrash": "master"
+    "base/fcitx-qt": "master"
+
+- 'on': ['MacOS']
+  'require':
+    "base/zlib": "master"

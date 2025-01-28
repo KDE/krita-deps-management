@@ -1,0 +1,8 @@
+description: The sip extension module provides support for the PyQt5 package
+hasrepo: false
+identifier: ext_pyqt5-sip
+name: pyqt5-sip
+projectpath: krita-deps/base/pyqt5-sip
+repoactive: false
+repopath: base/pyqt5-sip
+

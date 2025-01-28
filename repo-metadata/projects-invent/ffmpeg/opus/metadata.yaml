@@ -1,0 +1,7 @@
+description: An audio codec for use in low-delay speech and audio communication
+hasrepo: false
+identifier: ext_opus
+name: opus
+projectpath: krita-deps/ffmpeg/opus
+repoactive: false
+repopath: ffmpeg/opus

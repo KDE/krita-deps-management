@@ -1,0 +1,7 @@
+description: VP8/VP9 Video Codec SDK
+hasrepo: false
+identifier: ext_vpx
+name: vpx
+projectpath: krita-deps/ffmpeg/vpx
+repoactive: false
+repopath: ffmpeg/vpx

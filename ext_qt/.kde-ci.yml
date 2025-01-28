@@ -1,0 +1,29 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'base/icu': '@same'
+    'base/freetype': '@same'
+    'base/png': '@same'
+    'base/jpeg': '@same'
+- 'on': ['Linux']
+  'require':
+    'base/tiff': '@same' # can be fetched with pkgconfig only, so not on Windows
+    # 'base/webp': '@same' # can be fetched with pkgconfig only, so not on Windows
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+    'base/googleangle': '@same'
+    'base/strawberryperl': '@same'
+#    'base/jom': '@same' # only for msvc builds
+- 'on': ['Windows', 'MacOS']
+  'require':
+    'base/openssl': '@same' # TODO: do we actually need that on MacOS?
+#    'base/pkgconfig': '@same' # supported on linux only
+- 'on': ['Android']
+  'require':
+    'base/openssl': '@same'
+- 'on': ['Windows', 'MacOS', 'Android']
+  'require':
+    'base/zlib': '@same'
+Options:
+  force-ninja-on-windows: False

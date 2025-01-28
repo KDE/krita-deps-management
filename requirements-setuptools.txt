@@ -1,0 +1,2 @@
+setuptools @ https://github.com/dimula73/setuptools/releases/download/v69.0.2-dk1/setuptools-69.0.2-dk1.zip \
+    --hash=sha256:bd2e9186e4525eb63f3e5ef1d48b0276a3f6be81c2fd325f0fa86790a74bf430

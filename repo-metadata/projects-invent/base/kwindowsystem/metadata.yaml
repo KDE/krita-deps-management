@@ -1,0 +1,7 @@
+description: Access to the windowing system
+hasrepo: false
+identifier: ext_kwindowsystem
+name: KWindowSystem
+projectpath: krita-deps/base/kwindowsystem
+repoactive: false
+repopath: base/kwindowsystem

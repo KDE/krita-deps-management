@@ -53,7 +53,7 @@ function (krita_to_native_environment_path_list path_list output_var)
 if(WIN32)
     list(JOIN _output_var $<SEMICOLON> _output_var)
 else()
-    list(JOIN _output_var $<COLON> _output_var)
+    list(JOIN _output_var ":" _output_var)
 endif()
 
     set (${output_var} ${_output_var} PARENT_SCOPE)

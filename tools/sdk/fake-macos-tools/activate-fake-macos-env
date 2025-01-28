@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#set -ex
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export PATH="$DIR/bin":"$PATH"
+
+extra_cmake_arg="-DCMAKE_OSX_ARCHITECTURES:STRING=arm64\\;x86_64"
+
+if [ -z $KDECI_EXTRA_CMAKE_ARGS ]; then 
+    export KDECI_EXTRA_CMAKE_ARGS=$extra_cmake_arg
+else 
+    export KDECI_EXTRA_CMAKE_ARGS="$KDECI_EXTRA_CMAKE_ARGS $extra_cmake_arg"
+fi 
+
+export FAKE_MACOS_ENVIRONMENT=1

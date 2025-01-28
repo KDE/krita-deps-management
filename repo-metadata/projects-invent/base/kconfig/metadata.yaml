@@ -1,0 +1,7 @@
+description: Configuration system
+hasrepo: false
+identifier: ext_kconfig
+name: KConfig
+projectpath: krita-deps/base/kconfig
+repoactive: false
+repopath: base/kconfig

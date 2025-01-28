@@ -1,0 +1,1 @@
+# A custom metadata repo for Krita's dependencies

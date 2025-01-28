@@ -1,0 +1,7 @@
+description: An encoder/decoder for the Free Lossless Audio Codec
+hasrepo: false
+identifier: ext_flac
+name: flac
+projectpath: krita-deps/ffmpeg/flac
+repoactive: false
+repopath: ffmpeg/flac

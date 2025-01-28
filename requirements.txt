@@ -1,0 +1,2 @@
+-r requirements-setuptools.txt
+-r requirements-base.txt

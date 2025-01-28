@@ -1,0 +1,7 @@
+description: TIFF Library and Utilities
+hasrepo: false
+identifier: ext_tiff
+name: TIFF
+projectpath: krita-deps/base/tiff
+repoactive: false
+repopath: base/tiff

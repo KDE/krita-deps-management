@@ -1,0 +1,36 @@
+From 7962dc2ec0516a91f0137592b5ae9c8615cf0548 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Mon, 10 Jun 2024 10:44:03 +0200
+Subject: [PATCH] [mpl] Use static const for next/prior from C++11
+
+Trying to form next/prior in constant evaluation may be ill-formed
+
+A backported version of this patch:
+https://github.com/boostorg/mpl/pull/77
+
+Upstream issue:
+https://github.com/boostorg/mpl/issues/69
+
+The patch fixes compilation of Krita on Clang 16+
+
+---
+ boost/mpl/aux_/integral_wrapper.hpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/boost/mpl/aux_/integral_wrapper.hpp b/boost/mpl/aux_/integral_wrapper.hpp
+index 8748fbb93..5f24b7949 100644
+--- a/boost/mpl/aux_/integral_wrapper.hpp
++++ b/boost/mpl/aux_/integral_wrapper.hpp
+@@ -56,7 +56,8 @@ struct AUX_WRAPPER_NAME
+ // have to #ifdef here: some compilers don't like the 'N + 1' form (MSVC),
+ // while some other don't like 'value + 1' (Borland), and some don't like
+ // either
+-#if BOOST_WORKAROUND(__EDG_VERSION__, <= 243)
++#if BOOST_WORKAROUND(__EDG_VERSION__, <= 243) \
++    || __cplusplus >= 201103L
+  private:
+     BOOST_STATIC_CONSTANT(AUX_WRAPPER_VALUE_TYPE, next_value = BOOST_MPL_AUX_STATIC_CAST(AUX_WRAPPER_VALUE_TYPE, (N + 1)));
+     BOOST_STATIC_CONSTANT(AUX_WRAPPER_VALUE_TYPE, prior_value = BOOST_MPL_AUX_STATIC_CAST(AUX_WRAPPER_VALUE_TYPE, (N - 1)));
+-- 
+2.23.0.windows.1
+

@@ -1,0 +1,55 @@
+#!/bin/bash
+
+usage=\
+"Usage: $(basename "$0") [OPTION]...\n
+Fake lipo script for testing macos builds
+\n
+where:\n
+    -h,      --help              show this help text\n
+    -info \n
+    -create \n
+    -output \n
+\n
+"
+
+# Call getopt to validate the provided input.
+options=$(getopt -a -o "h" --long "help info create output:" -- "$@")
+[ $? -eq 0 ] || {
+    echo "Incorrect options provided"
+    exit 1
+}
+
+CREATE_MODE=
+INFO_MODE=
+OUTPUT_FILE=
+
+eval set -- "$options"
+while true; do
+    case "$1" in
+    --create)
+        CREATE_MODE=1
+        ;;
+    --info)
+        INFO_MODE=1
+        ;;
+    --output)
+        OUTPUT_FILE=$2
+        ;;
+    -h | --help)
+        echo -e $usage >&2
+        exit 1
+        ;;
+    --)
+        shift
+        break
+        ;;
+    esac
+    shift
+done
+
+if [ -n "$INFO_MODE" ]; then
+    echo Non-fat
+elif [ -n "$CREATE_MODE" ]; then
+    echo "## Creating fat binary ($*) -> $OUTPUT_FILE"
+    touch $OUTPUT_FILE
+fi

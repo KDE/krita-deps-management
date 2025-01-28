@@ -1,0 +1,7 @@
+description: Extra CMake modules
+hasrepo: false
+identifier: ext_extra_cmake_modules
+name: Extra CMake Modules
+projectpath: krita-deps/base/extra_cmake_modules
+repoactive: false
+repopath: base/extra_cmake_modules

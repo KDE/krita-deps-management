@@ -1,19 +1,49 @@
 ## Cleanup job for the registries
 
-registry_cleanup:
+.registry_cleanup_base:
   stage: SystemMaintenance
+  extends:
+  - .nightly-repo-cleanup
   needs: []
   image: invent-registry.kde.org/sysadmin/ci-images/suse-qt515:latest
-  rules:
-    - when: manual
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
   tags:
     - Linux
   variables:
     KDECI_CACHE_PATH: /mnt/artifacts/suse-qt5.15/
     KDECI_GITLAB_SERVER: https://invent.kde.org/
+    KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/ci-utilities/repo-metadata"
   before_script:
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git
-    - git clone https://invent.kde.org/dkazakov/krita-deps-repo-metadata.git ci-utilities/repo-metadata/
+    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
   script:
-    - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-windows-qt5.15
+    - python3 -u ci-utilities/package-registry-cleanup.py --project dkazakov/krita-ci-artifacts-${CI_ENVIRONMENT_NAME}
+
+
+registry_cleanup_windows_qt515:
+  extends:
+  - .registry_cleanup_base
+  environment: windows-qt5.15
+
+registry_cleanup_appimage_qt515:
+  extends:
+  - .registry_cleanup_base
+  environment: appimage-qt5.15
+
+registry_cleanup_macos-qt5.15:
+  extends:
+  - .registry_cleanup_base
+  environment: macos-qt5.15
+
+registry_cleanup_android-x86_64-qt5.15:
+  extends:
+  - .registry_cleanup_base
+  environment: android-x86_64-qt5.15
+
+registry_cleanup_android-arm64-v8a-qt5.15:
+  extends:
+  - .registry_cleanup_base
+  environment: android-arm64-v8a-qt5.15
+
+registry_cleanup_android-armeabi-v7a-qt5.15:
+  extends:
+  - .registry_cleanup_base
+  environment: android-armeabi-v7a-qt5.15

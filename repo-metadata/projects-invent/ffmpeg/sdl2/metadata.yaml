@@ -1,0 +1,7 @@
+description: Cross-platform multimedia library
+hasrepo: false
+identifier: ext_sdl2
+name: sdl2
+projectpath: krita-deps/ffmpeg/sdl2
+repoactive: false
+repopath: ffmpeg/sdl2

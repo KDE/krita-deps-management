@@ -1,0 +1,8 @@
+description: The OpenSSL cryptography and TLS library
+hasrepo: false
+identifier: ext_openssl
+name: OpenSSL
+projectpath: krita-deps/base/openssl
+repoactive: false
+repopath: base/openssl
+

@@ -1,0 +1,26 @@
+From 0fe7cf6647be6f8d916f0a030dd6b5c779082e79 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Tue, 12 Dec 2023 12:22:35 +0100
+Subject: [PATCH] [harfbuzz] Add global include prefix to the list of
+ pkg-config includes
+
+---
+ src/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/meson.build b/src/meson.build
+index ba3470f..031dac6 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -607,7 +607,7 @@ endif
+ 
+ pkgmod.generate(libharfbuzz,
+   description: 'HarfBuzz text shaping library',
+-  subdirs: [meson.project_name()],
++  subdirs: [meson.project_name(), ''],
+   version: meson.project_version(),
+ )
+ 
+-- 
+2.38.1.windows.1
+

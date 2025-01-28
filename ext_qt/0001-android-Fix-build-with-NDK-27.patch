@@ -1,0 +1,25 @@
+From cd232c4b852d06a2a9fe4488491837d1338af26c Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Mon, 28 Oct 2024 15:44:15 +0100
+Subject: [PATCH 1/2] [android] Fix build with NDK 27
+
+---
+ src/corelib/global/qlogging.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/corelib/global/qlogging.cpp b/src/corelib/global/qlogging.cpp
+index bdeaacf482..98bdb2192a 100644
+--- a/src/corelib/global/qlogging.cpp
++++ b/src/corelib/global/qlogging.cpp
+@@ -106,7 +106,7 @@
+ #    if __UCLIBC_HAS_BACKTRACE__
+ #      define QLOGGING_HAVE_BACKTRACE
+ #    endif
+-#  elif (defined(__GLIBC__) && defined(__GLIBCXX__)) || (__has_include(<cxxabi.h>) && __has_include(<execinfo.h>))
++#  elif (defined(__GLIBC__) && defined(__GLIBCXX__)) || (__has_include(<cxxabi.h>) && __has_include(<execinfo.h>) && (!defined(Q_OS_ANDROID) || __ANDROID_API__ >= 33))
+ #    define QLOGGING_HAVE_BACKTRACE
+ #  endif
+ #endif
+-- 
+2.34.1
+

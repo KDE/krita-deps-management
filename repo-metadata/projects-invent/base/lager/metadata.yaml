@@ -1,0 +1,7 @@
+description: lager is a C++ library to assist value-oriented design by implementing the unidirectional data-flow architecture.
+hasrepo: false
+identifier: ext_lager
+name: lager
+projectpath: krita-deps/base/lager
+repoactive: false
+repopath: base/lager

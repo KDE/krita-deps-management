@@ -1,0 +1,8 @@
+description: Python Interpreter
+hasrepo: false
+identifier: ext_python
+name: python3
+projectpath: krita-deps/base/python
+repoactive: false
+repopath: base/python
+

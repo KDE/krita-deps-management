@@ -1,0 +1,14 @@
+PostInstallScripts:
+    fix-pcfiles: ../tools/make_pkgconfig_files_relocatable.py
+
+Options:
+  use-ccache: True
+  run-tests: False
+  build-tests: False
+  run-cppcheck: False
+  run-gcovr: False
+  use-asan: False
+  pkg-config-sanity-check: 'warning'
+  macos-rpath-fix: True
+  force-build-target: ext_build
+  force-install-target: ext_install

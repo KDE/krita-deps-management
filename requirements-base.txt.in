@@ -1,0 +1,7 @@
+-r requirements-setuptools.txt
+lxml
+pyyaml
+python-gitlab
+packaging
+toml
+ply

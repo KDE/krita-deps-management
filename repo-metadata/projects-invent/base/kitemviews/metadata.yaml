@@ -1,0 +1,7 @@
+description: Widget addons for Qt Model/View
+hasrepo: false
+identifier: ext_kitemviews
+name: KItemViews
+projectpath: krita-deps/base/kitemviews
+repoactive: false
+repopath: base/kitemviews

@@ -1,0 +1,8 @@
+description: GNU libraries and utilities for producing multi-lingual messages
+hasrepo: false
+identifier: ext_gettext
+name: gettext
+projectpath: krita-deps/base/gettext
+repoactive: false
+repopath: base/gettext
+

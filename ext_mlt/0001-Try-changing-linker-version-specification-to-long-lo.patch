@@ -1,0 +1,35 @@
+From 07dc52ccc58eff5c075f34d94bb6c7380389b360 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Wed, 30 Oct 2024 20:21:51 +0100
+Subject: [PATCH] Try changing linker version specification to long-long
+
+(it fails to build on armeabi-v7a)
+---
+ src/mlt++/mlt++.vers | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/mlt++/mlt++.vers b/src/mlt++/mlt++.vers
+index 860d2b1..b856488 100644
+--- a/src/mlt++/mlt++.vers
++++ b/src/mlt++/mlt++.vers
+@@ -310,7 +310,7 @@ MLTPP_0.8.8 {
+       "Mlt::Properties::set(char const*, char const*)";
+       "Mlt::Properties::set(char const*, double)";
+       "Mlt::Properties::set(char const*, int)";
+-      "Mlt::Properties::set(char const*, long)";
++      "Mlt::Properties::set(char const*, long long)";
+       "Mlt::Properties::set(char const*, void*, int, void (*)(void*), char* (*)(void*, int))";
+       "Mlt::Properties::set_lcnumeric(char const*)";
+       "Mlt::Properties::setup_wait_for(char const*)";
+@@ -540,7 +540,7 @@ MLTPP_6.14.0 {
+       "Mlt::Service::set_profile(mlt_profile_s*)";
+       "Mlt::Playlist::reorder(int const*)";
+       "Mlt::Transition::connect(Mlt::Service&, int, int)";
+-      "Mlt::Producer::set_creation_time(long)";
++      "Mlt::Producer::set_creation_time(long long)";
+       "Mlt::Producer::get_creation_time()";
+   };
+ } MLTPP_6.10.0;
+-- 
+2.34.1
+

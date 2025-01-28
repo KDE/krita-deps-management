@@ -1,0 +1,7 @@
+description: Image format plugins for Qt
+hasrepo: false
+identifier: ext_kimageformats
+name: KImageFormats
+projectpath: krita-deps/base/kimageformats
+repoactive: false
+repopath: base/kimageformats

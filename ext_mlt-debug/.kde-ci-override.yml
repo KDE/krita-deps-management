@@ -1,0 +1,2 @@
+Options:
+  cmake-options: '-DMLT_ENABLE_DEBUG_INFO=ON'

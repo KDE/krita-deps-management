@@ -1,0 +1,7 @@
+description: Support for application crash analysis and bug report from apps
+hasrepo: false
+identifier: ext_kcrash
+name: KCrash
+projectpath: krita-deps/base/kcrash
+repoactive: false
+repopath: base/kcrash

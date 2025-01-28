@@ -1,0 +1,7 @@
+description: Open Source H.264 Codec
+hasrepo: false
+identifier: ext_openh264
+name: openh264
+projectpath: krita-deps/ffmpeg/openh264
+repoactive: false
+repopath: ffmpeg/openh264

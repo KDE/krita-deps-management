@@ -1,0 +1,7 @@
+description: JSON-C
+hasrepo: false
+identifier: ext_json_c
+name: JSON-C
+projectpath: krita-deps/base/json_c
+repoactive: false
+repopath: base/json_c

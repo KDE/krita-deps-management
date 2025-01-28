@@ -1,0 +1,7 @@
+description: Models for Qt Model/View system
+hasrepo: false
+identifier: ext_kitemmodels
+name: KItemModels
+projectpath: krita-deps/base/kitemmodels
+repoactive: false
+repopath: base/kitemmodels

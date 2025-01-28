@@ -1,0 +1,7 @@
+description: Brotli is a generic-purpose lossless compression algorithm
+hasrepo: false
+identifier: ext_brotli
+name: brotli
+projectpath: krita-deps/base/brotli
+repoactive: false
+repopath: base/brotli

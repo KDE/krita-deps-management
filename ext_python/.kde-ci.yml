@@ -1,0 +1,5 @@
+Dependencies:
+- 'on': ['MacOS']
+  'require':
+    'base/lzma' : '@same'
+    'base/openssl': '@same'

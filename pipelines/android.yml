@@ -1,0 +1,160 @@
+.seed_all_android_base:
+  stage: Dependencies
+  extends:
+  - .seed_template
+  - .android_qt515
+  script:
+    - python3 -u tools/replace-branch-in-seed-file.py latest/krita-deps.yml --print --dst-branch $BRANCH_NAME_ANDROID
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+    - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_ANDROID
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI-dev.log"
+    - python3 -u tools/replace-branch-in-seed-file.py latest/openvino-packages.yml --print --dst-branch $BRANCH_NAME_ANDROID
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI-dev.log"
+
+
+.seed_dirty_android_base:
+  extends:
+  - .seed_all_android_base
+  variables:
+    KRITA_STAGE_DEP:
+      value: "ext_unknown"
+  script:
+    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared --branch $BRANCH_NAME_ANDROID 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+
+.seed_custom_android_base:
+  extends:
+  - .seed_all_android_base
+  variables:
+    KRITA_STAGE_DEP:
+      value: "ext_unknown"
+  script:
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared --branch $BRANCH_NAME_ANDROID 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+
+.android_x86_64_mixin:
+  environment: android-x86_64-qt5.15
+  variables:
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-x86_64-qt5.15
+    KDECI_ANDROID_ABI: x86_64
+    KDECI_CC_CACHE: /mnt/caches/krita-android/x86_64/
+    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/x86_64/
+
+.android_arm64-v8a_mixin:
+  environment: android-arm64-v8a-qt5.15
+  variables:
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-arm64-v8a-qt5.15
+    KDECI_ANDROID_ABI: arm64-v8a
+    KDECI_CC_CACHE: /mnt/caches/krita-android/arm64-v8a/
+    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/arm64-v8a/
+
+.android_armeabi-v7a_mixin:
+  environment: android-armeabi-v7a-qt5.15
+  variables:
+    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-armeabi-v7a-qt5.15
+    KDECI_ANDROID_ABI: armeabi-v7a
+    KDECI_CC_CACHE: /mnt/caches/krita-android/armeabi-v7a/
+    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/armeabi-v7a/
+
+all_publish_android_x86_64:
+  extends:
+  - .seed_all_android_base
+  - .android_x86_64_mixin
+
+all_publish_android_arm64-v8a:
+  extends:
+  - .seed_all_android_base
+  - .android_arm64-v8a_mixin
+
+all_publish_android_armeabi-v7a:
+  extends:
+  - .seed_all_android_base
+  - .android_armeabi-v7a_mixin
+
+all_shared_android_x86_64:
+  extends:
+  - all_publish_android_x86_64
+  - .shared_build_mixin
+
+all_shared_android_arm64-v8a:
+  extends:
+  - all_publish_android_arm64-v8a
+  - .shared_build_mixin
+
+all_shared_android_armeabi-v7a:
+  extends:
+  - all_publish_android_armeabi-v7a
+  - .shared_build_mixin
+
+all_local_cache_android_x86_64:
+  extends:
+  - all_publish_android_x86_64
+  - .local_cache_mixin
+
+all_local_cache_android_arm64-v8a:
+  extends:
+  - all_publish_android_arm64-v8a
+  - .local_cache_mixin
+
+all_local_cache_android_armeabi-v7a:
+  extends:
+  - all_publish_android_armeabi-v7a
+  - .local_cache_mixin
+
+dirty_publish_android_x86_64:
+  extends:
+  - .seed_dirty_android_base
+  - .android_x86_64_mixin
+
+dirty_publish_android_arm64-v8a:
+  extends:
+  - .seed_dirty_android_base
+  - .android_arm64-v8a_mixin
+
+dirty_publish_android_armeabi-v7a:
+  extends:
+  - .seed_dirty_android_base
+  - .android_armeabi-v7a_mixin
+
+dirty_local_cache_android_x86_64:
+  extends:
+  - dirty_publish_android_x86_64
+  - .local_cache_mixin
+
+dirty_local_cache_android_arm64-v8a:
+  extends:
+  - dirty_publish_android_arm64-v8a
+  - .local_cache_mixin
+
+dirty_local_cache_android_armeabi-v7a:
+  extends:
+  - dirty_publish_android_armeabi-v7a
+  - .local_cache_mixin
+
+custom_publish_android_x86_64:
+  extends:
+  - .seed_custom_android_base
+  - .android_x86_64_mixin
+
+custom_publish_android_arm64-v8a:
+  extends:
+  - .seed_custom_android_base
+  - .android_arm64-v8a_mixin
+
+custom_publish_android_armeabi-v7a:
+  extends:
+  - .seed_custom_android_base
+  - .android_armeabi-v7a_mixin
+
+custom_local_cache_android_x86_64:
+  extends:
+  - custom_publish_android_x86_64
+  - .local_cache_mixin
+
+custom_local_cache_android_arm64-v8a:
+  extends:
+  - custom_publish_android_arm64-v8a
+  - .local_cache_mixin
+
+custom_local_cache_android_armeabi-v7a:
+  extends:
+  - custom_publish_android_armeabi-v7a
+  - .local_cache_mixin

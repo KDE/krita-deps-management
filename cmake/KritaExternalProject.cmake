@@ -1,12 +1,16 @@
 # SPDX-FileCopyrightText: 2023 Ivan Santa Maria <ghevan@gmail.com>
 # SPDX-License-Ref: BSD-3-Clause
 
-include(ExternalProject)
+if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
+    cmake_policy(SET CMP0135 NEW)
+endif()
 
-set(KRITA_MACOS_EXTERNAL_PACKAGE_NAME "package_build_fat.tar.gz")
+include(ExternalProject)
+include(MacroBoolToOnOff)
+
 # used always for stepped universal or non universal builds.
 set(PARENT_CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
-set(KRITA_MACOS_CONSOLIDATE_SCRIPT ${PARENT_CMAKE_SOURCE_DIR}/tools/macos_consolidate.sh)
+set(KRITA_MACOS_CONSOLIDATE_SCRIPT ${PARENT_CMAKE_SOURCE_DIR}/../tools/macos_consolidate.sh)
 
 set(kis_ONE_VALUE_ARGS URL URL_HASH DOWNLOAD_DIR WORKING_DIRECTORY
     GIT_REPOSITORY GIT_TAG GIT_REMOTE_UPDATE_STRATEGY GIT_SUBMODULES_RECURSE GIT_PROGRESS
@@ -17,13 +21,26 @@ set(kis_MULTI_VALUE_ARGS PATCH_COMMAND CONFIGURE_ARGS CMAKE_ARGS DEPENDS
     CONFIGURE_COMMAND BUILD_COMMAND INSTALL_COMMAND UPDATE_COMMAND
     )
 
+if (CMAKE_VERBOSE_MAKEFILE)
+    set(KRITA_MESON_VERBOSE_OPTION --verbose)
+    set(KRITA_MAKE_VERBOSE_OPTION VERBOSE=1)
+    set(KRITA_CMAKE_VERBOSE_OPTION -DCMAKE_VERBOSE_MAKEFILE=ON)
+else()
+    set(KRITA_MESON_VERBOSE_OPTION)
+    set(KRITA_MAKE_VERBOSE_OPTION)
+    set(KRITA_CMAKE_VERBOSE_OPTION)
+endif()
+
+MACRO_BOOL_TO_ON_OFF(CMAKE_VERBOSE_MAKEFILE _str_verbose_makefile)
+message (STATUS "Verbose output for external projects (set with -DCMAKE_VERBOSE_MAKEFILE=ON): ${_str_verbose_makefile}")
+
 
 # If APPLE call the muti build arch macro
 #    in other case pass args to ExternalProject_Add
 #    or if MESON given, make use of kis_ExternalProject_Add_meson
 macro(kis_ExternalProject_Add_with_separate_builds_apple)
 
-    if(APPLE)
+    if(APPLE OR DEFINED ENV{FAKE_MACOS_ENVIRONMENT})
         kis_ExternalProject_Add_macos(${ARGN})
     else()
         set(options MESON AUTOMAKE)
@@ -34,10 +51,19 @@ macro(kis_ExternalProject_Add_with_separate_builds_apple)
         else()
             # parsed arguments will not pass to child macro
             set(oneValueArgs WORKING_DIRECTORY)
-            set(multiValueArgs CONFIGURE_ARGS)
+            set(multiValueArgs CONFIGURE_ARGS UPDATE_COMMAND)
             cmake_parse_arguments(EXT "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-            ExternalProject_Add(${EXT_UNPARSED_ARGUMENTS})
+            if (EXT_UPDATE_COMMAND)
+                # There is some issue with passing an empty UPDATE_COMMAND via the macro arguments
+                # so we just forbid that for now; noone uses updates currently anyway
+                # If you'd like to recover this feature, test an external project with
+                # GIT_REPOSITORY tag **and** try calling make ext_foo twice, it should not
+                # fail
+                message(FATAL_ERROR "separate build macro cannot handle non-empty UPDATE_COMMAND argument: ${EXT_UPDATE_COMMAND}")
+            endif()
+
+            ExternalProject_Add(${EXT_UNPARSED_ARGUMENTS} UPDATE_COMMAND "")
         endif()
     endif()
 endmacro()
@@ -69,7 +95,8 @@ macro(kis_ExternalProject_Add_meson EXT_NAME)
 
         BUILD_COMMAND ${CMAKE_COMMAND} -E env
             PYTHONPATH=${_krita_pythonpath}
-            ${MESON_BINARY_PATH} compile -C <BINARY_DIR> -j${SUBMAKE_JOBS}
+            PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
+            ${MESON_BINARY_PATH} compile ${KRITA_MESON_VERBOSE_OPTION} -C <BINARY_DIR> -j${SUBMAKE_JOBS}
 
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env
             PYTHONPATH=${_krita_pythonpath}
@@ -97,7 +124,6 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
     )
     cmake_parse_arguments(EXT "${options}" "${onValueArgs}" "${multiValueArgs}" ${ARGN})
 
-
     macro(compile_arch ARCH DEPENDEES EXT_MESON)
         # Some packages need special configure to set architecture
         string(REPLACE "@ARCH@" ${ARCH} EXT_CONFIGURE_COMMAND_ARCH "${EXT_CONFIGURE_COMMAND}")
@@ -110,6 +136,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
         # CMake variant
         set(MAC_CONFIGURE_COMMAND
             arch -${ARCH} ${CMAKE_COMMAND} -S <SOURCE_DIR> -B <BINARY_DIR>-${ARCH}
+            ${KRITA_CMAKE_VERBOSE_OPTION}
             ${EXT_CONFIGURE_ARGS}
             ${EXT_CMAKE_ARGS}
             -DCMAKE_OSX_ARCHITECTURES:STRING=${ARCH}
@@ -129,14 +156,15 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
                 arch -${ARCH} ${MESON_BINARY_PATH} setup <BINARY_DIR>-${ARCH} <SOURCE_DIR>
                     --libdir=lib
                     -Dbuildtype=$<IF:$<CONFIG:Debug>,debug,debugoptimized>
+                    -Dpkgconfig.relocatable=true
                     ${EXT_CONFIGURE_ARGS}
                     ${EXT_CMAKE_ARGS}
-                    --native-file=${CMAKE_CURRENT_BINARY_DIR}/../meson-compiler_${ARCH}.ini
+                    --native-file=${CMAKE_CURRENT_BINARY_DIR}/meson-compiler_${ARCH}.ini
             )
             set(MAC_BUILD_COMMAND
                 ${CMAKE_COMMAND} -E env
                 PYTHONPATH=${_krita_pythonpath}
-                arch -${ARCH} ${MESON_BINARY_PATH} compile -C <BINARY_DIR>-${ARCH} -j${SUBMAKE_JOBS}
+                arch -${ARCH} ${MESON_BINARY_PATH} compile ${KRITA_MESON_VERBOSE_OPTION} -C <BINARY_DIR>-${ARCH} -j${SUBMAKE_JOBS}
             )
             set(MAC_INSTALL_COMMAND
                 ${CMAKE_COMMAND} -E env
@@ -155,7 +183,7 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
                 ${EXT_CMAKE_ARGS}
             )
             set(MAC_BUILD_COMMAND
-                make clean COMMAND arch -${ARCH} make -j${SUBMAKE_JOBS}
+                make clean COMMAND arch -${ARCH} make -j${SUBMAKE_JOBS} ${KRITA_MAKE_VERBOSE_OPTION}
             )
             set(MAC_INSTALL_COMMAND
                 make install DESTDIR=<TMP_DIR>/build-${ARCH} INSTALL_ROOT=<TMP_DIR>/build-${ARCH}
@@ -204,7 +232,8 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
 
             CONFIGURE_COMMAND ""
             BUILD_COMMAND ${CMAKE_COMMAND} -E env ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
-            INSTALL_COMMAND tar -xzf <TMP_DIR>/${KRITA_MACOS_EXTERNAL_PACKAGE_NAME} -C "/"
+            INSTALL_COMMAND ""
+            
             UPDATE_COMMAND ""
 
             DEPENDS ${EXT_DEPENDS}
@@ -223,11 +252,19 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
 
             CONFIGURE_COMMAND ""
             BUILD_COMMAND ${CMAKE_COMMAND} -E env ${KRITA_MACOS_CONSOLIDATE_SCRIPT} <TMP_DIR>
-            INSTALL_COMMAND tar -xzf <TMP_DIR>/${KRITA_MACOS_EXTERNAL_PACKAGE_NAME} -C "/"
+            INSTALL_COMMAND ""
+            
             UPDATE_COMMAND ""
 
             DEPENDS ${EXT_DEPENDS}
         )
+    endif()
+
+    # FIXME: Since this var isn't set, setting to universal
+    if(NOT CMAKE_OSX_ARCHITECTURES)
+        set(CMAKE_OSX_ARCHITECTURES)
+        list(APPEND CMAKE_OSX_ARCHITECTURES "x86_64")
+        list(APPEND CMAKE_OSX_ARCHITECTURES "arm64")
     endif()
 
     set(step_depend configure)
@@ -235,10 +272,56 @@ macro(kis_ExternalProject_Add_macos EXT_NAME)
         compile_arch(${ARCH} ${step_depend} ${EXT_MESON})
         set(step_depend build-${ARCH})
     endforeach()
+
+    # Add pre-install step that installs consolidated binaries
+    # using DESTDIR handling
+
+    if(${EXT_MESON} OR ${EXT_AUTOMAKE} OR EXT_BUILD_COMMAND)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_automake_like_prefix.cmake)
+        find_automake_like_prefix("${EXT_CONFIGURE_ARGS}" FINAL_PREFIX)
+    endif()
+
+    if(NOT FINAL_PREFIX AND EXT_CONFIGURE_ARGS)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_qt_like_prefix.cmake)
+        find_qt_like_prefix("${EXT_CONFIGURE_ARGS}" FINAL_PREFIX)
+    endif()
+
+    if(NOT FINAL_PREFIX AND EXT_CONFIGURE_COMMAND)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_qt_like_prefix.cmake)
+        find_qt_like_prefix("${EXT_CONFIGURE_COMMAND}" FINAL_PREFIX)
+    endif()
+
+    if(NOT FINAL_PREFIX AND EXT_CONFIGURE_COMMAND)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_automake_like_prefix.cmake)
+        find_automake_like_prefix("${EXT_CONFIGURE_COMMAND}" FINAL_PREFIX)
+    endif()
+
+    if(NOT FINAL_PREFIX AND EXT_CMAKE_ARGS)
+        include(${CMAKE_SOURCE_DIR}/../cmake/find_cmake_like_prefix.cmake)
+        find_cmake_like_prefix("${EXT_CMAKE_ARGS}" FINAL_PREFIX)
+    endif()
+
+    if (NOT FINAL_PREFIX)
+        message(FATAL_ERROR "Cannot detect the final prefix from meson configuration string")
+    endif()
+
+    ExternalProject_Get_Property(${EXT_NAME} TMP_DIR)
+
+    include(${CMAKE_SOURCE_DIR}/../cmake/offset_prefix_with_destdir.cmake)
+    offset_prefix_with_destdir(${TMP_DIR}/build_uni ${FINAL_PREFIX} OFFSET_PREFIX)
+
+    ExternalProject_Add_Step( ${EXT_NAME} pre-install
+            # newline space is important
+            COMMENT "Installing consolidated binaries for ${EXT_NAME}"
+
+            COMMAND ${CMAKE_COMMAND} -DSRC=${OFFSET_PREFIX} -DDST=${FINAL_PREFIX} -P ${KRITA_CI_INSTALL_DIRECTORY}
+
+            DEPENDERS install
+        )
 endmacro()
 
-macro(mkdir_build_arch_dir ARCH)
-ExternalProject_Add_Step(ext_qt mkdir-build-${ARCH}
+macro(mkdir_build_arch_dir PROJECT_NAME ARCH)
+ExternalProject_Add_Step(${PROJECT_NAME} mkdir-build-${ARCH}
     COMMAND ${CMAKE_COMMAND} -E make_directory <BINARY_DIR>-${ARCH}
     DEPENDERS configure
 )

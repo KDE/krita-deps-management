@@ -1,0 +1,7 @@
+description: immer is a library of persistent and immutable data structures written in C++.
+hasrepo: false
+identifier: ext_immer
+name: immer
+projectpath: krita-deps/base/immer
+repoactive: false
+repopath: base/immer
