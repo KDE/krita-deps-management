@@ -23,7 +23,7 @@
     "base/giflib": "master"
     "base/openjpeg": "master"
     "base/json_c": "master"
-    "base/xsimd": "master"
+    "base/xsimd": "krita/5.2"
     "base/unibreak": "master"
     "base/webp": "master"
     "base/quazip": "master"
