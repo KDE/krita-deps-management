@@ -1,10 +1,10 @@
 ## Overall seed job template for all jobs to make use of
 
 variables:
-  BRANCH_NAME_WINDOWS: 'master'
-  BRANCH_NAME_LINUX: 'master'
-  BRANCH_NAME_MACOS: 'master'
-  BRANCH_NAME_ANDROID: 'master'
+  BRANCH_NAME_WINDOWS: 'krita/5.2'
+  BRANCH_NAME_LINUX: 'krita/5.2'
+  BRANCH_NAME_MACOS: 'krita/5.2'
+  BRANCH_NAME_ANDROID: 'krita/5.2'
 
 stages:
   - Dependencies
