@@ -67,4 +67,4 @@ All publicly available CI jobs have names in the following format:
 
 ### Publishing the packages
 
-The packages can be published only from `master` and `transition/*` branches. After your MR is merged into master, you need to run `dirty_publish_<platform>` jobs for all related platforms to get the package published. The process of setting up `KRITA_STAGE_DEP` is the same as in the testing builds.
+The packages can be published only from `master` and `transition.now/*` branches. After your MR is merged into master, you need to run `dirty_publish_<platform>` jobs for all related platforms to get the package published. The process of setting up `KRITA_STAGE_DEP` is the same as in the testing builds.
