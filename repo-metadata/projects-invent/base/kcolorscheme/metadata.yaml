@@ -1,0 +1,7 @@
+description: KColorScheme provides access to the system color palette that the user has selected 
+hasrepo: false
+identifier: ext_kcolorscheme
+name: KColorScheme
+projectpath: krita-deps/base/kcolorscheme
+repoactive: false
+repopath: base/kcolorscheme

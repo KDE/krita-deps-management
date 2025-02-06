@@ -46,6 +46,7 @@
     "base/kitemviews": "master"
     "base/kimageformats": "master"
     "base/kwindowsystem": "master"
+    "base/kcolorscheme": "master"
     "base/mypaint": "master"
 #    "base/seexpr": "master" # TODO: port to Qt6
     "base/icu": "master"
