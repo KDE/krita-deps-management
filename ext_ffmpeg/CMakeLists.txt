@@ -81,8 +81,9 @@ kis_ExternalProject_Add_with_separate_builds_apple(
             -Dapng_decoder=enabled
             # ===================== Video Codecs
             -Dlibaom_av1_encoder=enabled
-            -Dlibvpx_vp9_encoder=auto
-            -Dlibvpx_vp8_encoder=auto
+            -Dlibvpx=enabled
+            -Dlibvpx_vp9_encoder=enabled
+            -Dlibvpx_vp8_encoder=enabled
             -Dlibopenh264=enabled
             -Dlibtheora=enabled
             # ===================== Audio Codecs

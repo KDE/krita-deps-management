@@ -12,7 +12,7 @@ ExternalProject_Add(
     # Official tarball has a missing opus_buildtype.cmake
     # The Git tag is complete
     GIT_REPOSITORY https://gitlab.xiph.org/xiph/opus.git
-    GIT_TAG v1.3.1
+    GIT_TAG v1.5.2
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
         -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}

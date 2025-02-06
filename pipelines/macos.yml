@@ -8,6 +8,8 @@ all_publish_macos:
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform MacOS/Qt5/Shared 2>&1 | tee "seed-packages-macos.log"
     - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_MACOS
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform MacOS/Qt5/Shared 2>&1 | tee "seed-packages-macos-dev.log"
+    - python3 -u tools/replace-branch-in-seed-file.py latest/openvino-packages.yml --print --dst-branch $BRANCH_NAME_MACOS
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform MacOS/Qt5/Shared 2>&1 | tee "seed-packages-macos-dev.log"
 
 all_local_cache_macos:
   extends:

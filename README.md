@@ -11,7 +11,6 @@
     * Android-arm64-v8a: https://invent.kde.org/dkazakov/krita-ci-artifacts-android-arm64-v8a-qt5.15
     * Android-armeabi-v7a: https://invent.kde.org/dkazakov/krita-ci-artifacts-android-armeabi-v7a-qt5.15
     * Android-x86_64: https://invent.kde.org/dkazakov/krita-ci-artifacts-android-x86_64-qt5.15
-    * Android-x86: https://invent.kde.org/dkazakov/krita-ci-artifacts-android-x86-qt5.15
 * Notary service repository: https://invent.kde.org/sysadmin/ci-notary-service
 * Configs for the notary service: https://invent.kde.org/sysadmin/ci-utilities/-/tree/master/signing
 
@@ -42,7 +41,7 @@ All publicly available CI jobs have names in the following format:
 
 * `shared` --- this is the legacy method of building multiple backages in the same environment without uploading them into the package repository. Currently, it is available for debugging purposes only
 
-`<platform>` selects the platform for which we build the package. Please note that `android-x86` platform is kept only for debugging purposes. We don't provide Krita build for this platform anymore.
+`<platform>` selects the platform for which we build the package
 
 ## How to update/rebuild a dependency
 
@@ -68,4 +67,4 @@ All publicly available CI jobs have names in the following format:
 
 ### Publishing the packages
 
-The packages can be published only from `master` and `transition/*` branches. After your MR is merged into master, you need to run `dirty_publish_<platform>` jobs for all related platforms to get the package published. The process of setting up `KRITA_STAGE_DEP` is the same as in the testing builds.
+The packages can be published only from `master` and `transition.now/*` branches. After your MR is merged into master, you need to run `dirty_publish_<platform>` jobs for all related platforms to get the package published. The process of setting up `KRITA_STAGE_DEP` is the same as in the testing builds.

@@ -10,8 +10,8 @@ if (NOT APPLE)
 ExternalProject_Add(
     ext_zlib
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://github.com/madler/zlib/releases/download/v1.2.13/zlib-1.2.13.tar.gz
-    URL_HASH SHA1=55eaa84906f31ac20d725aa26cd20839196b6ba6
+    URL https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz
+    URL_HASH SHA256=9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Prevent-invalid-inclusions-when-HAVE_-is-set-to-0.patch
 
@@ -46,8 +46,8 @@ else()
 ExternalProject_Add(
     ext_zlib
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://github.com/madler/zlib/releases/download/v1.2.13/zlib-1.2.13.tar.gz
-    URL_HASH SHA1=55eaa84906f31ac20d725aa26cd20839196b6ba6
+    URL https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz
+    URL_HASH SHA256=9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} ${GLOBAL_PROFILE}
 
