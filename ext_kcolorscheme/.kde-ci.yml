@@ -3,6 +3,6 @@ Dependencies:
   'require':
     'base/qt': '@same'
     'base/extra_cmake_modules': '@same'
-    'base/kconfig': 'master'
-    'base/kguiaddons': 'master'
-    'base/ki18n': 'master'
+    'base/kconfig': '@same'
+    'base/kguiaddons': '@same'
+    'base/ki18n': '@same'
