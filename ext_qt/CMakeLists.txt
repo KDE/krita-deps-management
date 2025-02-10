@@ -130,12 +130,29 @@ if (WIN32)
   ExternalProject_Add_StepTargets(ext_qt configure)
 
 elseif (ANDROID)
+  include(${CMAKE_SOURCE_DIR}/FilterEnvironmentPathList.cmake)
+
+  # We strip all the cross-compiled PATH, LD_LIBRARY_PATH and PKG_CONFIG_PATH
+  # locations from the environment to make sure the host-tools are build correctly.
+  # 
+  # CMAKE_PREFIX_PATH and CMAKE_TOOLCHAIN_FILE should just be unset for the host 
+  # tools.
+  filter_environment_path_list(PATH "${EXTPREFIX}" HOST_ONLY_PATH)
+  filter_environment_path_list(LD_LIBRARY_PATH "${EXTPREFIX}" HOST_ONLY_LD_LIBRARY_PATH)
+  filter_environment_path_list(PKG_CONFIG_PATH "${EXTPREFIX}" HOST_ONLY_PKG_CONFIG_PATH)
+
+  message(STATUS "Host PATH: ${HOST_ONLY_PATH}")
+  message(STATUS "Host LD_LIBRARY_PATH: ${HOST_ONLY_LD_LIBRARY_PATH}")
+  message(STATUS "Host PKG_CONFIG_PATH: ${HOST_ONLY_PKG_CONFIG_PATH}")
+
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
-      GIT_TAG ${QT_GIT_TAG}
-      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qtandroidextras qtquickcontrols2 qtgraphicaleffects
+
+      GIT_REPOSITORY https://code.qt.io/qt/qt5.git
+      GIT_TAG 6.8.0
+      # TODO: still need to be recovered: qtgraphicaleffects qtandroidextras
+      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
@@ -144,7 +161,7 @@ elseif (ANDROID)
       # TODO(sh_zam): We can probably skip the skipping now.
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -verbose
-          -android-sdk ${ANDROID_SDK_ROOT} -android-ndk ${CMAKE_ANDROID_NDK} -android-arch ${ANDROID_ABI}
+          -android-sdk ${ANDROID_SDK_ROOT} -android-ndk ${CMAKE_ANDROID_NDK} -android-abis ${ANDROID_ABI}
           -xplatform android-clang -android-ndk-platform android-24
           -make libs -qt-sqlite -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -system-zlib
           -nomake examples -nomake tests -nomake tools -skip qt3d -skip qtactiveqt -skip qtcanvas3d
@@ -155,19 +172,72 @@ elseif (ANDROID)
           -icu
           -I ${EXTPREFIX}/include
           -L ${EXTPREFIX}/lib
+          -no-feature-assistant -no-feature-designer
+          -qt-host-path <TMP_DIR>/hosttools/qtbase
+           -- -Wno-dev
 
-      PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Fix-build-with-NDK-27.patch
-             COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-android-Fix-ranlib-path-for-NDK-27.patch
-             COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-androiddeloyqt-fix-needed-libs-argument-for-llvm-rea.patch
+#      PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Fix-build-with-NDK-27.patch
+#             COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-android-Fix-ranlib-path-for-NDK-27.patch
+#             COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-androiddeloyqt-fix-needed-libs-argument-for-llvm-rea.patch
 
-      BUILD_COMMAND ${QT_BUILD_COMMAND}
-      INSTALL_COMMAND ${QT_INSTALL_COMMAND}
-
-      INSTALL_DIR ${EXTPREFIX}
+      BUILD_COMMAND ${CMAKE_COMMAND} --build . --parallel ${SUBMAKE_JOBS}
+      INSTALL_COMMAND ${CMAKE_COMMAND} --build . --parallel ${SUBMAKE_JOBS} --target install
 
       UPDATE_COMMAND ""
-      BUILD_IN_SOURCE 0
-)
+  )
+
+  ExternalProject_Add_Step(ext_qt hosttools-dirs
+    COMMENT "Making directories for host-tools"
+    COMMAND ${CMAKE_COMMAND} 
+      -E make_directory <TMP_DIR>/hosttools
+  )
+
+  ExternalProject_Add_Step(ext_qt hosttools-configure
+    COMMENT "Configuring host-tools (moc, qsb...)"
+    COMMAND ${CMAKE_COMMAND} 
+      -E env 
+        --unset=QMAKEFEATURES
+        # disable cross-compilation variables for host tools
+        --unset=CMAKE_PREFIX_PATH
+        --unset=CMAKE_TOOLCHAIN_FILE
+        PKG_CONFIG_PATH=${HOST_ONLY_PKG_CONFIG_PATH}
+        LD_LIBRARY_PATH=${HOST_ONLY_LD_LIBRARY_PATH}
+        PATH=${HOST_ONLY_PATH}
+        <SOURCE_DIR>/configure -release -developer-build
+          -nomake tests -nomake examples
+          -no-widgets -no-dbus
+          -skip qt5compat -skip qtimageformats -skip qtsvg -skip qttranslations
+          -no-feature-sql
+          -no-feature-network
+          -no-feature-testlib 
+          -- -Wno-dev
+
+    DEPENDEES hosttools-dirs patch
+    WORKING_DIRECTORY <TMP_DIR>/hosttools
+  )
+
+  ExternalProject_Add_Step(ext_qt hosttools
+    COMMENT "Building host-tools (moc, qsb...)"
+    COMMAND ${CMAKE_COMMAND} 
+      -E env 
+        --unset=QMAKEFEATURES
+        # disable cross-compilation variables for host tools
+        --unset=CMAKE_PREFIX_PATH
+        --unset=CMAKE_TOOLCHAIN_FILE
+        PKG_CONFIG_PATH=${HOST_ONLY_PKG_CONFIG_PATH}
+        LD_LIBRARY_PATH=${HOST_ONLY_LD_LIBRARY_PATH}
+        PATH=${HOST_ONLY_PATH}
+        ${CMAKE_COMMAND} --build . --target host_tools --parallel ${SUBMAKE_JOBS}
+
+    DEPENDEES hosttools-configure
+    WORKING_DIRECTORY <TMP_DIR>/hosttools
+
+    DEPENDERS configure
+  )
+
+  ExternalProject_Add_StepTargets(ext_qt hosttools)
+  ExternalProject_Add_StepTargets(ext_qt configure)
+
 elseif (NOT APPLE)
     if (QT_ENABLE_DEBUG_INFO)
         # Set the option to build Qt with debugging info enabled
