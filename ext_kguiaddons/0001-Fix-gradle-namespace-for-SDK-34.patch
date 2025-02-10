@@ -1,0 +1,25 @@
+From 038fa7a5bf2292773ff8c120933048b8732dbed2 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Mon, 10 Feb 2025 15:09:15 +0000
+Subject: [PATCH] Fix gradle namespace for SDK 34
+
+---
+ src/android/build.gradle | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/android/build.gradle b/src/android/build.gradle
+index 4d6a522..1c326de 100644
+--- a/src/android/build.gradle
++++ b/src/android/build.gradle
+@@ -22,6 +22,8 @@ repositories {
+ apply plugin: 'com.android.library'
+ 
+ android {
++    namespace 'org.kde.guiaddons'
++
+     compileSdkVersion @ANDROID_SDK_COMPILE_API@
+     buildToolsVersion '@ANDROID_SDK_BUILD_TOOLS_REVISION@'
+ 
+-- 
+2.25.1
+
