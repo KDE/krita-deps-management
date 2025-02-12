@@ -137,6 +137,7 @@
     "base/drmingw": "master"
     "base/icoutils": "master"
     "base/dlfcn_win32": "master"
+    "base/gperf": "master"
 
 - 'on': ['Windows', 'MacOS']
   'require':
