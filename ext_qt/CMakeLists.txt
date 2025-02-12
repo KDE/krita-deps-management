@@ -25,39 +25,47 @@ endif()
 
 if (WIN32)
 
-    if(MINGW)
-      if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-        set(QT_CONFIG_PLATFORM win32-clang-g++)
-      else()
-        set(QT_CONFIG_PLATFORM win32-g++)
-      endif()
-    elseif(MSVC)
-      ExternalProject_Add(ext_jom
-        DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://download.qt.io/official_releases/jom/jom_1_1_3.zip
-        URL_HASH SHA256=128fdd846fe24f8594eed37d1d8929a0ea78df563537c0c1b1861a635013fff8
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+      set(QT_CONFIG_PLATFORM win32-clang-g++)
+    else()
+      set(QT_CONFIG_PLATFORM win32-g++)
+    endif()
 
-        BUILD_COMMAND ${CMAKE_COMMAND} -E echo Deploying Jom
-        CONFIGURE_COMMAND ""
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/jom.exe ${EXTPREFIX}/bin
+    set(QT_BUILD_TYPE Release)
+    set(EXTRA_CMAKE_OPTIONS)
+    set(EXTRA_C_FLAGS_ALL)
+    set(EXTRA_CXX_FLAGS_ALL)
+    set(EXTRA_C_FLAGS_RELEASE)
+    set(EXTRA_CXX_FLAGS_RELEASE)
 
-        UPDATE_COMMAND ""
-      )
+    if(QT_ENABLE_DEBUG_INFO)
+      set(QT_BUILD_TYPE RelWithDebInfo)
+    endif()
 
-      set(QT_CONFIG_PLATFORM win32-msvc)
-      list(APPEND QT_EXTRA_DEPS ext_jom)
-    endif(MINGW)
+    if (QT_ENABLE_ASAN)
+      set(QT_BUILD_TYPE RelWithDebInfo)
+      list(APPEND EXTRA_CMAKE_OPTIONS -DFEATURE_sanitize_address=ON)
+    endif ()
 
-    list(APPEND _QT_conf -skip qt3d -skip qtactiveqt -skip qtcanvas3d
-        -skip qtconnectivity -skip qtdoc
-        -skip qtlocation -skip qtsensors -skip qtserialport -skip qtwayland
-        -skip qtwebchannel -skip qtwebengine -skip qtwebsockets -skip qtwebview
-        -skip qtxmlpatterns -nomake examples -nomake tools
-        -no-compile-examples -no-dbus -no-iconv -no-qml-debug
-        -no-libproxy -no-system-proxies -icu -no-mtdev
-        -skip qtcharts -skip qtdatavis3d -skip qtgamepad -skip qtnetworkauth
-        -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus
-        -skip qtspeech -skip qtvirtualkeyboard -qt-sqlite
+    # Generate minimal debug info for backtraces in release mode
+    list(APPEND EXTRA_C_FLAGS_RELEASE -g1)
+    list(APPEND EXTRA_CXX_FLAGS_RELEASE -g1)
+
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+      # This is needed for proper C++ function signatures in Release mode
+      list(APPEND EXTRA_C_FLAGS_RELEASE -fdebug-info-for-profiling)
+      list(APPEND EXTRA_CXX_FLAGS_RELEASE -fdebug-info-for-profiling)
+
+      # Workaround for DrMingw, see parent CMakeLists.txt
+      list(APPEND EXTRA_C_FLAGS_ALL -gdwarf-aranges)
+      list(APPEND EXTRA_CXX_FLAGS_ALL -gdwarf-aranges)
+    endif ()
+
+    list(APPEND _QT_conf
+         -nomake examples -nomake tools -nomake benchmarks -nomake manual-tests -nomake minimal-static-tests
+        -no-dbus -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev
+        -qt-sqlite
+        -no-feature-assistant -no-feature-designer -feature-linguist -no-feature-androiddeployqt
         #
         -system-zlib -qt-pcre -system-libpng -system-libjpeg -openssl-linked -system-freetype -system-harfbuzz
         -I ${EXTPREFIX}/include
@@ -65,69 +73,24 @@ if (WIN32)
         #
         -opensource -confirm-license
         -feature-relocatable
-        -no-feature-d3d12
         -no-feature-qdoc
-        -no-direct2d
         #
-        -release -platform ${QT_CONFIG_PLATFORM} -prefix ${EXTPREFIX}
-        QMAKE_LFLAGS_APP+=${SECURITY_EXE_LINKER_FLAGS}
-        QMAKE_LFLAGS_SHLIB+=${SECURITY_SHARED_LINKER_FLAGS}
-        QMAKE_LFLAGS_SONAME+=${SECURITY_SHARED_LINKER_FLAGS}
+        -platform ${QT_CONFIG_PLATFORM} -prefix ${EXTPREFIX}
+        --
+        # -DFEATURE_direct2d=OFF
+        # -DFEATURE_directwrite=OFF
+        # -DFEATURE_directwrite3=OFF
+        -DINPUT_opengl=desktop # TODO: dynamic is broken in 6.8.0
+        -DFEATURE_egl=OFF
+        #
+        -DCMAKE_BUILD_TYPE=${QT_BUILD_TYPE}
+        -DCMAKE_C_FLAGS_INIT="${EXTRA_C_FLAGS_ALL}"
+        -DCMAKE_CXX_FLAGS_INIT="${EXTRA_CXX_FLAGS_ALL}"
+        -DCMAKE_C_FLAGS_RELEASE_INIT="${EXTRA_C_FLAGS_RELEASE}"
+        -DCMAKE_CXX_FLAGS_RELEASE_INIT="${EXTRA_CXX_FLAGS_RELEASE}"
+        ${GLOBAL_PROFILE}
+        ${EXTRA_CMAKE_OPTIONS}
     )
-    if (MSVC)
-      list(APPEND _QT_conf
-        QMAKE_CFLAGS+=${SECURITY_C_FLAGS}
-        QMAKE_CXXFLAGS+=${SECURITY_CXX_FLAGS}
-      )
-    endif (MSVC)
-
-    if(QT_ENABLE_DEBUG_INFO OR WIN32)
-        # Set the option to build Qt with debugging info enabled
-        list(APPEND _QT_conf -force-debug-info)
-    endif(QT_ENABLE_DEBUG_INFO OR WIN32)
-    if (QT_ENABLE_ASAN)
-        list(APPEND _QT_conf -sanitize address)
-    endif ()
-    if (MINGW)
-        if (NOT QT_ENABLE_DEBUG_INFO)
-            # Generate minimal debug info for backtraces
-            list(APPEND _QT_conf
-                QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO-=-g
-                QMAKE_CFLAGS+=-g1
-                QMAKE_CXXFLAGS_RELEASE_WITH_DEBUGINFO-=-g
-                QMAKE_CXXFLAGS+=-g1
-            )
-            if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-                # This is needed for proper C++ function signatures
-                list(APPEND _QT_conf
-                    QMAKE_CFLAGS+=-fdebug-info-for-profiling
-                    QMAKE_CXXFLAGS+=-fdebug-info-for-profiling
-                )
-            endif ()
-        endif ()
-        if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-            # Workaround for DrMingw, see parent CMakeLists.txt
-            list(APPEND _QT_conf
-                QMAKE_CFLAGS+=-gdwarf-aranges
-                QMAKE_CXXFLAGS+=-gdwarf-aranges
-            )
-        endif ()
-    elseif (MSVC)
-      if (NOT QT_ENABLE_DEBUG_INFO)
-        # Generate minimal debug info for backtraces
-        list(APPEND _QT_conf
-            QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO-=-Zi
-            QMAKE_CFLAGS+=-Zi
-            QMAKE_CXXFLAGS_RELEASE_WITH_DEBUGINFO-=-Zi
-            QMAKE_CXXFLAGS+=-Zi
-        )
-      endif ()
-    endif ()
-    list(APPEND _QT_conf -opengl dynamic)
-
-    if (NOT PERL_FOUND) # Implies strawberry perl
-      list(APPEND QT_EXTRA_DEPS ext_strawberryperl)
-    endif()
 
     # we store our patch perl separately in Krita
     if (EXISTS ${EXTPREFIX}/Strawberry/perl/bin/perl.exe)
@@ -140,27 +103,32 @@ if (WIN32)
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
-      GIT_TAG ${QT_GIT_TAG}
-      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtwinextras qttranslations qtquickcontrols2 qtgraphicaleffects
+      GIT_REPOSITORY https://code.qt.io/qt/qt5.git
+      GIT_TAG 6.8.0
+      # TODO: still need to be recovered: qtwinextras
+      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
-      INSTALL_DIR ${EXTPREFIX}
+      #PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Pass-string-to-ICU-wrapper-as-a-QByteArray-not-a-QSt.patch
 
       # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
-      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} --unset=QMAKEFEATURES
+      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure.bat ${_QT_conf}
 
-      BUILD_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} ${QT_BUILD_COMMAND}
+      BUILD_COMMAND ${CMAKE_COMMAND} --build . --target all --parallel ${SUBMAKE_JOBS}
+      INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install
 
-      INSTALL_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} ${QT_INSTALL_COMMAND}
       UPDATE_COMMAND ""
+
       # Use a short name to reduce the chance of exceeding path length limit
       SOURCE_DIR s
       BINARY_DIR b
   )
+
+  ExternalProject_Add_StepTargets(ext_qt configure)
+
 elseif (ANDROID)
   ExternalProject_Add(
       ext_qt

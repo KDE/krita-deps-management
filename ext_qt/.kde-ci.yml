@@ -15,7 +15,6 @@ Dependencies:
   'require':
     'base/patch': '@same'
     'base/googleangle': '@same'
-    'base/strawberryperl': '@same'
 #    'base/jom': '@same' # only for msvc builds
 - 'on': ['Windows', 'MacOS']
   'require':
