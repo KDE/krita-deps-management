@@ -22,10 +22,11 @@ ExternalProject_Add( ext_poppler
         -DENABLE_UTILS=FALSE
         -DENABLE_GLIB=FALSE
         -DENABLE_LIBOPENJPEG=none
-        -DWITH_NSS3=OFF
+        -DENABLE_NSS3=OFF
         -DBUILD_MANUAL_TESTS=OFF
         -DENABLE_GPGME=OFF
         -DENABLE_QT5=OFF
+        -DENABLE_QT6=ON
         -DENABLE_LIBCURL=OFF
 
     UPDATE_COMMAND ""
