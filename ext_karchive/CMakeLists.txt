@@ -22,6 +22,8 @@ ExternalProject_Add(
         -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
         ${_karchive_extra_flags}
         -DWITH_LIBZSTD=OFF
+        -DWITH_BZIP2=OFF
+        -DWITH_LIBLZMA=OFF
 
     UPDATE_COMMAND ""
 )
