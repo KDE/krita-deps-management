@@ -92,14 +92,6 @@ if (WIN32)
         ${EXTRA_CMAKE_OPTIONS}
     )
 
-    # we store our patch perl separately in Krita
-    if (EXISTS ${EXTPREFIX}/Strawberry/perl/bin/perl.exe)
-      set(EXTRA_PERL_ENV $ENV{PATH};${EXTPREFIX}/Strawberry/perl/bin/)
-    else()
-      set(EXTRA_PERL_ENV $ENV{PATH})
-    endif()
-    list(JOIN EXTRA_PERL_ENV $<SEMICOLON> PERL_PATH)
-
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
