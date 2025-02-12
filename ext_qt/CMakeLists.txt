@@ -111,7 +111,7 @@ if (WIN32)
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
-      #PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Pass-string-to-ICU-wrapper-as-a-QByteArray-not-a-QSt.patch
+      PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Pass-string-to-ICU-wrapper-as-a-QByteArray-not-a-QSt.patch
 
       # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env --unset=QMAKEFEATURES
