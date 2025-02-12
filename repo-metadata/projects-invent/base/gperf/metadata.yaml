@@ -1,0 +1,7 @@
+description: "gperf is a program that generates perfect hash functions for sets of key words"
+hasrepo: false
+identifier: ext_gperf
+name: expat
+projectpath: krita-deps/base/gperf
+repoactive: false
+repopath: base/gperf
