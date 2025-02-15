@@ -13,7 +13,7 @@
     KDECI_GITLAB_SERVER: https://invent.kde.org/
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/ci-utilities/repo-metadata"
   before_script:
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1
   script:
     - python3 -u ci-utilities/package-registry-cleanup.py --project teams/ci-artifacts/krita-${KRITACI_PLATFORM}
 

@@ -37,7 +37,7 @@ stages:
     # to link to each other's build prefix
     KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
   before_script:
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .log_artifacts_windows:
@@ -86,7 +86,7 @@ stages:
     - python -m venv venv --upgrade-deps
     - . venv\Scripts\Activate.ps1
     - pip install -r requirements.txt
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_qt515:
@@ -150,7 +150,7 @@ stages:
     - python3 -m venv venv --upgrade-deps
     - . venv/bin/activate
     - pip install -r requirements.txt
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1
     - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1 upstream-ci-utilities
 
     - python3 -u tools/download-macos-tools.py

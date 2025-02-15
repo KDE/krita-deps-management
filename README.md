@@ -2,7 +2,7 @@
 
 ## Links
 
-* fork of ci-utilities repository: https://invent.kde.org/dkazakov/ci-utilities
+* fork of ci-utilities repository: https://invent.kde.org/packaging/krita-ci-utilities
 * ci-images repository: https://invent.kde.org/sysadmin/ci-images
 * artifacts:
     * Windows: https://invent.kde.org/teams/ci-artifacts/krita-windows
