@@ -21,7 +21,7 @@
 4) Change the branch name of `krita-deps-management` repository (add `-b transition.now/win-clang18`):
 
     ```bash
-    git clone https://invent.kde.org/dkazakov/krita-deps-management.git -b transition.now/win-clang18 krita-deps-management --depth=1
+    git clone https://invent.kde.org/packaging/krita-deps-management.git -b transition.now/win-clang18 krita-deps-management --depth=1
     ```
 
 5) Change the `image` tag for the corresponding job in `.gitlab-ci.yml` to point to the new docker image
@@ -55,7 +55,7 @@
 5) [krita] Remove a custom branch of `krita-deps-management` repository (remove `-b transition.now/win-clang18`):
 
     ```bash
-        git clone https://invent.kde.org/dkazakov/krita-deps-management.git krita-deps-management --depth=1
+        git clone https://invent.kde.org/packaging/krita-deps-management.git krita-deps-management --depth=1
     ```
 
 6) [krita] Merge the transition branch into master
