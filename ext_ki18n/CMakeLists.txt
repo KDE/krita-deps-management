@@ -12,8 +12,11 @@ ExternalProject_Add(
     URL https://download.kde.org/stable/frameworks/6.7/ki18n-6.7.0.tar.xz
     URL_HASH SHA256=555b5bc19546c3a791c69724e238c5d1710a9575cf8740012f8fc546f354122b
     INSTALL_DIR ${EXTPREFIX}
-    # PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ki18n-fix-loading-catalogs-with-patched-gettext.patch
-    #     COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Ensure-langenv-string-is-null-terminated.patch
+    
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ki18n-fix-loading-catalogs-with-patched-gettext.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Ensure-langenv-string-is-null-terminated.patch
+
+    # TODO: it seems like this patch is not needed anymore: the translations should be looked at XDG-defined locations
     #     COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Patch-the-location-where-ki18n-looks-for-catalogs.patch
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
