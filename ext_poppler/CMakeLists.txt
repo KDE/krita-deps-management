@@ -11,8 +11,7 @@ ExternalProject_Add( ext_poppler
     URL https://poppler.freedesktop.org/poppler-24.09.0.tar.xz
     URL_HASH SHA256=ebd857987e2395608c69fdc44009692d5906f13b612c5280beff65a0b75dc255
 
-    # PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-fix_sed_invocation.patch
-    #         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macos-add-missing-system-header.patch
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macos-add-missing-system-header.patch
 
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
