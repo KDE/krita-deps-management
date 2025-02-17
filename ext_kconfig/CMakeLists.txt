@@ -12,10 +12,8 @@ ExternalProject_Add(
     URL https://download.kde.org/stable/frameworks/6.7/kconfig-6.7.0.tar.xz
     URL_HASH SHA256=be2d5ddb63e56703bc097e5d9912b39abc513ac51654de2e0d83a1aed2c54b1b
 
-    # PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Patch-kconfig-to-save-the-config-to-AppConfigLocatio.patch
-    #     COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Work-around-CMake-multi-config-generators.patch
-    #     # TODO: remove when bumped to 5.102
-    #     COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Android-Fix-a-bug-where-new-file-wouldn-t-be-created.patch
+    # Dropped patches (might be related to the placement of kritarc config file or service detection):
+    # 0001-Patch-kconfig-to-save-the-config-to-AppConfigLocatio.patch
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF -DKCONFIG_USE_DBUS=OFF ${GLOBAL_PROFILE}
 
