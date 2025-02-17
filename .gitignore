@@ -6,3 +6,7 @@ PythonEnv
 **/_staging
 **/_shared_install
 **/__shared_install
+**/env
+**/env_deactivate
+**/env.bat
+**/env_deactivate.bat
