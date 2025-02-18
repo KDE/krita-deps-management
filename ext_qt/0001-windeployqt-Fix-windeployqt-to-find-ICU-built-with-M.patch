@@ -1,0 +1,52 @@
+From 692626ea76a4f331dbaa1fb07c350102475ede87 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Tue, 18 Feb 2025 13:28:34 +0100
+Subject: [PATCH] [windeployqt] Fix windeployqt to find ICU built with Meson
+
+Meson creates ICU in a form of `icudt-XX.dll`, we should be able
+to detect that as well.
+---
+ src/tools/windeployqt/main.cpp | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/src/tools/windeployqt/main.cpp b/src/tools/windeployqt/main.cpp
+index eb4a97b2c60..e3bfaba9042 100644
+--- a/src/tools/windeployqt/main.cpp
++++ b/src/tools/windeployqt/main.cpp
+@@ -1552,17 +1552,29 @@ static DeployResult deploy(const Options &options, const QMap<QString, QString>
+                 if (!icuVersion.isEmpty())  {
+                     if (optVerboseLevel > 1)
+                         std::wcout << "Adding ICU version " << icuVersion << '\n';
+-                    QString icuLib = QStringLiteral("icudt") + icuVersion
+-                            + QLatin1StringView(windowsSharedLibrarySuffix);
++
++                    QStringList icuLibCandidates;
++
++                    // ICU libraries may have a form of icudtXX.dll or icudt-XX.dll. The latter version is usually
++                    // produces by Meson wrappers over ICU.
++                    icuLibCandidates << QStringLiteral("icudt") + icuVersion + QLatin1StringView(windowsSharedLibrarySuffix);
++                    icuLibCandidates << QStringLiteral("icudt-") + icuVersion + QLatin1StringView(windowsSharedLibrarySuffix);
++
+                     // Some packages contain debug dlls of ICU libraries even though it's a C
+                     // library and the official packages do not differentiate (QTBUG-87677)
+                     if (result.isDebug) {
+-                        const QString icuLibCandidate = QStringLiteral("icudtd") + icuVersion
+-                                + QLatin1StringView(windowsSharedLibrarySuffix);
++                        icuLibCandidates << QStringLiteral("icudtd") + icuVersion + QLatin1StringView(windowsSharedLibrarySuffix);
++                        icuLibCandidates << QStringLiteral("icudtd-") + icuVersion + QLatin1StringView(windowsSharedLibrarySuffix);
++                    }
++
++                    QString icuLib = icuLibCandidates.front();
++                    for (const QString &icuLibCandidate : std::as_const(icuLibCandidates)) {
+                         if (!findInPath(icuLibCandidate).isEmpty()) {
+                             icuLib = icuLibCandidate;
++                            break;
+                         }
+                     }
++
+                     icuLibs.push_back(icuLib);
+                 }
+                 for (const QString &icuLib : std::as_const(icuLibs)) {
+-- 
+2.23.0.windows.1
+
