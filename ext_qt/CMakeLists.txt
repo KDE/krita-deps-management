@@ -283,41 +283,38 @@ else( APPLE )
         -skip qt3d -skip qtactiveqt -skip qtcanvas3d -skip qtconnectivity -skip qtdoc -skip qtlocation -skip qtsensors -skip qtserialport -skip qtwayland
         -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtwebengine -skip qtxmlpatterns
         -skip qtcharts -skip qtdatavis3d  -skip qtgamepad -skip qtnetworkauth
-        -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus -skip qtspeech -skip qtvirtualkeyboard -nomake examples -nomake tools -no-compile-examples
-        -no-dbus -no-iconv -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev
+        -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus -skip qtspeech -skip qtvirtualkeyboard -nomake examples -nomake tools
+        -no-dbus -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev
         -system-zlib -qt-pcre -qt-sqlite
+        -no-feature-assistant -no-feature-designer -feature-linguist
         -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
         -opensource -confirm-license -openssl-linked -prefix ${EXTPREFIX}
         OPENSSL_PREFIX=${EXTPREFIX}
         -I ${EXTPREFIX}/include
         -L ${EXTPREFIX}/lib
+        # todo: don't hardcode the archs
+        -- -DCMAKE_OSX_ARCHITECTURES="x86_64$<SEMICOLON>arm64"
     )
 
-    kis_ExternalProject_Add_macos(
+    ExternalProject_Add(
       ext_qt
 
-      GIT_REPOSITORY https://invent.kde.org/szaman/qt5.git
-      GIT_TAG ${QT_GIT_TAG}
-      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qtmacextras qttranslations qtquickcontrols2 qtgraphicaleffects
+      GIT_REPOSITORY https://code.qt.io/qt/qt5.git
+      GIT_TAG 6.8.0
+      # TODO: still need to be recovered: qtgraphicaleffects qtmacextras
+      GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
       GIT_SUBMODULES_RECURSE false
       GIT_PROGRESS true
       GIT_REMOTE_UPDATE_STRATEGY REBASE
-
-      WORKING_DIRECTORY <BINARY_DIR>-@ARCH@
 
       # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env "OPENSSL_LIBS=-L${EXTPREFIX}/lib -lssl -lcrypto" --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure
           ${MACOS_QT_CONFIGURE_OPS}
-          -device-option QMAKE_APPLE_DEVICE_ARCHS=@ARCH@
 
-      BUILD_COMMAND ${QT_BUILD_COMMAND}
+      BUILD_COMMAND ${CMAKE_COMMAND} --build . --parallel ${SUBMAKE_JOBS}
+      INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install
     )
-
-    # Qt needs separate builds for universal compilation before qt6
-    foreach(ARCH ${CMAKE_OSX_ARCHITECTURES})
-        mkdir_build_arch_dir(ext_qt ${ARCH})
-    endforeach()
 
 endif()
 

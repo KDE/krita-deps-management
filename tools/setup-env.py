@@ -89,7 +89,7 @@ if not sharedInstallDirectory is None:
     environmentUpdate['KDECI_SHARED_INSTALL_PATH'] = sharedInstallDirectory
 
 if sys.platform == "darwin":
-    macosDeployTarget = '10.14'
+    macosDeployTarget = '12'
     environmentUpdate['MACOSX_DEPLOYMENT_TARGET'] = macosDeployTarget
     environmentUpdate['QMAKE_MACOSX_DEPLOYMENT_TARGET'] = macosDeployTarget
 

@@ -140,8 +140,8 @@ stages:
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
-    MACOSX_DEPLOYMENT_TARGET: "10.14"
-    QMAKE_MACOSX_DEPLOYMENT_TARGET: "10.14"
+    MACOSX_DEPLOYMENT_TARGET: "12"
+    QMAKE_MACOSX_DEPLOYMENT_TARGET: "12"
     CMAKE_TOOLCHAIN_FILE: $CI_PROJECT_DIR/tools/macos-toolchain.cmake
 
   # different commits may build different deps, so they should not be cancellable
