@@ -171,3 +171,4 @@
 - 'on': ['MacOS']
   'require':
     "base/zlib": "master"
+    "base/gperf": "master"
