@@ -3,6 +3,6 @@ Dependencies:
   'require':
     'base/qt': '@same'
     'base/extra_cmake_modules': '@same'
-- 'on': ['Windows']
+- 'on': ['Windows', 'MacOS']
   'require':
     'base/gperf': '@same'
