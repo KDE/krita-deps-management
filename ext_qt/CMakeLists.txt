@@ -77,6 +77,10 @@ if (WIN32)
         #
         -platform ${QT_CONFIG_PLATFORM} -prefix ${EXTPREFIX}
         --
+        # we ship our own version of freedesktop.org.xml database
+        # which has Krita-specific formats and translations, so we
+        # can disable the internal database shipped with Qt
+        -DFEATURE_mimetype_database=OFF
         # -DFEATURE_direct2d=OFF
         # -DFEATURE_directwrite=OFF
         # -DFEATURE_directwrite3=OFF
@@ -167,7 +171,12 @@ elseif (ANDROID)
           -L ${EXTPREFIX}/lib
           -no-feature-assistant -no-feature-designer
           -qt-host-path <TMP_DIR>/hosttools/qtbase
-           -- -Wno-dev
+          --
+          -Wno-dev
+          # we ship our own version of freedesktop.org.xml database
+          # which has Krita-specific formats and translations, so we
+          # can disable the internal database shipped with Qt
+          -DFEATURE_mimetype_database=OFF
 
 #      PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Fix-build-with-NDK-27.patch
 #             COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-android-Fix-ranlib-path-for-NDK-27.patch
@@ -270,6 +279,11 @@ elseif (NOT APPLE)
 
                   -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz
           ${QT_DEBUG_OPTIONS}
+          --
+          # we ship our own version of freedesktop.org.xml database
+          # which has Krita-specific formats and translations, so we
+          # can disable the internal database shipped with Qt
+          -DFEATURE_mimetype_database=OFF
 
       BUILD_COMMAND ${CMAKE_COMMAND} --build . --target all --parallel ${SUBMAKE_JOBS}
       INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install
@@ -292,8 +306,13 @@ else( APPLE )
         OPENSSL_PREFIX=${EXTPREFIX}
         -I ${EXTPREFIX}/include
         -L ${EXTPREFIX}/lib
+        --
         # todo: don't hardcode the archs
-        -- -DCMAKE_OSX_ARCHITECTURES="x86_64$<SEMICOLON>arm64"
+        -DCMAKE_OSX_ARCHITECTURES="x86_64$<SEMICOLON>arm64"
+        # we ship our own version of freedesktop.org.xml database
+        # which has Krita-specific formats and translations, so we
+        # can disable the internal database shipped with Qt
+        -DFEATURE_mimetype_database=OFF
     )
 
     ExternalProject_Add(
