@@ -6,7 +6,7 @@ endif()
 project(ext_qt)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "4b3b2a81b7a285e5705e70d11e5535fddc89b3e1")
+set(QT_GIT_TAG "6c3db27e53e975cd7fae91858a078f5fa3efc39c")
 
 if (MINGW)
   set(QT_BUILD_COMMAND   mingw32-make -j${SUBMAKE_JOBS})
@@ -84,8 +84,8 @@ if (WIN32)
         # -DFEATURE_direct2d=OFF
         # -DFEATURE_directwrite=OFF
         # -DFEATURE_directwrite3=OFF
-        -DINPUT_opengl=desktop # TODO: dynamic is broken in 6.8.0
-        -DFEATURE_egl=OFF
+        -DFEATURE_opengl=ON # ensure openGL is activated
+        -DFEATURE_egl=ON # enable ANGLE backend
         #
         -DCMAKE_BUILD_TYPE=${QT_BUILD_TYPE}
         -DCMAKE_C_FLAGS_INIT="${EXTRA_C_FLAGS_ALL}"
@@ -99,8 +99,8 @@ if (WIN32)
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://code.qt.io/qt/qt5.git
-      GIT_TAG 6.8.0
+      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtwinextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
       GIT_SUBMODULES_RECURSE false
@@ -146,8 +146,8 @@ elseif (ANDROID)
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-      GIT_REPOSITORY https://code.qt.io/qt/qt5.git
-      GIT_TAG 6.8.0
+      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects qtandroidextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
       GIT_SUBMODULES_RECURSE false
@@ -257,8 +257,8 @@ elseif (NOT APPLE)
       # replace to avoid refetch on rebuilds
       #SOURCE_DIR ext_qt-prefix/src/ext_qt
 
-      GIT_REPOSITORY https://code.qt.io/qt/qt5.git
-      GIT_TAG 6.8.0
+      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtwayland qtshadertools
       GIT_SUBMODULES_RECURSE false
@@ -318,8 +318,8 @@ else( APPLE )
     ExternalProject_Add(
       ext_qt
 
-      GIT_REPOSITORY https://code.qt.io/qt/qt5.git
-      GIT_TAG 6.8.0
+      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects qtmacextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
       GIT_SUBMODULES_RECURSE false
