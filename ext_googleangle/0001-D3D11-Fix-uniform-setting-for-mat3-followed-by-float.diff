@@ -1,0 +1,100 @@
+From 2f2cdbb8b2db0f22c2306820f4e6d9b562d55b8f Mon Sep 17 00:00:00 2001
+From: Geoff Lang <geofflang@chromium.org>
+Date: Mon, 19 Aug 2024 11:05:22 -0400
+Subject: [PATCH] D3D11: Fix uniform setting for mat3 followed by float
+
+A single float following a float3x3 will pack tightly in the last row
+of the matrix. The uniform setting code for matricies would write a
+full row stride's worth of data for the last matrix row, overwriting
+the float packed at the end.
+
+Update ExpandMatrix to only write colsSrc worth of values in the last
+row.
+
+Bug: angleproject:42266878, chromium:345525082
+Change-Id: Ieb616972387501cd8c30f02b267f86a7f81cf01a
+Reviewed-on: https://chromium-review.googlesource.com/c/angle/angle/+/5796631
+Reviewed-by: Yuxin Hu <yuxinhu@google.com>
+Reviewed-by: Shahbaz Youssefi <syoussefi@chromium.org>
+Reviewed-by: Yuly Novikov <ynovikov@chromium.org>
+Commit-Queue: Geoff Lang <geofflang@chromium.org>
+---
+
+diff --git a/src/libANGLE/renderer/renderer_utils.cpp b/src/libANGLE/renderer/renderer_utils.cpp
+index badfb75..9fb9769 100644
+--- a/src/libANGLE/renderer/renderer_utils.cpp
++++ b/src/libANGLE/renderer/renderer_utils.cpp
+@@ -239,7 +239,7 @@
+ }
+ 
+ template <int cols, int rows, bool IsColumnMajor>
+-inline int GetFlattenedIndex(int col, int row)
++constexpr inline int GetFlattenedIndex(int col, int row)
+ {
+     if (IsColumnMajor)
+     {
+@@ -262,7 +262,10 @@
+ {
+     static_assert(colsSrc <= colsDst && rowsSrc <= rowsDst, "Can only expand!");
+ 
+-    constexpr int kDstFlatSize = colsDst * rowsDst;
++    // Clamp the staging data's size to the last written value so that data packed just after this
++    // matrix is not overwritten.
++    constexpr int kDstFlatSize =
++        GetFlattenedIndex<colsDst, rowsDst, IsDstColumnMajor>(colsSrc - 1, rowsSrc - 1) + 1;
+     T staging[kDstFlatSize]    = {0};
+ 
+     for (int r = 0; r < rowsSrc; r++)
+diff --git a/src/tests/gl_tests/UniformTest.cpp b/src/tests/gl_tests/UniformTest.cpp
+index b0e33aa..8e1735f 100644
+--- a/src/tests/gl_tests/UniformTest.cpp
++++ b/src/tests/gl_tests/UniformTest.cpp
+@@ -1542,6 +1542,48 @@
+     EXPECT_PIXEL_COLOR_EQ(0, 0, GLColor::green);
+ }
+ 
++// Regression test for D3D11 packing of 3x3 matrices followed by a single float. The setting of the
++// matrix would overwrite the float which is packed right after. http://anglebug.com/42266878,
++// http://crbug.com/345525082
++TEST_P(UniformTestES3, ExpandedFloatMatrix3Packing)
++{
++    constexpr char vs[] = R"(precision highp float;
++attribute vec4 position;
++void main()
++{
++    gl_Position = position;
++})";
++
++    constexpr char fs[] = R"(precision mediump float;
++struct s
++{
++    mat3 umat3;
++    float ufloat;
++};
++uniform s u;
++void main() {
++    gl_FragColor = vec4(u.umat3[0][0], u.ufloat, 1.0, 1.0);
++})";
++
++    ANGLE_GL_PROGRAM(program, vs, fs);
++    glUseProgram(program);
++
++    GLint umat3Location = glGetUniformLocation(program, "u.umat3");
++    ASSERT_NE(umat3Location, -1);
++
++    GLint ufloatLocation = glGetUniformLocation(program, "u.ufloat");
++    ASSERT_NE(ufloatLocation, -1);
++
++    constexpr GLfloat mat3[9] = {
++        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
++    };
++
++    glUniform1f(ufloatLocation, 1.0f);
++    glUniformMatrix3fv(umat3Location, 1, GL_FALSE, mat3);
++    drawQuad(program, "position", 0.5f);
++    EXPECT_PIXEL_COLOR_EQ(0, 0, GLColor(0, 255, 255, 255));
++}
++
+ // Use this to select which configurations (e.g. which renderer, which GLES major version) these
+ // tests should be run against.
+ ANGLE_INSTANTIATE_TEST_ES2_AND_ES3(SimpleUniformTest);
