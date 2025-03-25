@@ -7,7 +7,7 @@ Dependencies:
     'base/python': '@same'
     'base/sip': '@same'
     'base/qt': '@same'
-    'base/pyqt5': '@same'
+    'base/pyqt6': '@same'
 - 'on': ['Linux', 'MacOS']
   'require':
     'base/python-modules': '@same'

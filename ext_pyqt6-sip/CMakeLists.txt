@@ -3,15 +3,15 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-project(ext_pyqt-builder)
+project(ext_pyqt6-sip)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 
 if(UNIX)
-    ExternalProject_Add(ext_pyqt-builder
+    ExternalProject_Add( ext_pyqt6-sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/0b/0a/e7684c054c3b85999354bb3be7ccbd6e6d9b751940cec8ecff5e7a8ea9f7/pyqt_builder-1.18.1.tar.gz
-        URL_HASH SHA256=3f7a3a2715947a293a97530a76fd59f1309fcb8e57a5830f45c79fe7249b3998
+        URL https://files.pythonhosted.org/packages/90/18/0405c54acba0c8e276dd6f0601890e6e735198218d031a6646104870fe22/pyqt6_sip-13.10.0.tar.gz
+        URL_HASH SHA256=d6daa95a0bd315d9ec523b549e0ce97455f61ded65d5eafecd83ed2aa4ae5350
 
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
@@ -40,31 +40,26 @@ elseif(WIN32)
     string(TOLOWER ${_krita_pythonpath} _krita_pythonpath)
     krita_to_native_environment_path_list("${_krita_pythonpath}" _krita_pythonpath)
 
-    ExternalProject_Add(ext_pyqt-builder
+    ExternalProject_Add( ext_pyqt6-sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/0b/0a/e7684c054c3b85999354bb3be7ccbd6e6d9b751940cec8ecff5e7a8ea9f7/pyqt_builder-1.18.1.tar.gz
-        URL_HASH SHA256=3f7a3a2715947a293a97530a76fd59f1309fcb8e57a5830f45c79fe7249b3998
+        URL https://files.pythonhosted.org/packages/90/18/0405c54acba0c8e276dd6f0601890e6e735198218d031a6646104870fe22/pyqt6_sip-13.10.0.tar.gz
+        URL_HASH SHA256=d6daa95a0bd315d9ec523b549e0ce97455f61ded65d5eafecd83ed2aa4ae5350
 
-        # Todo: Fix this patch?
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Support-MinGW-and-MSYS-Python-builds.patch
+        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-MinGW-Distutils-support-hack.patch
 
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
 
-        # HACK: Create lib\site-packages before installing
-        # See e.g. https://access.redhat.com/errata/RHBA-2020:4437
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory ${EXTPREFIX}/lib/site-packages
-            COMMAND ${CMAKE_COMMAND} -E env 
-                PYTHONPATH=${_krita_pythonpath}
-                SETUPTOOLS_USE_DISTUTILS=local
-                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
-                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E env
+            PYTHONPATH=${_krita_pythonpath}
+            SETUPTOOLS_USE_DISTUTILS=local
+            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
 
         BUILD_IN_SOURCE 1
 
         UPDATE_COMMAND ""
     )
-
 endif()
 
-krita_add_to_ci_targets(ext_pyqt-builder)
+krita_add_to_ci_targets(ext_pyqt6-sip)

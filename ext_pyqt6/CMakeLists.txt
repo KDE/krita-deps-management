@@ -3,7 +3,7 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-project(ext_pyqt5)
+project(ext_pyqt6)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 
@@ -18,12 +18,10 @@ if(UNIX)
        unset(_extra_pyqt_config)
     endif ()
 
-    ExternalProject_Add( ext_pyqt5
+    ExternalProject_Add( ext_pyqt6
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://pypi.python.org/packages/source/P/PyQt5/PyQt5-5.15.7.tar.gz
-        URL_HASH SHA256=755121a52b3a08cb07275c10ebb96576d36e320e572591db16cfdbc558101594
-
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-Qt-composite-module-lacking-a-platform-tag-on-ma.patch
+        URL https://files.pythonhosted.org/packages/ce/bf/ff284a136b39cb1873c18e4fca4a40a8847c84a1910c5fb38c6a77868968/pyqt6-6.8.1.tar.gz
+        URL_HASH SHA256=91d937d6166274fafd70f4dee11a8da6dbfdb0da53de05f5d62361ddf775e256
 
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
@@ -66,12 +64,10 @@ elseif(WIN32)
     string(TOLOWER ${_krita_pythonpath} _krita_pythonpath)
     krita_to_native_environment_path_list("${_krita_pythonpath}" _krita_pythonpath)
 
-    ExternalProject_Add( ext_pyqt5
+    ExternalProject_Add( ext_pyqt6
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://pypi.python.org/packages/source/P/PyQt5/PyQt5-5.15.7.tar.gz
-        URL_HASH SHA256=755121a52b3a08cb07275c10ebb96576d36e320e572591db16cfdbc558101594
-
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-Qt-composite-module-lacking-a-platform-tag-on-ma.patch
+        URL https://files.pythonhosted.org/packages/ce/bf/ff284a136b39cb1873c18e4fca4a40a8847c84a1910c5fb38c6a77868968/pyqt6-6.8.1.tar.gz
+        URL_HASH SHA256=91d937d6166274fafd70f4dee11a8da6dbfdb0da53de05f5d62361ddf775e256
 
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}
@@ -95,4 +91,4 @@ elseif(WIN32)
     )
 endif()
 
-krita_add_to_ci_targets(ext_pyqt5)
+krita_add_to_ci_targets(ext_pyqt6)

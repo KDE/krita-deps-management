@@ -1,6 +1,6 @@
 Notes About Python And Windows
 
-On Windows, we need two Pythons. One to configure Qt and build sip and PyQt5 against, one to package together with Krita, PyQt, sip and PyKrita. These Pythons need to be exactly the same version, and that version is specified in many places:
+On Windows, we need two Pythons. One to configure Qt and build sip and PyQt6 against, one to package together with Krita, PyQt, sip and PyKrita. These Pythons need to be exactly the same version, and that version is specified in many places:
 
 
 krita\CMakeLists.txt (find_package(PythonLibrary 3.8))

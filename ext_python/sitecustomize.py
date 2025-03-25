@@ -8,4 +8,4 @@ data_path = sysconfig.get_paths()['data']
 site.addsitedir(framework_path)
 site.addsitedir(os.path.join(data_path, 'site-packages'))
 site.addsitedir(os.path.join(framework_path,'site-packages'))
-site.addsitedir(os.path.join(framework_path,'site-packages', 'PyQt5'))
+site.addsitedir(os.path.join(framework_path,'site-packages', 'PyQt6'))

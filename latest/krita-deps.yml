@@ -114,10 +114,10 @@
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
     "base/python": "master"
-    # "base/sip": "master" # TODO: port to Qt6
-    # "base/pyqt-builder": "master" # TODO: port to Qt6
-    # "base/pyqt5": "master" # TODO: port to Qt6
-    # "base/pyqt5-sip": "master" # TODO: port to Qt6
+    "base/sip": "master"
+    "base/pyqt-builder": "master"
+    "base/pyqt6": "master"
+    "base/pyqt6-sip": "master"
     "base/poppler": "master"
 
 - 'on': ['Android']

@@ -1,0 +1,8 @@
+description: Python bindings for Qt6
+hasrepo: false
+identifier: ext_pyqt6
+name: pyqt6
+projectpath: krita-deps/base/pyqt6
+repoactive: false
+repopath: base/pyqt6
+
