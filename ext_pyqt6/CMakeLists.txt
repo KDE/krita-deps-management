@@ -25,7 +25,16 @@ if(UNIX)
 
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
-            ${EXTPREFIX}/bin/sip-build --confirm-license --no-designer-plugin --no-qml-plugin --no-dbus-python --no-tools --no-make --jobs ${SUBMAKE_JOBS} ${_extra_pyqt_config}
+            ${EXTPREFIX}/bin/sip-build
+                --confirm-license
+                --verbose
+                --no-designer-plugin
+                --no-qml-plugin
+                --no-dbus-python
+                --no-tools
+                --no-make
+                --jobs ${SUBMAKE_JOBS}
+                ${_extra_pyqt_config}
 
         BUILD_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
@@ -71,7 +80,17 @@ elseif(WIN32)
 
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}
-            ${EXTPREFIX}/bin/sip-build --confirm-license --no-designer-plugin --no-qml-plugin --no-dbus-python --no-tools --no-make --target-dir ${EXTPREFIX}\\lib\\site-packages --jobs ${SUBMAKE_JOBS} ${_extra_pyqt_config}
+            ${EXTPREFIX}/bin/sip-build
+                --confirm-license
+                --verbose
+                --no-designer-plugin
+                --no-qml-plugin
+                --no-dbus-python
+                --no-tools
+                --no-make
+                --target-dir ${EXTPREFIX}\\lib\\site-packages
+                --jobs ${SUBMAKE_JOBS}
+                ${_extra_pyqt_config}
 
         BUILD_COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/build
             ${CMAKE_COMMAND} -E env 
