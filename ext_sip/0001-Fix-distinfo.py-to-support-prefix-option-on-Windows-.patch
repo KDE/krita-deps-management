@@ -20,7 +20,7 @@ index 783d21d..7d100d1 100644
 +    #print("fix_abs_path: path={}, destdir={}".format(path, destdir))
 +    if os.path.isabs(path):
 +        if destdir:
-+            print("   fixing...")
++            #print("   fixing...")
 +            normedPath = os.path.normpath(path)
 +            normedPath = os.path.splitdrive(normedPath)[1]
 +            if normedPath.startswith(os.sep):

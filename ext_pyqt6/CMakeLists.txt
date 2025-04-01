@@ -100,9 +100,10 @@ elseif(WIN32)
         # force single-threaded installation to avoid
         # race conditions in post-install .py script
         INSTALL_COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/build
-            ${CMAKE_COMMAND} -E env 
-            PYTHONPATH=${_krita_pythonpath}
-            ${CMAKE_COMMAND} -DMAKE_COMMAND=${_make_command} -P ${KRITA_CI_RUN_MAKE_WITH_INSTALL_ROOT} -- -j1 install
+            ${CMAKE_COMMAND} -E env
+                PYTHONPATH=${_krita_pythonpath}
+                ${CMAKE_COMMAND} -DMAKE_COMMAND=${_make_command} -P ${KRITA_CI_RUN_MAKE_WITH_INSTALL_ROOT} -- -j1 install
+            COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_INSTALL_SCHEME}
 
         BUILD_IN_SOURCE 1
 

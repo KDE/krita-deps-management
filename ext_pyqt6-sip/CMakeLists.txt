@@ -27,14 +27,6 @@ if(UNIX)
         UPDATE_COMMAND ""
     )
 elseif(WIN32)
-    if(MINGW)
-        set(_compiler -c mingw32)
-        set(_make_command mingw32-make)
-    elseif(MSVC)
-        set(_compiler -c msvc)
-        set(_make_command jom)
-    endif()
-
     krita_to_native_path("${EXTPREFIX}" _pyqt_prefix)
     krita_to_native_path("${KRITA_PYTHONPATH}" _krita_pythonpath)
     string(TOLOWER ${_krita_pythonpath} _krita_pythonpath)
@@ -45,16 +37,15 @@ elseif(WIN32)
         URL https://files.pythonhosted.org/packages/90/18/0405c54acba0c8e276dd6f0601890e6e735198218d031a6646104870fe22/pyqt6_sip-13.10.0.tar.gz
         URL_HASH SHA256=d6daa95a0bd315d9ec523b549e0ce97455f61ded65d5eafecd83ed2aa4ae5350
 
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-MinGW-Distutils-support-hack.patch
-
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
 
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E env
-            PYTHONPATH=${_krita_pythonpath}
-            SETUPTOOLS_USE_DISTUTILS=local
-            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
-                -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
+        INSTALL_COMMAND 
+            ${CMAKE_COMMAND} -E env
+                PYTHONPATH=${_krita_pythonpath}
+                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
+            COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_INSTALL_SCHEME}
 
         BUILD_IN_SOURCE 1
 
