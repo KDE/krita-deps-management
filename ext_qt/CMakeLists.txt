@@ -281,6 +281,8 @@ elseif (NOT APPLE)
           # which has Krita-specific formats and translations, so we
           # can disable the internal database shipped with Qt
           -DFEATURE_mimetype_database=OFF
+          # we don't plan to build our own wayland server
+          -DFEATURE_wayland_server=OFF
 
       BUILD_COMMAND ${CMAKE_COMMAND} --build . --target all --parallel ${SUBMAKE_JOBS}
       INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install
