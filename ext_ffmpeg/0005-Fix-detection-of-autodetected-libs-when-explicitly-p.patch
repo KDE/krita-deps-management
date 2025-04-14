@@ -1,0 +1,105 @@
+From 49aa3a8d6c55dc6a02edc3ffe379238e288b1843 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Mon, 14 Apr 2025 15:43:46 +0200
+Subject: [PATCH] Fix detection of autodetected libs when explicitly passed
+
+This patch basically reverts a part of 8fa4a0334d3403cac6c4eba9597300bc6d29ce90
+
+When a dep is explicitly set in `conf`, then it skips all the detection using pkg-config,
+hence it will not be linked into the objects of ffmpeg, breaking the build.
+
+Test plan: just pass -Dzlib=enabled and the build will fail.
+---
+ .vscode/settings.json |  6 ++++++
+ meson.build           | 33 +++------------------------------
+ 2 files changed, 9 insertions(+), 30 deletions(-)
+ create mode 100644 .vscode/settings.json
+
+diff --git a/.vscode/settings.json b/.vscode/settings.json
+new file mode 100644
+index 0000000000..c493b12f2a
+--- /dev/null
++++ b/.vscode/settings.json
+@@ -0,0 +1,6 @@
++{
++    "files.associations": {
++        "pngdsp.h": "c",
++        "png.h": "c"
++    }
++}
+\ No newline at end of file
+diff --git a/meson.build b/meson.build
+index 7d6c872320..6a09ff55c4 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1967,14 +1967,6 @@ options_map = {
+   'linux_fb_h' : 'linux_fbdev',
+ }
+ 
+-# Mark specifically enabled, but normally autodetected libraries as requested.
+-foreach component : autodetect_libs
+-  opt_name = options_map.get(component, component)
+-  if get_option(opt_name).enabled()
+-    conf.set10(component, true)
+-  endif
+-endforeach
+-
+ foreach check : all_checks
+   check_type = check[0]
+   check = check[1]
+@@ -2069,16 +2061,7 @@ foreach check : all_checks
+     preconditions = opts.get('preconditions', [])
+ 
+     foreach precondition : preconditions
+-      if precondition in autodetect_libs
+-        pre_name = options_map.get(precondition, precondition)
+-        if get_option(pre_name).allowed()
+-          found = found and conf.get(precondition, 1) == 1
+-        else
+-          found = found and conf.get(precondition, 0) == 1
+-        endif
+-      else
+-        found = found and conf.get(precondition) == 1
+-      endif
++      found = found and conf.get(precondition, 0) == 1
+     endforeach
+ 
+     # FIXME: or should these just be preconditions in the list above instead?
+@@ -2230,16 +2213,6 @@ foreach check : all_checks
+   endif
+ endforeach
+ 
+-# MANUAL: Mathieu already treats all enables as enable_weak. But they can
+-# only be enabled if the check is missing (ie. they're placeholders)
+-# or they've already passed
+-foreach component : external_autodetect_library_list + hwaccel_autodetect_library_list
+-  opt_name = options_map.get(component, component)
+-  if conf.get(component, 1) == 1
+-    conf.set10(component, get_option(opt_name).allowed())
+-  endif
+-endforeach
+-
+ xcrun = disabler()
+ bin2c = disabler()
+ metalcc = disabler()
+@@ -2379,7 +2352,7 @@ endif
+ 
+ schannel_extra_deps = []
+ 
+-if conf.get('schannel') == 1
++if conf.get('schannel', 0) == 1
+   secur32_dep = cc.find_library('secur32', required: false)
+   if cc.links(cpp_cond.format('winerror.h', 'defined(SEC_I_CONTEXT_EXPIRED)'), dependencies: secur32_dep, name: 'schannel dependency works')
+     schannel_extra_deps += [secur32_dep]
+@@ -2396,7 +2369,7 @@ if conf.get('avisynth') == 1
+ endif
+ 
+ # Manual check for amf
+-if conf.get('amf') == 1
++if conf.get('amf', 0) == 1
+   conf.set('amf', cc.links(cpp_cond.format('AMF/core/Version.h', 
+   '(AMF_VERSION_MAJOR << 48 | AMF_VERSION_MINOR << 32 | AMF_VERSION_RELEASE << 16 | AMF_VERSION_BUILD_NUM) >= 0x0001000400210000'), name: 'AMF version'))
+ endif
+-- 
+2.43.0
+
