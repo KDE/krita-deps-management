@@ -83,6 +83,9 @@ environmentUpdate['KDECI_COMPRESS_PACKAGES_ON_DOWNLOAD'] = '1'
 environmentUpdate['KDECI_GLOBAL_CONFIG_OVERRIDE_PATH'] = os.path.join(repoBaseDirectory, 'global-config.yml')
 environmentUpdate['KDECI_REPO_METADATA_PATH'] = os.path.join(repoBaseDirectory, 'repo-metadata')
 
+# fake the "protected" state of the branch to allow fetching deps from a custom
+# branch by passing `--branch transition.now/smth` switch to run-ci-build.py
+environmentUpdate['CI_COMMIT_REF_PROTECTED'] = 'true'
 
 if not sharedInstallDirectory is None:
     environmentUpdate['KDECI_SHARED_INSTALL_PATH'] = sharedInstallDirectory
