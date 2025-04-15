@@ -36,6 +36,9 @@ kis_ExternalProject_Add_with_separate_builds_apple(
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Add-options-for-SSP-and-CFGuard.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Be-more-forceful-when-setting-PIC-on-x86_32.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0005-Fix-detection-of-autodetected-libs-when-explicitly-p.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0006-Change-defauls-iconv-option-to-auto.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0007-Declare-other-auto-detected-lifraries-as-auto-fieatu.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0008-Fix-building-when-iconv-feature-is-explicitly-disabl.patch
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             --libdir=lib
