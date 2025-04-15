@@ -72,6 +72,7 @@ set (KRITA_CI_RUN_MAKE_WITH_INSTALL_ROOT ${CMAKE_CURRENT_LIST_DIR}/run-make-with
 set (KRITA_CI_RUN_MAKE_WITH_DESTDIR ${CMAKE_CURRENT_LIST_DIR}/run-make-with-destdir.cmake)
 set (KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR ${CMAKE_CURRENT_LIST_DIR}/run-pip-install-with-destdir.cmake)
 set (KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR ${CMAKE_CURRENT_LIST_DIR}/run-setup-py-with-destdir.cmake)
+set (KRITA_CI_FIX_PYTHON_INSTALL_SCHEME ${CMAKE_CURRENT_LIST_DIR}/fix-python-install-scheme.cmake)
 
 
 # set property on the root directory to make sure that all external projects

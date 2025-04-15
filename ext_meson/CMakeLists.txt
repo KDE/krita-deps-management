@@ -60,21 +60,22 @@ elseif(NOT CMAKE_CROSSCOMPILING)
         UPDATE_COMMAND ""
     )
 else()
-    set(_meson_prefix "${EXTPREFIX}")
+    krita_to_native_path("${KRITA_PYTHONPATH}" _krita_pythonpath)
+    string(TOLOWER ${_krita_pythonpath} _krita_pythonpath)
+    krita_to_native_environment_path_list("${_krita_pythonpath}" _krita_pythonpath)
+    
     # Meson needs to be brought manually when crosscompiling.
     ExternalProject_Add(ext_meson
         DOWNLOAD_COMMAND ""
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Installing meson natively"
-                COMMAND ${CMAKE_COMMAND} -E env
-                    PYTHONUSERBASE=${_meson_prefix}
-                    ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
-                        -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade meson==1.7.2 --ignore-installed --verbose
-                COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
-
-                # logging doesn't work when we are installing meson with DESTDIR
-                # COMMAND ${Python_EXECUTABLE} -m pip show -f meson
+        INSTALL_COMMAND 
+            ${CMAKE_COMMAND} -E env 
+                PYTHONPATH=${_krita_pythonpath}
+                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade meson==1.7.2 --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
+                    COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
+                    COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_INSTALL_SCHEME}
 
         UPDATE_COMMAND ""
     )
