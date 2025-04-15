@@ -39,6 +39,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0006-Change-defauls-iconv-option-to-auto.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0007-Declare-other-auto-detected-lifraries-as-auto-fieatu.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0008-Fix-building-when-iconv-feature-is-explicitly-disabl.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0009-Add-link_language-option-to-all-the-link-targets.patch
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             --libdir=lib
