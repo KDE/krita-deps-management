@@ -23,6 +23,7 @@ Dependencies:
     # on Linux we use meson provided by the distribution
     'base/meson': '@same'
     'base/pkgconfig': '@same'
+    'base/iconv': '@same' # on Linux ffmpeg uses iconv provided by libc
 
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
