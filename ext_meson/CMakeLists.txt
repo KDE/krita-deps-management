@@ -12,8 +12,8 @@ if (WIN32)
 
     ExternalProject_Add( ext_meson
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://github.com/mesonbuild/meson/releases/download/1.1.0/meson-1.1.0.tar.gz
-        URL_HASH SHA256=d9616c44cd6c53689ff8f05fc6958a693f2e17c3472a8daf83cee55dabff829f
+        URL https://github.com/mesonbuild/meson/releases/download/1.7.2/meson-1.7.2.tar.gz
+        URL_HASH SHA256=4d40d63aa748a9c139cc41ab9bffe43edd113c5639d78bde81544ca955aea890
 
         CONFIGURE_COMMAND ""
 
@@ -36,10 +36,8 @@ elseif(NOT CMAKE_CROSSCOMPILING)
 
     ExternalProject_Add( ext_meson
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://github.com/mesonbuild/meson/releases/download/1.1.0/meson-1.1.0.tar.gz
-        URL_HASH SHA256=d9616c44cd6c53689ff8f05fc6958a693f2e17c3472a8daf83cee55dabff829f
-
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-fix-linker-detection-on-Xcode-15.patch
+        URL https://github.com/mesonbuild/meson/releases/download/1.7.2/meson-1.7.2.tar.gz
+        URL_HASH SHA256=4d40d63aa748a9c139cc41ab9bffe43edd113c5639d78bde81544ca955aea890
 
         CONFIGURE_COMMAND chmod u+x <SOURCE_DIR>/setup.py
 
@@ -62,21 +60,22 @@ elseif(NOT CMAKE_CROSSCOMPILING)
         UPDATE_COMMAND ""
     )
 else()
-    set(_meson_prefix "${EXTPREFIX}")
+    krita_to_native_path("${KRITA_PYTHONPATH}" _krita_pythonpath)
+    string(TOLOWER ${_krita_pythonpath} _krita_pythonpath)
+    krita_to_native_environment_path_list("${_krita_pythonpath}" _krita_pythonpath)
+    
     # Meson needs to be brought manually when crosscompiling.
     ExternalProject_Add(ext_meson
         DOWNLOAD_COMMAND ""
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Installing meson natively"
-                COMMAND ${CMAKE_COMMAND} -E env
-                    PYTHONUSERBASE=${_meson_prefix}
-                    ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
-                        -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade meson==1.1.0 --user --ignore-installed --verbose
-                COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
-
-                # logging doesn't work when we are installing meson with DESTDIR
-                # COMMAND ${Python_EXECUTABLE} -m pip show -f meson
+        INSTALL_COMMAND 
+            ${CMAKE_COMMAND} -E env 
+                PYTHONPATH=${_krita_pythonpath}
+                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade meson==1.7.2 --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
+                    COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
+                    COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_INSTALL_SCHEME}
 
         UPDATE_COMMAND ""
     )
