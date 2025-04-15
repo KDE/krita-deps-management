@@ -70,7 +70,7 @@ else()
                 COMMAND ${CMAKE_COMMAND} -E env
                     PYTHONUSERBASE=${_meson_prefix}
                     ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
-                        -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade meson==1.7.2 --user --ignore-installed --verbose
+                        -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- --upgrade meson==1.7.2 --ignore-installed --verbose
                 COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
 
                 # logging doesn't work when we are installing meson with DESTDIR
