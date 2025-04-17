@@ -1,0 +1,7 @@
+description: A tool for packiging Qt applications into an AppImage
+hasrepo: false
+identifier: ext_linuxdeployqt
+name: linuxdeployqt
+projectpath: krita-deps/base/linuxdeployqt
+repoactive: false
+repopath: base/linuxdeployqt

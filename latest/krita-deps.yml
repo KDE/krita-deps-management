@@ -157,6 +157,12 @@
     "base/kcrash": "master"
     "base/fcitx-qt": "master"
 
+- 'on': ['Linux']
+  'require':
+    # extra build tools on Linux
+    "base/appimagetool": "master"
+    "base/linuxdeployqt": "master"
+
 - 'on': ['MacOS']
   'require':
     "base/zlib": "master"

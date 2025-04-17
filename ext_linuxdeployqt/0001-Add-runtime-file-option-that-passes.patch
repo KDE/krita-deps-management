@@ -1,0 +1,79 @@
+From e1a499717f926f6eac9ec2870350a51a4595dd35 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Thu, 17 Apr 2025 13:29:30 +0000
+Subject: [PATCH] Add -runtime-file option that passes
+
+If present, the local runtime file is passed to
+appimagetool to avoid a download from remote
+---
+ tools/linuxdeployqt/main.cpp   | 6 ++++++
+ tools/linuxdeployqt/shared.cpp | 8 +++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/tools/linuxdeployqt/main.cpp b/tools/linuxdeployqt/main.cpp
+index 6c12b06..1b0771c 100644
+--- a/tools/linuxdeployqt/main.cpp
++++ b/tools/linuxdeployqt/main.cpp
+@@ -76,6 +76,7 @@ int main(int argc, char **argv)
+     extern bool copyCopyrightFiles;
+     extern QString updateInformation;
+     extern QString qtLibInfix;
++    extern QString runtimeFile;
+ 
+     // Check arguments
+     // Due to the structure of the argument parser, we have to check all arguments at first to check whether the user
+@@ -186,6 +187,10 @@ int main(int argc, char **argv)
+             LogDebug() << "Argument found:" << argument;
+             int index = argument.indexOf("=");
+             qtLibInfix = QString(argument.mid(index+1));
++        } else if (argument.startsWith("-runtime-file=")) {
++            LogDebug() << "Argument found:" << argument;
++            int index = argument.indexOf("=");
++            runtimeFile = QString(argument.mid(index+1));
+         } else if (argument.startsWith("--")) {
+             LogError() << "Error: arguments must not start with --, only -:" << argument << "\n";
+             return 1;
+@@ -253,6 +258,7 @@ int main(int argc, char **argv)
+         qInfo() << "                              2 = normal, 3 = debug.";
+         qInfo() << "   -updateinformation=<update string>        : Embed update information STRING; if zsyncmake is installed, generate zsync file";
+         qInfo() << "   -qtlibinfix=<infix>      : Adapt the .so search if your Qt distribution has infix.";
++        qInfo() << "   -runtime-file=<file>     : A file containing runtime for appimagetool";
+         qInfo() << "   -version                 : Print version statement and exit.";
+         qInfo() << "";
+         qInfo() << "linuxdeployqt takes an application as input and makes it";
+diff --git a/tools/linuxdeployqt/shared.cpp b/tools/linuxdeployqt/shared.cpp
+index e4af7de..d9bf122 100644
+--- a/tools/linuxdeployqt/shared.cpp
++++ b/tools/linuxdeployqt/shared.cpp
+@@ -70,6 +70,7 @@ QStringList ignoreGlob;
+ bool copyCopyrightFiles = true;
+ QString updateInformation;
+ QString qtLibInfix;
++QString runtimeFile;
+ 
+ using std::cout;
+ using std::endl;
+@@ -1998,6 +1999,7 @@ bool checkAppImagePrerequisites(const QString &appDirPath)
+ int createAppImage(const QString &appDirPath)
+ {
+     QString updateInfoArgument;
++    QString runtimeFileArgument;
+ 
+     if (updateInformation.isEmpty()) {
+         // if there is no user-supplied update info, guess
+@@ -2006,7 +2008,11 @@ int createAppImage(const QString &appDirPath)
+         updateInfoArgument = QString("-u '%1'").arg(updateInformation);
+     }
+ 
+-    QString appImageCommand = "appimagetool -v '" + appDirPath + "' -n " + updateInfoArgument; // +"' '" + appImagePath + "'";
++    if (!runtimeFile.isEmpty()) {
++        runtimeFileArgument = QString(" --runtime-file '%1'").arg(runtimeFile);
++    }
++
++    QString appImageCommand = "appimagetool -v '" + appDirPath + "' -n " + updateInfoArgument + runtimeFileArgument; // +"' '" + appImagePath + "'";
+     LogNormal() << appImageCommand;
+     int ret = system(appImageCommand.toUtf8().constData());
+     LogNormal() << "ret" << ret;
+-- 
+2.34.1
+
