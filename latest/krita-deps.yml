@@ -99,6 +99,11 @@
     "heif/libx265": "master"
     "base/libheif": "master"
 
+- 'on': ['Windows', 'Linux']
+  'require':
+    # hardware optimization for Intel CPUs for ffmpeg
+    "ffmpeg/vpl": "master"
+
 # Note1: fseek call in libraw is not supported on 32-bit systems
 # Note2: RAW support is currently disabled on ['Android/x86_64',
 #        'Android/arm64-v8a'], since it doesn't work in Krita for

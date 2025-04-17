@@ -1,0 +1,7 @@
+description: Intel® library for hardware accelerated video decode and encode
+hasrepo: false
+identifier: ext_vpl
+name: vpl
+projectpath: krita-deps/ffmpeg/vpl
+repoactive: false
+repopath: ffmpeg/vpl
