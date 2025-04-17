@@ -43,6 +43,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0010-Fix-building-with-libvpl-present.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0011-Switch-deps-of-QSV-codecs-to-libvpl-instead-of-libmf.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0012-Fix-include-paths-for-libavcodec-s-codecs.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0013-Fix-VP9-hw-accelerated-encoder-with-libvpl.patch
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             --libdir=lib
