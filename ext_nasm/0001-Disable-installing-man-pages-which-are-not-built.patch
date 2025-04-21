@@ -1,0 +1,29 @@
+From fae4fd39f05f6fa484b7e458768a7d64b855f2d2 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Mon, 21 Apr 2025 16:39:01 +0200
+Subject: [PATCH] Disable installing man pages which are not built
+
+---
+ Makefile.in | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index baca4396..7e4dfd0b 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -389,9 +389,9 @@ install: nasm$(X) ndisasm$(X)
+ 	$(MKDIR_P) $(DESTDIR)$(bindir)
+ 	$(INSTALL_PROGRAM) nasm$(X) $(DESTDIR)$(bindir)/nasm$(X)
+ 	$(INSTALL_PROGRAM) ndisasm$(X) $(DESTDIR)$(bindir)/ndisasm$(X)
+-	$(MKDIR_P) $(DESTDIR)$(mandir)/man1
+-	$(INSTALL_DATA) $(srcdir)/nasm.1 $(DESTDIR)$(mandir)/man1/nasm.1
+-	$(INSTALL_DATA) $(srcdir)/ndisasm.1 $(DESTDIR)$(mandir)/man1/ndisasm.1
++#	$(MKDIR_P) $(DESTDIR)$(mandir)/man1
++#	$(INSTALL_DATA) $(srcdir)/nasm.1 $(DESTDIR)$(mandir)/man1/nasm.1
++#	$(INSTALL_DATA) $(srcdir)/ndisasm.1 $(DESTDIR)$(mandir)/man1/ndisasm.1
+ 
+ clean:
+ 	for d in . $(SUBDIRS) $(XSUBDIRS); do \
+-- 
+2.25.1
+
