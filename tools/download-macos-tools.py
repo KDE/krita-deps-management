@@ -14,8 +14,13 @@ cmakeArchive = 'cmake-3.29.3-macos-universal.tar.gz'
 ninjaArchive = 'ninja-mac-1.12.1.zip'
 ccacheArchive = 'ccache-4.9.1-darwin.tar.gz'
 
-workingDirectory = os.getcwd()
-downloadsDir = os.path.join(workingDirectory, 'cache', 'downloads')
+# check if EXTERNALS_DOWNLOAD_DIR variable is set, if not create a
+# basic folder to store all downloads
+try:
+    downloadsDir = os.environ.pop('EXTERNALS_DOWNLOAD_DIR')
+except:
+    workingDirectory = os.getcwd()
+    downloadsDir = os.path.join(workingDirectory, 'cache', 'downloads')
 
 # autocreate the downloads dialog, otherwise downloading will fail
 if not os.path.isdir(downloadsDir):
