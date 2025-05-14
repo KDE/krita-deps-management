@@ -68,7 +68,11 @@
 #
 # Here is a link explaining how to build it for Android:
 # https://medium.com/@zw3rk/building-iconv-for-android-e3581a52668f
-- 'on': ['Windows', 'MacOS', 'Linux']
+#
+# On Linux and MacOS we use POSIX iconv implementation provided by
+# the C-library
+
+- 'on': ['Windows']
   'require':
     "base/iconv": "master"
 

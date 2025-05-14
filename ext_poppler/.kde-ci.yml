@@ -9,7 +9,7 @@ Dependencies:
     'base/tiff': '@same'
     'base/boost': '@same'
     'base/lcms2': '@same'
-- 'on': ['Windows', 'MacOS', 'Linux']
+- 'on': ['Windows']
   'require':
     'base/iconv': '@same'
 - 'on': ['Windows']

@@ -5,7 +5,7 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
-- 'on': ['Windows', 'MacOS']
+- 'on': ['Windows']
   'require':
     'base/iconv': '@same'
 - 'on': ['Windows', 'MacOS', 'Android']

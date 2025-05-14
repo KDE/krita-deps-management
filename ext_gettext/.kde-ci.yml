@@ -3,6 +3,3 @@ Dependencies:
   'require':
     'base/patch': '@same'
     'base/iconv': '@same'
-- 'on': ['MacOS']
-  'require':
-    'base/iconv': '@same'
