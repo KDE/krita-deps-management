@@ -10,7 +10,12 @@ if (WIN32)
     ExternalProject_Add(
         ext_nasm
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
+
+        # the official website seems to be down regularly, please copy the
+        # archive to the KDE's infrastructure during updates
+        # URL https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
+
+        URL https://files.kde.org/krita/build/dependencies/nasm-2.15.05-win64.zip
         URL_HASH SHA256=f5c93c146f52b4f1664fa3ce6579f961a910e869ab0dae431bd871bdd2584ef2
 
         BUILD_COMMAND ""
@@ -26,17 +31,17 @@ else ()
     ExternalProject_Add(
         ext_nasm
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        GIT_REPOSITORY https://github.com/netwide-assembler/nasm.git
-        GIT_TAG nasm-2.15.05
 
-        # the official website seems to be down now :(
+        # the official website seems to be down regularly, please copy the
+        # archive to the KDE's infrastructure during updates
         #URL https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/nasm-2.15.05.tar.gz
-        #URL_HASH SHA256=9182a118244b058651c576baa9d0366ee05983c4d4ae1d9ddd3236a9f2304997
+
+        URL https://files.kde.org/krita/build/dependencies/nasm-2.15.05.tar.gz
+        URL_HASH SHA256=9182a118244b058651c576baa9d0366ee05983c4d4ae1d9ddd3236a9f2304997
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Disable-installing-man-pages-which-are-not-built.patch
 
-        CONFIGURE_COMMAND <SOURCE_DIR>/autogen.sh
-                  COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE}
+        CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE}
 
         UPDATE_COMMAND ""
         
