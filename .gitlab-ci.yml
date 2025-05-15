@@ -2,9 +2,9 @@
 
 variables:
   BRANCH_NAME_WINDOWS: 'master'
-  BRANCH_NAME_LINUX: 'transition.now/ubuntu-2204'
+  BRANCH_NAME_LINUX: 'master'
   BRANCH_NAME_MACOS: 'master'
-  BRANCH_NAME_ANDROID: 'transition.now/ubuntu-2204'
+  BRANCH_NAME_ANDROID: 'master'
 
 stages:
   - Dependencies
