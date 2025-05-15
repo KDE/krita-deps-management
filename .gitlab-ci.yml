@@ -90,7 +90,7 @@ stages:
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder:latest
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder-2204:latest
   tags:
     - Linux
   extends:
@@ -107,7 +107,7 @@ stages:
   interruptible: false
 
 .android_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-android-builder-sdk34:latest
+  image: invent-registry.kde.org/sysadmin/ci-images/krita-android-builder-sdk34-2204:latest
   tags:
     - Linux
   extends:
