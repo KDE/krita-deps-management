@@ -13,7 +13,7 @@ ExternalProject_Add(
     URL_HASH SHA256=d81de82692d3d2bb77110332a65c8266252becc2c3f307ce814990ce5607b8dc
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Disable-fastline-metadata-creation.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-android-Recursively-find-dependency-of-dependencies.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Android-Recursively-find-dependency-of-dependencies.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-android-Fix-specifydependencies.cmake-to-handle-Qt6-.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-windows-Revert-Use-BIN_INSTALL_DIR-data-for-DATAROOT.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0005-android-Find-dependencies-of-manually-specified-libr.patch
