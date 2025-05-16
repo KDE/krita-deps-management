@@ -1,0 +1,24 @@
+From 7c46060238e902abf18ded001548cd8e4f3d4c0b Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Mon, 14 Apr 2025 13:06:13 +0200
+Subject: [PATCH 3/4] Be more forceful when setting PIC on x86_32
+
+---
+ meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/meson.build b/meson.build
+index e205747612..8a0f17aad9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1826,6 +1826,7 @@ if cpu == 'x86'
+   conf.set('i686', 1)
+   conf.set('x86_32', 1)
+   conf.set('fast_cmov', 1)
++  conf.set('pic', 1)
+ elif cpu == 'x86_64'
+   arch = 'x86'
+   conf.set('x86', 1)
+-- 
+2.25.1
+

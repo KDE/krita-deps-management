@@ -70,7 +70,11 @@
 #
 # Here is a link explaining how to build it for Android:
 # https://medium.com/@zw3rk/building-iconv-for-android-e3581a52668f
-- 'on': ['Windows', 'MacOS', 'Linux']
+#
+# On Linux and MacOS we use POSIX iconv implementation provided by
+# the C-library
+
+- 'on': ['Windows']
   'require':
     "base/iconv": "master"
 
@@ -100,6 +104,11 @@
     "heif/libx265_12bit": "master"
     "heif/libx265": "master"
     "base/libheif": "master"
+
+- 'on': ['Windows', 'Linux']
+  'require':
+    # hardware optimization for Intel CPUs for ffmpeg
+    "ffmpeg/vpl": "master"
 
 # Note1: fseek call in libraw is not supported on 32-bit systems
 # Note2: RAW support is currently disabled on ['Android/x86_64',
@@ -167,6 +176,11 @@
     "base/wayland-protocols": "master"
     "base/plasma-wayland-protocols": "master"
 
+- 'on': ['Linux']
+  'require':
+    # extra build tools on Linux
+    "base/appimagetool": "master"
+    "base/linuxdeployqt": "master"
 
 - 'on': ['MacOS']
   'require':

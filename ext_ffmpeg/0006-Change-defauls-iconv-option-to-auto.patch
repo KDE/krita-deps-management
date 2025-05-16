@@ -1,0 +1,26 @@
+From 56a59f8600933c7a5b8972d7cb4755af346f18ac Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Tue, 15 Apr 2025 10:50:39 +0200
+Subject: [PATCH 6/8] Change defauls iconv option to "auto"
+
+(since it is an auto-detected library)
+---
+ meson_options.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/meson_options.txt b/meson_options.txt
+index ab5841285f..671194705f 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -4,7 +4,7 @@ option('avisynth', type: 'feature', value: 'disabled')
+ option('decklink', type: 'feature', value: 'disabled')
+ option('ffnvcodec', type: 'feature', value: 'auto')
+ option('frei0r', type: 'feature', value: 'disabled')
+-option('iconv', type: 'feature', value: 'disabled')
++option('iconv', type: 'feature', value: 'auto')
+ option('libgme', type: 'feature', value: 'disabled')
+ option('gnutls', type: 'feature', value: 'disabled')
+ option('libaom', type: 'feature', value: 'disabled')
+-- 
+2.25.1
+

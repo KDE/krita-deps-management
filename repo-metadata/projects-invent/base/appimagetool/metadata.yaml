@@ -1,0 +1,7 @@
+description: appimagetool is a tool to generate an AppImage from an existing AppDir
+hasrepo: false
+identifier: ext_appimagetool
+name: appimagetool
+projectpath: krita-deps/base/appimagetool
+repoactive: false
+repopath: base/appimagetool

@@ -22,6 +22,8 @@ if (NOT MSVC)
     set(_stack_guard_flag "-Denable-ssp=enabled")
 endif() 
 
+set(FFMPEG_GIT_SHA1 7601055639e789cdeeff793c48eaaf3186a70aad)
+
 kis_ExternalProject_Add_with_separate_builds_apple(
     ext_ffmpeg
     MESON
@@ -29,18 +31,23 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     GIT_REPOSITORY https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg.git
 
     # we use this branch as a source:
-    # https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/tree/meson-4.4
-    GIT_TAG c6e46e6e662742531a84b0d99f2772d9a4017c23
+    # https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/tree/meson-7.1
+    GIT_TAG ${FFMPEG_GIT_SHA1}
 
-    # Workaround https://github.com/mesonbuild/meson/issues/11113
-    # See https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/issues/31
-    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ffmpeg-Add-an-option-to-disable-UB-in-av_uninit.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-ffmpeg-Add-options-for-SSP-and-CFGuard.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Disable-ebp_available-on-android.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-libavutil-Don-t-disable-PIC-on-x86_32.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ffmpeg-Be-more-forceful-when-setting-PIC-on-x86_32.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Copy-over-some-macros-from-libavutil-version.h.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ffmpeg-Fix-compilation-on-MacOS.patch
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-an-option-to-disable-UB-in-av_uninit.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Add-options-for-SSP-and-CFGuard.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Be-more-forceful-when-setting-PIC-on-x86_32.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0005-Fix-detection-of-autodetected-libs-when-explicitly-p.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0006-Change-defauls-iconv-option-to-auto.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0007-Declare-other-auto-detected-lifraries-as-auto-fieatu.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0008-Fix-building-when-iconv-feature-is-explicitly-disabl.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0009-Add-link_language-option-to-all-the-link-targets.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0010-Fix-building-with-libvpl-present.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0011-Switch-deps-of-QSV-codecs-to-libvpl-instead-of-libmf.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0012-Fix-include-paths-for-libavcodec-s-codecs.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0013-Fix-VP9-hw-accelerated-encoder-with-libvpl.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0014-Fix-version-file-generation-in-version.py.patch
+          COMMAND ${CMAKE_COMMAND} -E echo "7.1.1-g${FFMPEG_GIT_SHA1}" > VERSION
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             --libdir=lib
@@ -50,15 +57,15 @@ kis_ExternalProject_Add_with_separate_builds_apple(
             -Dbuildtype=$<IF:$<CONFIG:Debug>,debug,debugoptimized>
             -Ddefault_library=shared
             ${DISABLE_ASM_ON_ANDROID_x86_32}
-            -Dcli=enabled
+            -Dprograms=enabled
             -Dtests=disabled
+            -Dffmpeg=enabled
             -Dffprobe=enabled
             -Dffplay=disabled
             -Davdevice=disabled
             -Davcodec=enabled
             -Davformat=enabled
             -Davutil=enabled
-            -Davresample=enabled
             -Dswresample=enabled
             -Dswscale=enabled
             -Dpostproc=disabled
@@ -81,6 +88,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
             -Dapng_decoder=enabled
             # ===================== Video Codecs
             -Dlibaom_av1_encoder=enabled
+            -Dlibvpl=auto # Intel-specific optimizations
             -Dlibvpx=enabled
             -Dlibvpx_vp9_encoder=enabled
             -Dlibvpx_vp8_encoder=enabled
