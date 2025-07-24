@@ -80,6 +80,7 @@ stages:
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
     KDECI_WORKDIR_PATH: "C:\\_"
+    PYTHONUTF8: 1
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
   before_script:
