@@ -67,16 +67,17 @@ stages:
       - "./**/meson-private/**/*"
 
 .windows_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder-clang18:latest
+  image: storage.kde.org/vm-images/krita-windows-clang18
   tags:
-    - Windows
+    - VM
+    - amd64
   extends:
     - .log_artifacts_windows
   variables:
-    KDECI_CC_CACHE: "C:\\Gitlab\\Caches\\krita-windows"
-    KDECI_CACHE_PATH: "C:\\Gitlab\\Artifacts\\krita-windows"
+    KDECI_CC_CACHE: "Z:\\krita-windows\\caches"
+    KDECI_CACHE_PATH: "Z:\\krita-windows\\artifacts"
     KDECI_PACKAGE_PROJECT: teams/ci-artifacts/krita-windows
-    EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\downloads"
+    EXTERNALS_DOWNLOAD_DIR: "Z:\\krita-windows\\downloads"
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
     KDECI_WORKDIR_PATH: "C:\\_"
@@ -91,16 +92,17 @@ stages:
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder-2204:latest
+  image: storage.kde.org/vm-images/krita-appimage-2204
   tags:
-    - Linux
+    - VM
+    - amd64
   extends:
     - .log_artifacts_unix
   variables:
-    KDECI_CC_CACHE: /mnt/caches/krita-appimage/
-    KDECI_CACHE_PATH: /mnt/artifacts/krita-appimage/
+    KDECI_CC_CACHE: /mnt/krita-appimage/caches/
+    KDECI_CACHE_PATH: /mnt/krita-appimage/artifacts/
     KDECI_PACKAGE_PROJECT: teams/ci-artifacts/krita-appimage
-    EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads
+    EXTERNALS_DOWNLOAD_DIR: /mnt/krita-appimage/downloads
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
