@@ -1,0 +1,27 @@
+From 0a68a25cff54c541909518e85ff2137c27185cd9 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Thu, 31 Jul 2025 19:10:53 +0200
+Subject: [PATCH] Fix QML modules being rebuilt all the time
+
+The byproduct is the installed .qml module, so we should
+point to that with an absolute path
+---
+ modules/ECMQmlModule.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/ECMQmlModule.cmake b/modules/ECMQmlModule.cmake
+index f14f75d..8caa15a 100644
+--- a/modules/ECMQmlModule.cmake
++++ b/modules/ECMQmlModule.cmake
+@@ -440,7 +440,7 @@ function(ecm_finalize_qml_module ARG_TARGET)
+             WORKING_DIRECTORY ${_runtime_output_dir}
+             COMMAND ${CMAKE_COMMAND} -E make_directory ${_file_path}
+             COMMAND ${CMAKE_COMMAND} -E copy ${_file} ${_file_path}
+-            BYPRODUCTS ${_file_path}/${_filename}
++            BYPRODUCTS ${_runtime_output_dir}/${_file_path}/${_filename}
+         )
+     endforeach()
+ endfunction()
+-- 
+2.49.0.windows.1
+
