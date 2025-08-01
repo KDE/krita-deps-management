@@ -187,6 +187,7 @@ elseif (ANDROID)
           -icu
           -I ${EXTPREFIX}/include
           -L ${EXTPREFIX}/lib
+          ${QT_PAGE_ALIGNMENT_OPTION}
 
       PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Fix-build-with-NDK-27.patch
              COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-android-Fix-ranlib-path-for-NDK-27.patch
