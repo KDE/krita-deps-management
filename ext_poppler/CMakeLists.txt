@@ -8,7 +8,7 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 ExternalProject_Add( ext_poppler
 	DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://poppler.freedesktop.org/poppler-24.09.0.tar.xz
+    URL https://files.kde.org/krita/build/dependencies/poppler-24.09.0.tar.xz
     URL_HASH SHA256=ebd857987e2395608c69fdc44009692d5906f13b612c5280beff65a0b75dc255
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macos-add-missing-system-header.patch
