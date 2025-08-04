@@ -162,6 +162,13 @@ if (WIN32)
       BINARY_DIR b
   )
 elseif (ANDROID)
+  set(PAGE_ALIGNMENT_PATCH_ARG)
+  if (PAGE_ALIGN_16K_LINKER_FLAGS)
+    message(STATUS "Enable 16K page alignment for Qt5")
+    set(PAGE_ALIGNMENT_PATCH_ARG
+        COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Force-enable-16K-alignment-on-Android.patch)
+  endif()
+
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
@@ -192,6 +199,7 @@ elseif (ANDROID)
       PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Fix-build-with-NDK-27.patch
              COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-android-Fix-ranlib-path-for-NDK-27.patch
              COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-androiddeloyqt-fix-needed-libs-argument-for-llvm-rea.patch
+             ${PAGE_ALIGNMENT_PATCH_ARG}
 
       BUILD_COMMAND ${QT_BUILD_COMMAND}
       INSTALL_COMMAND ${QT_INSTALL_COMMAND}
