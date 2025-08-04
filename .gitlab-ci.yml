@@ -110,13 +110,14 @@ stages:
   interruptible: false
 
 .android_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-android-builder-sdk34-2204:latest
+  image: storage.kde.org/vm-images/krita-android-sdk34-2204
   tags:
-    - Linux
+    - VM
+    - amd64
   extends:
     - .log_artifacts_unix
   variables:
-    EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads # reuse appimage caches!
+    EXTERNALS_DOWNLOAD_DIR: /mnt/krita-appimage/artifacts/downloads # reuse appimage caches!
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
