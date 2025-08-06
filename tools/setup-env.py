@@ -17,6 +17,7 @@ parser.add_argument('-d','--generate-deps-file', action='store_true', help='Gene
 parser.add_argument('--full-krita-env', action='store_true', help='Fetch all deps for Krita and generate the environment (implies -d)')
 parser.add_argument('-o','--output-file', type=str, help='Output file base name for the environment file (.bat suffix is added automatically)', default='base-env')
 parser.add_argument('--android-abi', type=str, choices=['x86_64', 'armeabi-v7a', 'arm64-v8a'], default = None, help='Target Android ABI to use for building')
+parser.add_argument('-b','--branch', type=str, default = 'master', help='Branch to use for fetching pacakges')
 arguments = parser.parse_args()
 
 workingDirectory = os.getcwd()
@@ -159,10 +160,11 @@ else:
 
 
 if arguments.full_krita_env:
-    commandToRun = '{python} -s {script} --only-env -e env --project krita --branch master --platform {platform}'.format(
+    commandToRun = '{python} -s {script} --only-env -e env --project krita --branch {branch} --platform {platform}'.format(
         python = effectivePythonExecutable,
         script = os.path.join(os.path.dirname(__file__), '..', 'ci-utilities', 'run-ci-build.py'),
-        platform = platformString)
+        platform = platformString,
+        branch = arguments.branch)
 
     runEnvironment = copy.deepcopy(dict(os.environ))
     for key, value in environmentUpdate.items():
