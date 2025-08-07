@@ -135,11 +135,32 @@ EnvFileUtils.writeEnvFile(workingDirectory, arguments.output_file,
             environmentAppend=environmentAppend)
 
 if arguments.generate_deps_file:
+    seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml')
+
+    if arguments.branch != 'master':
+        correctedSeedFile = os.path.join(workingDirectory, 'branch-corrected-deps.yml')
+
+        commandToRun = '{python} -s {script} -o {outFile} -d {branch} {seedFile}'.format(
+            python = effectivePythonExecutable,
+            script = os.path.join(os.path.dirname(__file__), 'replace-branch-in-seed-file.py'),
+            outFile = correctedSeedFile,
+            seedFile = seedFile,
+            branch = arguments.branch)
+
+        try:
+            print('## RUNNING BRANCH RENAME SCRIPT: {}'.format(commandToRun))
+            subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=os.getcwd())
+        except Exception:
+            print("## Failed to run branch rename script")
+            sys.exit(1)
+
+        seedFile = correctedSeedFile
+
     commandToRun = '{python} -s {script} -o {outFile} -s {seedFile}'.format(
         python = effectivePythonExecutable,
         script = os.path.join(os.path.dirname(__file__), 'generate-deps-file.py'),
         outFile = os.path.join(workingDirectory, '.kde-ci.yml'),
-        seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml'))
+        seedFile = seedFile)
 
     try:
         print('## RUNNING DEPS GENERATION SCRIPT: {}'.format(commandToRun))
@@ -160,6 +181,8 @@ else:
 
 
 if arguments.full_krita_env:
+    print(f"*** branch is {arguments.branch}")
+    
     commandToRun = '{python} -s {script} --only-env -e env --project krita --branch {branch} --platform {platform}'.format(
         python = effectivePythonExecutable,
         script = os.path.join(os.path.dirname(__file__), '..', 'ci-utilities', 'run-ci-build.py'),
