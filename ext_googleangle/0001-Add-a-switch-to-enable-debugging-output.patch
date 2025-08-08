@@ -1,0 +1,29 @@
+From 151cf5f5d563a0997c6757ad9b4b5dff0abc63f4 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Fri, 8 Aug 2025 18:36:18 +0200
+Subject: [PATCH] Add a switch to enable debugging output
+
+---
+ CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7d9ec73..f572f6e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -49,6 +49,12 @@ add_definitions(
+     ${WINRT_DEFINES}
+ )
+ add_compile_options("$<$<CONFIG:DEBUG>:-DANGLE_ENABLE_DEBUG_ANNOTATIONS>")
++
++if (ANGLE_ENABLE_EXTRA_DEBUG)
++    # a simple switch to enable printing of debugging lines
++    add_definitions(-DANGLE_ENABLE_DEBUG_TRACE_TO_DEBUGGER -DANGLE_ENABLE_ASSERTS)
++endif()
++
+ if(WIN32)
+     add_definitions(-DANGLE_IS_WIN)
+ endif()
+-- 
+2.49.0.windows.1
+
