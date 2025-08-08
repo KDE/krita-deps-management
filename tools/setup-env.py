@@ -182,7 +182,11 @@ if arguments.full_krita_env:
 
     runEnvironment = copy.deepcopy(dict(os.environ))
     for key, value in environmentUpdate.items():
-        runEnvironment[key] = value
+        # we do not add the global config override to the Krita's environment,
+        # since it breaks the build (Krita doesn't have the ext_build/ext_install
+        # targets)
+        if key != 'KDECI_GLOBAL_CONFIG_OVERRIDE_PATH':
+            runEnvironment[key] = value
 
     for key, value in environmentAppend.items():
         if key in runEnvironment:
