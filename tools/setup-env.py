@@ -17,7 +17,7 @@ parser.add_argument('-d','--generate-deps-file', action='store_true', help='Gene
 parser.add_argument('--full-krita-env', action='store_true', help='Fetch all deps for Krita and generate the environment (implies -d)')
 parser.add_argument('-o','--output-file', type=str, help='Output file base name for the environment file (.bat suffix is added automatically)', default='base-env')
 parser.add_argument('--android-abi', type=str, choices=['x86_64', 'armeabi-v7a', 'arm64-v8a'], default = None, help='Target Android ABI to use for building')
-parser.add_argument('-b','--branch', type=str, default='master', help='The branch name used for fetching dependencies')
+parser.add_argument('-b','--branch', type=str, default = 'master', help='Branch to use for fetching pacakges')
 arguments = parser.parse_args()
 
 workingDirectory = os.getcwd()
@@ -135,25 +135,32 @@ EnvFileUtils.writeEnvFile(workingDirectory, arguments.output_file,
             environmentAppend=environmentAppend)
 
 if arguments.generate_deps_file:
-    commandToRun = '{python} -s {script} -p -o {outFile} -d {branch} {seedFile}'.format(
-        python = effectivePythonExecutable,
-        script = os.path.join(os.path.dirname(__file__), 'replace-branch-in-seed-file.py'),
-        outFile = os.path.join(workingDirectory, 'branch-corrected-deps.yml'),
-        branch = arguments.branch,
-        seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml'))
+    seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml')
 
-    try:
-        print('## RUNNING BRANCH CORRECTION SCRIPT: {}'.format(commandToRun))
-        subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=os.getcwd())
-    except Exception:
-        print("## Failed to run branch correction script")
-        sys.exit(1)
+    if arguments.branch != 'master':
+        correctedSeedFile = os.path.join(workingDirectory, 'branch-corrected-deps.yml')
+
+        commandToRun = '{python} -s {script} -o {outFile} -d {branch} {seedFile}'.format(
+            python = effectivePythonExecutable,
+            script = os.path.join(os.path.dirname(__file__), 'replace-branch-in-seed-file.py'),
+            outFile = correctedSeedFile,
+            seedFile = seedFile,
+            branch = arguments.branch)
+
+        try:
+            print('## RUNNING BRANCH RENAME SCRIPT: {}'.format(commandToRun))
+            subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=os.getcwd())
+        except Exception:
+            print("## Failed to run branch rename script")
+            sys.exit(1)
+
+        seedFile = correctedSeedFile
 
     commandToRun = '{python} -s {script} -o {outFile} -s {seedFile}'.format(
         python = effectivePythonExecutable,
         script = os.path.join(os.path.dirname(__file__), 'generate-deps-file.py'),
         outFile = os.path.join(workingDirectory, '.kde-ci.yml'),
-        seedFile = os.path.join(workingDirectory, 'branch-corrected-deps.yml'))
+        seedFile = seedFile)
 
     try:
         print('## RUNNING DEPS GENERATION SCRIPT: {}'.format(commandToRun))

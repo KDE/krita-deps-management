@@ -139,6 +139,14 @@ elseif (ANDROID)
   message(STATUS "Host LD_LIBRARY_PATH: ${HOST_ONLY_LD_LIBRARY_PATH}")
   message(STATUS "Host PKG_CONFIG_PATH: ${HOST_ONLY_PKG_CONFIG_PATH}")
 
+  set(PAGE_ALIGNMENT_PATCH_ARG)
+  if (PAGE_ALIGN_16K_LINKER_FLAGS)
+    message(STATUS "Enable 16K page alignment for Qt5")
+    # TODO: disable 16K alignement patch for now
+    # set(PAGE_ALIGNMENT_PATCH_ARG
+    #     COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Force-enable-16K-alignment-on-Android.patch)
+  endif()
+
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
