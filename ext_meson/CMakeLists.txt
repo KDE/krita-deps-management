@@ -16,15 +16,13 @@ if (WIN32)
         URL_HASH SHA256=4d40d63aa748a9c139cc41ab9bffe43edd113c5639d78bde81544ca955aea890
 
         CONFIGURE_COMMAND ""
-
-        BUILD_COMMAND ${CMAKE_COMMAND} -E env 
-            PYTHONPATH=${_krita_pythonpath}
-            ${Python_EXECUTABLE} <SOURCE_DIR>/setup.py build -j ${SUBMAKE_JOBS}
+        BUILD_COMMAND ""
 
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}
-            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                        -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${_meson_prefix} --optimize=1  --install-scripts=${_meson_prefix}\\bin --install-lib=${_meson_prefix}\\lib\\site-packages
+            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR}  -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
+            COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_INSTALL_SCHEME}
 
         BUILD_IN_SOURCE 1
 
@@ -39,21 +37,14 @@ elseif(NOT CMAKE_CROSSCOMPILING)
         URL https://github.com/mesonbuild/meson/releases/download/1.7.2/meson-1.7.2.tar.gz
         URL_HASH SHA256=4d40d63aa748a9c139cc41ab9bffe43edd113c5639d78bde81544ca955aea890
 
-        CONFIGURE_COMMAND chmod u+x <SOURCE_DIR>/setup.py
-
-        BUILD_COMMAND ${CMAKE_COMMAND} -E env 
-            PYTHONPATH=${_krita_pythonpath}
-            SETUPTOOLS_USE_DISTUTILS=local
-            ${Python_EXECUTABLE} <SOURCE_DIR>/setup.py build -j ${SUBMAKE_JOBS}
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
 
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}
-            SETUPTOOLS_USE_DISTUTILS=local
-            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT="<SOURCE_DIR>/setup.py"
-                -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${_meson_prefix} --optimize=1 --install-scripts=${_meson_prefix}/bin
+            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR}  -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
             COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
-
-
 
         BUILD_IN_SOURCE 1
 
