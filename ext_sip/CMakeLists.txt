@@ -33,10 +33,6 @@ elseif (WIN32)
         message(FATAL_ERROR "sitecustomize.py file is not found! Make sure you have installed necessary Krita's python package (expected location: ${EXTPREFIX}/lib/site-packages/sitecustomize.py)")
     endif()
 
-    if (NOT EXISTS "${EXTPREFIX}/lib/site-packages/_distutils_system_mod.py")
-        message(FATAL_ERROR "_distutils_system_mod.py file is not found! Make sure you have installed necessary Krita's python package (expected location: ${EXTPREFIX}/lib/site-packages/_distutils_system_mod.py)")
-    endif()
-
     if (NOT EXISTS "${EXTPREFIX}/bin/python3.dll")
         message(FATAL_ERROR "python3.dll file is not found! Make sure you have installed necessary Krita's python package (expected location: ${EXTPREFIX}/bin/python3.dll)")
     endif()
