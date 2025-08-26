@@ -4,7 +4,7 @@ variables:
   BRANCH_NAME_WINDOWS: 'master'
   BRANCH_NAME_LINUX: 'master'
   BRANCH_NAME_MACOS: 'master'
-  BRANCH_NAME_ANDROID: 'transition.now/android-35'
+  BRANCH_NAME_ANDROID: 'master'
 
 stages:
   - Dependencies
