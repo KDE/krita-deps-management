@@ -63,7 +63,13 @@
 
    * https://invent.kde.org/dkazakov/krita-docker-env/-/blob/master/bin/base-image.conf
 
-9) Remove all the "branched" packages from the corresponding repository
+9) [krita-ci-utils] Add the deprecated branch into the list of branches to remove in
+   section `branchesToRemove` of `package-registry-cleanup.py` script:
+
+   * https://invent.kde.org/packaging/krita-ci-utilities/-/blob/master/package-registry-cleanup.py?ref_type=heads#L32
+
+   The script will remove the branch on the following sunday night. You can check that by checking
+   packages in the repository:
 
     * the packages will have suffix `-transition-win-clang18`
     * link: https://invent.kde.org/teams/ci-artifacts/krita-windows/-/packages
