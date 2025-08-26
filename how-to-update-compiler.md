@@ -58,9 +58,14 @@
 
 7) [krita] Make sure Krita compiles fine with the new set of deps
 
-8) Remove all the "branched" packages from the corresponding repository
+8) [krita-docker-env] [Linux] If Linux docker image has changed, then update the link to that in 
+   Krita-docker-env repository in `base-image.conf` file:
+
+   * https://invent.kde.org/dkazakov/krita-docker-env/-/blob/master/bin/base-image.conf
+
+9) Remove all the "branched" packages from the corresponding repository
 
     * the packages will have suffix `-transition-win-clang18`
     * link: https://invent.kde.org/teams/ci-artifacts/krita-windows/-/packages
 
-9) Make a sysadmin ticket to remove the old docker image
+10) Make a sysadmin ticket to remove the old docker image
