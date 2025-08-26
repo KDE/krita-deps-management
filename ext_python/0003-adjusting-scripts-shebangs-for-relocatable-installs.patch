@@ -4,23 +4,9 @@ Date: Fri, 5 Apr 2024 21:57:41 -0600
 Subject: [PATCH] adjusting scripts shebangs for relocatable installs
 
 ---
- Lib/distutils/command/build_scripts.py | 2 +-
  Misc/python-config.in                  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Lib/distutils/command/build_scripts.py b/Lib/distutils/command/build_scripts.py
-index ccc70e6..845ed2e 100644
---- a/Lib/distutils/command/build_scripts.py
-+++ b/Lib/distutils/command/build_scripts.py
-@@ -104,7 +104,7 @@ class build_scripts(Command):
-                            "python%s%s" % (sysconfig.get_config_var("VERSION"),
-                                            sysconfig.get_config_var("EXE")))
-                     executable = os.fsencode(executable)
--                    shebang = b"#!" + executable + post_interp + b"\n"
-+                    shebang = b"#!" + b"/usr/bin/env python3" + b"\n"
-                     # Python parser starts to read a script using UTF-8 until
-                     # it gets a #coding:xxx cookie. The shebang has to be the
-                     # first line of a file, the #coding:xxx cookie cannot be
 diff --git a/Misc/python-config.in b/Misc/python-config.in
 index ebd99da..54f3f59 100644
 --- a/Misc/python-config.in
