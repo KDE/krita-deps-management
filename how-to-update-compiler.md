@@ -18,12 +18,6 @@
 
     * use `BRANCH_NAME_LINUX` or `BRANCH_NAME_ANDROID` if you change stuff for these platforms as well
 
-4) Change the branch name of `krita-deps-management` repository (add `-b transition.now/win-clang18`):
-
-    ```bash
-    git clone https://invent.kde.org/packaging/krita-deps-management.git -b transition.now/win-clang18 krita-deps-management --depth=1
-    ```
-
 5) Change the `image` tag for the corresponding job in `.gitlab-ci.yml` to point to the new docker image
 
     * again, we don't use docker tags, only image names; so the image will always point to `:latest`
@@ -35,12 +29,18 @@
 
    Now all your packages are available for consumption by Krita using normal routines using the new branch name.
 
-8) Create a Krita branch with the same name (i.e. `transition.now/win-clang18`)
+8) [krita] Create a Krita branch with the same name (i.e. `transition.now/win-clang18`)
 
-9) Replace the value of `DEPS_BRANCH_NAME_WINDOWS` in `.gitlab-ci.yml` in Krita's repository with the name of
+9) [krita] Replace the value of `DEPS_BRANCH_NAME_WINDOWS` in `.gitlab-ci.yml` in Krita's repository with the name of
    your new dependencies branch
 
-10) Make sure Krita compiles correctly with the new set of dependencies
+10) [krita] Replace the value of `DEPS_REPO_BRANCH_NAME_WINDOWS` in `.gitlab-ci.yml` in Krita's repository with the name of
+   your new dependencies branch, if your changes also affect files used by Krita itself, like `krita-deps.yml` or toolchain
+   files.
+
+11) [krita] Change the `image` tag for the corresponding job in `.gitlab-ci.yml` to point to the new docker image
+
+10) [krita] Make sure Krita compiles correctly with the new set of dependencies
 
 ## Deprecation of the old compiler/environment
 
@@ -52,11 +52,7 @@
 
 4) [krita] Replace `DEPS_BRANCH_NAME_WINDOWS` back to `master` in the transition branch
 
-5) [krita] Remove a custom branch of `krita-deps-management` repository (remove `-b transition.now/win-clang18`):
-
-    ```bash
-        git clone https://invent.kde.org/packaging/krita-deps-management.git krita-deps-management --depth=1
-    ```
+5) [krita] Replace `DEPS_REPO_BRANCH_NAME_WINDOWS` back to `master` in the transition branch
 
 6) [krita] Merge the transition branch into master
 
