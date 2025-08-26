@@ -12,19 +12,16 @@ message (STATUS "python executable: ${Python_EXECUTABLE}")
 if(UNIX)
     ExternalProject_Add( ext_sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://pypi.python.org/packages/source/s/sip/sip-6.6.2.tar.gz
-        URL_HASH SHA256=0e3efac1c5dfd8e525ae57140927df26993e13f58b89d1577c314f4105bfd90d
+        URL https://files.pythonhosted.org/packages/62/9a/78122735697dbfc6c1db363627309eb0da7e44d8c05ba017b08666530586/sip-6.10.0.tar.gz
+        URL_HASH SHA256=fa0515697d4c98dbe04d9e898d816de1427e5b9ae5d0e152169109fd21f5d29c
 
         CONFIGURE_COMMAND ""
-
-        BUILD_COMMAND ${CMAKE_COMMAND} -E env 
-            "PYTHONPATH=${KRITA_PYTHONPATH}"
-            ${Python_EXECUTABLE} <SOURCE_DIR>/setup.py build -j ${SUBMAKE_JOBS}
+        BUILD_COMMAND ""
 
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
-            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${EXTPREFIX} --optimize=1
+            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
             COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
 
         BUILD_IN_SOURCE 1
@@ -32,47 +29,12 @@ if(UNIX)
         UPDATE_COMMAND ""
     )
 elseif (WIN32)
-    if(MINGW)
-        set(_compiler -c mingw32)
-    elseif(MSVC)
-        set(_compiler -c msvc)
-    endif()
-
     if (NOT EXISTS "${EXTPREFIX}/lib/site-packages/sitecustomize.py")
         message(FATAL_ERROR "sitecustomize.py file is not found! Make sure you have installed necessary Krita's python package (expected location: ${EXTPREFIX}/lib/site-packages/sitecustomize.py)")
     endif()
 
     if (NOT EXISTS "${EXTPREFIX}/bin/python3.dll")
         message(FATAL_ERROR "python3.dll file is not found! Make sure you have installed necessary Krita's python package (expected location: ${EXTPREFIX}/bin/python3.dll)")
-    endif()
-
-    #
-    # On Windows we don't install/build Python ourselves, hence we should make sure that the
-    # user installed all the necessary tools in advance
-    #
-    execute_process(
-        COMMAND ${CMAKE_COMMAND} -E env 
-            PYTHONPATH=${_krita_pythonpath}
-                ${Python_EXECUTABLE} -m pip show setuptools
-        RESULT_VARIABLE PIP_RESULT
-        OUTPUT_VARIABLE PIP_OUTPUT
-        ECHO_OUTPUT_VARIABLE
-        COMMAND_ECHO STDOUT
-        )
-
-    if (NOT PIP_RESULT EQUAL 0)
-        message(FATAL_ERROR "failed to fetch information about setuptools version")
-    endif()
-
-    if (${PIP_OUTPUT} MATCHES "Version: ([0-9\.]+)") 
-        set(SETUPTOOLS_VERSION ${CMAKE_MATCH_1})
-        message(STATUS "Found \'setuptools\' python module: ${SETUPTOOLS_VERSION}")
-    else()
-        message(FATAL_ERROR "failed to parse setuptools version returned by pip")
-    endif()
-
-    if (${SETUPTOOLS_VERSION} VERSION_LESS "59.8.0")
-        message(FATAL_ERROR "setuptools python module is too old!")
     endif()
 
     krita_to_native_path("${EXTPREFIX}" _sip_prefix)
@@ -82,26 +44,20 @@ elseif (WIN32)
 
     ExternalProject_Add( ext_sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://pypi.python.org/packages/source/s/sip/sip-6.6.2.tar.gz
-        URL_HASH SHA256=0e3efac1c5dfd8e525ae57140927df26993e13f58b89d1577c314f4105bfd90d
+        URL https://files.pythonhosted.org/packages/62/9a/78122735697dbfc6c1db363627309eb0da7e44d8c05ba017b08666530586/sip-6.10.0.tar.gz
+        URL_HASH SHA256=fa0515697d4c98dbe04d9e898d816de1427e5b9ae5d0e152169109fd21f5d29c
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-distinfo.py-to-support-prefix-option-on-Windows-.patch
 
         CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
 
-        BUILD_COMMAND ${CMAKE_COMMAND} -E env 
-            PYTHONPATH=${_krita_pythonpath}
-            SETUPTOOLS_USE_DISTUTILS=local
-            ${Python_EXECUTABLE} <SOURCE_DIR>/setup.py build -j ${SUBMAKE_JOBS} ${_compiler}
-
-        # HACK: Create lib\site-packages before installing
-        # See e.g. https://access.redhat.com/errata/RHBA-2020:4437
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory ${EXTPREFIX}/lib/site-packages
-            COMMAND ${CMAKE_COMMAND} -E env    
+        INSTALL_COMMAND
+            ${CMAKE_COMMAND} -E env
                 PYTHONPATH=${_krita_pythonpath}
-                SETUPTOOLS_USE_DISTUTILS=local
-                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                    -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${_sip_prefix} --optimize=1  --install-scripts=${_sip_prefix}\\bin --install-lib=${_sip_prefix}\\lib\\site-packages
+                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
+            COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_INSTALL_SCHEME}
 
         BUILD_IN_SOURCE 1
 
