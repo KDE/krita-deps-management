@@ -1,4 +1,5 @@
 packaging
 ply
-toml
+tomli
+wheel
 -r requirements-setuptools.txt

@@ -10,26 +10,16 @@ include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 if(UNIX)
     ExternalProject_Add( ext_pyqt5-sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://pypi.python.org/packages/source/P/PyQt5-sip/PyQt5_sip-12.11.0.tar.gz
-        URL_HASH SHA256=b4710fd85b57edef716cc55fae45bfd5bfac6fc7ba91036f1dcc3f331ca0eb39
+        URL https://files.pythonhosted.org/packages/01/79/086b50414bafa71df494398ad277d72e58229a3d1c1b1c766d12b14c2e6d/pyqt5_sip-12.17.0.tar.gz
+        URL_HASH SHA256=682dadcdbd2239af9fdc0c0628e2776b820e128bec88b49b8d692fe682f90b4f
 
         CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
 
-        BUILD_COMMAND ${CMAKE_COMMAND} -E env 
-            "PYTHONPATH=${KRITA_PYTHONPATH}"
-            ${Python_EXECUTABLE} <SOURCE_DIR>/setup.py build ${_compiler} -j ${SUBMAKE_JOBS}
-
-        # Here we need a flat-egg installation, otherwise the egg is deployed
-        # inside its own directory in site-packages.
-        # So we set as root our 3rdparty layout, and a sufficiently dud prefix.
-        # See https://github.com/msys2/MINGW-packages/blob/8a4066591cf1e023971526c55bf2d5fe0c7aa84a/mingw-w64-pyqt5-sip/PKGBUILD
-        # INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
-        #     "PYTHONPATH=${KRITA_PYTHONPATH}"
-        #     ${Python_EXECUTABLE} <SOURCE_DIR>/setup.py install --prefix "." --root=${EXTPREFIX} --optimize=1
         INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
-            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${EXTPREFIX} --optimize=1
+            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
             COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_SHEBANG_LINES}
 
         BUILD_IN_SOURCE 1
@@ -37,14 +27,6 @@ if(UNIX)
         UPDATE_COMMAND ""
     )
 elseif(WIN32)
-    if(MINGW)
-        set(_compiler -c mingw32)
-        set(_make_command mingw32-make)
-    elseif(MSVC)
-        set(_compiler -c msvc)
-        set(_make_command jom)
-    endif()
-
     krita_to_native_path("${EXTPREFIX}" _pyqt_prefix)
     krita_to_native_path("${KRITA_PYTHONPATH}" _krita_pythonpath)
     string(TOLOWER ${_krita_pythonpath} _krita_pythonpath)
@@ -52,32 +34,22 @@ elseif(WIN32)
 
     ExternalProject_Add( ext_pyqt5-sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://pypi.python.org/packages/source/P/PyQt5-sip/PyQt5_sip-12.11.0.tar.gz
-        URL_HASH SHA256=b4710fd85b57edef716cc55fae45bfd5bfac6fc7ba91036f1dcc3f331ca0eb39
-
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-MinGW-Distutils-support-hack.patch
+        URL https://files.pythonhosted.org/packages/01/79/086b50414bafa71df494398ad277d72e58229a3d1c1b1c766d12b14c2e6d/pyqt5_sip-12.17.0.tar.gz
+        URL_HASH SHA256=682dadcdbd2239af9fdc0c0628e2776b820e128bec88b49b8d692fe682f90b4f
 
         CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
 
-        BUILD_COMMAND ${CMAKE_COMMAND} -E env 
-            PYTHONPATH=${_krita_pythonpath}
-            SETUPTOOLS_USE_DISTUTILS=local
-            ${Python_EXECUTABLE} <SOURCE_DIR>/setup.py build ${_compiler} -j ${SUBMAKE_JOBS}
-
-        # Here we need a flat-egg installation, otherwise the egg is deployed
-        # inside its own directory in site-packages.
-        # So we set as root our 3rdparty layout, and a sufficiently dud prefix.
-        # See https://github.com/msys2/MINGW-packages/blob/8a4066591cf1e023971526c55bf2d5fe0c7aa84a/mingw-w64-pyqt5-sip/PKGBUILD
-        # INSTALL_COMMAND ${CMAKE_COMMAND} -E env 
-        #     PYTHONPATH=${_krita_pythonpath}
-        #     SETUPTOOLS_USE_DISTUTILS=local
-        #     ${Python_EXECUTABLE} <SOURCE_DIR>/setup.py install --skip-build --prefix "." --root=${_pyqt_prefix} --optimize=1 --install-scripts=${_pyqt_prefix}\\bin
-
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E env
-            PYTHONPATH=${_krita_pythonpath}
-            SETUPTOOLS_USE_DISTUTILS=local
-            ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE} -DSCRIPT=<SOURCE_DIR>/setup.py
-                -P ${KRITA_CI_RUN_SETUP_PY_WITH_DESTDIR} -- --skip-build --prefix=${_pyqt_prefix} --optimize=1  --install-scripts=${_pyqt_prefix}\\bin --install-lib=${_pyqt_prefix}\\lib\\site-packages
+        INSTALL_COMMAND 
+            ${CMAKE_COMMAND} -E env
+                PYTHONPATH=${_krita_pythonpath}
+                # setuptools/_distutils/ccompiler.py expects MSVC to be the default compiler on
+                # Windows, so we should pass a separate config file to actually switch it to
+                # MinGW's one
+                DIST_EXTRA_CONFIG=${CMAKE_CURRENT_SOURCE_DIR}/extra_distutils_mingw32_config.cfg
+                ${CMAKE_COMMAND} -DPython_EXECUTABLE=${Python_EXECUTABLE}
+                    -P ${KRITA_CI_RUN_PIP_INSTALL_WITH_DESTDIR} -- <SOURCE_DIR> --prefix ${EXTPREFIX} --ignore-installed --verbose --no-deps --no-build-isolation
+            COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_FIX_PYTHON_INSTALL_SCHEME}
 
         BUILD_IN_SOURCE 1
 
