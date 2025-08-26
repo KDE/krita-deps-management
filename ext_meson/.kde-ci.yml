@@ -2,3 +2,4 @@ Dependencies:
 - 'on': ['Linux', 'MacOS']
   'require':
     'base/python': '@same'
+    'base/python-modules': '@same'
