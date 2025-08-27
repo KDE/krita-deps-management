@@ -69,8 +69,6 @@ elseif(WIN32)
         URL https://files.pythonhosted.org/packages/0e/07/c9ed0bd428df6f87183fca565a79fee19fa7c88c7f00a7f011ab4379e77a/PyQt5-5.15.11.tar.gz
         URL_HASH SHA256=fda45743ebb4a27b4b1a51c6d8ef455c4c1b5d610c90d2934c7802b5c1557c52
 
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-Qt-composite-module-lacking-a-platform-tag-on-ma.patch
-
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}
             ${EXTPREFIX}/bin/sip-build --confirm-license --no-designer-plugin --no-qml-plugin --no-dbus-python --no-tools --no-make --target-dir ${EXTPREFIX}\\lib\\site-packages --jobs ${SUBMAKE_JOBS} ${_extra_pyqt_config}
