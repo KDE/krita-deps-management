@@ -1,9 +1,9 @@
 ## Overall seed job template for all jobs to make use of
 
 variables:
-  BRANCH_NAME_WINDOWS: 'transition.now/qt6'
-  BRANCH_NAME_LINUX: 'transition.now/qt6'
-  BRANCH_NAME_MACOS: 'transition.now/qt6'
+  BRANCH_NAME_WINDOWS: 'transition.now/python-313-qt6'
+  BRANCH_NAME_LINUX: 'transition.now/python-313-qt6'
+  BRANCH_NAME_MACOS: 'transition.now/python-313-qt6'
   BRANCH_NAME_ANDROID: 'transition.now/qt6'
 
 stages:
