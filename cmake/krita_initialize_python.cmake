@@ -59,7 +59,7 @@ if (WIN32)
         endif ()
     endif ()
 elseif(UNIX)
-    set(PYTHON_VERSION "3.10")
+    set(PYTHON_VERSION "3.13")
 
     set(KRITA_PYTHONPATH "${EXTPREFIX}/lib/python${PYTHON_VERSION}/site-packages")
     set(Python_EXECUTABLE "${EXTPREFIX}/bin/python3")
