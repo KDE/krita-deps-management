@@ -67,7 +67,7 @@ stages:
       - "./**/meson-private/**/*"
 
 .windows_qt515:
-  image: storage.kde.org/vm-images/krita-windows-clang18
+  image: storage.kde.org/vm-images/krita-windows-clang18-py313
   tags:
     - VM
     - amd64
