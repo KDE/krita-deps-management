@@ -2,7 +2,7 @@ PostInstallScripts:
     fix-pcfiles: ../tools/make_pkgconfig_files_relocatable.py
 
 Options:
-  use-ccache: True
+  use-ccache: False
   run-tests: False
   build-tests: False
   run-cppcheck: False
