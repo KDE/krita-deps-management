@@ -6,7 +6,7 @@ endif()
 project(ext_qt)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "65e0d54be09e36d50fae9a76ec2c4ce0c3858bc1")
+set(QT_GIT_TAG "4eabbfbbcfc6bb0ab1045672d18c836cb7040e41")
 
 if (MINGW)
   set(QT_BUILD_COMMAND   mingw32-make -j${SUBMAKE_JOBS})
@@ -99,7 +99,7 @@ if (WIN32)
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_REPOSITORY https://github.com/dimula73/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtwinextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
@@ -151,7 +151,7 @@ elseif (ANDROID)
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_REPOSITORY https://github.com/dimula73/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects qtandroidextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
@@ -262,7 +262,7 @@ elseif (NOT APPLE)
       # replace to avoid refetch on rebuilds
       #SOURCE_DIR ext_qt-prefix/src/ext_qt
 
-      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_REPOSITORY https://github.com/dimula73/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtwayland qtshadertools
@@ -325,7 +325,7 @@ else( APPLE )
     ExternalProject_Add(
       ext_qt
 
-      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_REPOSITORY https://github.com/dimula73/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects qtmacextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
