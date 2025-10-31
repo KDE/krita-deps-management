@@ -6,6 +6,10 @@ variables:
   BRANCH_NAME_MACOS: 'master'
   BRANCH_NAME_ANDROID: 'master'
 
+  VM_IMAGE_NAME_WINDOWS: 'storage.kde.org/vm-images/krita-windows-clang18'
+  VM_IMAGE_NAME_LINUX: 'storage.kde.org/vm-images/krita-appimage-2204'
+  VM_IMAGE_NAME_ANDROID: 'storage.kde.org/vm-images/krita-android-sdk35-2204'
+
 stages:
   - Dependencies
   - SystemMaintenance
@@ -67,7 +71,7 @@ stages:
       - "./**/meson-private/**/*"
 
 .windows_qt515:
-  image: storage.kde.org/vm-images/krita-windows-clang18
+  image: $VM_IMAGE_NAME_WINDOWS
   tags:
     - VM
     - amd64
@@ -92,7 +96,7 @@ stages:
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_qt515:
-  image: storage.kde.org/vm-images/krita-appimage-2204
+  image: $VM_IMAGE_NAME_LINUX
   tags:
     - VM
     - amd64
@@ -110,7 +114,7 @@ stages:
   interruptible: false
 
 .android_qt515:
-  image: storage.kde.org/vm-images/krita-android-sdk35-2204
+  image: $VM_IMAGE_NAME_ANDROID
   tags:
     - VM
     - amd64
