@@ -10,20 +10,50 @@ all_publish_windows:
   script:
     - python -u tools/replace-branch-in-seed-file.py latest\krita-deps.yml --print --dst-branch $BRANCH_NAME_WINDOWS
     - python -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Windows/Qt5/Shared 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+
+# All publish
+all_publish_windows_dev:
+  stage: Dependencies
+  extends:
+  - .seed_template_auto
+  - .windows_qt515
+  # use large-timeout nodes for full rebuilds
+  tags:
+    - LargeVM
+    - amd64
+  script:
     - python -u tools/replace-branch-in-seed-file.py latest\developer-packages.yml --print --dst-branch $BRANCH_NAME_WINDOWS
     - python -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Windows/Qt5/Shared 2>&1 | Tee-Object -FilePath "seed-packages-win64-dev.log"
+  needs:
+    - job: all_publish_windows 
+      artifacts: false
+
+all_publish_windows_openvino:
+  stage: Dependencies
+  extends:
+  - .seed_template_auto
+  - .windows_qt515
+  # use large-timeout nodes for full rebuilds
+  tags:
+    - LargeVM
+    - amd64
+  script:
     - python -u tools/replace-branch-in-seed-file.py latest\openvino-packages.yml --print --dst-branch $BRANCH_NAME_WINDOWS
     - python -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform Windows/Qt5/Shared 2>&1 | Tee-Object -FilePath "seed-packages-win64-openvino.log"
+  needs:
+    - job: all_publish_windows 
+      artifacts: false
+
+
 
 all_local_cache_windows:
-  extends:
-  - all_publish_windows
-  - .local_cache_mixin
-
+  extends: 
+    - all_publish_windows
+    - .local_cache_mixin
 all_shared_windows:
-  extends:
-  - all_publish_windows
-  - .shared_build_mixin
+  extends: 
+    - all_publish_windows
+    - .shared_build_mixin
 
 custom_publish_windows:
   stage: Dependencies

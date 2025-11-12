@@ -20,11 +20,15 @@ stages:
       when: always
 
 .local_cache_mixin:
+  rules:
+    - when: manual
   variables:
     KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
     KDECI_PUBLISH_TO_CACHE: True
 
 .shared_build_mixin:
+  rules:
+    - when: manual
   variables:
     KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: False
     KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
@@ -34,7 +38,24 @@ stages:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
     - when: manual
+  variables:
+    KDECI_GITLAB_SERVER: https://invent.kde.org/
+    # we need to make sure that the packages of the same batch don't try
+    # to link to each other's build prefix
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
+  before_script:
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
+    - git config --global --add safe.directory $CI_PROJECT_DIR
+
+.seed_template_auto:
+  needs: []
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - when: always
   variables:
     KDECI_GITLAB_SERVER: https://invent.kde.org/
     # we need to make sure that the packages of the same batch don't try
