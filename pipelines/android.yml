@@ -6,10 +6,15 @@
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/krita-deps.yml --print --dst-branch $BRANCH_NAME_ANDROID
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+
+.seed_all_android_dev:
+  stage: Dependencies
+  extends:
+  - .seed_template_auto
+  - .android_qt515
+  script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_ANDROID
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI-dev.log"
-    - python3 -u tools/replace-branch-in-seed-file.py latest/openvino-packages.yml --print --dst-branch $BRANCH_NAME_ANDROID
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI-openvino.log"
 
 
 .seed_dirty_android_base:
@@ -55,16 +60,39 @@ all_publish_android_x86_64:
   extends:
   - .seed_all_android_base
   - .android_x86_64_mixin
+all_publish_android_x86_64_dev:
+  extends:
+  - .seed_all_android_dev
+  - .android_x86_64_mixin
+  needs:
+    - job: all_publish_android_x86_64
+      artifacts: false
 
 all_publish_android_arm64-v8a:
   extends:
   - .seed_all_android_base
   - .android_arm64-v8a_mixin
+all_publish_android_arm64-v8a_dev:
+  extends:
+  - .seed_all_android_dev
+  - .android_arm64-v8a_mixin
+  needs:
+    - job: all_publish_android_arm64-v8a
+      artifacts: false
 
 all_publish_android_armeabi-v7a:
   extends:
   - .seed_all_android_base
   - .android_armeabi-v7a_mixin
+all_publish_android_armeabi-v7a_dev:
+  extends:
+  - .seed_all_android_dev
+  - .android_armeabi-v7a_mixin
+  needs:
+  - job: all_publish_android_armeabi-v7a
+    artifacts: false
+
+
 
 all_shared_android_x86_64:
   extends:

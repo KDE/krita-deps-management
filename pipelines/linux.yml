@@ -1,21 +1,42 @@
 all_publish_linux:
   stage: Dependencies
   extends:
-  - .seed_template
   - .appimage_qt515
+  - .seed_template
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/krita-deps.yml --print --dst-branch $BRANCH_NAME_LINUX
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Linux/Qt5/Shared 2>&1 | tee "seed-packages-linux.log"
+
+all_publish_linux_dev:
+  stage: Dependencies
+  extends:
+  - .appimage_qt515
+  - .seed_template_auto
+  script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_LINUX
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Linux/Qt5/Shared 2>&1 | tee "seed-packages-linux-dev.log"
+  needs:
+    - job: all_publish_linux
+      artifacts: false
+
+all_publish_linux_openvino:
+  stage: Dependencies
+  extends:
+  - .appimage_qt515
+  - .seed_template_auto
+  script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/openvino-packages.yml --print --dst-branch $BRANCH_NAME_LINUX
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform Linux/Qt5/Shared 2>&1 | tee "seed-packages-linux-openvino.log"
+  needs:
+    - job: all_publish_linux
+      artifacts: false
 
+# Local cache
 all_local_cache_linux:
   extends:
   - all_publish_linux
   - .local_cache_mixin
-
+# Shared
 all_shared_linux:
   extends:
   - all_publish_linux
