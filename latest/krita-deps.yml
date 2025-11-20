@@ -147,8 +147,6 @@
 
 - 'on': ['Windows', 'MacOS']
   'require':
-    # on Linux we use meson provided by the distribution
-    "base/meson": "master"
     # on Linux we use meson provided by the distribution, on Android the use
     # of pkgconfig is explicitly prohibited
     "base/pkgconfig": "master"

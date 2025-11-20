@@ -5,3 +5,4 @@ python-gitlab
 packaging
 toml
 ply
+meson
