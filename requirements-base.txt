@@ -235,6 +235,10 @@ lxml==5.4.0 \
     --hash=sha256:fb54f7c6bafaa808f27166569b1511fc42701a7713858dddc08afdde9746849e \
     --hash=sha256:fd3be6481ef54b8cfd0e1e953323b7aa9d9789b94842d0e5b142ef4bb7999539
     # via -r requirements-base.txt.in
+meson==1.9.1 \
+    --hash=sha256:4e076606f2afff7881d195574bddcd8d89286f35a17b4977a216f535dc0c74ac \
+    --hash=sha256:f824ab770c041a202f532f69e114c971918ed2daff7ea56583d80642564598d0
+    # via -r requirements-base.txt.in
 packaging==23.2 \
     --hash=sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5 \
     --hash=sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7

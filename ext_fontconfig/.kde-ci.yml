@@ -9,8 +9,6 @@ Dependencies:
     'base/gperf': '@same'
 - 'on': ['Windows', 'MacOS']
   'require':
-    # on Linux we use meson provided by the distribution
-    'base/meson': '@same'
     'base/pkgconfig': '@same'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
