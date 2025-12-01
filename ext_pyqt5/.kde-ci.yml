@@ -6,8 +6,8 @@ Dependencies:
   'require':
     'base/python': 'krita/5.2'
     'base/qt': 'master'
-    'base/pyqt-builder': 'master'
-    'base/sip': 'master'
+    'base/pyqt-builder': 'krita/5.2'
+    'base/sip': 'krita/5.2'
 - 'on': ['Linux', 'MacOS']
   'require':
     'base/python-modules': 'krita/5.2'

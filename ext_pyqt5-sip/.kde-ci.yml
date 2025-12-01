@@ -5,9 +5,9 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/python': 'krita/5.2'
-    'base/sip': 'master'
+    'base/sip': 'krita/5.2'
     'base/qt': 'master'
-    'base/pyqt5': 'master'
+    'base/pyqt5': 'krita/5.2'
 - 'on': ['Linux', 'MacOS']
   'require':
     'base/python-modules': 'krita/5.2'
