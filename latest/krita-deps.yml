@@ -120,11 +120,11 @@
 
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
-    "base/python": "master"
-    "base/sip": "master"
-    "base/pyqt-builder": "master"
-    "base/pyqt5": "master"
-    "base/pyqt5-sip": "master"
+    "base/python": "krita/5.2"
+    "base/sip": "krita/5.2"
+    "base/pyqt-builder": "krita/5.2"
+    "base/pyqt5": "krita/5.2"
+    "base/pyqt5-sip": "krita/5.2"
     "base/poppler": "master"
 
 - 'on': ['Android']
@@ -157,7 +157,7 @@
 
 - 'on': ['Linux', 'MacOS']
   'require':
-    "base/python-modules": "master"
+    "base/python-modules": "krita/5.2"
 
 - 'on': ['Linux']
   'require':
