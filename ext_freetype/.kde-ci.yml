@@ -11,4 +11,4 @@ Dependencies:
     'base/pkgconfig': 'master'
 - 'on': ['MacOS']
   'require':
-    'base/zlib':  '@same'
+    'base/zlib':  'master'
