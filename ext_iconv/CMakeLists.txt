@@ -6,6 +6,8 @@ endif()
 project(ext_iconv)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
+# NOTE: iconv support is present on Linux as part of GNU libc implementation,
+# so we don't need to build and install it separtely on Linux.
 
 if (WIN32)
 

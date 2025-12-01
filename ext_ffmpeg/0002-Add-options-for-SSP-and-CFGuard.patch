@@ -1,7 +1,7 @@
-From 7aa8faf667f47e3679928fd415aac91f9a1b4e71 Mon Sep 17 00:00:00 2001
+From efc9d71eb3e40d21b2c6e9c633c775a345193c54 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
-Date: Tue, 11 Apr 2023 14:55:10 +0200
-Subject: [PATCH 3/3] Add options for SSP and CFGuard
+Date: Mon, 14 Apr 2025 12:59:22 +0200
+Subject: [PATCH 2/4] Add options for SSP and CFGuard
 
 ---
  meson.build       | 13 +++++++++++++
@@ -9,11 +9,11 @@ Subject: [PATCH 3/3] Add options for SSP and CFGuard
  2 files changed, 15 insertions(+)
 
 diff --git a/meson.build b/meson.build
-index a14241eb45..8e0d2fa713 100644
+index 73e7ded5e1..e205747612 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -464,6 +464,19 @@ types_list = [
-   'struct_v4l2_frmivalenum_discrete',
+@@ -549,6 +549,19 @@ types_list = [
+   'struct_mfxConfigInterface',
  ]
  
 +option_cfguard = get_option('enable-cfguard').require(cc.has_argument('-mguard=cf'), error_message : 'Compiler does not support cfguard')
@@ -33,15 +33,16 @@ index a14241eb45..8e0d2fa713 100644
    add_global_arguments('-DDISABLE_AV_UNINIT_UB=1', language : 'c')
    add_global_arguments('-DDISABLE_AV_UNINIT_UB=1', language : 'cpp')
 diff --git a/meson_options.txt b/meson_options.txt
-index d02877e76c..4452ddce72 100644
+index fd16f3c063..082e9cb32a 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -2203,3 +2203,5 @@ option('inline_asm', type: 'feature', value: 'enabled', description: 'Enable inl
- option('cli', type: 'feature', value: 'disabled')
- option('tests', type : 'feature', value : 'auto', description : 'Build tests', yield : true)
+@@ -2486,3 +2486,5 @@ option('tests', type : 'feature', value : 'auto', description : 'Build tests', y
+ option('large_tests', type : 'feature', value : 'disabled')
+ option('assert_level', type: 'integer', min: 0, max: 2, value: 0)
  option('no_uninit_ub', type: 'boolean', value: false, description: 'Disable UB in av_uninit optimization')
 +option('enable-ssp', type: 'feature', value: 'enabled', description: 'Enable -fstack-protector-strong')
 +option('enable-cfguard', type: 'feature', value: 'auto', description: 'Enable control flow guard')
+\ No newline at end of file
 -- 
-2.40.1.windows.1
+2.25.1
 

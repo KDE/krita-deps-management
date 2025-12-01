@@ -17,6 +17,7 @@ parser.add_argument('-d','--generate-deps-file', action='store_true', help='Gene
 parser.add_argument('--full-krita-env', action='store_true', help='Fetch all deps for Krita and generate the environment (implies -d)')
 parser.add_argument('-o','--output-file', type=str, help='Output file base name for the environment file (.bat suffix is added automatically)', default='base-env')
 parser.add_argument('--android-abi', type=str, choices=['x86_64', 'armeabi-v7a', 'arm64-v8a'], default = None, help='Target Android ABI to use for building')
+parser.add_argument('-b','--branch', type=str, default = 'master', help='Branch to use for fetching pacakges')
 arguments = parser.parse_args()
 
 workingDirectory = os.getcwd()
@@ -61,7 +62,7 @@ environmentUpdate['EXTERNALS_DOWNLOAD_DIR'] = os.path.join(workingDirectory, 'ca
 environmentUpdate['KDECI_GITLAB_SERVER'] = 'https://invent.kde.org/'
 
 if not arguments.android_abi is None:
-    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-android-{}-qt5.15'.format(arguments.android_abi)
+    environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'teams/ci-artifacts/krita-android-{}'.format(arguments.android_abi)
     environmentUpdate['KDECI_ANDROID_ABI'] = arguments.android_abi
     # run-ci-build uses this variable to detect if we are building android target
     # our docker image usually sets this environment variable properly,
@@ -72,17 +73,20 @@ if not arguments.android_abi is None:
     environmentUpdate['KDECI_SKIP_ECM_ANDROID_TOOLCHAIN'] = 'True'
 else:
     if sys.platform == 'win32':
-        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-windows-qt5.15'
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'teams/ci-artifacts/krita-windows'
     elif sys.platform == "darwin":
-        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-macos-qt5.15'
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'teams/ci-artifacts/krita-macos'
     else:
-        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'dkazakov/krita-ci-artifacts-appimage-qt5.15'
+        environmentUpdate['KDECI_PACKAGE_PROJECT'] = 'teams/ci-artifacts/krita-appimage'
 
 environmentUpdate['KDECI_BUILD_TYPE'] = 'Release'
 environmentUpdate['KDECI_COMPRESS_PACKAGES_ON_DOWNLOAD'] = '1'
 environmentUpdate['KDECI_GLOBAL_CONFIG_OVERRIDE_PATH'] = os.path.join(repoBaseDirectory, 'global-config.yml')
 environmentUpdate['KDECI_REPO_METADATA_PATH'] = os.path.join(repoBaseDirectory, 'repo-metadata')
 
+# fake the "protected" state of the branch to allow fetching deps from a custom
+# branch by passing `--branch transition.now/smth` switch to run-ci-build.py
+environmentUpdate['CI_COMMIT_REF_PROTECTED'] = 'true'
 
 if not sharedInstallDirectory is None:
     environmentUpdate['KDECI_SHARED_INSTALL_PATH'] = sharedInstallDirectory
@@ -131,11 +135,32 @@ EnvFileUtils.writeEnvFile(workingDirectory, arguments.output_file,
             environmentAppend=environmentAppend)
 
 if arguments.generate_deps_file:
+    seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml')
+
+    if arguments.branch != 'master':
+        correctedSeedFile = os.path.join(workingDirectory, 'branch-corrected-deps.yml')
+
+        commandToRun = '{python} -s {script} -o {outFile} -d {branch} {seedFile}'.format(
+            python = effectivePythonExecutable,
+            script = os.path.join(os.path.dirname(__file__), 'replace-branch-in-seed-file.py'),
+            outFile = correctedSeedFile,
+            seedFile = seedFile,
+            branch = arguments.branch)
+
+        try:
+            print('## RUNNING BRANCH RENAME SCRIPT: {}'.format(commandToRun))
+            subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=os.getcwd())
+        except Exception:
+            print("## Failed to run branch rename script")
+            sys.exit(1)
+
+        seedFile = correctedSeedFile
+
     commandToRun = '{python} -s {script} -o {outFile} -s {seedFile}'.format(
         python = effectivePythonExecutable,
         script = os.path.join(os.path.dirname(__file__), 'generate-deps-file.py'),
         outFile = os.path.join(workingDirectory, '.kde-ci.yml'),
-        seedFile = os.path.join(os.path.dirname(__file__), '..', 'latest', 'krita-deps.yml'))
+        seedFile = seedFile)
 
     try:
         print('## RUNNING DEPS GENERATION SCRIPT: {}'.format(commandToRun))
@@ -156,14 +181,21 @@ else:
 
 
 if arguments.full_krita_env:
-    commandToRun = '{python} -s {script} --only-env -e env --project krita --branch master --platform {platform}'.format(
+    print(f"*** branch is {arguments.branch}")
+    
+    commandToRun = '{python} -s {script} --only-env -e env --project krita --branch {branch} --platform {platform}'.format(
         python = effectivePythonExecutable,
         script = os.path.join(os.path.dirname(__file__), '..', 'ci-utilities', 'run-ci-build.py'),
-        platform = platformString)
+        platform = platformString,
+        branch = arguments.branch)
 
     runEnvironment = copy.deepcopy(dict(os.environ))
     for key, value in environmentUpdate.items():
-        runEnvironment[key] = value
+        # we do not add the global config override to the Krita's environment,
+        # since it breaks the build (Krita doesn't have the ext_build/ext_install
+        # targets)
+        if key != 'KDECI_GLOBAL_CONFIG_OVERRIDE_PATH':
+            runEnvironment[key] = value
 
     for key, value in environmentAppend.items():
         if key in runEnvironment:

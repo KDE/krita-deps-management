@@ -1,0 +1,57 @@
+From ba85bdaf2a0d0ae2b3e56364951cee3bfcfbc3f0 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Tue, 15 Apr 2025 13:48:17 +0200
+Subject: [PATCH] Add link_language option to all the link targets
+
+It should potentially fix the linking problems on MacOS
+---
+ meson.build | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/meson.build b/meson.build
+index 5d037f1f0c..2fea23906c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3592,6 +3592,7 @@ foreach built_lib : built_libs
+       dependencies: deps,
+       include_directories: common_incs + special_includes,
+       link_with: link_with,
++      link_language: 'c',
+       c_args: c_args,
+       pic: conf.get('pic') == 1,
+       implicit_include_directories : false,
+@@ -3606,6 +3607,7 @@ foreach built_lib : built_libs
+     dependencies: deps,
+     include_directories: common_incs,
+     link_with: link_with,
++    link_language: 'c',
+     c_args: c_args,
+     pic: conf.get('pic') == 1,
+     implicit_include_directories : false,
+@@ -3629,6 +3631,7 @@ foreach built_lib : built_libs
+     include_directories: common_incs,
+     link_with: link_with,
+     link_args: link_args,
++    link_language: 'c',
+     c_args: c_args,
+     pic: conf.get('pic') == 1,
+     vs_module_defs: vs_module_def,
+@@ -3665,6 +3668,7 @@ foreach built_lib : built_libs
+       endforeach
+ 
+       exe = executable('test_@0@_@1@'.format(built_lib[0], test_name), test_sources,
++        link_language: 'c',
+         c_args: c_args,
+         dependencies: test_deps,
+         include_directories: common_incs,
+@@ -3720,6 +3724,7 @@ foreach built_exe : built_exe_list
+   exe = executable(built_exe, sources + [config_h, config_components_h],
+     install: true,
+     dependencies: deps,
++    link_language: 'c',
+     include_directories: common_incs,
+     implicit_include_directories : false,
+     pie: get_option('b_pie') and (conf.get('pic') == 1),
+-- 
+2.25.1
+

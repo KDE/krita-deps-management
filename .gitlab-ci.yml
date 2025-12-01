@@ -6,6 +6,15 @@ variables:
   BRANCH_NAME_MACOS: 'krita/5.2'
   BRANCH_NAME_ANDROID: 'krita/5.2'
 
+  VM_IMAGE_NAME_WINDOWS: 'storage.kde.org/vm-images/krita-windows-clang18-twinpy'
+  VM_IMAGE_NAME_LINUX: 'storage.kde.org/vm-images/krita-appimage-2204'
+  VM_IMAGE_NAME_ANDROID: 'storage.kde.org/vm-images/krita-android-sdk35-2204'
+
+  # The name of python executable that will be used for initializing
+  # the initial virtual envioronment. After venv is initialized, the chosen
+  # python can be addressed via plain 'python' or 'python3'
+  BOOTSTRAP_PYTHON_EXE_WINDOWS: 'C:\tools\Python-3.10\python.exe'
+
 stages:
   - Dependencies
   - SystemMaintenance
@@ -16,11 +25,15 @@ stages:
       when: always
 
 .local_cache_mixin:
+  rules:
+    - when: manual
   variables:
     KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
     KDECI_PUBLISH_TO_CACHE: True
 
 .shared_build_mixin:
+  rules:
+    - when: manual
   variables:
     KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: False
     KDECI_SHARED_INSTALL_PATH: $CI_PROJECT_DIR/_shared_install
@@ -30,15 +43,28 @@ stages:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
     - when: manual
   variables:
     KDECI_GITLAB_SERVER: https://invent.kde.org/
     # we need to make sure that the packages of the same batch don't try
     # to link to each other's build prefix
     KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
-  before_script:
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
-    - git config --global --add safe.directory $CI_PROJECT_DIR
+
+.seed_template_auto:
+  needs: []
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - when: always
+  variables:
+    KDECI_GITLAB_SERVER: https://invent.kde.org/
+    # we need to make sure that the packages of the same batch don't try
+    # to link to each other's build prefix
+    KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
 
 .log_artifacts_windows:
   artifacts:
@@ -67,55 +93,66 @@ stages:
       - "./**/meson-private/**/*"
 
 .windows_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-windows-builder-clang18:latest
+  image: $VM_IMAGE_NAME_WINDOWS
   tags:
-    - Windows
-  environment: windows-qt5.15
+    - VM
+    - amd64
   extends:
     - .log_artifacts_windows
   variables:
-    KDECI_CC_CACHE: "C:\\Gitlab\\Caches\\krita-windows"
-    KDECI_CACHE_PATH: "C:\\Gitlab\\Artifacts\\krita-windows"
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-windows-qt5.15
-    EXTERNALS_DOWNLOAD_DIR: "C:\\Gitlab\\Artifacts\\krita-windows\\downloads"
+    KDECI_CC_CACHE: "Z:\\krita-windows\\caches"
+    KDECI_CACHE_PATH: "Z:\\krita-windows\\artifacts"
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/krita-windows
+    EXTERNALS_DOWNLOAD_DIR: "Z:\\krita-windows\\downloads"
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
     KDECI_WORKDIR_PATH: "C:\\_"
+    PYTHONUTF8: 1
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
   before_script:
-    - python -m venv venv --upgrade-deps
+    - >
+      & $BOOTSTRAP_PYTHON_EXE_WINDOWS -m venv venv --upgrade-deps
     - . venv\Scripts\Activate.ps1
     - pip install -r requirements.txt
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder:latest
+  image: $VM_IMAGE_NAME_LINUX
   tags:
-    - Linux
-  environment: appimage-qt5.15
+    - VM
+    - amd64
   extends:
     - .log_artifacts_unix
   variables:
-    KDECI_CC_CACHE: /mnt/caches/krita-appimage/
-    KDECI_CACHE_PATH: /mnt/artifacts/krita-appimage/
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-appimage-qt5.15
-    EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads
+    KDECI_CC_CACHE: /mnt/krita-appimage/caches/
+    KDECI_CACHE_PATH: /mnt/krita-appimage/artifacts/
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/krita-appimage
+    EXTERNALS_DOWNLOAD_DIR: /mnt/krita-appimage/downloads
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
+  before_script:
+    - python3 -m venv venv --upgrade-deps
+    - . venv/bin/activate
+    - pip install -r requirements.txt
+    # Reactivate the venv to force it to use pip version of meson
+    - . venv/bin/activate
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
+    - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .android_qt515:
-  image: invent-registry.kde.org/sysadmin/ci-images/krita-android-builder-sdk34:latest
+  image: $VM_IMAGE_NAME_ANDROID
   tags:
-    - Linux
+    - VM
+    - amd64
   extends:
     - .log_artifacts_unix
   variables:
-    EXTERNALS_DOWNLOAD_DIR: /mnt/artifacts/krita-appimage/downloads # reuse appimage caches!
+    EXTERNALS_DOWNLOAD_DIR: /mnt/krita-appimage/artifacts/downloads # reuse appimage caches!
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
     KDECI_BUILD_TYPE: Release
@@ -127,18 +164,26 @@ stages:
 
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
+  before_script:
+    - python3 -m venv venv --upgrade-deps
+    # Venvs can not be stacked
+    - . venv/bin/activate
+    - pip install -r requirements.txt
+    # Ensure that we're using the venv version of dependencies
+    - . venv/bin/activate
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
+    - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .macos_qt515:
   tags:
     - macOS
-  environment: macos-qt5.15
   extends:
     - .log_artifacts_unix
   variables:
     # ccache is not present on macOS
     # KDECI_CC_CACHE: /Users/gitlab/caches/krita-macos/cache
     KDECI_CACHE_PATH: /Users/gitlab/caches/krita-macos/artifacts
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-macos-qt5.15
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/krita-macos
     EXTERNALS_DOWNLOAD_DIR: /Users/gitlab/caches/krita-macos/downloads
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR/global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR/repo-metadata"
@@ -153,7 +198,7 @@ stages:
     - python3 -m venv venv --upgrade-deps
     - . venv/bin/activate
     - pip install -r requirements.txt
-    - git clone https://invent.kde.org/dkazakov/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
     - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1 upstream-ci-utilities
 
     - python3 -u tools/download-macos-tools.py

@@ -6,10 +6,15 @@
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/krita-deps.yml --print --dst-branch $BRANCH_NAME_ANDROID
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+
+.seed_all_android_dev:
+  stage: Dependencies
+  extends:
+  - .seed_template_auto
+  - .android_qt515
+  script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_ANDROID
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI-dev.log"
-    - python3 -u tools/replace-branch-in-seed-file.py latest/openvino-packages.yml --print --dst-branch $BRANCH_NAME_ANDROID
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI-dev.log"
 
 
 .seed_dirty_android_base:
@@ -31,43 +36,63 @@
     - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared --branch $BRANCH_NAME_ANDROID 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
 
 .android_x86_64_mixin:
-  environment: android-x86_64-qt5.15
   variables:
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-x86_64-qt5.15
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/krita-android-x86_64
     KDECI_ANDROID_ABI: x86_64
-    KDECI_CC_CACHE: /mnt/caches/krita-android/x86_64/
-    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/x86_64/
+    KDECI_CC_CACHE: /mnt/krita-android/x86_64/caches/
+    KDECI_CACHE_PATH: /mnt/krita-android/x86_64/artifacts/
 
 .android_arm64-v8a_mixin:
-  environment: android-arm64-v8a-qt5.15
   variables:
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-arm64-v8a-qt5.15
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/krita-android-arm64-v8a
     KDECI_ANDROID_ABI: arm64-v8a
-    KDECI_CC_CACHE: /mnt/caches/krita-android/arm64-v8a/
-    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/arm64-v8a/
+    KDECI_CC_CACHE: /mnt/krita-android/arm64-v8a/caches/
+    KDECI_CACHE_PATH: /mnt/krita-android/arm64-v8a/artifacts/
 
 .android_armeabi-v7a_mixin:
-  environment: android-armeabi-v7a-qt5.15
   variables:
-    KDECI_PACKAGE_PROJECT: dkazakov/krita-ci-artifacts-android-armeabi-v7a-qt5.15
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/krita-android-armeabi-v7a
     KDECI_ANDROID_ABI: armeabi-v7a
-    KDECI_CC_CACHE: /mnt/caches/krita-android/armeabi-v7a/
-    KDECI_CACHE_PATH: /mnt/artifacts/krita-android/armeabi-v7a/
+    KDECI_CC_CACHE: /mnt/krita-android/armeabi-v7a/caches/
+    KDECI_CACHE_PATH: /mnt/krita-android/armeabi-v7a/artifacts/
 
 all_publish_android_x86_64:
   extends:
   - .seed_all_android_base
   - .android_x86_64_mixin
+all_publish_android_x86_64_dev:
+  extends:
+  - .seed_all_android_dev
+  - .android_x86_64_mixin
+  needs:
+    - job: all_publish_android_x86_64
+      artifacts: false
 
 all_publish_android_arm64-v8a:
   extends:
   - .seed_all_android_base
   - .android_arm64-v8a_mixin
+all_publish_android_arm64-v8a_dev:
+  extends:
+  - .seed_all_android_dev
+  - .android_arm64-v8a_mixin
+  needs:
+    - job: all_publish_android_arm64-v8a
+      artifacts: false
 
 all_publish_android_armeabi-v7a:
   extends:
   - .seed_all_android_base
   - .android_armeabi-v7a_mixin
+all_publish_android_armeabi-v7a_dev:
+  extends:
+  - .seed_all_android_dev
+  - .android_armeabi-v7a_mixin
+  needs:
+  - job: all_publish_android_armeabi-v7a
+    artifacts: false
+
+
 
 all_shared_android_x86_64:
   extends:

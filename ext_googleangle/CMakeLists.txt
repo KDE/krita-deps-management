@@ -94,13 +94,22 @@ ExternalProject_Add(
     COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/02-patches_krita/0016-Reduce-flickering-when-resizing-window.patch
     COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/02-patches_krita/0017-Replace-extern-thread_local-to-avoid-GCC-mingw-w64-b.patch
     COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/02-patches_krita/0019-Add-resource-files-for-DLL-identification.patch
+    # A patch that adds a switch for debugging options on Windows (it doesn't enable it itself,
+    # one mast pass ANGLE_ENABLE_EXTRA_DEBUG to Angle's cmake call)
+    COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-a-switch-to-enable-debugging-output.patch
     # Copy headers:
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/angle_commit.h ./
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/angle_commit.h ./src/common/
     # Copy third_party/zlib:
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/src-chromium_zlib ${CMAKE_CURRENT_BINARY_DIR}/src/third_party/zlib
 
-    CMAKE_ARGS -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
+    CMAKE_ARGS
+        -DBUILD_SHARED_LIBS=ON
+        # uncomment to enable debugging output and asserts in Angle
+        # -DANGLE_ENABLE_EXTRA_DEBUG=ON
+        -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
+        -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
+        ${GLOBAL_PROFILE}
     UPDATE_COMMAND ""
 
     SOURCE_DIR src

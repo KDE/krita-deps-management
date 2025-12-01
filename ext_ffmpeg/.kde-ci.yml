@@ -2,6 +2,7 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
+    'base/iconv': '@same' # on Linux and MacOS ffmpeg uses iconv provided by libc
 
 - 'on': ['@all']
   'require':
@@ -20,13 +21,15 @@ Dependencies:
 
 - 'on': ['Windows', 'MacOS']
   'require':
-    # on Linux we use meson provided by the distribution
-    'base/meson': '@same'
     'base/pkgconfig': '@same'
 
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
     'base/lzma': '@same'
+
+- 'on': ['Windows', 'Linux']
+  'require':
+    'ffmpeg/vpl': '@same'
 
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':

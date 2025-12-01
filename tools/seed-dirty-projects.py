@@ -18,6 +18,7 @@ parser.add_argument('--platform', type=str, required=True)
 parser.add_argument('--skip-dependencies-fetch', default=False, action='store_true')
 parser.add_argument('--publish-to-cache', default=False, action='store_true')
 parser.add_argument('--missing-only', default=False, action='store_true')
+parser.add_argument('-n', '--dry-run', default=False, action='store_true')
 
 arguments = parser.parse_args()
 
@@ -149,5 +150,8 @@ if arguments.missing_only:
 
 print('## Run the build for the requested projects: {}'.format(commandToRun))
 
-# Then run it!
-subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=workingDirectory )
+if not arguments.dry_run:
+    # Then run it!
+    subprocess.check_call( commandToRun, stdout=sys.stdout, stderr=sys.stderr, shell=True, cwd=workingDirectory )
+else:
+    print('## skipping due to --dry-run option present...')

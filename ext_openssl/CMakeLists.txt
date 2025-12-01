@@ -47,12 +47,20 @@ if (WIN32)
         )
     endif(MSVC)
 elseif (ANDROID)
+    set(PAGE_ALIGNMENT_ENV_ARG)
+    if (PAGE_ALIGN_16K_LINKER_FLAGS)
+        message(STATUS "Enable 16K page alignment for OpenSSL")
+        set(PAGE_ALIGNMENT_ENV_ARG
+            LDFLAGS=${PAGE_ALIGN_16K_LINKER_FLAGS})
+    endif()
+
     ExternalProject_Add( ext_openssl
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         URL https://www.openssl.org/source/openssl-1.1.1m.tar.gz
         URL_HASH SHA256=f89199be8b23ca45fc7cb9f1d8d3ee67312318286ad030f5316aca6462db6c96
 
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env
+            ${PAGE_ALIGNMENT_ENV_ARG}
             ANDROID_NDK_HOME=${CMAKE_ANDROID_NDK}
             ANDROID_NDK=${CMAKE_ANDROID_NDK}
             PATH=${ANDROID_TOOLCHAIN_ROOT}/bin/:$ENV{PATH}

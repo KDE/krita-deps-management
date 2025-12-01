@@ -1,4 +1,0 @@
-Dependencies:
-- 'on': ['Windows']
-  'require':
-    'base/meson': '@same'

@@ -10,19 +10,13 @@
 
 2) Create a branch in `krita-deps-management` repository for the transitionary builds
 
-    * the branch should start with `transition/*` prefix, e.g. `transition/win-clang18`
-    * all branches with `transition/*` prefix are protected and, hence, are allowed to
+    * the branch should start with `transition.now/*` prefix, e.g. `transition.now/win-clang18`
+    * all branches with `transition.now/*` prefix are protected and, hence, are allowed to
       publish the packages into repository
 
 3) Replace the value of `BRANCH_NAME_WINDOWS` in `.gitlab-ci.yml` with the name of your new branch
 
     * use `BRANCH_NAME_LINUX` or `BRANCH_NAME_ANDROID` if you change stuff for these platforms as well
-
-4) Change the branch name of `krita-deps-management` repository (add `-b transition/win-clang18`):
-
-    ```bash
-    git clone https://invent.kde.org/dkazakov/krita-deps-management.git -b transition/win-clang18 krita-deps-management --depth=1
-    ```
 
 5) Change the `image` tag for the corresponding job in `.gitlab-ci.yml` to point to the new docker image
 
@@ -35,12 +29,18 @@
 
    Now all your packages are available for consumption by Krita using normal routines using the new branch name.
 
-8) Create a Krita branch with the same name (i.e. `transition/win-clang18`)
+8) [krita] Create a Krita branch with the same name (i.e. `transition.now/win-clang18`)
 
-9) Replace the value of `DEPS_BRANCH_NAME_WINDOWS` in `.gitlab-ci.yml` in Krita's repository with the name of
+9) [krita] Replace the value of `DEPS_BRANCH_NAME_WINDOWS` in `.gitlab-ci.yml` in Krita's repository with the name of
    your new dependencies branch
 
-10) Make sure Krita compiles correctly with the new set of dependencies
+10) [krita] Replace the value of `DEPS_REPO_BRANCH_NAME_WINDOWS` in `.gitlab-ci.yml` in Krita's repository with the name of
+   your new dependencies branch, if your changes also affect files used by Krita itself, like `krita-deps.yml` or toolchain
+   files.
+
+11) [krita] Change the `image` tag for the corresponding job in `.gitlab-ci.yml` to point to the new docker image
+
+10) [krita] Make sure Krita compiles correctly with the new set of dependencies
 
 ## Deprecation of the old compiler/environment
 
@@ -52,19 +52,26 @@
 
 4) [krita] Replace `DEPS_BRANCH_NAME_WINDOWS` back to `master` in the transition branch
 
-5) [krita] Remove a custom branch of `krita-deps-management` repository (remove `-b transition/win-clang18`):
-
-    ```bash
-        git clone https://invent.kde.org/dkazakov/krita-deps-management.git krita-deps-management --depth=1
-    ```
+5) [krita] Replace `DEPS_REPO_BRANCH_NAME_WINDOWS` back to `master` in the transition branch
 
 6) [krita] Merge the transition branch into master
 
 7) [krita] Make sure Krita compiles fine with the new set of deps
 
-8) Remove all the "branched" packages from the corresponding repository
+8) [krita-docker-env] [Linux] If Linux docker image has changed, then update the link to that in 
+   Krita-docker-env repository in `base-image.conf` file:
+
+   * https://invent.kde.org/dkazakov/krita-docker-env/-/blob/master/bin/base-image.conf
+
+9) [krita-ci-utils] Add the deprecated branch into the list of branches to remove in
+   section `branchesToRemove` of `package-registry-cleanup.py` script:
+
+   * https://invent.kde.org/packaging/krita-ci-utilities/-/blob/master/package-registry-cleanup.py?ref_type=heads#L32
+
+   The script will remove the branch on the following sunday night. You can check that by checking
+   packages in the repository:
 
     * the packages will have suffix `-transition-win-clang18`
-    * link: https://invent.kde.org/dkazakov/krita-ci-artifacts-windows-qt5.15/-/packages
+    * link: https://invent.kde.org/teams/ci-artifacts/krita-windows/-/packages
 
-9) Make a sysadmin ticket to remove the old docker image
+10) Make a sysadmin ticket to remove the old docker image
