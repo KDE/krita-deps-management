@@ -38,7 +38,7 @@
    your new dependencies branch, if your changes also affect files used by Krita itself, like `krita-deps.yml` or toolchain
    files.
 
-11) [krita] Change the `image` tag for the corresponding job in `.gitlab-ci.yml` to point to the new docker image
+11) [krita] Change the value of `VM_IMAGE_NAME_WINDOWS` in `.gitlab-ci.yml` to point to the new docker image
 
 10) [krita] Make sure Krita compiles correctly with the new set of dependencies
 
