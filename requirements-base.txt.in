@@ -5,4 +5,6 @@ python-gitlab
 packaging
 toml
 ply
+tomli
+wheel
 meson

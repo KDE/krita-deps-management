@@ -1,7 +1,4 @@
 Dependencies:
-- 'on': ['Windows']
-  'require':
-    'base/patch': '@same'
 - 'on': ['@all']
   'require':
     'base/python': '@same'
