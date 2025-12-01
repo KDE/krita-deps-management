@@ -1,9 +1,9 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'heif/libaom': '@same'
-    'heif/libde265': '@same'
-    'heif/libx265': '@same'
+    'heif/libaom': 'master'
+    'heif/libde265': 'master'
+    'heif/libx265': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'

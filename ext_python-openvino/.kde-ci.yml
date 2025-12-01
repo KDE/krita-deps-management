@@ -1,4 +1,4 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/python': '@same'
+    'base/python': 'krita/5.2'

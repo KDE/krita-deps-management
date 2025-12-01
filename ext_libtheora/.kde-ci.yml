@@ -1,12 +1,12 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['@all']
   'require':
-    'ffmpeg/libogg': '@same'
-    'ffmpeg/libvorbis': '@same'
-    'base/png': '@same'
+    'ffmpeg/libogg': 'master'
+    'ffmpeg/libvorbis': 'master'
+    'base/png': 'master'
 - 'on': ['Windows', 'MacOS']
   'require':
-    'base/pkgconfig': '@same'
+    'base/pkgconfig': 'master'

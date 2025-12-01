@@ -1,7 +1,7 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/zlib': '@same'
+    'base/zlib': 'master'

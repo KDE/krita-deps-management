@@ -1,7 +1,7 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['@all']
   'require':
-    'ffmpeg/libogg': '@same'
+    'ffmpeg/libogg': 'master'

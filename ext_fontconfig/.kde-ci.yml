@@ -1,14 +1,14 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/freetype': '@same'
-    'base/expat': '@same'
+    'base/freetype': 'master'
+    'base/expat': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['Windows', 'MacOS']
   'require':
-    'base/pkgconfig': '@same'
+    'base/pkgconfig': 'master'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/gettext': '@same'
+    'base/gettext': 'master'

@@ -1,14 +1,14 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/png': '@same'
-    'base/icu': '@same'
+    'base/png': 'master'
+    'base/icu': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['Windows', 'MacOS']
   'require':
-    'base/pkgconfig': '@same'
+    'base/pkgconfig': 'master'
 - 'on': ['MacOS']
   'require':
     'base/zlib':  '@same'

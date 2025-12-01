@@ -1,15 +1,15 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/qt': '@same'
-    'base/extra_cmake_modules': '@same'
+    'base/qt': 'master'
+    'base/extra_cmake_modules': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['MacOS', 'Windows', 'Android']
   'require':
-    'base/gettext': '@same'
+    'base/gettext': 'master'
 - 'on': ['Android']
   'require':
-    'base/libintl-lite': '@same'
+    'base/libintl-lite': 'master'
 #TODO: check if it actuall requires base/python

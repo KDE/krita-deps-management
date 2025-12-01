@@ -1,29 +1,29 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/icu': '@same'
-    'base/freetype': '@same'
-    'base/png': '@same'
-    'base/jpeg': '@same'
+    'base/icu': 'master'
+    'base/freetype': 'master'
+    'base/png': 'master'
+    'base/jpeg': 'master'
 - 'on': ['Linux']
   'require':
-    'base/tiff': '@same' # can be fetched with pkgconfig only, so not on Windows
-    # 'base/webp': '@same' # can be fetched with pkgconfig only, so not on Windows
+    'base/tiff': 'master' # can be fetched with pkgconfig only, so not on Windows
+    # 'base/webp': 'master' # can be fetched with pkgconfig only, so not on Windows
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
-    'base/googleangle': '@same'
-    'base/strawberryperl': '@same'
-#    'base/jom': '@same' # only for msvc builds
+    'base/patch': 'master'
+    'base/googleangle': 'master'
+    'base/strawberryperl': 'master'
+#    'base/jom': 'master' # only for msvc builds
 - 'on': ['Windows', 'MacOS']
   'require':
-    'base/openssl': '@same' # TODO: do we actually need that on MacOS?
-#    'base/pkgconfig': '@same' # supported on linux only
+    'base/openssl': 'master' # TODO: do we actually need that on MacOS?
+#    'base/pkgconfig': 'master' # supported on linux only
 - 'on': ['Android']
   'require':
-    'base/openssl': '@same'
+    'base/openssl': 'master'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/zlib': '@same'
+    'base/zlib': 'master'
 Options:
   force-ninja-on-windows: False

@@ -1,10 +1,10 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/qt': '@same'
+    'base/qt': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/zlib': '@same'
+    'base/zlib': 'master'

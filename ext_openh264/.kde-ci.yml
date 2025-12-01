@@ -1,10 +1,10 @@
 Dependencies:
 - 'on': ['Windows', 'Linux', 'MacOS', 'Android/x86_64', 'Android/x86']
   'require':
-    'base/nasm': '@same'
+    'base/nasm': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['Windows', 'MacOS']
   'require':
-    'base/pkgconfig': '@same'
+    'base/pkgconfig': 'master'

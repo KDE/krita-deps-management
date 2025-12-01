@@ -1,10 +1,10 @@
 Dependencies:
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/zlib': '@same'
+    'base/zlib': 'master'
 - 'on': ['@all']
   'require':
-    'base/jpeg': '@same'
+    'base/jpeg': 'master'
 # webp depends on tiff for some reason, so we shouldn't create a cyclic dependency
-#    'base/webp': '@same'
+#    'base/webp': 'master'
 

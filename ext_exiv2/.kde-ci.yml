@@ -1,13 +1,13 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/expat': '@same'
+    'base/expat': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['Windows']
   'require':
-    'base/iconv': '@same'
+    'base/iconv': 'master'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/zlib': '@same'
+    'base/zlib': 'master'

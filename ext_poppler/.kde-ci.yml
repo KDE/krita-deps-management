@@ -1,17 +1,17 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/freetype': '@same'
-    'base/fontconfig': '@same'
-    'base/qt': '@same'
-    'base/jpeg': '@same'
-    'base/png': '@same'
-    'base/tiff': '@same'
-    'base/boost': '@same'
-    'base/lcms2': '@same'
+    'base/freetype': 'master'
+    'base/fontconfig': 'master'
+    'base/qt': 'master'
+    'base/jpeg': 'master'
+    'base/png': 'master'
+    'base/tiff': 'master'
+    'base/boost': 'master'
+    'base/lcms2': 'master'
 - 'on': ['Windows']
   'require':
-    'base/iconv': '@same'
+    'base/iconv': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'

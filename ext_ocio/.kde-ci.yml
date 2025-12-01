@@ -1,5 +1,5 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/openexr': '@same'
-    'base/expat': '@same'
+    'base/openexr': 'master'
+    'base/expat': 'master'

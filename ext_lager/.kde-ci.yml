@@ -1,8 +1,8 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/zug': '@same'
-    'base/immer': '@same'
+    'base/zug': 'master'
+    'base/immer': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'

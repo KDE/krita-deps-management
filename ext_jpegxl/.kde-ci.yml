@@ -1,11 +1,11 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/highway': '@same'
-    'base/brotli': '@same'
-    'base/lcms2': '@same'
-    'base/jpeg': '@same'
-    'base/png': '@same'
+    'base/highway': 'master'
+    'base/brotli': 'master'
+    'base/lcms2': 'master'
+    'base/jpeg': 'master'
+    'base/png': 'master'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/zlib': '@same'
+    'base/zlib': 'master'

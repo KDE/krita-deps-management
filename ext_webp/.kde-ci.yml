@@ -1,13 +1,13 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/png': '@same'
-    'base/jpeg': '@same'
-    'base/tiff': '@same'
-    'base/giflib': '@same'
+    'base/png': 'master'
+    'base/jpeg': 'master'
+    'base/tiff': 'master'
+    'base/giflib': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/zlib': '@same'
+    'base/zlib': 'master'

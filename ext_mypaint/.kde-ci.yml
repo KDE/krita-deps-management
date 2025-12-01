@@ -1,5 +1,5 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/json_c': '@same'
-    'base/extra_cmake_modules': '@same'
+    'base/json_c': 'master'
+    'base/extra_cmake_modules': 'master'

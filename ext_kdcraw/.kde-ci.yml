@@ -1,6 +1,6 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/libraw': '@same'
-    'base/extra_cmake_modules': '@same'
-    'base/qt': '@same'
+    'base/libraw': 'master'
+    'base/extra_cmake_modules': 'master'
+    'base/qt': 'master'

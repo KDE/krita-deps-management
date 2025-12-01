@@ -1,8 +1,8 @@
 Dependencies:
 - 'on': ['@all']
   'require':
-    'base/qt': '@same'
-    'base/extra_cmake_modules': '@same'
+    'base/qt': 'master'
+    'base/extra_cmake_modules': 'master'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'

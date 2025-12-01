@@ -1,36 +1,36 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
-    'base/iconv': '@same' # on Linux and MacOS ffmpeg uses iconv provided by libc
+    'base/patch': 'master'
+    'base/iconv': 'master' # on Linux and MacOS ffmpeg uses iconv provided by libc
 
 - 'on': ['@all']
   'require':
-    'ffmpeg/flac': '@same'
-    'ffmpeg/opus': '@same'
-    'ffmpeg/sdl2': '@same'
-    'ffmpeg/vpx': '@same'
-    'ffmpeg/libvorbis': '@same'
-    'ffmpeg/libtheora': '@same'
-    'ffmpeg/openh264': '@same'
-    'ffmpeg/lame': '@same'
-    'heif/libaom': '@same'
-    'base/webp': '@same'
-    'base/png': '@same'
-    'base/jpeg': '@same'
+    'ffmpeg/flac': 'master'
+    'ffmpeg/opus': 'master'
+    'ffmpeg/sdl2': 'master'
+    'ffmpeg/vpx': 'master'
+    'ffmpeg/libvorbis': 'master'
+    'ffmpeg/libtheora': 'master'
+    'ffmpeg/openh264': 'master'
+    'ffmpeg/lame': 'master'
+    'heif/libaom': 'master'
+    'base/webp': 'master'
+    'base/png': 'master'
+    'base/jpeg': 'master'
 
 - 'on': ['Windows', 'MacOS']
   'require':
-    'base/pkgconfig': '@same'
+    'base/pkgconfig': 'master'
 
 - 'on': ['Windows', 'MacOS', 'Linux']
   'require':
-    'base/lzma': '@same'
+    'base/lzma': 'master'
 
 - 'on': ['Windows', 'Linux']
   'require':
-    'ffmpeg/vpl': '@same'
+    'ffmpeg/vpl': 'master'
 
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
-    'base/zlib': '@same'
+    'base/zlib': 'master'

@@ -1,5 +1,5 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/png': '@same'
-    'base/patch': '@same'
+    'base/png': 'master'
+    'base/patch': 'master'

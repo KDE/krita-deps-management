@@ -1,11 +1,11 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
+    'base/patch': 'master'
 - 'on': ['@all']
   'require':
-    'base/python': '@same'
+    'base/python': 'krita/5.2'
 - 'on': ['Linux', 'MacOS']
   'require':
-    'base/python-modules': '@same'
+    'base/python-modules': 'krita/5.2'
 
