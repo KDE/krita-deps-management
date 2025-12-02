@@ -100,6 +100,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
             -Dlibmp3lame=enabled
             -Dlibopus=enabled
             -Dlibvorbis=enabled
+            -Dcoreimage=disabled
             ${EXTRA_MESON_FLAGS}
 
     UPDATE_COMMAND ""
