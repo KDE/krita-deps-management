@@ -1,0 +1,36 @@
+From e54b813661e5753569af27d546c0c60f63ed7890 Mon Sep 17 00:00:00 2001
+From: Carsten Hartenfels <carsten.hartenfels@pm.me>
+Date: Tue, 2 Dec 2025 10:23:22 +0100
+Subject: [PATCH] [macos] Fix building on MacOS 26
+
+AGL framework is gone, we should use OpenGL instead
+---
+ mkspecs/common/mac.conf | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/mkspecs/common/mac.conf b/mkspecs/common/mac.conf
+index 61bea952b2..9ba38d9949 100644
+--- a/mkspecs/common/mac.conf
++++ b/mkspecs/common/mac.conf
+@@ -18,8 +18,7 @@ QMAKE_LIBDIR            =
+ 
+ # sdk.prf will prefix the proper SDK sysroot
+ QMAKE_INCDIR_OPENGL     = \
+-    /System/Library/Frameworks/OpenGL.framework/Headers \
+-    /System/Library/Frameworks/AGL.framework/Headers/
++    /System/Library/Frameworks/OpenGL.framework/Headers
+ 
+ QMAKE_FIX_RPATH         = install_name_tool -id
+ 
+@@ -30,7 +29,7 @@ QMAKE_LFLAGS_REL_RPATH  =
+ QMAKE_REL_RPATH_BASE    = @loader_path
+ 
+ QMAKE_LIBS_DYNLOAD      =
+-QMAKE_LIBS_OPENGL       = -framework OpenGL -framework AGL
++QMAKE_LIBS_OPENGL       = -framework OpenGL
+ QMAKE_LIBS_THREAD       =
+ 
+ QMAKE_INCDIR_WAYLAND    =
+-- 
+2.34.1
+

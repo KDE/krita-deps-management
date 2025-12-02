@@ -281,6 +281,8 @@ else( APPLE )
 
       WORKING_DIRECTORY <BINARY_DIR>-@ARCH@
 
+      PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macos-Fix-building-on-MacOS-26.patch
+
       # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env "OPENSSL_LIBS=-L${EXTPREFIX}/lib -lssl -lcrypto" --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure
