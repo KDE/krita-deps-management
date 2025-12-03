@@ -1,4 +1,4 @@
--r requirements-setuptools.txt
+setuptools
 lxml
 pyyaml
 python-gitlab
