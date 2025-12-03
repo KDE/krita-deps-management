@@ -1,0 +1,6 @@
+setuptools
+packaging
+ply
+tomli
+wheel
+
