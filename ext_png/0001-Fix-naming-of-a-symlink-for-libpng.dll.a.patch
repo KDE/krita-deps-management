@@ -1,0 +1,27 @@
+From 05ff5d85a8dfc445b67a61faa57d9e5d7f073366 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Wed, 3 Dec 2025 13:27:03 +0100
+Subject: [PATCH] Fix naming of a symlink for libpng.dll.a
+
+---
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 144b57b..34db49f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1052,8 +1052,8 @@ if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
+   if(PNG_SHARED)
+     # Create a symlink for libpng.dll.a => libpng16.dll.a on Cygwin
+     if(NOT WIN32 OR CYGWIN OR MINGW)
+-      create_symlink(libpng${CMAKE_SHARED_LIBRARY_SUFFIX} TARGET png_shared)
+-      install(FILES "$<TARGET_LINKER_FILE_DIR:png_shared>/libpng${CMAKE_SHARED_LIBRARY_SUFFIX}"
++      create_symlink(libpng${CMAKE_IMPORT_LIBRARY_SUFFIX} TARGET png_shared)
++      install(FILES "$<TARGET_LINKER_FILE_DIR:png_shared>/libpng${CMAKE_IMPORT_LIBRARY_SUFFIX}"
+               DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+     endif()
+   endif()
+-- 
+2.49.0.windows.1
+
