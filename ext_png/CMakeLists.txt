@@ -14,6 +14,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} -DPNG_TESTS=OFF
 
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-naming-of-a-symlink-for-libpng.dll.a.patch
+
     UPDATE_COMMAND ""
 )
 
