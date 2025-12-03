@@ -1,27 +1,35 @@
-From 05ff5d85a8dfc445b67a61faa57d9e5d7f073366 Mon Sep 17 00:00:00 2001
+From 46c327ef0f49e49a0bd1a7819a3ac55b355f2826 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
-Date: Wed, 3 Dec 2025 13:27:03 +0100
+Date: Wed, 3 Dec 2025 15:22:05 +0100
 Subject: [PATCH] Fix naming of a symlink for libpng.dll.a
 
 ---
- CMakeLists.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ CMakeLists.txt | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 144b57b..34db49f 100644
+index 144b57b..428b4af 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1052,8 +1052,8 @@ if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
+@@ -1050,10 +1050,16 @@ if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
+           FRAMEWORK DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+ 
    if(PNG_SHARED)
++    set (SHARED_LINK_TARGET_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
++
      # Create a symlink for libpng.dll.a => libpng16.dll.a on Cygwin
++    if (CYGWIN OR MINGW)
++      set (SHARED_LINK_TARGET_SUFFIX ${CMAKE_IMPORT_LIBRARY_SUFFIX})
++    endif()
++
      if(NOT WIN32 OR CYGWIN OR MINGW)
 -      create_symlink(libpng${CMAKE_SHARED_LIBRARY_SUFFIX} TARGET png_shared)
 -      install(FILES "$<TARGET_LINKER_FILE_DIR:png_shared>/libpng${CMAKE_SHARED_LIBRARY_SUFFIX}"
-+      create_symlink(libpng${CMAKE_IMPORT_LIBRARY_SUFFIX} TARGET png_shared)
-+      install(FILES "$<TARGET_LINKER_FILE_DIR:png_shared>/libpng${CMAKE_IMPORT_LIBRARY_SUFFIX}"
++      create_symlink(libpng${SHARED_LINK_TARGET_SUFFIX} TARGET png_shared)
++      install(FILES "$<TARGET_LINKER_FILE_DIR:png_shared>/libpng${SHARED_LINK_TARGET_SUFFIX}"
                DESTINATION "${CMAKE_INSTALL_LIBDIR}")
      endif()
    endif()
 -- 
-2.49.0.windows.1
+2.43.0
 
