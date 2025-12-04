@@ -88,6 +88,7 @@ stages:
       - "./**/CMakeCache.txt"
       - "./**/CMakeFiles/CMakeOutput.log"
       - "./**/config.log"
+      - "./**/build.ninja"
       - "*.log"
     exclude:
       - "./**/meson-private/**/*"
