@@ -8,6 +8,7 @@ security_linker_flags = @_security_exe_linker_flags@
 [binaries]
 c = ['@CMAKE_C_COMPILER@'] + cross_compile_args
 cpp = ['@CMAKE_CXX_COMPILER@'] + cross_compile_args
+objc = ['@CMAKE_OBJC_COMPILER@'] + cross_compile_args
 ar = '@CMAKE_AR@'
 strip = '@CMAKE_STRIP@'
 pkg-config = '@PKG_CONFIG_EXECUTABLE@'
@@ -22,5 +23,7 @@ nasm = '@MESON_NASM_PATH@'
 pkg_config_path = '@EXTPREFIX@/share/pkgconfig,@EXTPREFIX@/lib/pkgconfig,@EXTPREFIX@/lib64/pkgconfig'
 c_args = common_args + @_security_c_flags@
 cpp_args = common_args +  @_security_cxx_flags@
+objc_args = common_args + cross_compile_args + @_security_cxx_flags@
 c_link_args = common_link_args + cross_link_args + security_linker_flags
 cpp_link_args = common_link_args + cross_link_args + security_linker_flags
+objc_link_args = common_link_args + cross_link_args + security_linker_flags
