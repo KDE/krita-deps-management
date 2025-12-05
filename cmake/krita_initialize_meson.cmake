@@ -15,6 +15,13 @@ macro(mesonify VAR DEST)
     set(${DEST} "[${${DEST}}]")
 endmacro()
 
+if(NOT DEFINED CMAKE_OBJC_COMPILER)
+    find_program(XCRUN_EXECUTABLE NAMES xcrun)
+    execute_process(COMMAND ${XCRUN_EXECUTABLE} -find clang OUTPUT_VARIABLE XCRUN_OUTPUT)
+    string(STRIP ${XCRUN_OUTPUT} XCRUN_OUTPUT_STRIP)
+    set(CMAKE_OBJC_COMPILER ${XCRUN_OUTPUT_STRIP})
+endif()
+
 if (ANDROID OR (CMAKE_CROSSCOMPILING AND NOT APPLE))
     set(CROSS_COMPILE_FLAGS "--sysroot=${CMAKE_SYSROOT}")
     set(CROSS_LINKER_FLAGS "--sysroot=${CMAKE_SYSROOT}")
