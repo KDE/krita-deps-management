@@ -8,7 +8,7 @@ security_linker_flags = @_security_exe_linker_flags@
 [binaries]
 c = ['@CMAKE_C_COMPILER@'] + cross_compile_args
 cpp = ['@CMAKE_CXX_COMPILER@'] + cross_compile_args
-objc = ['@CMAKE_OBJC_COMPILER@'] + cross_compile_args
+@_objc_compiler@
 ar = '@CMAKE_AR@'
 strip = '@CMAKE_STRIP@'
 pkg-config = '@PKG_CONFIG_EXECUTABLE@'
