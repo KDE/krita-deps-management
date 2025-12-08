@@ -165,6 +165,8 @@ stages:
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
   before_script:
+    - . /var/lib/ci-files/setup-environment.sh
+
     - python3 -m venv venv --upgrade-deps
     # Venvs can not be stacked
     - . venv/bin/activate
