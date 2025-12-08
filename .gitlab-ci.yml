@@ -204,8 +204,6 @@ stages:
     - python3 -u tools/download-macos-tools.py
     - source _krita-tools/activate
 
-    - source tools/remove-homebrew-from-path.sh
-
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 include:
