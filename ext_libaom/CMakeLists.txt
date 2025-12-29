@@ -22,11 +22,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     ext_libaom
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-    URL https://storage.googleapis.com/aom-releases/libaom-3.6.1.tar.gz
-    URL_HASH SHA256=42b862f58b3d00bd3902d2dc469526574f5b012e5b178e6a9652845a113d6887
-
-    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-cdef-Disable-MSVC-optimizations-for-filter_block.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/android-cpu-features.patch
+    URL https://storage.googleapis.com/aom-releases/libaom-3.13.1.tar.gz
+    URL_HASH SHA256=19e45a5a7192d690565229983dad900e76b513a02306c12053fb9a262cbeca7d
 
     # Static library is needed because ffmpeg accesses aom_codec_av1_dx_algo
     # which is not exported in Windows compilers.
