@@ -1,4 +1,0 @@
-Dependencies:
-- 'on': ['@all']
-  'require':
-    'base/meson': '@same'
