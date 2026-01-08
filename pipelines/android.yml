@@ -2,19 +2,19 @@
   stage: Dependencies
   extends:
   - .seed_template
-  - .android_qt515
+  - .android_base
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/krita-deps.yml --print --dst-branch $BRANCH_NAME_ANDROID
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Android/$KDECI_ANDROID_ABI 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
 
 .seed_all_android_dev:
   stage: Dependencies
   extends:
   - .seed_template_auto
-  - .android_qt515
+  - .android_base
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_ANDROID
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI-dev.log"
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Android/$KDECI_ANDROID_ABI 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI-dev.log"
 
 
 .seed_dirty_android_base:
@@ -24,7 +24,7 @@
     KRITA_STAGE_DEP:
       value: "ext_unknown"
   script:
-    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared --branch $BRANCH_NAME_ANDROID 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI --branch $BRANCH_NAME_ANDROID 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
 
 .seed_custom_android_base:
   extends:
@@ -33,7 +33,7 @@
     KRITA_STAGE_DEP:
       value: "ext_unknown"
   script:
-    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI/Qt5/Shared --branch $BRANCH_NAME_ANDROID 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Android/$KDECI_ANDROID_ABI --branch $BRANCH_NAME_ANDROID 2>&1 | tee "seed-packages-android-$KDECI_ANDROID_ABI.log"
 
 .android_x86_64_mixin:
   variables:

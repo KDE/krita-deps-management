@@ -92,7 +92,7 @@ stages:
     exclude:
       - "./**/meson-private/**/*"
 
-.windows_qt515:
+.windows_base:
   image: $VM_IMAGE_NAME_WINDOWS
   tags:
     - VM
@@ -118,7 +118,7 @@ stages:
     - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
-.appimage_qt515:
+.appimage_base:
   image: $VM_IMAGE_NAME_LINUX
   tags:
     - VM
@@ -144,7 +144,7 @@ stages:
     - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
-.android_qt515:
+.android_base:
   image: $VM_IMAGE_NAME_ANDROID
   tags:
     - VM
@@ -176,7 +176,7 @@ stages:
     - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
-.macos_qt515:
+.macos_base:
   tags:
     - macOS
   extends:

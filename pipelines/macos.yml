@@ -1,20 +1,20 @@
 all_publish_macos:
   stage: Dependencies
   extends:
-  - .macos_qt515
+  - .macos_base
   - .seed_template
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/krita-deps.yml --print --dst-branch $BRANCH_NAME_MACOS
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform MacOS/Qt5/Shared 2>&1 | tee "seed-packages-macos.log"
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform MacOS 2>&1 | tee "seed-packages-macos.log"
 
 all_publish_macos_dev:
   stage: Dependencies
   extends:
   - .seed_template_auto
-  - .macos_qt515
+  - .macos_base
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_MACOS
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform MacOS/Qt5/Shared 2>&1 | tee "seed-packages-macos-dev.log"
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform MacOS 2>&1 | tee "seed-packages-macos-dev.log"
   needs:
     - job: all_publish_macos
       artifacts: false
@@ -23,10 +23,10 @@ all_publish_macos_openvino:
   stage: Dependencies
   extends:
   - .seed_template_auto
-  - .macos_qt515
+  - .macos_base
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/openvino-packages.yml --print --dst-branch $BRANCH_NAME_MACOS
-    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform MacOS/Qt5/Shared 2>&1 | tee "seed-packages-macos-openvino.log"
+    - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform MacOS 2>&1 | tee "seed-packages-macos-openvino.log"
   needs:
     - job: all_publish_macos
       artifacts: false
@@ -45,12 +45,12 @@ custom_publish_macos:
   stage: Dependencies
   extends:
   - .seed_template
-  - .macos_qt515
+  - .macos_base
   variables:
     KRITA_STAGE_DEP:
       value: "ext_unknown"
   script:
-    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch $BRANCH_NAME_MACOS 2>&1 | tee "seed-packages-macos.log"
+    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform MacOS --branch $BRANCH_NAME_MACOS 2>&1 | tee "seed-packages-macos.log"
   
 custom_local_cache_macos:
   extends:
@@ -61,7 +61,7 @@ dirty_publish_macos:
   extends:
     - custom_publish_macos
   script:
-    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform MacOS/Qt5/Shared --branch $BRANCH_NAME_MACOS 2>&1 | tee "seed-packages-macos.log"
+    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform MacOS --branch $BRANCH_NAME_MACOS 2>&1 | tee "seed-packages-macos.log"
 
 dirty_local_cache_macos:
   extends:
