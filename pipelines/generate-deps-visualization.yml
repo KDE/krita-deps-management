@@ -1,7 +1,7 @@
 generate-visualization:
   stage: Dependencies
   extends:
-  - .appimage_qt515
+  - .appimage_base
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: never

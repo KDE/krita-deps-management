@@ -2,28 +2,28 @@ all_publish_windows:
   stage: Dependencies
   extends:
   - .seed_template
-  - .windows_qt515
+  - .windows_base
   # use large-timeout nodes for full rebuilds
   tags:
     - LargeVM
     - amd64
   script:
     - python -u tools/replace-branch-in-seed-file.py latest\krita-deps.yml --print --dst-branch $BRANCH_NAME_WINDOWS
-    - python -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Windows/Qt5/Shared 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+    - python -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Windows 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 # All publish
 all_publish_windows_dev:
   stage: Dependencies
   extends:
   - .seed_template_auto
-  - .windows_qt515
+  - .windows_base
   # use large-timeout nodes for full rebuilds
   tags:
     - LargeVM
     - amd64
   script:
     - python -u tools/replace-branch-in-seed-file.py latest\developer-packages.yml --print --dst-branch $BRANCH_NAME_WINDOWS
-    - python -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Windows/Qt5/Shared 2>&1 | Tee-Object -FilePath "seed-packages-win64-dev.log"
+    - python -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Windows 2>&1 | Tee-Object -FilePath "seed-packages-win64-dev.log"
   needs:
     - job: all_publish_windows 
       artifacts: false
@@ -32,14 +32,14 @@ all_publish_windows_openvino:
   stage: Dependencies
   extends:
   - .seed_template_auto
-  - .windows_qt515
+  - .windows_base
   # use large-timeout nodes for full rebuilds
   tags:
     - LargeVM
     - amd64
   script:
     - python -u tools/replace-branch-in-seed-file.py latest\openvino-packages.yml --print --dst-branch $BRANCH_NAME_WINDOWS
-    - python -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform Windows/Qt5/Shared 2>&1 | Tee-Object -FilePath "seed-packages-win64-openvino.log"
+    - python -u ci-utilities/seed-package-registry.py --seed-file latest/openvino-packages.yml --platform Windows 2>&1 | Tee-Object -FilePath "seed-packages-win64-openvino.log"
   needs:
     - job: all_publish_windows 
       artifacts: false
@@ -59,12 +59,12 @@ custom_publish_windows:
   stage: Dependencies
   extends:
   - .seed_template
-  - .windows_qt515
+  - .windows_base
   variables:
     KRITA_STAGE_DEP:
       value: "ext_unknown"
   script:
-    - python -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+    - python -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Windows --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 custom_local_cache_windows:
   extends:
@@ -75,7 +75,7 @@ dirty_publish_windows:
   extends:
     - custom_publish_windows
   script:
-  - python -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Windows/Qt5/Shared --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+  - python -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Windows --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 dirty_local_cache_windows:
   extends:
