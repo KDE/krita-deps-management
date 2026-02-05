@@ -74,4 +74,7 @@
     * the packages will have suffix `-transition-win-clang18`
     * link: https://invent.kde.org/teams/ci-artifacts/krita-windows/-/packages
 
-10) Make a sysadmin ticket to remove the old docker image
+10) Make a sysadmin ticket to:
+
+    * remove the old docker image
+    * remove the transition branch (you cannot remove it normally, since it is protected)
