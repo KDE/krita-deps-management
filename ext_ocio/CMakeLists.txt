@@ -9,9 +9,9 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_ocio
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    DOWNLOAD_NAME OpenColorIO-v2.3.0.tar.gz
-    URL https://github.com/AcademySoftwareFoundation/OpenColorIO/archive/refs/tags/v2.3.0.tar.gz
-    URL_HASH SHA256=32b7be676c110d849a77886d8a409159f0367309b2b2f5dae5aa0c38f42b445a
+    DOWNLOAD_NAME OpenColorIO-v2.5.1.tar.gz
+    URL https://github.com/AcademySoftwareFoundation/OpenColorIO/releases/download/v2.5.1/OpenColorIO-2.5.1.tar.gz
+    URL_HASH SHA256=49ab04d023d7a7a7237e24f2cfead3171b0ff7f466ce20e6e32859ec8c7cc94b
 
     INSTALL_DIR ${EXTPREFIX}
 
