@@ -2,4 +2,6 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/openexr': '@same'
-    'base/expat': '@same'
+#    we are removing expat dependency for now, since OCIO requires Expat 2.7.2 and it builds it itself internally
+#    recover package reusal after our expat is updated
+#    'base/expat': '@same'
