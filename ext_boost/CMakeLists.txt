@@ -13,19 +13,33 @@ if(WIN32)
         string(REGEX REPLACE "([0-9])\\.([0-9])(\\.[0-9])?" "\\1"
             KRITA_boost_COMPILER_VERSION ${CMAKE_CXX_COMPILER_VERSION})
 
-        set (BUILD_ARGS -j${SUBMAKE_JOBS} linkflags="${SECURITY_SHARED_LINKER_FLAGS}" --with-system --build-dir=build-dir toolset=gcc variant=release link=shared threading=multi architecture=x86 address-model=64)
+        # Detect architecture
+        if(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64|aarch64|arm64")
+            set(BOOST_ARCH "arm")
+            set(BOOST_ADDR_MODEL "64")
+            set(BOOST_PLATFORM_TAG "a64")  # ARM64 platform tag
+        else()
+            set(BOOST_ARCH "x86")
+            set(BOOST_ADDR_MODEL "64")
+            set(BOOST_PLATFORM_TAG "x64")  # x86-64 platform tag
+        endif()
+
+        set (BUILD_ARGS -j${SUBMAKE_JOBS} linkflags="${SECURITY_SHARED_LINKER_FLAGS}"
+            --with-system --build-dir=build-dir toolset=gcc variant=release
+            link=shared threading=multi
+            architecture=${BOOST_ARCH} address-model=${BOOST_ADDR_MODEL})
 
         ExternalProject_Add(
             ext_boost
 
             DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-            URL https://archives.boost.io/release/1.80.0/source/boost_1_80_0.tar.bz2
-            URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
+            URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
+            URL_HASH SHA256=71FEEED900FBCCCA04A3B4F2F84A7C217186F28A940ED8B7ED4725986BAF99FA
 
-            PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-Krita-builds-with-Clang.patch
-                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-building-Boost.Build-with-a-chosen-toolset.patch
-                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch
+            PATCH_COMMAND
+                  #COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-building-Boost.Build-with-a-chosen-toolset.patch
+                  ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch
                   COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-mpl-Use-static-const-for-next-prior-from-C-11.patch
 
             CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat gcc --prefix=${EXTPREFIX}
@@ -38,7 +52,8 @@ if(WIN32)
         ExternalProject_Add_Step(
             ext_boost
             pre_install
-            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/gcc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/libboost_system-mgw${KRITA_boost_COMPILER_VERSION}-mt-x64-1_80.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            # Use platform-specific tag (a64 for ARM64, x64 for x86-64)
+            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/gcc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/libboost_system-mgw${KRITA_boost_COMPILER_VERSION}-mt-${BOOST_PLATFORM_TAG}-1_81.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
             DEPENDERS install
         )
         if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -73,7 +88,7 @@ if(WIN32)
             ext_boost
             DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-            URL https://archives.boost.io/release/1.80.0/source/boost_1_80_0.tar.bz2
+            URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
             URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
 
             CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat msvc --prefix=${EXTPREFIX}
@@ -93,13 +108,13 @@ if(WIN32)
         ExternalProject_Add_Step(
             ext_boost
             pre_install
-            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/vc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/boost_system-vc${KRITA_boost_COMPILER_VERSION}-mt-x32-1_80.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
-            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/vc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/boost_system-vc${KRITA_boost_COMPILER_VERSION}-mt-x64-1_80.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/vc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/boost_system-vc${KRITA_boost_COMPILER_VERSION}-mt-x32-1_81.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/vc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/boost_system-vc${KRITA_boost_COMPILER_VERSION}-mt-x64-1_81.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
             DEPENDERS install
         )
     endif()
 elseif(ANDROID)
-    set (BUILD_ARGS --with-libraries=system --boost=1.80.0 --arch=${ANDROID_ABI} ${CMAKE_ANDROID_NDK})
+    set (BUILD_ARGS --with-libraries=system --boost=1.81.0 --arch=${ANDROID_ABI} ${CMAKE_ANDROID_NDK})
 
     ExternalProject_Add( ext_boost
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
@@ -108,8 +123,8 @@ elseif(ANDROID)
         URL_HASH SHA256=f58385cb816edcde35c8c1172bd38c91bb75aa03aa4680305b64915f1bbd51f3
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-support-for-NDK-27.02.patch
-            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch <SOURCE_DIR>/patches/boost-1_80_0/
-            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/0001-mpl-Use-static-const-for-next-prior-from-C-11.patch <SOURCE_DIR>/patches/boost-1_80_0/
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch <SOURCE_DIR>/patches/boost-1_81_0/
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/0001-mpl-Use-static-const-for-next-prior-from-C-11.patch <SOURCE_DIR>/patches/boost-1_81_0/
 
         CONFIGURE_COMMAND ""
         # no prefix is passed, we will install it ourselves!
@@ -134,7 +149,7 @@ else()
     endif()
     ExternalProject_Add( ext_boost
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://archives.boost.io/release/1.80.0/source/boost_1_80_0.tar.bz2
+        URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
         URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch

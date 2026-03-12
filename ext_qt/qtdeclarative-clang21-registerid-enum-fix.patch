@@ -1,0 +1,60 @@
+diff --git a/src/qml/jit/qv4assemblercommon_p.h b/src/qml/jit/qv4assemblercommon_p.h
+index cea5f23..ead1e75 100644
+--- a/src/qml/jit/qv4assemblercommon_p.h
++++ b/src/qml/jit/qv4assemblercommon_p.h
+@@ -70,7 +70,7 @@ class PlatformAssembler_X86_64_SysV : public JSC::MacroAssembler<JSC::MacroAssem
+ public:
+     static constexpr int NativeStackAlignment = 16;
+ 
+-    static const RegisterID NoRegister = RegisterID(-1);
++    static constexpr RegisterID NoRegister = RegisterID::none;
+ 
+     static const RegisterID ReturnValueRegister   = RegisterID::eax;
+     static const RegisterID ReturnValueRegisterValue = ReturnValueRegister;
+@@ -157,7 +157,7 @@ typedef PlatformAssembler_X86_64_SysV PlatformAssemblerBase;
+ class PlatformAssembler_Win64 : public JSC::MacroAssembler<JSC::MacroAssemblerX86_64>
+ {
+ public:
+-    static const RegisterID NoRegister = RegisterID(-1);
++    static constexpr RegisterID NoRegister = RegisterID::none;
+ 
+     static const RegisterID ReturnValueRegister   = RegisterID::eax;
+     static const RegisterID ReturnValueRegisterValue = ReturnValueRegister;
+@@ -247,7 +247,7 @@ typedef PlatformAssembler_Win64 PlatformAssemblerBase;
+ class PlatformAssembler_X86_All : public JSC::MacroAssembler<JSC::MacroAssemblerX86>
+ {
+ public:
+-    static const RegisterID NoRegister = RegisterID(-1);
++    static constexpr RegisterID NoRegister = RegisterID::none;
+ 
+     static const RegisterID ReturnValueRegisterValue = RegisterID::eax;
+     static const RegisterID ReturnValueRegisterTag   = RegisterID::edx;
+@@ -337,7 +337,7 @@ typedef PlatformAssembler_X86_All PlatformAssemblerBase;
+ class PlatformAssembler_ARM64 : public JSC::MacroAssembler<JSC::MacroAssemblerARM64>
+ {
+ public:
+-    static const RegisterID NoRegister = RegisterID(-1);
++    static constexpr RegisterID NoRegister = RegisterID::none;
+ 
+     static const RegisterID ReturnValueRegister   = JSC::ARM64Registers::x0;
+     static const RegisterID ReturnValueRegisterValue = ReturnValueRegister;
+@@ -436,7 +436,7 @@ typedef PlatformAssembler_ARM64 PlatformAssemblerBase;
+ class PlatformAssembler_ARM32 : public JSC::MacroAssembler<JSC::MacroAssemblerARMv7>
+ {
+ public:
+-    static const RegisterID NoRegister = RegisterID(-1);
++    static constexpr RegisterID NoRegister = RegisterID::none;
+ 
+     static const RegisterID ReturnValueRegisterValue = JSC::ARMRegisters::r0;
+     static const RegisterID ReturnValueRegisterTag   = JSC::ARMRegisters::r1;
+diff --git a/src/3rdparty/masm/assembler/X86Assembler.h b/src/3rdparty/masm/assembler/X86Assembler.h
+index abc1234..def5678 100644
+--- a/src/3rdparty/masm/assembler/X86Assembler.h
++++ b/src/3rdparty/masm/assembler/X86Assembler.h
+@@ -52,6 +52,7 @@ namespace X86Registers {
+         r13,
+         r14,
+         r15,
++        none = 0xff,
+ #endif
+     } RegisterID;
