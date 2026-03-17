@@ -24,8 +24,8 @@ else()
 endif()
 ExternalProject_Add(ext_libx265_10bit
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://github.com/HandBrake/HandBrake-contribs/releases/download/contribs2/x265-snapshot-20250729-13276.tar.gz
-    URL_HASH SHA256=3feb40d5f7fc37aba193a686a4445efff332f18d0f4830c6af565c3e18d340a8
+    URL https://github.com/HandBrake/HandBrake-contribs/releases/download/contribs2/x265-snapshot-20260216-13309.tar.gz
+    URL_HASH SHA256=a0882bb90826da62a96676c1a7cb7a7beb7f1db901f2775299cbeed03c3eb2a2
 
     SOURCE_SUBDIR source/
 
@@ -38,7 +38,6 @@ ExternalProject_Add(ext_libx265_10bit
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A07-Fix-macOS-cross-compilation.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A08-Fix-inconsistent-bitrate-in-second-pass.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A09-Ensuring-the-mvdLX-is-compliant.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A10-AArch64-Fix-scanPosLast_neon-compilation-with-old-bi.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/0001-ext_heif-Make-sure-that-pthreads-are-not-linked-it-o.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/0002-Skip-PDB-in-MinGW.patch
 
