@@ -38,6 +38,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-MLT-check-pointers-before-dereferencing.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-installing-melt-manpage-when-DESTDIR-is-active.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Add-an-option-to-skip-non-plugins-in-reposit.patch
+        # upstream fixes this problem differently, we can just remove this patch after updating to MLT 7.34.0+
+        # https://github.com/mltframework/mlt/commit/64aa54375d2816d82210144bb5cebaf1ba911aa5
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/win32-nanosleep-posix-timers-guard.patch
         ${ANDROID_EXTRA_PATCHES}
 
