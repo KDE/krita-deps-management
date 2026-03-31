@@ -38,7 +38,6 @@ if(WIN32)
             URL_HASH SHA256=71FEEED900FBCCCA04A3B4F2F84A7C217186F28A940ED8B7ED4725986BAF99FA
 
             PATCH_COMMAND
-                  #COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-building-Boost.Build-with-a-chosen-toolset.patch
                   ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch
                   COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-mpl-Use-static-const-for-next-prior-from-C-11.patch
 
