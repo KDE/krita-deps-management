@@ -132,7 +132,12 @@ ExternalProject_Add(
     # URL_HASH SHA256=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     # Note: Don't use the archive from googlesource, they don't use deterministic
     #       timestamps so the file changes every time.
-    GIT_REPOSITORY https://chromium.googlesource.com/chromium/src/third_party/zlib
+    #GIT_REPOSITORY https://chromium.googlesource.com/chromium/src/third_party/zlib
+
+    # the official repo seems to be unavailable outside of Google, let's just try
+    # use our backup repo
+    GIT_REPOSITORY https://github.com/dimula73/google-zlib.git
+
     GIT_TAG ${GOOGLE_ANGLE_THIRDPARTY_ZLIB_COMMIT}
 
     UPDATE_COMMAND ""
