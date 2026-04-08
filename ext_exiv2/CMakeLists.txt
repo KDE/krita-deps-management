@@ -18,8 +18,8 @@ if (ANDROID)
         ext_exiv2
 
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://github.com/Exiv2/exiv2/releases/download/v0.27.5/exiv2-0.27.5-Source.tar.gz
-        URL_HASH SHA256=35a58618ab236a901ca4928b0ad8b31007ebdc0386d904409d825024e45ea6e2
+        URL https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.8.tar.gz
+        URL_HASH SHA256=23efd6cfacad6ca8e08e862c897afe138431e021100f0cf168262e4d330d7972
 
         CMAKE_ARGS -DCMAKE_CXX_STANDARD=14 -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} -DEXIV2_BUILD_SAMPLES=OFF -DEXIV2_ENABLE_NLS=OFF -DEXPAT_LIBRARY=${EXTPREFIX}/lib/libexpat.so -DEXPAT_INCLUDE_DIR=${EXTPREFIX}/include -DEXIV2_BUILD_EXIV2_COMMAND=OFF
         UPDATE_COMMAND ""
@@ -37,8 +37,8 @@ elseif(WIN32)
         ext_exiv2
         
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://github.com/Exiv2/exiv2/releases/download/v0.27.5/exiv2-0.27.5-Source.tar.gz
-        URL_HASH SHA256=35a58618ab236a901ca4928b0ad8b31007ebdc0386d904409d825024e45ea6e2
+        URL https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.8.tar.gz
+        URL_HASH SHA256=23efd6cfacad6ca8e08e862c897afe138431e021100f0cf168262e4d330d7972
 
         PATCH_COMMAND ${WINDOWS_PATCH_COMMAND}
 
@@ -51,8 +51,8 @@ else()
         ext_exiv2
 
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://github.com/Exiv2/exiv2/releases/download/v0.27.5/exiv2-0.27.5-Source.tar.gz
-        URL_HASH SHA256=35a58618ab236a901ca4928b0ad8b31007ebdc0386d904409d825024e45ea6e2
+        URL https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.8.tar.gz
+        URL_HASH SHA256=23efd6cfacad6ca8e08e862c897afe138431e021100f0cf168262e4d330d7972
 
         CMAKE_ARGS -DCMAKE_CXX_STANDARD=14 -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_LIBRARY_PATH=${EXTPREFIX}/lib 
             -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} -DEXIV2_BUILD_SAMPLES=OFF
