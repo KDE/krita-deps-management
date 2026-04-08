@@ -10,9 +10,9 @@ set(BOOTSTRAP_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/bootstrap_prefix)
 
 ExternalProject_Add( ext_appimagetool-binary
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    # appimagetool does not have proper releases, so use a nightly snapshot
-    URL https://files.kde.org/krita/build/appimagetools-2025-04-17/appimagetool-x86_64.AppImage
-    URL_HASH SHA256=9e2a59f4c0fe13de7ffbc6d76ef2d301f99c7a9d8c12c7aa762bd4852e9fce30
+    # Release https://github.com/AppImage/appimagetool/releases/tag/1.9.1 (4 dec 2025)
+    URL https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
+    URL_HASH SHA256=ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0
     DOWNLOAD_NO_EXTRACT TRUE
 
     UPDATE_COMMAND ""
@@ -27,7 +27,7 @@ ExternalProject_Add( ext_appimagetool-binary
 
 ExternalProject_Add( ext_appimagetool-runtime
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    # appimagetool does not have proper releases, so use a nightly snapshot
+    # Get the runtime from the files.kde.org?
     URL https://files.kde.org/krita/build/appimagetools-2025-04-17/runtime-x86_64
     URL_HASH SHA256=45756b96904baa7a9bb5be5416840258707dc11ebe645d3d5ef706dfe132fba6
     DOWNLOAD_NO_EXTRACT TRUE
