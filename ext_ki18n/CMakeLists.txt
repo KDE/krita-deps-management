@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_ki18n
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/6.7/ki18n-6.7.0.tar.xz
-    URL_HASH SHA256=555b5bc19546c3a791c69724e238c5d1710a9575cf8740012f8fc546f354122b
+    URL https://download.kde.org/stable/frameworks/6.25/ki18n-6.25.0.tar.xz
+    URL_HASH SHA256=7fbac8bc88f5cb1af00f6a667381c4bcebba6f417dc6a3c7eef8bded6c9161de
     INSTALL_DIR ${EXTPREFIX}
     
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-ki18n-fix-loading-catalogs-with-patched-gettext.patch

@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_extra_cmake_modules
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/6.7/extra-cmake-modules-6.7.0.tar.xz
-    URL_HASH SHA256=d81de82692d3d2bb77110332a65c8266252becc2c3f307ce814990ce5607b8dc
+    URL https://download.kde.org/stable/frameworks/6.25/extra-cmake-modules-6.25.0.tar.xz
+    URL_HASH SHA256=ffeb4951bf09b2b8ee17ef24a28b6de650c0db0f59ddffb9009b37cac63af348
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Disable-fastline-metadata-creation.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Android-Recursively-find-dependency-of-dependencies.patch

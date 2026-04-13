@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_kguiaddons
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/6.7/kguiaddons-6.7.0.tar.xz
-    URL_HASH SHA256=ac437ca6baf50b0178bc8bf0b4dd1e6e70e0e4ef1ac770259738a1c42d035bcc
+    URL https://download.kde.org/stable/frameworks/6.25/kguiaddons-6.25.0.tar.xz
+    URL_HASH SHA256=38850963cb91978d08e781d81b147c7b66f78f4204ad820631e42ab1ef5ef76b
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-gradle-namespace-for-SDK-34.patch
     #     COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-geo-scheme-handler-Don-t-make-it-into-a-bundle-i.patch

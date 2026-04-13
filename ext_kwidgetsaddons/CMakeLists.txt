@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_kwidgetsaddons
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/6.7/kwidgetsaddons-6.7.0.tar.xz
-    URL_HASH SHA256=bd36342893863e6110c5f1245f8ae0b3a338275f4eaf124b15585d2fe492329a
+    URL https://download.kde.org/stable/frameworks/6.25/kwidgetsaddons-6.25.0.tar.xz
+    URL_HASH SHA256=8a9f9cde4427ffec37a0501d337aadae3de39736674f571ff8a13d17d1e6c938
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
 

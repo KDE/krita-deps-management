@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_kcodecs
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/6.7/kcodecs-6.7.0.tar.xz
-    URL_HASH SHA256=9ab494055e06bdce45568b7c47edb2aa9ecaa9dec0c0fb152367b4321921b9f2
+    URL https://download.kde.org/stable/frameworks/6.25/kcodecs-6.25.0.tar.xz
+    URL_HASH SHA256=5051fe783803d94444a231c79635b96f1266594942b836f59ae8460497c788c5
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} 
         -DBUILD_TESTING=OFF

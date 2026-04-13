@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_kcoreaddons
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/6.7/kcoreaddons-6.7.0.tar.xz
-    URL_HASH SHA256=48511e9dab1f2e80b3c4822bb87c2e981186de3b8977d92082d34d003b1283c5
+    URL https://download.kde.org/stable/frameworks/6.25/kcoreaddons-6.25.0.tar.xz
+    URL_HASH SHA256=e7f0825576dc44af0c7194538e48114aa240f8fd3402f27047771f009e161a7e
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
 
