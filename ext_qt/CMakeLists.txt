@@ -86,6 +86,10 @@ if (WIN32)
         # -DFEATURE_directwrite3=OFF
         -DFEATURE_opengl=ON # ensure openGL is activated
         -DFEATURE_egl=ON # enable ANGLE backend
+        # Qt's code for deploying SBOM files cannot install using DESTDIR
+        # variable on Windows, since it stupidly concatenates DESTDIR with
+        # CMAKE_INSTALL_PREFIX instead of properly removing the disk name
+        -DQT_GENERATE_SBOM=OFF
         #
         -DCMAKE_BUILD_TYPE=${QT_BUILD_TYPE}
         -DCMAKE_C_FLAGS_INIT="${EXTRA_C_FLAGS_ALL}"
