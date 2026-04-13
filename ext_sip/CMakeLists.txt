@@ -12,8 +12,8 @@ message (STATUS "python executable: ${Python_EXECUTABLE}")
 if(UNIX)
     ExternalProject_Add( ext_sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/62/9a/78122735697dbfc6c1db363627309eb0da7e44d8c05ba017b08666530586/sip-6.10.0.tar.gz
-        URL_HASH SHA256=fa0515697d4c98dbe04d9e898d816de1427e5b9ae5d0e152169109fd21f5d29c
+        URL https://files.pythonhosted.org/packages/02/b1/79bff1c49a9e19ffe0211cb8905cc514c3f6b8f3f7ae55a40403d346c076/sip-6.15.3.tar.gz
+        URL_HASH SHA256=bb2516983f9f716d321e5157c00d0de0c12422eba73b8f43a44610a0f6622438
 
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
@@ -44,8 +44,8 @@ elseif (WIN32)
 
     ExternalProject_Add( ext_sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/62/9a/78122735697dbfc6c1db363627309eb0da7e44d8c05ba017b08666530586/sip-6.10.0.tar.gz
-        URL_HASH SHA256=fa0515697d4c98dbe04d9e898d816de1427e5b9ae5d0e152169109fd21f5d29c
+        URL https://files.pythonhosted.org/packages/02/b1/79bff1c49a9e19ffe0211cb8905cc514c3f6b8f3f7ae55a40403d346c076/sip-6.15.3.tar.gz
+        URL_HASH SHA256=bb2516983f9f716d321e5157c00d0de0c12422eba73b8f43a44610a0f6622438
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-distinfo.py-to-support-prefix-option-on-Windows-.patch
 
