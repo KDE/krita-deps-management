@@ -13,12 +13,14 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ##          The last version of quazip released with the old maintainer was
 ##          quazip-v1.4
 ##
+## NOTE: changes in v1.5 has been reviewed by Dmitry Kazakov
+##
 
 ExternalProject_Add( ext_quazip
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    DOWNLOAD_NAME quazip-v1.4.tar.gz
-    URL https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz
-    URL_HASH SHA256=79633fd3a18e2d11a7d5c40c4c79c1786ba0c74b59ad752e8429746fe1781dd6
+    DOWNLOAD_NAME quazip-v1.5.tar.gz
+    URL https://github.com/stachenov/quazip/archive/refs/tags/v1.5.tar.gz
+    URL_HASH SHA256=405b72b6e76c8987ff41a762523b8f64876ba406d8a831d268ee0b63f1369582
 
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DQUAZIP_BZIP2=OFF ${GLOBAL_PROFILE}
