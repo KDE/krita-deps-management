@@ -1,19 +1,19 @@
-From b417b42facd1a8e7d528ac0b6fccd3d17a17ffca Mon Sep 17 00:00:00 2001
+From 7a231d83a3462637a87f2e971073e7935c71b3a3 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
-Date: Wed, 13 Dec 2023 14:08:47 +0100
+Date: Tue, 14 Apr 2026 17:26:18 +0200
 Subject: [PATCH] Fix distinfo.py to support --prefix option on Windows
  properly
 
 ---
- sipbuild/distinfo/distinfo.py | 37 ++++++++++++++++++++++++++---------
- 1 file changed, 28 insertions(+), 9 deletions(-)
+ sipbuild/distinfo/distinfo.py | 39 ++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
 diff --git a/sipbuild/distinfo/distinfo.py b/sipbuild/distinfo/distinfo.py
-index 783d21d..7d100d1 100644
+index 2e67f090..656d88b0 100644
 --- a/sipbuild/distinfo/distinfo.py
 +++ b/sipbuild/distinfo/distinfo.py
-@@ -70,6 +70,25 @@ def distinfo(name, console_scripts, gui_scripts, generator, inventory,
-             generator=generator)
+@@ -55,6 +55,25 @@ def distinfo(name, console_scripts, gui_scripts, sbom_files, generator,
+             generator_version=generator_version)
  
  
 +def fix_abs_path(destdir, path):
@@ -36,10 +36,10 @@ index 783d21d..7d100d1 100644
 +    return outpath
 +
  def create_distinfo(distinfo_dir, wheel_tag, installed, metadata,
-         requires_dists, project_root, console_scripts, gui_scripts,
-         prefix_dir='', generator=None):
-@@ -79,7 +98,7 @@ def create_distinfo(distinfo_dir, wheel_tag, installed, metadata,
-         generator = os.path.basename(sys.argv[0])
+         requires_dists, project_root, console_scripts, gui_scripts, sbom_files,
+         prefix_dir='', generator=None, generator_version=None):
+@@ -67,7 +86,7 @@ def create_distinfo(distinfo_dir, wheel_tag, installed, metadata,
+         generator_version = SIP_VERSION_STR
  
      # The prefix directory corresponds to DESTDIR or INSTALL_ROOT.
 -    real_distinfo_dir = prefix_dir + distinfo_dir
@@ -47,7 +47,7 @@ index 783d21d..7d100d1 100644
  
      # Make sure we have an empty dist-info directory.  Handle exceptions as the
      # user may be trying something silly with a system directory.
-@@ -108,7 +127,7 @@ def create_distinfo(distinfo_dir, wheel_tag, installed, metadata,
+@@ -107,7 +126,7 @@ def create_distinfo(distinfo_dir, wheel_tag, installed, metadata,
          installer_fn = os.path.join(distinfo_dir, 'INSTALLER')
          installed.append(installer_fn)
  
@@ -56,7 +56,7 @@ index 783d21d..7d100d1 100644
              print(generator, file=installer_f)
      else:
          # Define any entry points.
-@@ -116,7 +135,7 @@ def create_distinfo(distinfo_dir, wheel_tag, installed, metadata,
+@@ -115,7 +134,7 @@ def create_distinfo(distinfo_dir, wheel_tag, installed, metadata,
              eps_fn = os.path.join(distinfo_dir, 'entry_points.txt')
              installed.append(eps_fn)
  
@@ -65,16 +65,16 @@ index 783d21d..7d100d1 100644
                  if console_scripts:
                      eps_f.write(
                              '[console_scripts]\n' + '\n'.join(
-@@ -136,7 +155,7 @@ Tag: {}
+@@ -135,7 +154,7 @@ Tag: {}
          wheel_fn = os.path.join(distinfo_dir, 'WHEEL')
          installed.append(wheel_fn)
  
 -        with open(prefix_dir + wheel_fn, 'w') as wheel_f:
 +        with open(fix_abs_path(prefix_dir, wheel_fn), 'w') as wheel_f:
              wheel_f.write(
-                     WHEEL.format(WHEEL_VERSION, generator, SIP_VERSION_STR,
+                     WHEEL.format(WHEEL_VERSION, generator, generator_version,
                              wheel_tag))
-@@ -151,11 +170,11 @@ Tag: {}
+@@ -150,11 +169,11 @@ Tag: {}
      record_fn = os.path.join(distinfo_dir, 'RECORD')
  
      distinfo_path, distinfo_base = os.path.split(distinfo_dir)
@@ -89,7 +89,7 @@ index 783d21d..7d100d1 100644
              if os.path.isdir(real_name):
                  all_fns = []
  
-@@ -177,7 +196,7 @@ Tag: {}
+@@ -176,7 +195,7 @@ Tag: {}
  
                  if norm_fn.startswith(real_distinfo_path):
                      fn_name = fn[len(real_distinfo_path) + 1:].replace('\\', '/')
@@ -98,7 +98,7 @@ index 783d21d..7d100d1 100644
                      fn_name = os.path.relpath(
                              fn, real_distinfo_path).replace('\\', '/')
                  else:
-@@ -207,7 +226,7 @@ def write_metadata(metadata, requires_dists, metadata_fn, project_root,
+@@ -206,7 +225,7 @@ def write_metadata(metadata, requires_dists, metadata_fn, project_root,
  
          metadata['requires-dist'] = requires_dists + rd
  
@@ -106,7 +106,16 @@ index 783d21d..7d100d1 100644
 +    with open(fix_abs_path(prefix_dir, metadata_fn), 'w') as metadata_f:
          description = None
  
-         for name, value in metadata.items():
+         # Do these first for cosmetic reasons.
+@@ -240,7 +259,7 @@ def _install_files(files, prefix_dir, target_dir, installed):
+                 file_fn = os.path.join(target_dir, file)
+                 installed.append(file_fn)
+ 
+-                real_dir = prefix_dir + os.path.dirname(file_fn)
++                real_dir = fix_abs_path(prefix_dir, os.path.dirname(file_fn))
+                 os.makedirs(real_dir, exist_ok=True)
+                 shutil.copy(file, real_dir)
+ 
 -- 
-2.38.1.windows.1
+2.49.0.windows.1
 
