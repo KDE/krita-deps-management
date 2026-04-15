@@ -1,6 +1,6 @@
 ## Cleanup job for the registries
 
-.registry_cleanup_base:
+registry_cleanup:
   stage: SystemMaintenance
   extends:
   - .nightly-repo-cleanup
@@ -16,41 +16,9 @@
   before_script:
     - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
   script:
-    - python3 -u ci-utilities/package-registry-cleanup.py --project teams/ci-artifacts/krita-${KRITACI_PLATFORM}
-
-
-registry_cleanup_windows_qt515:
-  variables:
-    KRITACI_PLATFORM: windows
-  extends:
-  - .registry_cleanup_base
-
-registry_cleanup_appimage_qt515:
-  variables:
-    KRITACI_PLATFORM: appimage
-  extends:
-  - .registry_cleanup_base
-
-registry_cleanup_macos-qt5.15:
-  variables:
-    KRITACI_PLATFORM: macos
-  extends:
-  - .registry_cleanup_base
-
-registry_cleanup_android-x86_64-qt5.15:
-  variables:
-    KRITACI_PLATFORM: android-x86_64
-  extends:
-  - .registry_cleanup_base
-
-registry_cleanup_android-arm64-v8a-qt5.15:
-  variables:
-    KRITACI_PLATFORM: android-arm64-v8a
-  extends:
-  - .registry_cleanup_base
-
-registry_cleanup_android-armeabi-v7a-qt5.15:
-  variables:
-    KRITACI_PLATFORM: android-armeabi-v7a
-  extends:
-  - .registry_cleanup_base
+    - python3 -u ci-utilities/package-registry-cleanup.py --project teams/ci-artifacts/krita-windows
+    - python3 -u ci-utilities/package-registry-cleanup.py --project teams/ci-artifacts/krita-appimage
+    - python3 -u ci-utilities/package-registry-cleanup.py --project teams/ci-artifacts/krita-macos
+    - python3 -u ci-utilities/package-registry-cleanup.py --project teams/ci-artifacts/krita-android-x86_64
+    - python3 -u ci-utilities/package-registry-cleanup.py --project teams/ci-artifacts/krita-android-arm64-v8a
+    - python3 -u ci-utilities/package-registry-cleanup.py --project teams/ci-artifacts/krita-android-armeabi-v7a
