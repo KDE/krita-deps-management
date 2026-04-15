@@ -112,7 +112,7 @@ stages:
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
   before_script:
-    - Remove-Item -Path "Z:\\krita-windows\\downloads\\karchive-5.101.0.tar.xz" -ErrorAction SilentlyContinue
+    - Remove-Item -Path "Z:\\krita-windows\\downloads\\karchive-5.101.0.tar.xz" -ErrorAction Ignore
 
       # Download update CA Bundle from Mozilla, our base Windows image
       # is outdated and sysadmins have problems with keeping it up to date
