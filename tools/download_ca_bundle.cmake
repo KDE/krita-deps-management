@@ -2,6 +2,11 @@ if (NOT KDECI_CA_BUNDLE)
     message(FATAL_ERROR "KDECI_CA_BUNDLE argument is not set!")
 endif()
 
+message("xxx")
+message(${KDECI_CA_BUNDLE})
+message("${KDECI_CA_BUNDLE}")
+message("xxx")
+
 if(DEFINED ENV{CMAKE_TLS_CAINFO} AND EXISTS "$ENV{CMAKE_TLS_CAINFO}")
     message(WARNING "CMAKE_TLS_CAINFO environment is already set... weird, but we will continue")
 endif()
