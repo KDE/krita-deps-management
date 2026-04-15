@@ -115,6 +115,7 @@ stages:
     - cmake -DKDECI_CA_BUNDLE=$KDECI_CA_BUNDLE -P tools\download_ca_bundle.cmake
     - >
       $env:SSL_CERT_FILE = $KDECI_CA_BUNDLE
+      $env:CMAKE_TLS_CAINFO = $KDECI_CA_BUNDLE
     - >
       & $BOOTSTRAP_PYTHON_EXE_WINDOWS -m venv venv --upgrade-deps
     - . venv\Scripts\Activate.ps1
