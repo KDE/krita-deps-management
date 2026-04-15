@@ -27,9 +27,8 @@ ExternalProject_Add( ext_appimagetool-binary
 
 ExternalProject_Add( ext_appimagetool-runtime
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    # Get the runtime from the files.kde.org?
-    URL https://files.kde.org/krita/build/appimagetools-2025-04-17/runtime-x86_64
-    URL_HASH SHA256=45756b96904baa7a9bb5be5416840258707dc11ebe645d3d5ef706dfe132fba6
+    URL https://github.com/AppImage/type2-runtime/releases/download/20251108/runtime-x86_64
+    URL_HASH SHA256=2fca8b443c92510f1483a883f60061ad09b46b978b2631c807cd873a47ec260d
     DOWNLOAD_NO_EXTRACT TRUE
 
     UPDATE_COMMAND ""
