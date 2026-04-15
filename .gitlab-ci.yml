@@ -123,7 +123,7 @@ stages:
     # - del karchive-5.101.0.tar.xz
 
     - >
-      cmake -DKDECI_CA_BUNDLE_ARG=$KDECI_CA_BUNDLE -P tools\download_ca_bundle.cmake
+      cmake -DKDECI_CA_BUNDLE_ARG=$env:KDECI_CA_BUNDLE -P tools\download_ca_bundle.cmake
     # - >
     #   $env:SSL_CERT_FILE = $KDECI_CA_BUNDLE
     # - >
