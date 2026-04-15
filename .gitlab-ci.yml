@@ -112,12 +112,12 @@ stages:
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
   before_script:
-    - echo "Download with default certs"
-    - curl -vv -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
-    - del karchive-5.101.0.tar.xz
+    # - echo "Download with default certs"
+    # - curl -vv -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
+    # - del karchive-5.101.0.tar.xz
 
     - echo "Download with native certs"
-    - curl -vv --ca-native -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
+    - curl -vvv --ca-native -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
     - del karchive-5.101.0.tar.xz
 
     - cmake -DKDECI_CA_BUNDLE=$KDECI_CA_BUNDLE -P tools\download_ca_bundle.cmake
@@ -127,11 +127,11 @@ stages:
       $env:CMAKE_TLS_CAINFO = $KDECI_CA_BUNDLE
 
     - echo "Download with custom certs from environment"
-    - curl -vv -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
+    - curl -vvv -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
     - del karchive-5.101.0.tar.xz
 
     - echo "Download with custom certs explicit"
-    - curl -vv --cacert $KDECI_CA_BUNDLE -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
+    - curl -vvv --cacert $KDECI_CA_BUNDLE -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
     - del karchive-5.101.0.tar.xz
 
     - >
