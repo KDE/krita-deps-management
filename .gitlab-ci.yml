@@ -112,28 +112,12 @@ stages:
   # different commits may build different deps, so they should not be cancellable
   interruptible: false
   before_script:
-    - curl --version
-    - (get-command curl.exe).Path
-    # - echo "Download with default certs"
-    # - curl -vv -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
-    # - del karchive-5.101.0.tar.xz
+    - del "Z:\\krita-windows\\downloads\\karchive-5.101.0.tar.xz"
 
-    # - echo "Download with native certs"
-    # - curl -vvv --ca-native -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
-    # - del karchive-5.101.0.tar.xz
-
+      # Download update CA Bundle from Mozilla, our base Windows image
+      # is outdated and sysadmins have problems with keeping it up to date
     - cmake -DKDECI_CA_BUNDLE_ARG="$KDECI_CA_BUNDLE" -P tools\download_ca_bundle.cmake
     - $env:SSL_CERT_FILE = $KDECI_CA_BUNDLE
-    # - >
-    #   $env:CMAKE_TLS_CAINFO = $KDECI_CA_BUNDLE
-
-    # - echo "Download with custom certs from environment"
-    # - curl -vvv -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
-    # - del karchive-5.101.0.tar.xz
-
-    - echo "Download with custom certs explicit"
-    - curl -vvv --cacert $KDECI_CA_BUNDLE -OL https://ftp.funet.fi/pub/mirrors/ftp.kde.org/pub/kde/Attic/frameworks/5.101/karchive-5.101.0.tar.xz
-    - del karchive-5.101.0.tar.xz
 
     - >
       & $BOOTSTRAP_PYTHON_EXE_WINDOWS -m venv venv --upgrade-deps
