@@ -148,7 +148,7 @@ if (WIN32)
       GIT_REMOTE_UPDATE_STRATEGY REBASE
 
       INSTALL_DIR ${EXTPREFIX}
-
+      PATCH_COMMAND ${PATCH_COMMAND} -d qtdeclarative -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/qtdeclarative-clang21-registerid-enum-fix.patch
       # unset QMAKEFEATURES to allow incremental builds with run-ci-build.py
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${PERL_PATH} --unset=QMAKEFEATURES
           <SOURCE_DIR>/configure.bat ${_QT_conf}
