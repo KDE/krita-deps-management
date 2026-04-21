@@ -1,33 +1,33 @@
-From e5972ccd998a39efc562af6edb0a107b2b26ff37 Mon Sep 17 00:00:00 2001
-From: Alonso Schaich <alonsoschaich@fastmail.fm>
-Date: Thu, 24 Mar 2022 21:03:32 +0000
-Subject: [PATCH 1/2] [fontconfig] Do not create symlinks (microsoft#23735)
+From 86083d339e4443de2bfff29d36f7d5edb7262926 Mon Sep 17 00:00:00 2001
+From: Halla Rempt <halla@valdyas.org>
+Date: Tue, 21 Apr 2026 09:26:30 +0200
+Subject: [PATCH] Do not create symlinks
 
 ---
  conf.d/link_confs.py | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/conf.d/link_confs.py b/conf.d/link_confs.py
-index 52b8093..03608c6 100644
+index f92e1c3..d7de72c 100644
 --- a/conf.d/link_confs.py
 +++ b/conf.d/link_confs.py
-@@ -4,6 +4,7 @@ import os
- import sys
+@@ -5,6 +5,7 @@ import sys
  import argparse
  import platform
+ from pathlib import PurePath
 +import shutil
  
  if __name__=='__main__':
      parser = argparse.ArgumentParser()
-@@ -32,7 +33,7 @@ if __name__=='__main__':
+@@ -34,7 +35,7 @@ if __name__=='__main__':
          except FileNotFoundError:
              pass
          try:
--            os.symlink(src, dst)
+-            os.symlink(os.path.relpath(src, start=args.confpath), dst)
 +            shutil.copyfile(src, dst)
          except NotImplementedError:
              # Not supported on this version of Windows
              break
 -- 
-2.32.0.windows.2
+2.43.0
 
