@@ -10,8 +10,8 @@ if (WIN32)
     ExternalProject_Add(ext_gettext_bin
 
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://github.com/mlocati/gettext-iconv-windows/releases/download/v0.21-v1.16/gettext0.21-iconv1.16-static-64.zip
-        URL_HASH SHA256=721395c2e057eeed321f0c793311732e57cb4fa30d5708672a13902a69a77d43
+        URL https://github.com/mlocati/gettext-iconv-windows/releases/download/v1.0-v1.19/gettext1.0-iconv1.19-static-64.zip
+        URL_HASH SHA256=2b999bc37b56fa052ff98578e9cb188152009f634e3a66aa8ff263a016e9c466
 
         BUILD_COMMAND ${CMAKE_COMMAND} -E echo Deploying gettext 64-bit dependencies
         CONFIGURE_COMMAND ""
@@ -23,8 +23,8 @@ if (WIN32)
     ExternalProject_Add (
         ext_gettext_lib
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.kde.org/krita/build/dependencies/gettext-0.21.tar.xz
-        URL_MD5 40996bbaf7d1356d3c22e33a8b255b31
+        URL https://ftp.gnu.org/pub/gnu/gettext/gettext-1.0.tar.gz
+        URL_HASH SHA256=85d99b79c981a404874c02e0342176cf75c7698e2b51fe41031cf6526d974f1a
 
         PATCH_COMMAND ${PATCH_COMMAND} --binary -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-macro-definitions.patch
             COMMAND ${PATCH_COMMAND} --binary -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Fix-uwp-build.patch
@@ -42,9 +42,10 @@ else ()
 ExternalProject_Add( ext_gettext
     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://files.kde.org/krita/build/dependencies/gettext-0.21.tar.xz
-    URL_MD5 40996bbaf7d1356d3c22e33a8b255b31
-    PATCH_COMMAND ${PATCH_COMMAND} -Z -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-libgettextpo-linking-on-macOS.patch
+    URL https://ftp.gnu.org/pub/gnu/gettext/gettext-1.0.tar.gz
+    URL_HASH SHA256=85d99b79c981a404874c02e0342176cf75c7698e2b51fe41031cf6526d974f1a
+
+    #PATCH_COMMAND ${PATCH_COMMAND} -Z -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-libgettextpo-linking-on-macOS.patch
 
     CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} --disable-java ${GLOBAL_AUTOMAKE_PROFILE} --disable-native-java 
 
