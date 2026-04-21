@@ -14,8 +14,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 if (WIN32)
     ExternalProject_Add( ext_lzma
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://tukaani.org/xz/xz-5.2.6-windows.zip
-        URL_HASH SHA256=6fd6dad79e5b0d3b24a43bc3f79472b62a48d210f1aaa02fb06e5dfad89a4ebc
+        URL https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3-windows.zip
+        URL_HASH SHA256=8d0048ee51177b11ef1613959c2a268c951f4e7f6fb3706e681e00e34bb6d5e3
 
         INSTALL_DIR ${EXTPREFIX}
         CONFIGURE_COMMAND ""
@@ -30,14 +30,10 @@ if (WIN32)
 else ()
     ExternalProject_Add( ext_lzma
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://tukaani.org/xz/xz-5.2.6.tar.gz
-        URL_HASH SHA256=a2105abee17bcd2ebd15ced31b4f5eda6e17efd6b10f921a01cda4a44c91b3a0
+        URL https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz
+        URL_HASH SHA256=3d3a1b973af218114f4f889bbaa2f4c037deaae0c8e815eec381c3d546b974a0
 
-        INSTALL_DIR ${EXTPREFIX}
-        CONFIGURE_COMMAND ./configure --prefix=${EXTPREFIX} --disable-xz --disable-xzdec --disable-lzmadec --disable-lzmainfo --disable-lzma-links --disable-scripts --disable-doc --disable-static --enable-shared ${GLOBAL_AUTOMAKE_PROFILE}
-
-        UPDATE_COMMAND ""
-        BUILD_IN_SOURCE 1
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
     )
 
 endif ()
