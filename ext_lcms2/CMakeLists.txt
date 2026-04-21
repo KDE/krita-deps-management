@@ -8,8 +8,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 ExternalProject_Add( ext_lcms2
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://github.com/mm2/Little-CMS/releases/download/lcms2.14/lcms2-2.14.tar.gz
-    URL_HASH SHA256=28474ea6f6591c4d4cee972123587001a4e6e353412a41b3e9e82219818d5740
+    URL https://github.com/mm2/Little-CMS/archive/refs/tags/lcms2.18.tar.gz
+    URL_HASH SHA256=4f52a4459a93ac02b88e49b04dc0679e52fc92d36d3b722e5a1a44dbe8118236
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Add-modern-CMake-toolchain.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Revert-Fix-LUT-based-optimization-on-8-bits.patch
