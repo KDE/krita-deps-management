@@ -13,11 +13,9 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     MESON
 
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    DOWNLOAD_NAME openh264-v2.3.1.tar.gz
-    URL https://github.com/cisco/openh264/archive/v2.3.1.tar.gz
-    URL_HASH SHA256=453afa66dacb560bc5fd0468aabee90c483741571bca820a39a1c07f0362dc32
-
-    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-libopenh264-Enable-PIC-for-the-assembler-code-on-x86.patch
+    DOWNLOAD_NAME openh264-v2.6.0.tar.gz
+    URL https://github.com/cisco/openh264/archive/refs/tags/v2.6.0.tar.gz
+    URL_HASH SHA256=558544ad358283a7ab2930d69a9ceddf913f4a51ee9bf1bfb9e377322af81a69
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             -Dtests=disabled
