@@ -35,7 +35,7 @@ if(WIN32)
             DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
             URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
-            URL_HASH SHA256=71FEEED900FBCCCA04A3B4F2F84A7C217186F28A940ED8B7ED4725986BAF99FA
+            URL_HASH SHA256=71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa
 
             PATCH_COMMAND
                   ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch
@@ -88,7 +88,7 @@ if(WIN32)
             DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
             URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
-            URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
+            URL_HASH SHA256=71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa
 
             CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat msvc --prefix=${EXTPREFIX}
             BUILD_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${BUILD_ARGS}
@@ -149,7 +149,7 @@ else()
     ExternalProject_Add( ext_boost
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
-        URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
+        URL_HASH SHA256=71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch
               COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-mpl-Use-static-const-for-next-prior-from-C-11.patch
