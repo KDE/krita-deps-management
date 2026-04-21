@@ -34,12 +34,8 @@ if(WIN32)
 
             DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-            URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
-            URL_HASH SHA256=71FEEED900FBCCCA04A3B4F2F84A7C217186F28A940ED8B7ED4725986BAF99FA
-
-            PATCH_COMMAND
-                  ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch
-                  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-mpl-Use-static-const-for-next-prior-from-C-11.patch
+            URL https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.bz2
+            URL_HASH SHA256=49551aff3b22cbc5c5a9ed3dbc92f0e23ea50a0f7325b0d198b705e8ee3fc305
 
             CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat gcc --prefix=${EXTPREFIX}
             BUILD_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${BUILD_ARGS}
@@ -52,7 +48,7 @@ if(WIN32)
             ext_boost
             pre_install
             # Use platform-specific tag (a64 for ARM64, x64 for x86-64)
-            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/gcc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/libboost_system-mgw${KRITA_boost_COMPILER_VERSION}-mt-${BOOST_PLATFORM_TAG}-1_81.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
+            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/gcc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/libboost_system-mgw${KRITA_boost_COMPILER_VERSION}-mt-${BOOST_PLATFORM_TAG}-1_90.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
             DEPENDERS install
         )
         if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -87,8 +83,8 @@ if(WIN32)
             ext_boost
             DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-            URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
-            URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
+            URL https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.bz2
+            URL_HASH SHA256=49551aff3b22cbc5c5a9ed3dbc92f0e23ea50a0f7325b0d198b705e8ee3fc305
 
             CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat msvc --prefix=${EXTPREFIX}
             BUILD_COMMAND ${CMAKE_COMMAND} -DPREFIX=${EXTPREFIX} -P ${CMAKE_CURRENT_SOURCE_DIR}/run-b2-with-destdir.cmake -- ${BUILD_ARGS}
@@ -113,17 +109,15 @@ if(WIN32)
         )
     endif()
 elseif(ANDROID)
-    set (BUILD_ARGS --with-libraries=system --boost=1.81.0 --arch=${ANDROID_ABI} ${CMAKE_ANDROID_NDK})
+    set (BUILD_ARGS --with-libraries=system --boost=1.90.0 --arch=${ANDROID_ABI} ${CMAKE_ANDROID_NDK})
 
     ExternalProject_Add( ext_boost
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         DOWNLOAD_NAME boost-2335700042dc9882c5d03e210f9f58ab3ac83b58.tar.gz
-        URL https://github.com/moritz-wundke/Boost-for-Android/archive/2335700042dc9882c5d03e210f9f58ab3ac83b58.tar.gz
-        URL_HASH SHA256=f58385cb816edcde35c8c1172bd38c91bb75aa03aa4680305b64915f1bbd51f3
+        URL https://github.com/moritz-wundke/Boost-for-Android/archive/6dcf8c41657d2e5829253009137302a576a174cb.tar.gz
+        URL_HASH SHA256=ebdab9383a15e21c0e0829c6c483276f5d04c8f0612227021713c4f761594a95
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-support-for-NDK-27.02.patch
-            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch <SOURCE_DIR>/patches/boost-1_81_0/
-            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/0001-mpl-Use-static-const-for-next-prior-from-C-11.patch <SOURCE_DIR>/patches/boost-1_81_0/
 
         CONFIGURE_COMMAND ""
         # no prefix is passed, we will install it ourselves!
@@ -148,11 +142,9 @@ else()
     endif()
     ExternalProject_Add( ext_boost
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.bz2
-        URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
 
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-compilation-with-clang-15.patch
-              COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-mpl-Use-static-const-for-next-prior-from-C-11.patch
+        URL https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.bz2
+        URL_HASH SHA256=49551aff3b22cbc5c5a9ed3dbc92f0e23ea50a0f7325b0d198b705e8ee3fc305
 
         CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh --prefix=${EXTPREFIX} --with-libraries=system
         
