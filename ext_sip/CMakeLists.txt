@@ -12,8 +12,7 @@ message (STATUS "python executable: ${Python_EXECUTABLE}")
 if(UNIX)
     ExternalProject_Add( ext_sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        # URL https://files.pythonhosted.org/packages/62/9a/78122735697dbfc6c1db363627309eb0da7e44d8c05ba017b08666530586/sip-6.10.0.tar.gz
-        URL https://files.kde.org/krita/build/dependencies/sip-6.10.0.tar.gz
+        URL https://files.pythonhosted.org/packages/62/9a/78122735697dbfc6c1db363627309eb0da7e44d8c05ba017b08666530586/sip-6.10.0.tar.gz
         URL_HASH SHA256=fa0515697d4c98dbe04d9e898d816de1427e5b9ae5d0e152169109fd21f5d29c
 
         CONFIGURE_COMMAND ""
@@ -45,8 +44,7 @@ elseif (WIN32)
 
     ExternalProject_Add( ext_sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        # URL https://files.pythonhosted.org/packages/62/9a/78122735697dbfc6c1db363627309eb0da7e44d8c05ba017b08666530586/sip-6.10.0.tar.gz
-        URL https://files.kde.org/krita/build/dependencies/sip-6.10.0.tar.gz
+        URL https://files.pythonhosted.org/packages/62/9a/78122735697dbfc6c1db363627309eb0da7e44d8c05ba017b08666530586/sip-6.10.0.tar.gz
         URL_HASH SHA256=fa0515697d4c98dbe04d9e898d816de1427e5b9ae5d0e152169109fd21f5d29c
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-distinfo.py-to-support-prefix-option-on-Windows-.patch

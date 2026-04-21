@@ -10,8 +10,7 @@ include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 if(UNIX)
     ExternalProject_Add( ext_pyqt5-sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        # URL https://files.pythonhosted.org/packages/01/79/086b50414bafa71df494398ad277d72e58229a3d1c1b1c766d12b14c2e6d/pyqt5_sip-12.17.0.tar.gz
-        URL https://files.kde.org/krita/build/dependencies/pyqt5_sip-12.17.0.tar.gz
+        URL https://files.pythonhosted.org/packages/01/79/086b50414bafa71df494398ad277d72e58229a3d1c1b1c766d12b14c2e6d/pyqt5_sip-12.17.0.tar.gz
         URL_HASH SHA256=682dadcdbd2239af9fdc0c0628e2776b820e128bec88b49b8d692fe682f90b4f
 
         CONFIGURE_COMMAND ""
@@ -35,8 +34,7 @@ elseif(WIN32)
 
     ExternalProject_Add( ext_pyqt5-sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        # URL https://files.pythonhosted.org/packages/01/79/086b50414bafa71df494398ad277d72e58229a3d1c1b1c766d12b14c2e6d/pyqt5_sip-12.17.0.tar.gz
-        URL https://files.kde.org/krita/build/dependencies/pyqt5_sip-12.17.0.tar.gz
+        URL https://files.pythonhosted.org/packages/01/79/086b50414bafa71df494398ad277d72e58229a3d1c1b1c766d12b14c2e6d/pyqt5_sip-12.17.0.tar.gz
         URL_HASH SHA256=682dadcdbd2239af9fdc0c0628e2776b820e128bec88b49b8d692fe682f90b4f
 
         CONFIGURE_COMMAND ""

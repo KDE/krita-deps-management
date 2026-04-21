@@ -5,5 +5,4 @@ files.kde.org before linking them in krita-deps-management repo
 
 1) https://www.nasm.us
 2) https://poppler.freedesktop.org
-3) https://files.pythonhosted.org
 
