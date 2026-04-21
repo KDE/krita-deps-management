@@ -19,9 +19,9 @@ endif()
 
 ExternalProject_Add( ext_highway
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    DOWNLOAD_NAME highway-1.1.0.tar.gz
-    URL https://github.com/google/highway/archive/refs/tags/1.1.0.tar.gz
-    URL_HASH SHA256=354a8b4539b588e70b98ec70844273e3f2741302c4c377bcc4e81b3d1866f7c9
+    DOWNLOAD_NAME highway-1.3.0.tar.gz
+    URL https://github.com/google/highway/archive/refs/tags/1.3.0.tar.gz
+    URL_HASH SHA256=07b3c1ba2c1096878a85a31a5b9b3757427af963b1141ca904db2f9f4afe0bc2
 
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF -DBUILD_STATIC_LIBS=ON -DBUILD_SHARED_LIBS=OFF ${GLOBAL_PROFILE} 
