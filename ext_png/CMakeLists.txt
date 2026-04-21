@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 kis_ExternalProject_Add_with_separate_builds_apple(
     ext_png
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://downloads.sourceforge.net/project/libpng/libpng16/1.6.51/libpng-1.6.51.tar.xz
-    URL_HASH SHA256=a050a892d3b4a7bb010c3a95c7301e49656d72a64f1fc709a90b8aded192bed2
+    URL https://sourceforge.net/projects/libpng/files/libpng16/1.6.58/libpng-1.6.58.tar.gz
+    URL_HASH SHA256=8c9b05b675ca7301a458df2c2e46f26e1d41ff36b8863f8c33530bc58c2e6225
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} -DPNG_TESTS=OFF
 
