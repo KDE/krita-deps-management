@@ -3,6 +3,12 @@ if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
     cmake_policy(SET CMP0135 NEW)
 endif()
 
+# IMPORTANT NOTE
+#
+# We don't use boost::system in Krita, but we should pass at least
+# something to ./b2 to make sure boost doesn't try to build anything
+# non-header-only; (boost::system itself is a header-only library, so
+# it will not result in any module either!)
 
 project(ext_boost)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
@@ -44,13 +50,7 @@ if(WIN32)
             UPDATE_COMMAND ""
             BUILD_IN_SOURCE 1
         )
-        ExternalProject_Add_Step(
-            ext_boost
-            pre_install
-            # Use platform-specific tag (a64 for ARM64, x64 for x86-64)
-            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/gcc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/libboost_system-mgw${KRITA_boost_COMPILER_VERSION}-mt-${BOOST_PLATFORM_TAG}-1_90.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
-            DEPENDERS install
-        )
+
         if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
             message(STATUS "Applying Clang override to Boost...")
             set(_user_config "using gcc : : ${CMAKE_CXX_COMPILER} ;")
@@ -100,13 +100,6 @@ if(WIN32)
         else()
             set(KRITA_boost_COMPILER_VERSION ${MSVC_TOOLSET_VERSION})
         endif()
-        ExternalProject_Add_Step(
-            ext_boost
-            pre_install
-            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/vc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/boost_system-vc${KRITA_boost_COMPILER_VERSION}-mt-x32-1_81.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
-            COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/build-dir/boost/bin.v2/libs/system/build/vc-${KRITA_boost_COMPILER_VERSION}/release/threading-multi/visibility-hidden/boost_system-vc${KRITA_boost_COMPILER_VERSION}-mt-x64-1_81.dll -DDST=${EXTPREFIX}/bin -P ${KRITA_CI_INSTALL}
-            DEPENDERS install
-        )
     endif()
 elseif(ANDROID)
     set (BUILD_ARGS --with-libraries=system --boost=1.90.0 --arch=${ANDROID_ABI} ${CMAKE_ANDROID_NDK})
