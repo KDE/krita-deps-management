@@ -14,8 +14,8 @@ if (WIN32)
 	ExternalProject_Add( ext_iconv
 		DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 		DOWNLOAD_NAME win-iconv-v0.0.8.tar.gz
-		URL https://github.com/win-iconv/win-iconv/archive/v0.0.8.tar.gz
-		URL_MD5 e4574721c2d9667af32283175c828833
+		URL https://github.com/win-iconv/win-iconv/archive/v0.0.10.tar.gz
+		URL_MD5 fa45ad25b003942ca768cfcdf59dc5be
 
 		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
 
@@ -26,8 +26,8 @@ else ()
 
 	ExternalProject_Add( ext_iconv
 		DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-		URL https://ftp.gnu.org/gnu/libiconv/libiconv-1.17.tar.gz
-		URL_HASH SHA256=8f74213b56238c85a50a5329f77e06198771e70dd9a739779f4c02f65d971313
+		URL https://ftp.gnu.org/gnu/libiconv/libiconv-1.19.tar.gz
+		URL_HASH SHA256=88dd96a8c0464eca144fc791ae60cd31cd8ee78321e67397e25fc095c4a19aa6
 
 		CONFIGURE_COMMAND ./configure --prefix=${EXTPREFIX}  ${GLOBAL_AUTOMAKE_PROFILE}
 
