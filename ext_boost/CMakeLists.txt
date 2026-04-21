@@ -117,7 +117,7 @@ elseif(ANDROID)
         URL https://github.com/moritz-wundke/Boost-for-Android/archive/6dcf8c41657d2e5829253009137302a576a174cb.tar.gz
         URL_HASH SHA256=ebdab9383a15e21c0e0829c6c483276f5d04c8f0612227021713c4f761594a95
 
-        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-support-for-NDK-27.02.patch
+        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-support-for-NDK-27.X-and-30.0.patch
 
         CONFIGURE_COMMAND ""
         # no prefix is passed, we will install it ourselves!
