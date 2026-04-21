@@ -10,8 +10,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 if (ANDROID)
     ExternalProject_Add( ext_jpeg
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://downloads.sourceforge.net/project/libjpeg-turbo/2.1.4/libjpeg-turbo-2.1.4.tar.gz
-        URL_HASH SHA256=d3ed26a1131a13686dfca4935e520eb7c90ae76fbc45d98bb50a8dc86230342b
+        URL https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/3.1.4.1.tar.gz
+        URL_HASH SHA256=a7da42b640377c2a9a9665e2c4b0ea60cd5599afb48c2521e6df0c9dc9d15a25
 
         CMAKE_ARGS -DANDROID_ARM_MODE=arm -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DENABLE_SHARED=ON -DWITH_SIMD=OFF -DENABLE_STATIC=OFF _DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
 
@@ -21,8 +21,8 @@ else()
     kis_ExternalProject_Add_with_separate_builds_apple(
         ext_jpeg
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://downloads.sourceforge.net/project/libjpeg-turbo/2.1.4/libjpeg-turbo-2.1.4.tar.gz
-        URL_HASH SHA256=d3ed26a1131a13686dfca4935e520eb7c90ae76fbc45d98bb50a8dc86230342b
+        URL https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/3.1.4.1.tar.gz
+        URL_HASH SHA256=a7da42b640377c2a9a9665e2c4b0ea60cd5599afb48c2521e6df0c9dc9d15a25
 
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DWITH_SIMD=OFF -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
     )
