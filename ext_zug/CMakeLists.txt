@@ -9,7 +9,7 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add( ext_zug
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     GIT_REPOSITORY https://github.com/arximboldi/zug.git
-    GIT_TAG deb266f4c7c35d325de7eb3d033f06e0809495f2
+    GIT_TAG v0.1.2
 
     CMAKE_ARGS -Dzug_BUILD_TESTS=OFF -Dzug_BUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
 
