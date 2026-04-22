@@ -13,7 +13,7 @@ ExternalProject_Add(
     # of UTF-8 internationalized filenames in
     # test/flac-to-flac-metadata-test-files.
     GIT_REPOSITORY https://github.com/xiph/flac.git
-    GIT_TAG 1.4.2
+    GIT_TAG 1.5.0
 
     # Emmet: if you need metaflac, please add:
     # -DIconv_IS_BUILT_IN=TRUE
