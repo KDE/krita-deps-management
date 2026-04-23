@@ -62,7 +62,7 @@ if (WIN32)
     endif ()
 
     list(APPEND _QT_conf
-         -nomake examples -nomake tools -nomake benchmarks -nomake manual-tests -nomake minimal-static-tests
+         -nomake examples -nomake benchmarks -nomake manual-tests -nomake minimal-static-tests
         -no-dbus -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev
         -qt-sqlite
         -no-feature-assistant -no-feature-designer -feature-linguist -no-feature-androiddeployqt
@@ -169,8 +169,8 @@ elseif (ANDROID)
           <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -verbose
           -android-sdk ${ANDROID_SDK_ROOT} -android-ndk ${CMAKE_ANDROID_NDK} -android-abis ${ANDROID_ABI}
           -xplatform android-clang -android-ndk-platform android-24
-          -make libs -qt-sqlite -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -system-zlib
-          -nomake examples -nomake tests -nomake tools -skip qt3d -skip qtactiveqt -skip qtcanvas3d
+          -qt-sqlite -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -system-zlib
+          -nomake examples -nomake tests -skip qt3d -skip qtactiveqt -skip qtcanvas3d
           -skip qtconnectivity -skip qtlocation -skip qtwayland -skip qtwebchannel -skip qtwebengine
           -skip qtwebsockets -skip qtwebview -skip qtserialport  -skip qtvirtualkeyboard -skip qtspeech
           -skip qtsensors  -skip qtscxml -skip qtremoteobjects -skip qtxmlpatterns -skip qtnetworkauth
@@ -308,7 +308,7 @@ else( APPLE )
         -skip qt3d -skip qtactiveqt -skip qtcanvas3d -skip qtconnectivity -skip qtdoc -skip qtlocation -skip qtsensors -skip qtserialport -skip qtwayland
         -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtwebengine -skip qtxmlpatterns
         -skip qtcharts -skip qtdatavis3d  -skip qtgamepad -skip qtnetworkauth
-        -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus -skip qtspeech -skip qtvirtualkeyboard -nomake examples -nomake tools
+        -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus -skip qtspeech -skip qtvirtualkeyboard -nomake examples
         -no-dbus -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev
         -system-zlib -qt-pcre -qt-sqlite
         -no-feature-assistant -no-feature-designer -feature-linguist
