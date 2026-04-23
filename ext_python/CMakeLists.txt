@@ -8,8 +8,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 if (UNIX)
     if (APPLE)
-        set(PYTHON_SHORT_VERSION "3.13")
-        set(PYTHON_VERSION "3.13.5")
+        set(PYTHON_SHORT_VERSION "3.14")
+        set(PYTHON_VERSION "3.14.4")
 
         if(MACOS_ARCHS GREATER 1)
             set(PYTHON_MACOS_CONFIG "--enable-universalsdk" "--with-universal-archs=universal2")
@@ -80,8 +80,8 @@ if (UNIX)
 
     ExternalProject_Add( ext_python
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://www.python.org/ftp/python/3.13.5/Python-3.13.5.tar.xz
-        URL_MD5 dbaa8833aa736eddbb18a6a6ae0c10fa
+        URL https://www.python.org/ftp/python/3.14.4/Python-3.14.4.tar.xz
+        URL_MD5 279d92a745927c3aa5fdf68ec0bfd638
 
         CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${EXTPREFIX} ${GLOBAL_AUTOMAKE_PROFILE} --enable-shared --without-static-libpython
 
@@ -92,7 +92,7 @@ if (UNIX)
         ext_python 
         pre_install
         # presumably something actually needs this symlink?
-        COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink python3.13 python
+        COMMAND ${CMAKE_COMMAND} -E chdir <TMP_DIR> ${CMAKE_COMMAND} -E create_symlink python3.14 python
         COMMAND ${CMAKE_COMMAND} -DSRC=<TMP_DIR>/python -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
 
         DEPENDERS install
@@ -104,15 +104,15 @@ if (UNIX)
 elseif(WIN32)
     ExternalProject_Add( ext_python
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://www.python.org/ftp/python/3.13.5/python-3.13.5-embed-amd64.zip
-        URL_MD5 370a345dbea8bbc1830a2385f24632d2
+        URL https://www.python.org/ftp/python/3.14.4/python-3.14.4-embed-amd64.zip
+        URL_MD5 128546d09ce1c29a3f9f743f59a13bf1
 
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
         INSTALL_COMMAND ${CMAKE_COMMAND} -E echo deploying python3 64-bit binary
                 COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/ -DDST=${EXTPREFIX}/python -P ${KRITA_CI_INSTALL_DIRECTORY}
                 COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/python3.dll -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
-                COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/python313.dll -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
+                COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/python314.dll -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
                 COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/vcruntime140.dll -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
                 COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/vcruntime140_1.dll -DDST=${EXTPREFIX}/bin -P  ${KRITA_CI_INSTALL}
                 COMMAND ${CMAKE_COMMAND} -DSRC=${CMAKE_CURRENT_SOURCE_DIR}/sitecustomize.py -DDST=${EXTPREFIX}/lib/site-packages/ -P  ${KRITA_CI_INSTALL}
