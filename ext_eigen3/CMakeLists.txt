@@ -13,6 +13,9 @@ ExternalProject_Add(
     URL_HASH SHA256=e9c326dc8c05cd1e044c71f30f1b2e34a6161a3b6ecf445d56b53ff1669e3dec
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} -DBUILD_TESTING=OFF
+        # we don't use BLAS and LAPACK optimizations for now and they
+        # seem to cause some troubles for gcc to compile this thing
+        -DEIGEN_BUILD_BLAS=OFF -DEIGEN_BUILD_LAPACK=OFF
 
     UPDATE_COMMAND ""
 )
