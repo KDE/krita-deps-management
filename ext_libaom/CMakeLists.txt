@@ -22,8 +22,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     ext_libaom
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-    URL https://storage.googleapis.com/aom-releases/libaom-3.13.1.tar.gz
-    URL_HASH SHA256=19e45a5a7192d690565229983dad900e76b513a02306c12053fb9a262cbeca7d
+    URL https://storage.googleapis.com/aom-releases/libaom-3.13.3.tar.gz
+    URL_HASH SHA256=446a4ae9741cb8f3eeb98c949d25f91b48cb2b8569cae975c4b737392e9024fc
 
     # Static library is needed because ffmpeg accesses aom_codec_av1_dx_algo
     # which is not exported in Windows compilers.
