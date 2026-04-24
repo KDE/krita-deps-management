@@ -22,7 +22,7 @@ if (NOT MSVC)
     set(_stack_guard_flag "-Denable-ssp=enabled")
 endif() 
 
-set(FFMPEG_GIT_SHA1 7601055639e789cdeeff793c48eaaf3186a70aad)
+set(FFMPEG_GIT_SHA1 894da5ca7d742e4429ffb2af534fcda0103ef593)
 
 kis_ExternalProject_Add_with_separate_builds_apple(
     ext_ffmpeg
@@ -47,7 +47,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0012-Fix-include-paths-for-libavcodec-s-codecs.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0013-Fix-VP9-hw-accelerated-encoder-with-libvpl.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0014-Fix-version-file-generation-in-version.py.patch
-          COMMAND ${CMAKE_COMMAND} -E echo "7.1.1-g${FFMPEG_GIT_SHA1}" > VERSION
+          COMMAND ${CMAKE_COMMAND} -E echo "8.0.1-g${FFMPEG_GIT_SHA1}" > VERSION
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             --libdir=lib
