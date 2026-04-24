@@ -29,18 +29,13 @@ endif()
 kis_ExternalProject_Add_with_separate_builds_apple(
   ext_mlt
   DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-  URL https://github.com/mltframework/mlt/releases/download/v7.28.0/mlt-7.28.0.tar.gz
-  URL_HASH SHA256=bc425bf9602213f5f4855b78cfbbcd43eeb78097c508588bde44415963955aa1
-  #GIT_REPOSITORY https://github.com/emmetoneillpdx/mlt.git
-  #GIT_TAG origin/master
+  URL https://github.com/mltframework/mlt/releases/download/v7.38.0/mlt-7.38.0.tar.gz
+  URL_HASH SHA256=b8f0a23c89e9250edc5038d745537c382367bf2ad3dad5d5c7cd13b0fe1c4144
 
   PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macOS-allow-finding-plugins-outside-bundles.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-MLT-check-pointers-before-dereferencing.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-installing-melt-manpage-when-DESTDIR-is-active.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Add-an-option-to-skip-non-plugins-in-reposit.patch
-        # upstream fixes this problem differently, we can just remove this patch after updating to MLT 7.34.0+
-        # https://github.com/mltframework/mlt/commit/64aa54375d2816d82210144bb5cebaf1ba911aa5
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/win32-nanosleep-posix-timers-guard.patch
         ${ANDROID_EXTRA_PATCHES}
 
   CMAKE_ARGS ${GLOBAL_PROFILE} -DMOD_OPENCV=OFF -DMOD_QT=OFF -DMOD_QT6=OFF -DMOD_XML=OFF ${WIN32_CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} ${BUILD_EXTRA_OPTS}
