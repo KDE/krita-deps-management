@@ -11,7 +11,7 @@ if (ANDROID)
         ext_sdl2
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
         GIT_REPOSITORY https://github.com/sh-zam/SDL-android-glue.git
-        GIT_TAG 8babf290ece99a58a5354d52775bf79063cf7cf5
+        GIT_TAG 9facc86b6add4e3a02d2ef499a4cf4e82302e189
 
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
             -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
@@ -27,8 +27,8 @@ else()
     ExternalProject_Add(
         ext_sdl2
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://github.com/libsdl-org/SDL/releases/download/release-2.26.0/SDL2-2.26.0.tar.gz
-        URL_HASH SHA256=8000d7169febce93c84b6bdf376631f8179132fd69f7015d4dadb8b9c2bdb295
+        URL https://github.com/libsdl-org/SDL/releases/download/release-2.32.10/SDL2-2.32.10.tar.gz
+        URL_HASH SHA256=5f5993c530f084535c65a6879e9b26ad441169b3e25d789d83287040a9ca5165
 
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
             -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
