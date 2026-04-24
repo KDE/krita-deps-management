@@ -23,8 +23,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     MESON
 
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    GIT_REPOSITORY https://github.com/dimula73/libvpx.git
-    GIT_TAG meson-2
+    GIT_REPOSITORY https://gitlab.freedesktop.org/gstreamer/meson-ports/libvpx.git
+    GIT_TAG 1a9feea0ccde0dc100f00bd12a6fcd7b507ccc87
 
     WORKING_DIRECTORY <BINARY_DIR>
 
