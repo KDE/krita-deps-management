@@ -26,6 +26,7 @@ ExternalProject_Add(
         COMMAND ${CMAKE_COMMAND} -E echo "Removing Strawberry Perl pkg-config"
         COMMAND ${CMAKE_COMMAND} -DSRC=Strawberry/perl/bin/pkg-config.bat -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_REMOVE_AT_PREFIX}
         COMMAND ${CMAKE_COMMAND} -DSRC=Strawberry/perl/bin/pkg-config -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_REMOVE_AT_PREFIX}
+        COMMAND ${CMAKE_COMMAND} -DSRC=Strawberry/c -DPREFIX=${EXTPREFIX} -P ${KRITA_CI_REMOVE_AT_PREFIX}
 
         UPDATE_COMMAND ""
 
