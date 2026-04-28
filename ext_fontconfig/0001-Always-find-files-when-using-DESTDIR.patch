@@ -1,0 +1,56 @@
+diff --git a/conf.d/link_confs.py b/conf.d/link_confs.py
+index f92e1c3b..66bedf29 100644
+--- a/conf.d/link_confs.py
++++ b/conf.d/link_confs.py
+@@ -6,6 +6,25 @@ import argparse
+ import platform
+ from pathlib import PurePath
+ 
++
++def fix_path(path):
++    if os.path.isabs(path):
++        destdir = os.environ.get('DESTDIR')
++        if destdir:
++            normedPath = os.path.normpath(path)
++            normedPath = os.path.splitdrive(normedPath)[1]
++            if normedPath.startswith(os.sep):
++                normedPath = normedPath[1:]
++            outpath = os.path.join(destdir, normedPath)
++        else:
++            outpath = path
++    else:
++        outpath = os.path.join(os.environ['MESON_INSTALL_DESTDIR_PREFIX'], os.path.normpath(path))
++
++    return outpath
++
++
++
+ if __name__=='__main__':
+     parser = argparse.ArgumentParser()
+     parser.add_argument('availpath')
+@@ -13,21 +32,14 @@ if __name__=='__main__':
+     parser.add_argument('links', nargs='+')
+     args = parser.parse_args()
+ 
+-    if os.path.isabs(args.confpath):
+-        destdir = os.environ.get('DESTDIR')
+-        if destdir:
+-            # c:\destdir + c:\prefix must produce c:\destdir\prefix
+-            confpath = str(PurePath(destdir, *PurePath(args.confpath).parts[1:]))
+-        else:
+-            confpath = args.confpath
+-    else:
+-        confpath = os.path.join(os.environ['MESON_INSTALL_DESTDIR_PREFIX'], args.confpath)
++    confpath = fix_path(args.confpath)
++    availpath = fix_path(args.availpath)
+ 
+     if not os.path.exists(confpath):
+         os.makedirs(confpath)
+ 
+     for link in args.links:
+-        src = os.path.join(args.availpath, link)
++        src = os.path.join(availpath, link)
+         dst = os.path.join(confpath, link)
+         try:
+             os.remove(dst)
+

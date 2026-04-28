@@ -15,7 +15,9 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     URL https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.16.0.tar.xz
     URL_HASH SHA256=6a33dc555cc9ba8b10caf7695878ef134eeb36d0af366041f639b1da9b6ed220
 
-    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Do-not-create-symlinks.patch
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Always-find-files-when-using-DESTDIR.patch
+       COMMAND  ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Do-not-create-symlinks.patch
+
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
         -Ddoc=disabled
