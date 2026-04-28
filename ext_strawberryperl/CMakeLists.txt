@@ -14,9 +14,8 @@ endif()
 ExternalProject_Add(
     ext_strawberryperl
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    # From https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip
-    URL https://files.kde.org/krita/build/dependencies/strawberry-perl-5.32.1.1-32bit-portable.zip
-    URL_HASH SHA1=28bca91cadd6651c2b2463db8587c170bf17f2fa
+    URL https://files.kde.org/krita/build/dependencies/strawberry-perl-5.42.2.1-64bit-portable.zip
+    URL_HASH SHA1=b3cf1ae1eb40cb1a5b9f598ec196cd0fbe68c3ee
 
     BUILD_COMMAND ""
     CONFIGURE_COMMAND ""
