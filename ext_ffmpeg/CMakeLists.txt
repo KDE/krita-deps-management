@@ -22,7 +22,7 @@ if (NOT MSVC)
     set(_stack_guard_flag "-Denable-ssp=enabled")
 endif() 
 
-set(FFMPEG_GIT_SHA1 894da5ca7d742e4429ffb2af534fcda0103ef593)
+set(FFMPEG_GIT_SHA1 1834eb471506fe3f6296aa844825ac317e51bd5b)
 
 kis_ExternalProject_Add_with_separate_builds_apple(
     ext_ffmpeg
