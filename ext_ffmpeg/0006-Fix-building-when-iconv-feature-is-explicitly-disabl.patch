@@ -1,0 +1,28 @@
+From 7cf090d4d53d2ad353be81e488eeb847951a5ee7 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Tue, 15 Apr 2025 11:17:44 +0200
+Subject: [PATCH 06/10] Fix building when iconv feature is explicitly disabled
+
+---
+ meson.build | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/meson.build b/meson.build
+index c8224e0afd..4d41452289 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2167,6 +2167,11 @@ foreach check : all_checks
+   name = check[0]
+   opt_name = options_map.get(name, name)
+ 
++  if (name == 'iconv' and get_option(opt_name).disabled())
++    message('Skipping iconv because disabled by the user')
++    continue
++  endif
++
+   if check_type == 'func'
+     headers = []
+   elif check_type == 'header'
+-- 
+2.54.0
+

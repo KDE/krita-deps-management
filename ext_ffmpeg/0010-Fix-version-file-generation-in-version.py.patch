@@ -1,7 +1,7 @@
-From b610503103dba0475247c292a61393926a09085c Mon Sep 17 00:00:00 2001
+From 1c96c88023c15a653d42952c285489f7f68265e7 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Fri, 18 Apr 2025 11:40:20 +0200
-Subject: [PATCH] Fix version file generation in version.py
+Subject: [PATCH 10/10] Fix version file generation in version.py
 
 When VERSION file exists, it overrides the revision deduced from git tags
 ---
@@ -24,5 +24,5 @@ index 8b133f0860..0c4f6fcac4 100644
 -            f.write('#define FFMPEG_VERSION "%s"\n' % revision)
 +            f.write('#define FFMPEG_VERSION "%s"\n' % version)
 -- 
-2.25.1
+2.54.0
 

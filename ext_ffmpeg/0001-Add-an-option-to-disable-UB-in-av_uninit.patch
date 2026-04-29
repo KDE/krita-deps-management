@@ -1,18 +1,18 @@
-From 360e8724ae626e3ddc0730f81f42da5ef0371135 Mon Sep 17 00:00:00 2001
+From 5a541db57bd5b780b181decf7cb45681433c503a Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Mon, 14 Apr 2025 12:56:53 +0200
-Subject: [PATCH 1/4] Add an option to disable UB in av_uninit
+Subject: [PATCH 01/10] Add an option to disable UB in av_uninit
 
 Usage:
 meson configure -Dno_uninit_ub=true
 ---
  libavutil/attributes.h | 4 +++-
- meson.build            | 5 +++++
+ meson.build            | 6 ++++++
  meson_options.txt      | 1 +
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/libavutil/attributes.h b/libavutil/attributes.h
-index 04c615c952..3ab77d6eb8 100644
+index d15ede1286..6075a72f06 100644
 --- a/libavutil/attributes.h
 +++ b/libavutil/attributes.h
 @@ -150,7 +150,9 @@
@@ -27,10 +27,10 @@ index 04c615c952..3ab77d6eb8 100644
  #else
  #    define av_uninit(x) x
 diff --git a/meson.build b/meson.build
-index 7714bcfed7..73e7ded5e1 100644
+index 0c78c8710e..f9fd42f9f8 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -549,6 +549,11 @@ types_list = [
+@@ -581,8 +581,14 @@ types_list = [
    'struct_mfxConfigInterface',
  ]
  
@@ -39,18 +39,21 @@ index 7714bcfed7..73e7ded5e1 100644
 +  add_global_arguments('-DDISABLE_AV_UNINIT_UB=1', language : 'cpp')
 +endif
 +
- asm = get_option('asm')
+ asm = get_option('asm').require(cpu != 'x86' or host_system != 'android',
+     error_message: 'causes text relocations on Android x86')
++    
  inline_asm = get_option('inline_asm')
  
+ conf.set10('asm', asm.allowed())
 diff --git a/meson_options.txt b/meson_options.txt
-index ab5841285f..fd16f3c063 100644
+index 48083ee7d9..4fa1471213 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -2485,3 +2485,4 @@ option('os2threads', type: 'feature', value: 'disabled', description: 'Enable OS
- option('tests', type : 'feature', value : 'auto', description : 'Build tests', yield : true)
+@@ -2537,3 +2537,4 @@ option('tests', type : 'feature', value : 'auto', description : 'Build tests', y
  option('large_tests', type : 'feature', value : 'disabled')
  option('assert_level', type: 'integer', min: 0, max: 2, value: 0)
+ option('suppress_warnings', type: 'boolean', value: false, description: 'Disable all compiler warnings. Only used when built as a subproject.')
 +option('no_uninit_ub', type: 'boolean', value: false, description: 'Disable UB in av_uninit optimization')
 -- 
-2.25.1
+2.54.0
 
