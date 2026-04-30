@@ -1,4 +1,4 @@
-From c5d6b9ef96d787fb5042f6e0b6633aa7c5992c2b Mon Sep 17 00:00:00 2001
+From 7cf090d4d53d2ad353be81e488eeb847951a5ee7 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Tue, 15 Apr 2025 11:17:44 +0200
 Subject: [PATCH 06/10] Fix building when iconv feature is explicitly disabled
@@ -8,10 +8,10 @@ Subject: [PATCH 06/10] Fix building when iconv feature is explicitly disabled
  1 file changed, 5 insertions(+)
 
 diff --git a/meson.build b/meson.build
-index 95d7f3fb46..bc84d3351c 100644
+index c8224e0afd..4d41452289 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2061,6 +2061,11 @@ foreach check : all_checks
+@@ -2167,6 +2167,11 @@ foreach check : all_checks
    name = check[0]
    opt_name = options_map.get(name, name)
  

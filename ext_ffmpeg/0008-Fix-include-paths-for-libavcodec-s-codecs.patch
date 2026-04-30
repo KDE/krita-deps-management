@@ -1,20 +1,22 @@
-From b7ef4bf26fe2cf8c7390f116fba3e38a9b8c1310 Mon Sep 17 00:00:00 2001
+From 13e662a5eadeeca72507d8d0817823eba879a37d Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Thu, 17 Apr 2025 16:34:48 +0200
 Subject: [PATCH 08/10] Fix include paths for libavcodec's codecs
 
 ---
- libavcodec/meson.build | 6 ++++++
- 1 file changed, 6 insertions(+)
+ libavcodec/meson.build | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/libavcodec/meson.build b/libavcodec/meson.build
-index 78bf05d3c9..517900509b 100644
+index 805b72c89f..ed86f407ee 100644
 --- a/libavcodec/meson.build
 +++ b/libavcodec/meson.build
-@@ -1210,6 +1210,12 @@ endforeach
+@@ -1253,6 +1253,14 @@ foreach i : [libavcodec_aac_optional_sources, libavcodec_bsf_optional_sources, l
+   endforeach
+ endforeach
  
- libavcodec_optional_sources += libavcodec_vvc_optional_sources
- 
++libavcodec_optional_sources += libavcodec_vvc_optional_sources
++
 +foreach i : [libavcodec_optional_sources]
 +  foreach k, v: i
 +    libavcodec_optional_includes += {k: include_directories('.')}

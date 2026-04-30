@@ -1,0 +1,51 @@
+diff --git a/libavutil/meson.build b/libavutil/meson.build
+index 7d1f2f7d22..ce67aec928 100644
+--- a/libavutil/meson.build
++++ b/libavutil/meson.build
+@@ -147,7 +147,6 @@ libavutil_headers = files(
+   'hwcontext_mediacodec.h',
+   'hwcontext_opencl.h',
+   'hwcontext_oh.h',
+-  'hwcontext_vaapi.h',
+   'hwcontext_videotoolbox.h',
+   'hwcontext_vdpau.h',
+   'hwcontext_vulkan.h',
+@@ -210,7 +209,6 @@ libavutil_optional_sources = {
+   'ohcodec' : files('hwcontext_oh.c'),
+   'opencl' : files('hwcontext_opencl.c'),
+   'qsv' : files('hwcontext_qsv.c'),
+-  'vaapi' : files('hwcontext_vaapi.c'),
+   'vdpau' : files('hwcontext_vdpau.c'),
+   'videotoolbox' : files('hwcontext_videotoolbox.c'),
+   'vulkan' : files('hwcontext_vulkan.c','vulkan.c'),
+diff --git a/meson.build b/meson.build
+index 0c78c8710e..7eccfe418b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -212,8 +212,6 @@ example_list = [
+   'show_metadata_example',
+   'transcode_aac_example',
+   'transcode_example',
+-  'vaapi_encode_example',
+-  'vaapi_transcode_example',
+   'qsv_transcode_example',
+ ]
+ 
+@@ -1571,7 +1569,6 @@ hwaccel_autodetect_library_list = [
+   'libdrm',
+   'nvdec',
+   'nvenc',
+-  'vaapi',
+   'vdpau',
+   'videotoolbox',
+   'vulkan',
+@@ -1739,8 +1736,6 @@ config_extra = [
+   'texturedsp',
+   'texturedspenc',
+   'tpeldsp',
+-  'vaapi_1',
+-  'vaapi_encode',
+   'vulkan_1_4',
+   'vc1dsp',
+   'videodsp',
+

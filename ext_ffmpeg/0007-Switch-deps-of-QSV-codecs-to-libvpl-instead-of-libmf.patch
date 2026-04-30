@@ -1,4 +1,4 @@
-From 81bda7e653fee816cb5f8a0b576467ad8bb5761c Mon Sep 17 00:00:00 2001
+From 0d4a9a6f2d6ed860583fcb89c0d2d3bbc121074f Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Thu, 17 Apr 2025 15:22:03 +0200
 Subject: [PATCH 07/10] Switch deps of QSV codecs to libvpl instead of libmfx
@@ -8,10 +8,10 @@ Subject: [PATCH 07/10] Switch deps of QSV codecs to libvpl instead of libmfx
  1 file changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/depgraph.py b/depgraph.py
-index eceb711c7e..3129014661 100644
+index ba09ee6984..9ff240d8ff 100644
 --- a/depgraph.py
 +++ b/depgraph.py
-@@ -163,7 +163,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+@@ -173,7 +173,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
                          'gcrypt',
                          'libm',
                          'libdrm',
@@ -20,7 +20,7 @@ index eceb711c7e..3129014661 100644
                          'opencl',
                          'openssl',
                          'user32',
-@@ -264,7 +264,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+@@ -272,7 +272,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
                                            'avutil']},
   'decode_video_example': {'deps': ['avcodec', 'avutil']},
   'deflate_wrapper': {'deps': ['zlib']},
@@ -29,7 +29,7 @@ index eceb711c7e..3129014661 100644
   'deinterlace_vaapi_filter': {'deps': ['vaapi']},
   'delogo_filter': {'deps': ['gpl']},
   'demux_decode_example': {'deps': ['avcodec', 'avformat', 'avutil']},
-@@ -561,7 +561,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+@@ -584,7 +584,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
                              'mpegts_demuxer']},
   'hls_muxer': {'select': ['mov_muxer', 'mpegts_muxer']},
   'hqdn3d_filter': {'deps': ['gpl']},
@@ -38,7 +38,7 @@ index eceb711c7e..3129014661 100644
   'hstack_vaapi_filter': {'deps': ['vaapi_1']},
   'htmlpages': {'deps': ['perl'], 'deps_any': ['makeinfo_html', 'texi2html']},
   'http_protocol': {'select': ['tcp_protocol'], 'suggest': ['zlib']},
-@@ -761,7 +761,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+@@ -792,7 +792,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
   'mjpeg_encoder': {'select': ['jpegtables', 'mpegvideoenc']},
   'mjpeg_nvdec_hwaccel': {'deps': ['nvdec'], 'select': ['mjpeg_decoder']},
   'mjpeg_qsv_decoder': {'select': ['qsvdec']},
@@ -47,7 +47,7 @@ index eceb711c7e..3129014661 100644
   'mjpeg_vaapi_encoder': {'deps': ['vaencpictureparameterbufferjpeg'],
                           'select': ['cbs_jpeg', 'jpegtables', 'vaapi_encode']},
   'mjpeg_vaapi_hwaccel': {'deps': ['vaapi'], 'select': ['mjpeg_decoder']},
-@@ -931,7 +931,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+@@ -964,7 +964,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
   'overlay_cuda_filter': {'deps': ['ffnvcodec'],
                           'deps_any': ['cuda_nvcc', 'cuda_llvm']},
   'overlay_opencl_filter': {'deps': ['opencl']},
@@ -56,7 +56,7 @@ index eceb711c7e..3129014661 100644
   'overlay_vaapi_filter': {'deps': ['vaapi', 'vaprocpipelinecaps_blend_flags']},
   'overlay_vulkan_filter': {'deps': ['vulkan', 'spirv_compiler']},
   'owdenoise_filter': {'deps': ['gpl']},
-@@ -977,10 +977,10 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+@@ -1013,10 +1013,10 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
   'qdmc_at_decoder': {'deps': ['audiotoolbox']},
   'qrencode_filter': {'deps': ['libqrencode']},
   'qrencodesrc_filter': {'deps': ['libqrencode']},
@@ -69,8 +69,8 @@ index eceb711c7e..3129014661 100644
                                   'h264_qsv_decoder']},
   'qsv_transcode_example': {'deps': ['avcodec',
                                      'avformat',
-@@ -1057,7 +1057,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
-                        'deps_any': ['cuda_nvcc', 'cuda_llvm']},
+@@ -1095,7 +1095,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+  'scale_d3d11_filter': {'deps': ['d3d11va']},
   'scale_filter': {'deps': ['swscale']},
   'scale_npp_filter': {'deps': ['ffnvcodec', 'libnpp']},
 - 'scale_qsv_filter': {'deps': ['libmfx'], 'select': ['qsvvpp']},
@@ -78,7 +78,7 @@ index eceb711c7e..3129014661 100644
   'scale_vaapi_filter': {'deps': ['vaapi']},
   'scale_video_example': {'deps': ['avutil', 'swscale']},
   'scale_vt_filter': {'deps': ['videotoolbox', 'vtpixeltransfersessioncreate']},
-@@ -1288,7 +1288,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+@@ -1337,7 +1337,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
   'vp9_metadata_bsf': {'select': ['cbs_vp9']},
   'vp9_nvdec_hwaccel': {'deps': ['nvdec'], 'select': ['vp9_decoder']},
   'vp9_qsv_decoder': {'select': ['qsvdec']},
@@ -87,18 +87,18 @@ index eceb711c7e..3129014661 100644
   'vp9_rkmpp_decoder': {'deps': ['rkmpp']},
   'vp9_v4l2m2m_decoder': {'deps': ['v4l2_m2m', 'vp9_v4l2_m2m']},
   'vp9_vaapi_encoder': {'deps': ['vaencpictureparameterbuffervp9'],
-@@ -1300,8 +1300,8 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
-                        'select': ['vp9_decoder']},
-  'vp9_videotoolbox_hwaccel': {'deps': ['videotoolbox'],
-                               'select': ['vp9_decoder']},
+@@ -1352,8 +1352,8 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+  'vp9_vulkan_hwaccel': {'deps': ['vulkan', 'vulkan_1_4'],
+                         'select': ['vp9_decoder']},
+  'vpp_amf_filter': {'deps': ['amf']},
 - 'vpp_qsv_filter': {'deps': ['libmfx'], 'select': ['qsvvpp']},
 - 'vstack_qsv_filter': {'deps': ['libmfx'], 'select': ['qsvvpp']},
 + 'vpp_qsv_filter': {'deps': ['libvpl'], 'select': ['qsvvpp']},
 + 'vstack_qsv_filter': {'deps': ['libvpl'], 'select': ['qsvvpp']},
   'vstack_vaapi_filter': {'deps': ['vaapi_1']},
-  'vec_xl': {'deps': ['altivec']},
   'vsx': {'deps': ['altivec']},
-@@ -1358,7 +1358,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
+  'vulkan': {'deps': ['threads'], 'deps_any': ['libdl', 'loadlibrary']},
+@@ -1419,7 +1419,7 @@ GRAPH = {'aac_adtstoasc_bsf': {'select': ['adts_header', 'mpeg4audio']},
   'xma2_decoder': {'select': ['wmapro_decoder']},
   'xmv_demuxer': {'select': ['riffdec']},
   'xop': {'deps': ['avx']},

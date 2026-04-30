@@ -1,4 +1,4 @@
-From 691328da869cd18a96d7bc40c565db8b66b07165 Mon Sep 17 00:00:00 2001
+From e5ad7c6477097996a5e15fb28439136cdf62efc2 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Mon, 14 Apr 2025 15:43:46 +0200
 Subject: [PATCH 04/10] Fix detection of autodetected libs when explicitly
@@ -30,10 +30,10 @@ index 0000000000..c493b12f2a
 +}
 \ No newline at end of file
 diff --git a/meson.build b/meson.build
-index 072fc073f8..95d7f3fb46 100644
+index 4588c8e509..c8224e0afd 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2054,14 +2054,6 @@ options_map = {
+@@ -2160,14 +2160,6 @@ options_map = {
    'linux_fb_h' : 'linux_fbdev',
  }
  
@@ -48,7 +48,7 @@ index 072fc073f8..95d7f3fb46 100644
  foreach check : all_checks
    check_type = check[0]
    check = check[1]
-@@ -2156,16 +2148,7 @@ foreach check : all_checks
+@@ -2262,16 +2254,7 @@ foreach check : all_checks
      preconditions = opts.get('preconditions', [])
  
      foreach precondition : preconditions
@@ -66,7 +66,7 @@ index 072fc073f8..95d7f3fb46 100644
      endforeach
  
      # FIXME: or should these just be preconditions in the list above instead?
-@@ -2317,16 +2300,6 @@ foreach check : all_checks
+@@ -2426,16 +2409,6 @@ foreach check : all_checks
    endif
  endforeach
  
@@ -83,23 +83,23 @@ index 072fc073f8..95d7f3fb46 100644
  xcrun = disabler()
  bin2c = disabler()
  metalcc = disabler()
-@@ -2473,7 +2446,7 @@ endif
+@@ -2588,7 +2561,7 @@ endif
  
  schannel_extra_deps = []
  
 -if conf.get('schannel') == 1
 +if conf.get('schannel', 0) == 1
-   secur32_dep = cc.find_library('secur32', required: false)
-   if cc.links(cpp_cond.format('winerror.h', 'defined(SEC_I_CONTEXT_EXPIRED)'), dependencies: secur32_dep, name: 'schannel dependency works')
-     schannel_extra_deps += [secur32_dep]
-@@ -2490,7 +2463,7 @@ if conf.get('avisynth') == 1
+   secur32_dep = [
+     cc.find_library('secur32', required: false),
+     cc.find_library('ncrypt', required: false),
+@@ -2620,7 +2593,7 @@ if conf.get('avisynth') == 1
  endif
  
  # Manual check for amf
 -if conf.get('amf') == 1
 +if conf.get('amf', 0) == 1
    conf.set('amf', cc.links(cpp_cond.format('AMF/core/Version.h', 
-   '(AMF_VERSION_MAJOR << 48 | AMF_VERSION_MINOR << 32 | AMF_VERSION_RELEASE << 16 | AMF_VERSION_BUILD_NUM) >= 0x0001000400210000'), name: 'AMF version'))
+   '(AMF_VERSION_MAJOR << 48 | AMF_VERSION_MINOR << 32 | AMF_VERSION_RELEASE << 16 | AMF_VERSION_BUILD_NUM) >= 0x0001000400240000'), name: 'AMF version'))
  endif
 -- 
 2.54.0

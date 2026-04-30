@@ -1,4 +1,4 @@
-From c7102adb04bc93826cfccf5e35bb3b14613c4a35 Mon Sep 17 00:00:00 2001
+From 1c96c88023c15a653d42952c285489f7f68265e7 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Fri, 18 Apr 2025 11:40:20 +0200
 Subject: [PATCH 10/10] Fix version file generation in version.py
