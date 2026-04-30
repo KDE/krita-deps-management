@@ -44,9 +44,11 @@ kis_ExternalProject_Add_with_separate_builds_apple(
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0008-Fix-include-paths-for-libavcodec-s-codecs.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0009-Fix-VP9-hw-accelerated-encoder-with-libvpl.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0010-Fix-version-file-generation-in-version.py.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/remove-va.patch
           COMMAND ${CMAKE_COMMAND} -E echo "8.0.1-g${FFMPEG_GIT_SHA1}" > VERSION
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
+            -Dvaapi=disabled
             --libdir=lib
             -Dno_uninit_ub=true
             ${_stack_guard_flag}
@@ -97,6 +99,43 @@ kis_ExternalProject_Add_with_separate_builds_apple(
             -Dlibmp3lame=enabled
             -Dlibopus=enabled
             -Dlibvorbis=enabled
+-Dvaapi=disabled
+-Dvaapi_drm=disabled
+-Dvaapi_x11=disabled
+-Dvaapi_win32=disabled
+-Dav1_vaapi_encoder=disabled
+-Dh264_vaapi_encoder=disabled
+-Dhevc_vaapi_encoder=disabled
+-Dmjpeg_vaapi_encoder=disabled
+-Dmpeg2_vaapi_encoder=disabled
+-Dvp8_vaapi_encoder=disabled
+-Dvp9_vaapi_encoder=disabled
+-Dav1_vaapi_hwaccel=disabled
+-Dh263_vaapi_hwaccel=disabled
+-Dh264_vaapi_hwaccel=disabled
+-Dhevc_vaapi_hwaccel=disabled
+-Dmjpeg_vaapi_hwaccel=disabled
+-Dmpeg2_vaapi_hwaccel=disabled
+-Dmpeg4_vaapi_hwaccel=disabled
+-Dvc1_vaapi_hwaccel=disabled
+-Dvp8_vaapi_hwaccel=disabled
+-Dvp9_vaapi_hwaccel=disabled
+-Dvvc_vaapi_hwaccel=disabled
+-Dwmv3_vaapi_hwaccel=disabled
+-Ddeinterlace_vaapi_filter=disabled
+-Ddenoise_vaapi_filter=disabled
+-Doverlay_vaapi_filter=disabled
+-Dprocamp_vaapi_filter=disabled
+-Dscale_vaapi_filter=disabled
+-Dsharpness_vaapi_filter=disabled
+-Dtonemap_vaapi_filter=disabled
+-Dtranspose_vaapi_filter=disabled
+-Dhstack_vaapi_filter=disabled
+-Dvstack_vaapi_filter=disabled
+-Dxstack_vaapi_filter=disabled
+-Dpad_vaapi_filter=disabled
+-Ddrawbox_vaapi_filter=disabled
+
             ${EXTRA_MESON_FLAGS}
 
     UPDATE_COMMAND ""
