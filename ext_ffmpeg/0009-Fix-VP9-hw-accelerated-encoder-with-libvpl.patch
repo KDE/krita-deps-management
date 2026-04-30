@@ -1,4 +1,4 @@
-From db98a5913512b6cc68d488a086875db6443f4923 Mon Sep 17 00:00:00 2001
+From 6a7f99bd4bcb0738349b916446b9ab82f5130748 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Thu, 17 Apr 2025 21:01:49 +0200
 Subject: [PATCH 09/10] Fix VP9 hw-accelerated encoder with libvpl
@@ -9,10 +9,10 @@ MFX_CODEC_VP9 can be provided by libvpl as well.
  1 file changed, 1 insertion(+)
 
 diff --git a/meson.build b/meson.build
-index 4d41452289..5a2e71be67 100644
+index bc84d3351c..c83b45b605 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2625,6 +2625,7 @@ elif conf.get('libmfx') == 1
+@@ -2495,6 +2495,7 @@ elif conf.get('libmfx') == 1
    conf.set10('MFX_CODEC_VP9'.to_lower(), cc.has_header_symbol('mfxstructures.h', 'MFX_CODEC_VP9'))
    warning('libmfx is deprecated. Please run meson setup with -Dlibmfx=disabled to use libvpl instead.')
  elif conf.get('libvpl') == 1

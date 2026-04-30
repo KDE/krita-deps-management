@@ -1,4 +1,4 @@
-From 5a541db57bd5b780b181decf7cb45681433c503a Mon Sep 17 00:00:00 2001
+From e6add5a908c8258ef7e4e58d6b723de35d2008bd Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Mon, 14 Apr 2025 12:56:53 +0200
 Subject: [PATCH 01/10] Add an option to disable UB in av_uninit
@@ -12,7 +12,7 @@ meson configure -Dno_uninit_ub=true
  3 files changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/libavutil/attributes.h b/libavutil/attributes.h
-index d15ede1286..6075a72f06 100644
+index 04c615c952..3ab77d6eb8 100644
 --- a/libavutil/attributes.h
 +++ b/libavutil/attributes.h
 @@ -150,7 +150,9 @@
@@ -27,10 +27,10 @@ index d15ede1286..6075a72f06 100644
  #else
  #    define av_uninit(x) x
 diff --git a/meson.build b/meson.build
-index 0c78c8710e..f9fd42f9f8 100644
+index 25aa2f84b2..34527a5201 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -581,8 +581,14 @@ types_list = [
+@@ -553,8 +553,14 @@ types_list = [
    'struct_mfxConfigInterface',
  ]
  
@@ -46,13 +46,13 @@ index 0c78c8710e..f9fd42f9f8 100644
  
  conf.set10('asm', asm.allowed())
 diff --git a/meson_options.txt b/meson_options.txt
-index 48083ee7d9..4fa1471213 100644
+index 46cae8449b..e381299532 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -2537,3 +2537,4 @@ option('tests', type : 'feature', value : 'auto', description : 'Build tests', y
+@@ -2489,3 +2489,4 @@ option('tests', type : 'feature', value : 'auto', description : 'Build tests', y
  option('large_tests', type : 'feature', value : 'disabled')
  option('assert_level', type: 'integer', min: 0, max: 2, value: 0)
- option('suppress_warnings', type: 'boolean', value: false, description: 'Disable all compiler warnings. Only used when built as a subproject.')
+ option('suppress_warnings', type: 'boolean', value: 'false', description: 'Disable all compiler warnings. Only used when built as a subproject.')
 +option('no_uninit_ub', type: 'boolean', value: false, description: 'Disable UB in av_uninit optimization')
 -- 
 2.54.0

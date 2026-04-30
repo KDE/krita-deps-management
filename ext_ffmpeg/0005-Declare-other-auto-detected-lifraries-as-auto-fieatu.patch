@@ -1,4 +1,4 @@
-From 2de41b906cfa7f2b1c744cae86dc588f73201ad7 Mon Sep 17 00:00:00 2001
+From e303f78c9a787f4a3c04ac90793559fce6ce6def Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Tue, 15 Apr 2025 11:16:14 +0200
 Subject: [PATCH 05/10] Declare other auto-detected lifraries as 'auto'
@@ -9,10 +9,10 @@ Subject: [PATCH 05/10] Declare other auto-detected lifraries as 'auto'
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/meson_options.txt b/meson_options.txt
-index 0a8892fb4b..209f84d1b0 100644
+index 62914bf226..38316c4a15 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -164,7 +164,7 @@ option('securetransport', type: 'feature', value: 'auto')
+@@ -163,7 +163,7 @@ option('securetransport', type: 'feature', value: 'auto')
  option('schannel', type: 'feature', value: 'auto')
  option('shell32', type: 'feature', value: 'disabled')
  option('spirv_compiler', type: 'feature', value: 'disabled')
