@@ -12,10 +12,10 @@ endif()
 
 if (ANDROID)
   set(BUILD_EXTRA_OPTS -DMOD_RTAUDIO=OFF)
-  set(ANDROID_EXTRA_PATCHES COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Fix-export-table-for-FILE-arguments-with-NDK.patch)
+  set(ANDROID_EXTRA_PATCHES COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0011-android-Fix-export-table-for-FILE-arguments-with-NDK.patch)
   if (${ANDROID_ABI} STREQUAL "armeabi-v7a")
     list(APPEND ANDROID_EXTRA_PATCHES
-         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Try-changing-linker-version-specification-to-long-lo.patch)
+         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0012-android-Try-changing-linker-version-specification-to-long-lo.patch)
   endif()
 else()
   set(BUILD_EXTRA_OPTS)
@@ -32,10 +32,10 @@ kis_ExternalProject_Add_with_separate_builds_apple(
   URL https://github.com/mltframework/mlt/releases/download/v7.38.0/mlt-7.38.0.tar.gz
   URL_HASH SHA256=b8f0a23c89e9250edc5038d745537c382367bf2ad3dad5d5c7cd13b0fe1c4144
 
-  PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macOS-allow-finding-plugins-outside-bundles.patch
+  PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-MacOS-allow-finding-plugins-outside-bundles.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-MLT-check-pointers-before-dereferencing.patch
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-installing-melt-manpage-when-DESTDIR-is-active.patch
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Add-an-option-to-skip-non-plugins-in-reposit.patch
+        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Fix-installing-melt-manpage-when-DESTDIR-is-active.patch
+        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-Android-Add-an-option-to-skip-non-plugins-in-reposit.patch
         ${ANDROID_EXTRA_PATCHES}
 
   CMAKE_ARGS ${GLOBAL_PROFILE} -DMOD_OPENCV=OFF -DMOD_QT=OFF -DMOD_QT6=OFF -DMOD_XML=OFF ${WIN32_CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} ${BUILD_EXTRA_OPTS}
