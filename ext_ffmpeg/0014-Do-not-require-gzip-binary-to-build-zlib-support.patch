@@ -1,0 +1,34 @@
+From 6ecf8c5ffe7032d149420691a1824edfcc542efe Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Thu, 7 May 2026 15:43:35 +0200
+Subject: [PATCH] Do not require gzip binary to build zlib support
+
+This binary is not available on Windows
+---
+ meson.build | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 0c78c8710e..29903a5e57 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2699,9 +2699,14 @@ endif
+ 
+ # Manual (abridged) check for Zlib/GZIP support
+ if conf.get('zlib') == 1
+-  conf.set10('zlib_gzip', true)
+-  gzip_exe = find_program('gzip', native: true)
++  gzip_exe = find_program('gzip', native: true, required: false)
++  conf.set10('zlib_gzip', gzip_exe.found())
+   conf.set10('gzip', gzip_exe.found())
++
++  if not gzip_exe.found()
++    conf.set10('ptx_compression', false)
++    conf.set10('resource_compression', false)
++  endif
+ else
+   conf.set10('ptx_compression', false)
+   conf.set10('resource_compression', false)
+-- 
+2.34.1
+
