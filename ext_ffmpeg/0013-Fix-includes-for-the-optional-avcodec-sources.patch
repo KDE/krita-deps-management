@@ -1,0 +1,38 @@
+From 19939c8d1d309ee5d2cb7f3bddb3e1a7e773d1d2 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Thu, 7 May 2026 15:00:13 +0200
+Subject: [PATCH] Fix includes for the optional avcodec sources
+
+`libavcodec_optional_sources` map has more elements
+than the ones iterated in the loop above, hence the
+ ncludes should be added in a separate loop.
+---
+ libavcodec/meson.build | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/libavcodec/meson.build b/libavcodec/meson.build
+index 805b72c89f..2d10e05db0 100644
+--- a/libavcodec/meson.build
++++ b/libavcodec/meson.build
+@@ -1244,11 +1244,16 @@ subdir('opus')
+ subdir('vulkan')
+ subdir('vvc')
+ 
+-libavcodec_optional_includes = {}
+-
+ foreach i : [libavcodec_aac_optional_sources, libavcodec_bsf_optional_sources, libavcodec_hevc_optional_sources, libavcodec_opus_optional_sources, libavcodec_vvc_optional_sources]
+   foreach k, v: i
+     libavcodec_optional_sources += {k: libavcodec_optional_sources.get(k, []) + v}
++  endforeach
++endforeach
++
++libavcodec_optional_includes = {}
++
++foreach i : [libavcodec_optional_sources]
++  foreach k, v: i
+     libavcodec_optional_includes += {k: include_directories('.')}
+   endforeach
+ endforeach
+-- 
+2.34.1
+
