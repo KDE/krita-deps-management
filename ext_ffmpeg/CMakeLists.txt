@@ -36,7 +36,6 @@ kis_ExternalProject_Add_with_separate_builds_apple(
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-an-option-to-disable-UB-in-av_uninit.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Add-options-for-SSP-and-CFGuard.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Be-more-forceful-when-setting-PIC-on-x86_32.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-Fix-detection-of-autodetected-libs-when-explicitly-p.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0005-Declare-other-auto-detected-lifraries-as-auto-fieatu.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0006-Fix-building-when-iconv-feature-is-explicitly-disabl.patch
