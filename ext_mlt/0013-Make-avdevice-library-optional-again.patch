@@ -1,0 +1,86 @@
+From b14594b5538d840389d8a31617e1921d1b66dcf6 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Mon, 11 May 2026 15:20:13 +0200
+Subject: [PATCH] Make avdevice library optional again
+
+It is not used by avformat when performing
+playback via SDL2, the only thing it does is
+initializing avdevice and not using it later.
+---
+ CMakeLists.txt                      | 2 +-
+ cmake/FindFFmpeg.cmake              | 4 +++-
+ src/modules/avformat/CMakeLists.txt | 4 ++++
+ src/modules/avformat/factory.c      | 4 ++++
+ 4 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index df7ca479..d905389a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -229,8 +229,8 @@ if(MOD_AVFORMAT)
+     AVUTIL
+     AVCODEC
+     AVFILTER
+-    AVDEVICE
+     SWRESAMPLE
++    OPTIONAL_COMPONENTS AVDEVICE
+   )
+ 
+   list(APPEND MLT_SUPPORTED_COMPONENTS avformat)
+diff --git a/cmake/FindFFmpeg.cmake b/cmake/FindFFmpeg.cmake
+index e2571409..f3811dec 100644
+--- a/cmake/FindFFmpeg.cmake
++++ b/cmake/FindFFmpeg.cmake
+@@ -194,7 +194,9 @@ foreach (_component ${FFmpeg_FIND_COMPONENTS})
+     endif ()
+     list(APPEND _FFmpeg_FOUND_LIBRARIES ${${_component}_LIBRARIES})
+   endif ()
+-  list(APPEND _FFmpeg_REQUIRED_VARS ${_component}_LIBRARIES ${_component}_INCLUDE_DIRS ${_component}_FOUND)
++  if (${FFMPEG_FIND_REQUIRED_${_component}})
++    list(APPEND _FFmpeg_REQUIRED_VARS ${_component}_LIBRARIES ${_component}_INCLUDE_DIRS ${_component}_FOUND)
++  endif()
+ endforeach ()
+ list(INSERT _FFmpeg_REQUIRED_VARS 0 _FFmpeg_FOUND_LIBRARIES)
+ 
+diff --git a/src/modules/avformat/CMakeLists.txt b/src/modules/avformat/CMakeLists.txt
+index dbef25fa..14bbe927 100644
+--- a/src/modules/avformat/CMakeLists.txt
++++ b/src/modules/avformat/CMakeLists.txt
+@@ -51,6 +51,10 @@ if(WIN32)
+   endif()
+ endif()
+ 
++if(AVDEVICE_FOUND)
++  target_compile_definitions(mltavformat PRIVATE AVDEVICE)
++endif()
++
+ if(CPU_MMX)
+   target_compile_definitions(mltavformat PRIVATE USE_MMX)
+ endif()
+diff --git a/src/modules/avformat/factory.c b/src/modules/avformat/factory.c
+index 5909600b..d788712e 100644
+--- a/src/modules/avformat/factory.c
++++ b/src/modules/avformat/factory.c
+@@ -45,7 +45,9 @@ extern mlt_link link_swresample_init(mlt_profile profile, mlt_service_type, cons
+ // ffmpeg Header files
+ #include "mltavformat_export.h"
+ #include <libavcodec/avcodec.h>
++#ifdef AVDEVICE
+ #include <libavdevice/avdevice.h>
++#endif
+ #include <libavfilter/avfilter.h>
+ #include <libavformat/avformat.h>
+ #include <libavutil/opt.h>
+@@ -58,7 +60,9 @@ static void avformat_init()
+     // Initialise avformat if necessary
+     if (avformat_initialised == 0) {
+         avformat_initialised = 1;
++#ifdef AVDEVICE
+         avdevice_register_all();
++#endif
+         avformat_network_init();
+         av_log_set_level(mlt_log_get_level());
+         if (getenv("MLT_AVFORMAT_PRODUCER_CACHE")) {
+-- 
+2.43.0
+
