@@ -1,0 +1,22 @@
+From bcc791da96847789efd07fa4ba78d47e7b66c0bf Mon Sep 17 00:00:00 2001
+From: Luna Lovecraft <ciubix8514@gmail.com>
+Date: Mon, 18 May 2026 21:30:48 +0400
+Subject: [PATCH 2/2] Update to cmake 4
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f377c42..c565114 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8.12)
++cmake_minimum_required(VERSION 3.29)
+ project(vorbis)
+ 
+ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+-- 
+2.54.0
+

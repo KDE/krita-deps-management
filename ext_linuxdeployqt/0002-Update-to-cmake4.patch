@@ -1,0 +1,25 @@
+From d1e3f3cf2f9ce048fc844509d19a3e6544522678 Mon Sep 17 00:00:00 2001
+From: Luna Lovecraft <ciubix8514@gmail.com>
+Date: Wed, 20 May 2026 20:46:28 +0400
+Subject: [PATCH 2/2] Update to cmake4
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f53724a..618cd35 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ # CMake configuration for linuxdeployqt
+ # Not meant to replace the qmake build system, but for use with CMake based IDEs.
+ 
+-cmake_minimum_required(VERSION 3.2)
++cmake_minimum_required(VERSION 3.29)
+ 
+ project(linuxdeployqt)
+ 
+-- 
+2.54.0
+

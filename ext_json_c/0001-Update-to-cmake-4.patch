@@ -1,0 +1,36 @@
+From 1e11d9be48b58d8c1a7c248cd8a2385a4c9f2693 Mon Sep 17 00:00:00 2001
+From: Luna Lovecraft <ciubix8514@gmail.com>
+Date: Mon, 18 May 2026 21:21:15 +0400
+Subject: [PATCH] Update to cmake 4
+
+---
+ CMakeLists.txt      | 2 +-
+ apps/CMakeLists.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 631accf..8bd9c23 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,7 +3,7 @@
+ #   and many OpenWRT packages require, much newer CMake packages.
+ #  We're stopping before 3.10 because that version starts requiring
+ #   c++11, which isn't available on e.g HPUX.
+-cmake_minimum_required(VERSION 3.9...3.12)
++cmake_minimum_required(VERSION 3.29)
+ 
+ # JSON-C library is C only project.
+ # PROJECT_VERSION{,_MAJOR,_MINOR,_PATCH} set by project():
+diff --git a/apps/CMakeLists.txt b/apps/CMakeLists.txt
+index f7c9dec..8b996bf 100644
+--- a/apps/CMakeLists.txt
++++ b/apps/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ 
+-cmake_minimum_required(VERSION 2.8)  # see ../CMakeLists.txt for why 2.8
++cmake_minimum_required(VERSION 3.29)  # see ../CMakeLists.txt for why 2.8
+ 
+ if(POLICY CMP0075)
+     cmake_policy(SET CMP0075 NEW)
+-- 
+2.54.0

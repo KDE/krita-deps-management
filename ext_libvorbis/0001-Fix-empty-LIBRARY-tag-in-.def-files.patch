@@ -1,7 +1,7 @@
-From d79b30bc28138225280844727d46656f9b080289 Mon Sep 17 00:00:00 2001
+From 70b8837921899c1a6bf69530c06cd3024d26f3ec Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Fri, 7 Apr 2023 13:58:31 +0200
-Subject: [PATCH] Fix empty LIBRARY tag in .def files
+Subject: [PATCH 1/2] Fix empty LIBRARY tag in .def files
 
 ---
  win32/vorbis.def     | 1 -
@@ -44,5 +44,5 @@ index 4dc5549..243795d 100644
  ov_clear
  ov_open
 -- 
-2.38.1.windows.1
+2.54.0
 

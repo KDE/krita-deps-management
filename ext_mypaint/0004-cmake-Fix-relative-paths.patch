@@ -1,17 +1,17 @@
-From 165c022a9ab7b6dff88f20c576b41e36991e2f99 Mon Sep 17 00:00:00 2001
+From 5887496ae29afbcd4758bd7325f3d94807b93a01 Mon Sep 17 00:00:00 2001
 From: "L. E. Segovia" <amy@amyspark.me>
 Date: Tue, 17 Nov 2020 23:44:44 +0000
-Subject: [PATCH 4/5] cmake: Fix relative paths
+Subject: [PATCH 4/6] cmake: Fix relative paths
 
 ---
  CMakeLists.txt | 16 ++++++++--------
  1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0da19e9..b99f289 100644
+index ea6071b..f6f198c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -66,11 +66,11 @@ target_link_libraries(mypaint ${JSONC_LIBRARIES})
+@@ -66,11 +66,11 @@ target_link_libraries(mypaint PRIVATE ${JSONC_LIBRARIES})
  set_property(TARGET mypaint PROPERTY C_STANDARD 11)
  install(TARGETS mypaint
      EXPORT libmypaintTargets
@@ -49,5 +49,5 @@ index 0da19e9..b99f289 100644
 -install(EXPORT libmypaintTargets DESTINATION lib/cmake/libmypaint)
 +install(EXPORT libmypaintTargets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libmypaint)
 -- 
-2.29.2.windows.1
+2.54.0
 

@@ -1,7 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
-if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
-    cmake_policy(SET CMP0135 NEW)
-endif()
+cmake_minimum_required(VERSION 3.29)
 
 project(ext_mypaint)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
@@ -16,6 +13,7 @@ ExternalProject_Add( ext_mypaint
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-cmake-library-versioning-info-for-CMake-itself.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-cmake-Fix-relative-paths.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0005-Export-all-symbols.patch
+        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0006-Update-to-cmake-4.patch
 
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}

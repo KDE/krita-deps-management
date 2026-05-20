@@ -1,7 +1,7 @@
-From 6c70f2fba1491b1bedc5c891d3add83b4eac67e3 Mon Sep 17 00:00:00 2001
+From 70291bf9124eade41bc4d3502110e7c683656ce2 Mon Sep 17 00:00:00 2001
 From: "L. E. Segovia" <amy@amyspark.me>
 Date: Sat, 3 Apr 2021 01:45:52 +0000
-Subject: [PATCH 5/5] Export all symbols
+Subject: [PATCH 5/6] Export all symbols
 
 ---
  CMakeLists.txt | 3 +++
@@ -22,5 +22,5 @@ index f6f198c..0890f7c 100644
  install(TARGETS mypaint
      EXPORT libmypaintTargets
 -- 
-2.30.1.windows.1
+2.54.0
 

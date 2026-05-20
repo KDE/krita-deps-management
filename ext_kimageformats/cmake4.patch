@@ -1,0 +1,17 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 65d479d..563e4e2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.16)
++cmake_minimum_required(VERSION 3.29)
+ 
+ project(KImageFormats)
+ 
+@@ -89,5 +89,3 @@ if (BUILD_TESTING)
+ endif()
+ 
+ feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
+-
+-kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+

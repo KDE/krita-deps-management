@@ -5,10 +5,7 @@
 # FIXME: Remove this setting when exiv2 has been updated to remove usage of
 # `auto_ptr`, and also remove the workaround in `FindLibExiv2.cmake`.
 
-cmake_minimum_required(VERSION 3.21)
-if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
-    cmake_policy(SET CMP0135 NEW)
-endif()
+cmake_minimum_required(VERSION 3.29)
 
 project(ext_exiv2)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)

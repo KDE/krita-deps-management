@@ -1,4 +1,4 @@
-From 0305bbffa2e736c735f4482fed30c973e47456bd Mon Sep 17 00:00:00 2001
+From 4764e6596fd56dd6e311c5e9aaa46b4ebc52ac26 Mon Sep 17 00:00:00 2001
 From: "L. E. Segovia" <amy@amyspark.me>
 Date: Fri, 26 Feb 2021 15:41:10 +0000
 Subject: [PATCH] Add vcpkg CMake toolchain
@@ -16,7 +16,7 @@ Subject: [PATCH] Add vcpkg CMake toolchain
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
-index 0000000..b877947
+index 0000000..a7ac238
 --- /dev/null
 +++ b/CMakeLists.txt
 @@ -0,0 +1,126 @@
@@ -26,7 +26,7 @@ index 0000000..b877947
 +#
 +# SPDX-License-Identifier: BSD-2-Clause
 +
-+cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.29)
 +
 +project(giflib LANGUAGES C VERSION 5.2.1)
 +
@@ -489,5 +489,5 @@ index 77c75c0..a96cf27 100644
  #include "getarg.h"
  
 -- 
-2.31.1.windows.1
+2.54.0
 
