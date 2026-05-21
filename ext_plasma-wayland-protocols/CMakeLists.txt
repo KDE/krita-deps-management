@@ -10,8 +10,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_plasma-wayland-protocols
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://github.com/KDE/plasma-wayland-protocols/archive/refs/tags/v1.13.0.tar.gz
-    URL_HASH SHA256=b4441a673cfb5dcdef921a2793b2dc6de6c4bed00ac005814376fc16caf1a016
+    URL https://invent.kde.org/libraries/plasma-wayland-protocols/-/archive/v1.21.0/plasma-wayland-protocols-v1.21.0.tar.gz
+    URL_HASH SHA256=2e6cea3529c0965c0147aee30cdd7e5725957ca441043579288803246a3a5758
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
 
