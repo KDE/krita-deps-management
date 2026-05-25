@@ -6,7 +6,7 @@ endif()
 project(ext_qt)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "56c34fb6d2b3acfd42cf370d27bbb14ed23376cf")
+set(QT_GIT_TAG "01778be7a36435a56c9d12195a4e1dcdb67923e8")
 
 if (MINGW)
   set(QT_BUILD_COMMAND   mingw32-make -j${SUBMAKE_JOBS})
