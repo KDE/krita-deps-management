@@ -1,7 +1,7 @@
 From eb2ae932326e3e1eda2e0b3962b4e91ee54e0b27 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Wed, 20 May 2026 16:45:31 +0200
-Subject: [PATCH 1/2] meson: Work around windeployqt expecting no ICU prefix
+Subject: [PATCH] meson: Work around windeployqt expecting no ICU prefix
 
 ---
  meson.build                       | 8 ++++++++

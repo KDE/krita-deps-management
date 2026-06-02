@@ -38,7 +38,6 @@ kis_ExternalProject_Add_with_separate_builds_apple(
             <SOURCE_DIR>
          COMMAND ${CMAKE_COMMAND} -E echo Deploying patches
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-meson-Work-around-windeployqt-expecting-no-ICU-prefi.patch
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Don-t-install-ICU-tools-into-the-installation-prefix.patch
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX} ${EXTRA_MESON_FLAGS}
     UPDATE_COMMAND ""
