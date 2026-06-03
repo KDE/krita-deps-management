@@ -2,6 +2,7 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'base/expat': '@same'
+    'base/brotli': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
