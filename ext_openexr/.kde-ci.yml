@@ -1,4 +1,0 @@
-Dependencies:
-- 'on': ['Windows', 'MacOS', 'Android']
-  'require':
-    'base/zlib': '@same'
