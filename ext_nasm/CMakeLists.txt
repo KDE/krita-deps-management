@@ -21,7 +21,6 @@ if (WIN32)
         BUILD_COMMAND ""
         CONFIGURE_COMMAND ""
         INSTALL_COMMAND ${CMAKE_COMMAND} -E echo Deploying nasm 64-bit binaries
-                COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/rdoff -DDST=${EXTPREFIX}/bin/rdoff -P ${KRITA_CI_INSTALL_DIRECTORY}
                 COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/nasm.exe -DDST=${EXTPREFIX}/bin/ -P ${KRITA_CI_INSTALL}
                 COMMAND ${CMAKE_COMMAND} -DSRC=<SOURCE_DIR>/ndisasm.exe -DDST=${EXTPREFIX}/bin/ -P ${KRITA_CI_INSTALL}
 
