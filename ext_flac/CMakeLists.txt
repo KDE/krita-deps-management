@@ -32,6 +32,8 @@ ExternalProject_Add(
         -DINSTALL_MANPAGES=FALSE
         ${GLOBAL_PROFILE}
 
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Revert-CMake-disable-fseeko-on-32-bit-Android-before.patch
+
     UPDATE_COMMAND ""
 
     DEPENDS ${OGG_DEP}
