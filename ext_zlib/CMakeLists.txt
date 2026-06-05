@@ -20,27 +20,8 @@ ExternalProject_Add(
     UPDATE_COMMAND ""
 )
 
-if(WIN32)
-    # Workaround for zlib's library naming bug:
-    # https://github.com/madler/zlib/issues/652
-    if (MINGW)
-        ExternalProject_Add_Step(
-            ext_zlib
-            pre_install
-            COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/libzlib.dll.a <BINARY_DIR>/libz.dll.a
-            COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/libz.dll.a -DDST=${EXTPREFIX}/lib -P ${KRITA_CI_INSTALL}
-            DEPENDERS install
-        )
-    elseif(MSVC)
-        ExternalProject_Add_Step(
-            ext_zlib
-            pre_install
-            COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/zlib.lib <BINARY_DIR>/z.lib
-            COMMAND ${CMAKE_COMMAND} -DSRC=<BINARY_DIR>/z.lib -DDST=${EXTPREFIX}/lib -P  ${KRITA_CI_INSTALL}
-            DEPENDERS install
-        )
-    endif()
-endif()
+# ZLib had a naming bug on Windows for ages, it is resolved in newer versions:
+# https://github.com/madler/zlib/issues/652
 
 else()
 ExternalProject_Add(
