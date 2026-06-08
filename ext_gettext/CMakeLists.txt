@@ -7,6 +7,28 @@ project(ext_gettext)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
 if (WIN32)
+    #
+    # We build gettext is a weird way. We download all the executables, like gettext.exe
+    # is a staticly prebuilt form from the official website. And intl.dll is built
+    # by creating our own CMakeLists.txt file and building it manually. We don't build any
+    # tools ourselves.
+    #
+    # UTF-8 patch problem
+    #
+    # The current version of gettext uses a patch that explicitly allows it
+    # handle UTF-8 strings by converting them into UTF-16 and passing to _wopen().
+    # Since Krita explictily declares it uses UTF-8 codepage in its manifest,
+    # and Windows 10 is not supported anymore, we don't need this patch anymore.
+    #
+    # Ideally, out plan should be like that:
+    # 1) Remove 0003-Fix-win-unicode-paths.patch, which will force libintl to use open()
+    #    calls directly
+    # 2) Remove a patch ext_ki18n\0001-ki18n-fix-loading-catalogs-with-patched-gettext.patch, which
+    #    utilizes this utf-8 encoding.
+    # 3) Check if Krita can still open and use translations when run from a folder
+    #    with non-latin characters
+    #
+
     ExternalProject_Add(ext_gettext_bin
 
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
