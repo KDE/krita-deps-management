@@ -33,6 +33,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Fix-installing-melt-manpage-when-DESTDIR-is-active.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-Android-Add-an-option-to-skip-non-plugins-in-reposit.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0013-Remove-dependency-on-libavdevice.patch
+        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0014-Revert-Fix-build-on-msys2-mingw64.patch
+        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0015-win-Don-t-build-an-own-version-nanosleep-when-not-ne.patch
         ${ANDROID_EXTRA_PATCHES}
 
   CMAKE_ARGS ${GLOBAL_PROFILE}
