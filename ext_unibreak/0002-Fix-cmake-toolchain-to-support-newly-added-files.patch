@@ -1,0 +1,42 @@
+From a3510d52f014bb45961781b7686e67dbeb2db531 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Thu, 11 Jun 2026 13:01:11 +0200
+Subject: [PATCH] Fix cmake toolchain to support newly added files
+
+---
+ CMakeLists.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c602351..f4fc32e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2,7 +2,7 @@
+ # SPDX-FileCopyrightText: 2022 L. E. Segovia <amy@amyspark.me>
+ # SPDX-License-Ref: MIT
+ 
+-cmake_minimum_required(VERSION 3.8.0)
++cmake_minimum_required(VERSION 3.29.0)
+ 
+ project(libunibreak VERSION 5.0 LANGUAGES C)
+ 
+@@ -14,6 +14,8 @@ set(libunibreak_srcs
+   src/linebreak.c
+   src/linebreakdata.c
+   src/linebreakdef.c
++  src/eastasianwidthdata.c
++  src/eastasianwidthdef.c
+   src/wordbreak.c
+   src/wordbreakdata.c
+   src/graphemebreak.c
+@@ -47,6 +49,7 @@ if(NOT DISABLE_INSTALL_HEADERS)
+     src/graphemebreakdef.h
+     src/linebreak.h
+     src/linebreakdef.h
++    src/eastasianwidthdef.h
+     src/test_skips.h
+     src/unibreakbase.h
+     src/unibreakdef.h
+-- 
+2.43.0
+
