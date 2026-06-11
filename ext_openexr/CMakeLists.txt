@@ -11,6 +11,8 @@ ExternalProject_Add( ext_openexr
     URL https://github.com/AcademySoftwareFoundation/openexr/releases/download/v3.4.10/openexr-3.4.10.tar.gz
     URL_HASH SHA256=2e054a8f5030c25d1585cbfa537feaaf86d69388b75c00d96c3a91f676e88cbe
 
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-macos-fix-non-compatible-1014-code.patch
+
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} -DNAMESPACE_VERSIONING=OFF -DOPENEXR_FORCE_INTERNAL_DEFLATE=ON
 
