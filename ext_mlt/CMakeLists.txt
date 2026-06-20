@@ -59,7 +59,7 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     -DMOD_OLDFILM=OFF
     -DMOD_OPENCV=OFF
     -DMOD_OPENFX=OFF
-    -DMOD_PLUS=OFF
+    -DMOD_PLUS=ON
     -DMOD_PLUSGPL=OFF
     -DMOD_QT=OFF
     -DMOD_QT6=OFF
