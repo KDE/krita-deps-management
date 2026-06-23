@@ -1,5 +1,12 @@
 PostInstallScripts:
-    fix-pcfiles: ../tools/make_pkgconfig_files_relocatable.py
+  - 'on': ['@all']
+    'require':
+      fix-pcfiles: ../tools/make_pkgconfig_files_relocatable.py
+  - 'on': ['Windows']
+    'require':
+      split-debug: ../ci-utilities/split-debug-info.py
+      sign-package: ../ci-utilities/sign-windows-package-at-notary-service.py
+      verify-no-debug-and-signed: ../ci-utilities/verify-release-binaries.py
 
 Options:
   use-ccache: False
