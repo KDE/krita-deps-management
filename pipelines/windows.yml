@@ -50,10 +50,15 @@ all_local_cache_windows:
   extends: 
     - all_publish_windows
     - .local_cache_mixin
+  variables:
+    KDECI_SIGN_BINARIES: False
+
 all_shared_windows:
   extends: 
     - all_publish_windows
     - .shared_build_mixin
+  variables:
+    KDECI_SIGN_BINARIES: False
 
 custom_publish_windows:
   stage: Dependencies
@@ -70,6 +75,8 @@ custom_local_cache_windows:
   extends:
   - custom_publish_windows
   - .local_cache_mixin
+  variables:
+    KDECI_SIGN_BINARIES: False
 
 dirty_publish_windows:
   extends:
@@ -81,3 +88,5 @@ dirty_local_cache_windows:
   extends:
   - dirty_publish_windows
   - .local_cache_mixin
+  variables:
+    KDECI_SIGN_BINARIES: False
