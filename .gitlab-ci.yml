@@ -106,6 +106,8 @@ stages:
     EXTERNALS_DOWNLOAD_DIR: "Z:\\krita-windows\\downloads"
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
+    KDECI_SIGN_BINARIES: True
+    KRITACI_WINDOWS_SIGN_CONFIG: upstream-ci-utilities/signing/signwindowsbinaries.ini
     KDECI_WORKDIR_PATH: "C:\\_"
     KDECI_CA_BUNDLE: "C:\\_\\_ca_bundle\\cacert.pem"
     PYTHONUTF8: 1
@@ -120,9 +122,15 @@ stages:
     - >
       & $BOOTSTRAP_PYTHON_EXE_WINDOWS -m venv venv --upgrade-deps
     - . venv\Scripts\Activate.ps1
-    - pip install -r requirements.txt
+
     - git clone https://invent.kde.org/packaging/krita-ci-utilities.git -b work/split-sign-packages --depth=1 ci-utilities
+    - git clone https://invent.kde.org/sysadmin/ci-notary-service.git --depth=1
+    - git clone https://invent.kde.org/sysadmin/ci-utilities.git upstream-ci-utilities --depth=1
+
+    - pip install -r requirements.txt
     - pip install -r ci-utilities/requirements-windows.txt
+    - pip install -r ci-notary-service/requirements.txt
+
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_base:
