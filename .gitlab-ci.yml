@@ -122,6 +122,7 @@ stages:
     - . venv\Scripts\Activate.ps1
     - pip install -r requirements.txt
     - git clone https://invent.kde.org/packaging/krita-ci-utilities.git --depth=1 ci-utilities
+    - pip install -r ci-utilities/requirements-windows.txt
     - git config --global --add safe.directory $CI_PROJECT_DIR
 
 .appimage_base:
