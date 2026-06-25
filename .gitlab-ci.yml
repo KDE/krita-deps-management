@@ -107,7 +107,7 @@ stages:
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
     KDECI_SIGN_BINARIES: True
-    KRITACI_WINDOWS_SIGN_CONFIG: upstream-ci-utilities/signing/signwindowsbinaries.ini
+    KRITACI_WINDOWS_SIGN_CONFIG: "$CI_PROJECT_DIR\\upstream-ci-utilities\\signing\\signwindowsbinaries.ini"
     KDECI_WORKDIR_PATH: "C:\\_"
     KDECI_CA_BUNDLE: "C:\\_\\_ca_bundle\\cacert.pem"
     PYTHONUTF8: 1
