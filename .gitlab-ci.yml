@@ -75,8 +75,11 @@ stages:
       - ".\\**\\CMakeCache.txt"
       - ".\\**\\CMakeFiles\\CMakeOutput.log"
       - ".\\**\\config.log"
-      - ".\\ext_*\\task.log"
-      - ".\\ext_*\\task-debug.log"
+      - ".\\**\\task.log"
+      - ".\\**\\task-debug.log"
+      - "./**/task.log"
+      - "./**/task-debug.log"
+      - "./**/CMakeCache.txt"
       - "*.log"
     exclude:
       - "./**/meson-private/**/*"
