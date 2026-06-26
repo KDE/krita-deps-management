@@ -1,0 +1,5 @@
+Environment:
+  # We don't ship gperf to the users, it is used for building
+  # some of the dependencies, so no need to sign it with our
+  # certificate
+  KDECI_SIGN_BINARIES: "False"
