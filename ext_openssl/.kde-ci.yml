@@ -1,0 +1,6 @@
+Environment:
+  # The prebuilt version of openSSL libraries on Windows
+  # comes with a self-signed certificate from curl team.
+  # We should resign it into a proper certificate before
+  # we could ship it to the users
+  KDECI_FORCE_RESIGN_BINARIES: "True"
