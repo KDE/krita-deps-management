@@ -34,13 +34,18 @@ if not 'CI_MERGE_REQUEST_TARGET_BRANCH_NAME' in os.environ:
     os.environ['CI_MERGE_REQUEST_TARGET_BRANCH_NAME'] = arguments.branch
 
 workingDirectory = os.getcwd()
-seedFile = os.path.join(workingDirectory, 'latest', 'krita-deps.yml')
-
 dependencyResolver = prepareDependenciesResolver(platform)
 
 allSeededDeps = []
-with open(seedFile, 'r') as f:
+
+kritaDepsSeedFile = os.path.join(workingDirectory, 'latest', 'krita-deps.yml')
+with open(kritaDepsSeedFile, 'r') as f:
     allSeededDeps = yaml.safe_load(f)
+
+buildToolsSeedFile = os.path.join(workingDirectory, 'latest', 'deps-build-tools.yml')
+with open(buildToolsSeedFile, 'r') as f:
+    buildToolsDeps = yaml.safe_load(f)
+    allSeededDeps += buildToolsDeps
 
 platformDeps = []
 

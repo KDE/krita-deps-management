@@ -8,8 +8,9 @@ all_publish_windows:
     - LargeVM
     - amd64
   script:
-    - python -u tools/replace-branch-in-seed-file.py latest\krita-deps.yml --print --dst-branch $BRANCH_NAME_WINDOWS
-    - python -u ci-utilities/seed-package-registry.py --seed-file latest/krita-deps.yml --platform Windows 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+    - python -u tools/concatenate-files.py -i latest/deps-build-tools.yml -i latest/krita-deps.yml -o all-deps-to-build.yml
+    - python -u tools/replace-branch-in-seed-file.py all-deps-to-build.yml --print --dst-branch $BRANCH_NAME_WINDOWS
+    - python -u ci-utilities/seed-package-registry.py --seed-file all-deps-to-build.yml --platform Windows 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 # All publish
 all_publish_windows_dev:

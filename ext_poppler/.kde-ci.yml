@@ -12,6 +12,7 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/iconv': '@same'
+BuildDependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'

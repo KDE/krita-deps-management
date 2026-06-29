@@ -1,7 +1,6 @@
-Dependencies:
+BuildDependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
     'base/strawberryperl': '@same'
 - 'on': ['Windows', 'Linux', 'MacOS', 'Android/x86_64', 'Android/x86']
   'require':
