@@ -11,9 +11,7 @@ Dependencies:
     # 'base/webp': '@same' # can be fetched with pkgconfig only, so not on Windows
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
     'base/googleangle': '@same'
-    'base/strawberryperl': '@same'
 #    'base/jom': '@same' # only for msvc builds
 - 'on': ['Windows', 'MacOS']
   'require':
@@ -25,5 +23,10 @@ Dependencies:
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
     'base/zlib': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
+    'base/strawberryperl': '@same'
 Options:
   force-ninja-on-windows: False

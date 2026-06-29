@@ -29,6 +29,8 @@ for seed_file in arguments.seed_file:
     with open(seed_file, 'r') as f:
         dependencies.extend(yaml.safe_load(f))
 
+# Here we generate a dep file for Krita, so no need to
+# handle 'BuildDependencies' in any way
 configuration['Dependencies'] = dependencies
 
 if not arguments.output_file:

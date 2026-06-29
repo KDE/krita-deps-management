@@ -2,4 +2,7 @@ Dependencies:
 - 'on': ['Windows']
   'require':
     'base/png': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
     'base/patch': '@same'

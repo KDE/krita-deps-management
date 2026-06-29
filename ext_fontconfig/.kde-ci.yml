@@ -5,7 +5,6 @@ Dependencies:
     'base/expat': '@same'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
     'base/gperf': '@same'
 - 'on': ['Windows', 'MacOS']
   'require':
@@ -13,3 +12,7 @@ Dependencies:
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
     'base/gettext': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

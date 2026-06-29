@@ -5,9 +5,6 @@ Dependencies:
     'base/brotli': '@same'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
-- 'on': ['Windows']
-  'require':
     'base/iconv': '@same'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':

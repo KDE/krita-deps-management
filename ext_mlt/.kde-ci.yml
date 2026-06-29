@@ -8,5 +8,8 @@ Dependencies:
     'base/fontconfig': '@same'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
     'base/dlfcn_win32': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

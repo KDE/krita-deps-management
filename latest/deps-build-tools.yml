@@ -1,0 +1,8 @@
+- 'on': ['Windows']
+  'require':
+    "base/patch": "master"
+    "base/strawberryperl": "master"
+
+- 'on': ['@all']
+  'require':
+    "base/nasm": "master"
