@@ -1,4 +1,4 @@
-Dependencies:
+BuildDependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'

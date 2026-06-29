@@ -3,6 +3,7 @@ Dependencies:
   'require':
     'base/qt': '@same'
     'base/extra_cmake_modules': '@same'
+BuildDependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'

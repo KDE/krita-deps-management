@@ -1,10 +1,11 @@
-Dependencies:
+BuildDependencies:
 - 'on': ['Windows', 'Linux', 'MacOS', 'Android/x86_64', 'Android/x86']
   'require':
     'base/nasm': '@same'
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'
+Dependencies:
 - 'on': ['Windows', 'MacOS']
   'require':
     'base/pkgconfig': '@same'

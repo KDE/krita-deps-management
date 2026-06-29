@@ -1,5 +1,8 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
     'base/iconv': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

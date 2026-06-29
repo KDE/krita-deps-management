@@ -3,7 +3,6 @@
     "base/boost": "master"
     "base/lcms2": "master"
     "base/png": "master"
-    "base/nasm": "master"
     "base/eigen3": "master"
     "base/expat": "master"
     "base/exiv2": "master"
@@ -137,8 +136,6 @@
 
 - 'on': ['Windows']
   'require':
-    "base/patch": "master"
-    "base/strawberryperl": "master"
     "base/zlib": "master"
     "base/googleangle": "master"
     "base/drmingw": "master"

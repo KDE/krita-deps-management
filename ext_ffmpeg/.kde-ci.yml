@@ -1,7 +1,6 @@
 Dependencies:
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
     'base/iconv': '@same' # on Linux and MacOS ffmpeg uses iconv provided by libc
 
 - 'on': ['@all']
@@ -34,3 +33,8 @@ Dependencies:
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
     'base/zlib': '@same'
+
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

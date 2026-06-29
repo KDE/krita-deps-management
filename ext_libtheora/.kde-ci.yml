@@ -1,7 +1,4 @@
 Dependencies:
-- 'on': ['Windows']
-  'require':
-    'base/patch': '@same'
 - 'on': ['@all']
   'require':
     'ffmpeg/libogg': '@same'
@@ -10,3 +7,7 @@ Dependencies:
 - 'on': ['Windows', 'MacOS']
   'require':
     'base/pkgconfig': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

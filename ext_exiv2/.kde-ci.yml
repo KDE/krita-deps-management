@@ -4,10 +4,11 @@ Dependencies:
     'base/expat': '@same'
 - 'on': ['Windows']
   'require':
-    'base/patch': '@same'
-- 'on': ['Windows']
-  'require':
     'base/iconv': '@same'
 - 'on': ['Windows', 'MacOS', 'Android']
   'require':
     'base/zlib': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'

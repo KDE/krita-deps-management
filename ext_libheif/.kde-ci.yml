@@ -4,6 +4,7 @@ Dependencies:
     'heif/libaom': '@same'
     'heif/libde265': '@same'
     'heif/libx265': '@same'
+BuildDependencies:
 - 'on': ['Windows']
   'require':
     'base/patch': '@same'

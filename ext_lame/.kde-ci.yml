@@ -1,7 +1,8 @@
 Dependencies:
-- 'on': ['Windows']
-  'require':
-    'base/patch': '@same'
 - 'on': ['Windows', 'MacOS']
   'require':
     'base/pkgconfig': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
