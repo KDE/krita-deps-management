@@ -3,3 +3,7 @@ Dependencies:
   'require':
     'base/json_c': '@same'
     'base/extra_cmake_modules': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
