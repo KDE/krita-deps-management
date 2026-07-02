@@ -6,12 +6,23 @@ endif()
 project(ext_tiff)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
+if(ANDROID)
+    # WARNING: this patch should **not** be applied on other platforms,
+    # especially on Windows, because it removes a windows specific symbol
+    # from the linker script
+    set(ANDROID_PATCH_COMMAND
+        PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Remove-windows-specifc-symbols-from-linker-s.patch)
+else()
+    set(ANDROID_PATCH_COMMAND)
+endif()
+
 ExternalProject_Add( ext_tiff
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.osgeo.org/libtiff/tiff-4.4.0.tar.gz
-    URL_HASH SHA256=917223b37538959aca3b790d2d73aa6e626b688e02dcda272aec24c2f498abed
+    URL https://download.osgeo.org/libtiff/tiff-4.7.1.tar.gz
+    URL_HASH SHA256=f698d94f3103da8ca7438d84e0344e453fe0ba3b7486e04c5bf7a9a3fabe9b69
 
-    INSTALL_DIR ${EXTPREFIX}
+    ${ANDROID_PATCH_COMMAND}
+    
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
 
     UPDATE_COMMAND ""

@@ -1,0 +1,85 @@
+From 26e68dd4e458178b06d170a190fda8316c9de336 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Wed, 10 Jun 2026 11:25:27 +0200
+Subject: [PATCH] Fix exporting symbols from intl.dll
+
+BUILDING_DLL enables the proper export statements
+generation, which fixes the symbols to appear in libintl.dll.a
+---
+ gettext-runtime/CMakeLists.txt     | 4 +---
+ gettext-runtime/intl/intl-compat.c | 2 +-
+ gettext-runtime/intl/printf.c      | 2 +-
+ gettext-runtime/intl/relocatable.h | 2 +-
+ gettext-runtime/intl/setlocale.c   | 2 +-
+ 5 files changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/gettext-runtime/CMakeLists.txt b/gettext-runtime/CMakeLists.txt
+index b7d52ec..4e5ff88 100644
+--- a/gettext-runtime/CMakeLists.txt
++++ b/gettext-runtime/CMakeLists.txt
+@@ -123,9 +123,7 @@ add_definitions(-DLOCALEDIR=\"${CMAKE_INSTALL_PREFIX}\")
+ add_definitions(-DLOCALE_ALIAS_PATH=\"${CMAKE_INSTALL_PREFIX}\")
+ add_definitions(-DLIBDIR=\"${CMAKE_INSTALL_PREFIX}\")
+ add_definitions(-DINSTALLDIR=\"${CMAKE_INSTALL_PREFIX}\")
+-if(BUILD_SHARED_LIBS)
+-  add_definitions(-DBUILDING_DLL)
+-endif()
++add_definitions(-DBUILDING_DLL)
+ add_definitions("-DBUILDING_LIBINTL -DIN_LIBINTL -DENABLE_RELOCATABLE=1 -DIN_LIBRARY")
+
+ add_definitions("-DNO_XMALLOC -Dset_relocation_prefix=libintl_set_relocation_prefix -Drelocate=libintl_relocate -DDEPENDS_ON_LIBICONV=1 -DHAVE_CONFIG_H -DHAVE_ICONV -DHAVE_ICONV_H -D_CRT_SECURE_NO_WARNINGS")
+diff --git a/gettext-runtime/intl/intl-compat.c b/gettext-runtime/intl/intl-compat.c
+index e2b8d6c..92ab989 100644
+--- a/gettext-runtime/intl/intl-compat.c
++++ b/gettext-runtime/intl/intl-compat.c
+@@ -49,7 +49,7 @@
+    don't need to use __declspec(dllimport) in any case.  */
+ #if HAVE_VISIBILITY && BUILDING_DLL
+ # define DLL_EXPORTED __attribute__((__visibility__("default")))
+-#elif defined _MSC_VER && BUILDING_DLL
++#elif defined _WIN32 && BUILDING_DLL
+ # define DLL_EXPORTED __declspec(dllexport)
+ #else
+ # define DLL_EXPORTED
+diff --git a/gettext-runtime/intl/printf.c b/gettext-runtime/intl/printf.c
+index 7c07ed7..9261995 100644
+--- a/gettext-runtime/intl/printf.c
++++ b/gettext-runtime/intl/printf.c
+@@ -60,7 +60,7 @@ char *alloca ();
+    don't need to use __declspec(dllimport) in any case.  */
+ #if HAVE_VISIBILITY && BUILDING_DLL
+ # define DLL_EXPORTED __attribute__((__visibility__("default")))
+-#elif defined _MSC_VER && BUILDING_DLL
++#elif defined _WIN32 && BUILDING_DLL
+ # define DLL_EXPORTED __declspec(dllexport)
+ #else
+ # define DLL_EXPORTED
+diff --git a/gettext-runtime/intl/relocatable.h b/gettext-runtime/intl/relocatable.h
+index 4253b66..ffd9424 100644
+--- a/gettext-runtime/intl/relocatable.h
++++ b/gettext-runtime/intl/relocatable.h
+@@ -31,7 +31,7 @@ extern "C" {
+    in any case.  */
+ #if HAVE_VISIBILITY && BUILDING_DLL
+ # define RELOCATABLE_DLL_EXPORTED __attribute__((__visibility__("default")))
+-#elif defined _MSC_VER && BUILDING_DLL
++#elif defined _WIN32 && BUILDING_DLL
+ # define RELOCATABLE_DLL_EXPORTED __declspec(dllexport)
+ #else
+ # define RELOCATABLE_DLL_EXPORTED
+diff --git a/gettext-runtime/intl/setlocale.c b/gettext-runtime/intl/setlocale.c
+index 2995db1..44b7fc5 100644
+--- a/gettext-runtime/intl/setlocale.c
++++ b/gettext-runtime/intl/setlocale.c
+@@ -35,7 +35,7 @@
+    don't need to use __declspec(dllimport) in any case.  */
+ #if HAVE_VISIBILITY && BUILDING_DLL
+ # define DLL_EXPORTED __attribute__((__visibility__("default")))
+-#elif defined _MSC_VER && BUILDING_DLL
++#elif defined _WIN32 && BUILDING_DLL
+ # define DLL_EXPORTED __declspec(dllexport)
+ #else
+ # define DLL_EXPORTED
+--
+2.49.0.windows.1
+

@@ -1,4 +1,4 @@
 Dependencies:
-- 'on': ['Windows', 'MacOS', 'Android']
+- 'on': ['@all']
   'require':
-    'base/zlib': '@same'
+    'base/imath': '@same'

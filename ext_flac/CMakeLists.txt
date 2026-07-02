@@ -13,7 +13,7 @@ ExternalProject_Add(
     # of UTF-8 internationalized filenames in
     # test/flac-to-flac-metadata-test-files.
     GIT_REPOSITORY https://github.com/xiph/flac.git
-    GIT_TAG 1.4.2
+    GIT_TAG 1.5.0
 
     # Emmet: if you need metaflac, please add:
     # -DIconv_IS_BUILT_IN=TRUE
@@ -31,6 +31,8 @@ ExternalProject_Add(
         -DBUILD_DOCS=FALSE
         -DINSTALL_MANPAGES=FALSE
         ${GLOBAL_PROFILE}
+
+    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Revert-CMake-disable-fseeko-on-32-bit-Android-before.patch
 
     UPDATE_COMMAND ""
 

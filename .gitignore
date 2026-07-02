@@ -6,3 +6,4 @@ PythonEnv
 **/_staging
 **/_shared_install
 **/__shared_install
+*.swp

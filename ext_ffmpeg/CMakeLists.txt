@@ -22,7 +22,7 @@ if (NOT MSVC)
     set(_stack_guard_flag "-Denable-ssp=enabled")
 endif() 
 
-set(FFMPEG_GIT_SHA1 7601055639e789cdeeff793c48eaaf3186a70aad)
+set(FFMPEG_GIT_SHA1 1834eb471506fe3f6296aa844825ac317e51bd5b)
 
 kis_ExternalProject_Add_with_separate_builds_apple(
     ext_ffmpeg
@@ -31,25 +31,22 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     GIT_REPOSITORY https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg.git
 
     # we use this branch as a source:
-    # https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/tree/meson-7.1
+    # https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/tree/meson-8.0.1
     GIT_TAG ${FFMPEG_GIT_SHA1}
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-an-option-to-disable-UB-in-av_uninit.patch
           COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-Add-options-for-SSP-and-CFGuard.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Be-more-forceful-when-setting-PIC-on-x86_32.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0005-Fix-detection-of-autodetected-libs-when-explicitly-p.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0006-Change-defauls-iconv-option-to-auto.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0007-Declare-other-auto-detected-lifraries-as-auto-fieatu.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0008-Fix-building-when-iconv-feature-is-explicitly-disabl.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0009-Add-link_language-option-to-all-the-link-targets.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0010-Fix-building-with-libvpl-present.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0011-Switch-deps-of-QSV-codecs-to-libvpl-instead-of-libmf.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0012-Fix-include-paths-for-libavcodec-s-codecs.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0013-Fix-VP9-hw-accelerated-encoder-with-libvpl.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0014-Fix-version-file-generation-in-version.py.patch
-          COMMAND ${CMAKE_COMMAND} -E echo "7.1.1-g${FFMPEG_GIT_SHA1}" > VERSION
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0007-Switch-deps-of-QSV-codecs-to-libvpl-instead-of-libmf.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0009-Fix-VP9-hw-accelerated-encoder-with-libvpl.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0010-Fix-version-file-generation-in-version.py.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0011-Fix-build-with-Dvaapi-disabled.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0012-Fix-makedef.py-to-generate-correct-files-on-Linux.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0013-Fix-includes-for-the-optional-avcodec-sources.patch
+          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0014-Do-not-require-gzip-binary-to-build-zlib-support.patch
+          COMMAND ${CMAKE_COMMAND} -E echo "8.0.1-g${FFMPEG_GIT_SHA1}" > VERSION
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
+            -Dvaapi=disabled
             --libdir=lib
             -Dno_uninit_ub=true
             ${_stack_guard_flag}
@@ -100,6 +97,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
             -Dlibmp3lame=enabled
             -Dlibopus=enabled
             -Dlibvorbis=enabled
+            -Dvaapi=disabled
+
             ${EXTRA_MESON_FLAGS}
 
     UPDATE_COMMAND ""

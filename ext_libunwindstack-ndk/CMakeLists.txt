@@ -10,7 +10,7 @@ ExternalProject_Add( ext_libunwindstack-ndk
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     SOURCE_SUBDIR ./cmake
     GIT_REPOSITORY https://github.com/getsentry/libunwindstack-ndk.git
-    GIT_TAG a4c27d48deff95fe922fe9733ef5c1339bdbf4fb
+    GIT_TAG 284202fb1e42dbeba6598e26ced2e1ec404eecd1
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Add-install-property-and-cmake-config-file.patch
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
