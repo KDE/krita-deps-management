@@ -6,6 +6,11 @@ endif()
 project(ext_libx265_12bit)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
+include(${CMAKE_SOURCE_DIR}/../ext_libx265/x265_shared_patches.cmake)
+if (NOT X265_SHARED_PATCH_COMMAND)
+    message(FATAL_ERROR "Failed to fetch the patches list")
+endif()
+
 # Incorporate Handbrake's extensions for building x265
 # Multicoreware added detection of SSE2/3/4.1, so we can freely enable them now
 # Also ship their patch for Apple silicon
@@ -29,18 +34,7 @@ ExternalProject_Add(ext_libx265_12bit
 
     SOURCE_SUBDIR source/
 
-    PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A01-Do-not-set-thread-priority-on-Windows.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A02-Apple-Silicon-tuning.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A03-Implement-ambient-viewing-environment-sei.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A04-add-new-matrix-coefficients-from-H.273-v3.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A05-Fix-Dolby-Vision-RPU-memory-management.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A06-Update-version-strings.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A07-Fix-macOS-cross-compilation.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A08-Fix-inconsistent-bitrate-in-second-pass.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/handbrake/A09-Ensuring-the-mvdLX-is-compliant.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/0001-ext_heif-Make-sure-that-pthreads-are-not-linked-it-o.patch
-          COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/../ext_libx265/patches/0002-Skip-PDB-in-MinGW.patch
-
+    ${X265_SHARED_PATCH_COMMAND}
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} 
     -DHIGH_BIT_DEPTH=TRUE -DMAIN12=TRUE -DEXPORT_C_API=FALSE  -DENABLE_CLI=FALSE -DENABLE_SHARED=FALSE
