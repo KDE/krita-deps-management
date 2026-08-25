@@ -6,6 +6,7 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add( ext_libintl-lite
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
     GIT_REPOSITORY https://github.com/j-jorge/libintl-lite.git
+    GIT_TAG edbb3064b2ee7ed42ffc5a4b9e0b8c3616d54cbf
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
                -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}
