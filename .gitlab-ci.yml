@@ -29,6 +29,7 @@ stages:
     - when: manual
   variables:
     KDECI_CACHE_PATH: $CI_PROJECT_DIR/_local_cache
+    KDECI_ALLOW_PACKAGE_OVERRIDE_BY_CACHE: True
     KDECI_PUBLISH_TO_CACHE: True
 
 .shared_build_mixin:
