@@ -86,6 +86,9 @@ if (WIN32)
         # -DFEATURE_directwrite3=OFF
         -DFEATURE_opengl=ON # ensure openGL is activated
         -DFEATURE_egl=ON # enable ANGLE backend
+        # do not build Windows11 and Windows Vista styles, they
+        # look broken when used in Krita
+        -DFEATURE_style_windowsvista=OFF
         #
         -DCMAKE_BUILD_TYPE=${QT_BUILD_TYPE}
         -DCMAKE_C_FLAGS_INIT="${EXTRA_C_FLAGS_ALL}"
