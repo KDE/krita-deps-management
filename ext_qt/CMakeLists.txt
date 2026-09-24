@@ -89,6 +89,7 @@ if (WIN32)
         # do not build Windows11 and Windows Vista styles, they
         # look broken when used in Krita
         -DFEATURE_style_windowsvista=OFF
+        -DFEATURE_style_windows11=OFF
         #
         -DCMAKE_BUILD_TYPE=${QT_BUILD_TYPE}
         -DCMAKE_C_FLAGS_INIT="${EXTRA_C_FLAGS_ALL}"
@@ -185,6 +186,9 @@ elseif (ANDROID)
           # which has Krita-specific formats and translations, so we
           # can disable the internal database shipped with Qt
           -DFEATURE_mimetype_database=OFF
+
+          # do not build Android style, it looks broken when used in Krita
+          -DFEATURE_style_android=OFF
 
 #      PATCH_COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-android-Fix-build-with-NDK-27.patch
 #             COMMAND ${PATCH_COMMAND} -d qtbase -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-android-Fix-ranlib-path-for-NDK-27.patch
