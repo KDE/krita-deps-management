@@ -9,11 +9,11 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_fcitx5-qt
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    DOWNLOAD_NAME fcitx5-qt-5.1.7.tar.gz
-    URL https://github.com/fcitx/fcitx5-qt/archive/refs/tags/5.1.7.tar.gz
-    URL_HASH SHA256=586e35e70e656ce387d7c87b58af1294599bd10385f983580235a2efeca666ee
+    DOWNLOAD_NAME fcitx5-qt-5.1.13.tar.gz
+    URL https://github.com/fcitx/fcitx5-qt/archive/refs/tags/5.1.13.tar.gz
+    URL_HASH SHA256=74b2c43ca865ec9ede257bcd3bdadafc20f571900cb2440a4488335e4d4e91cc
 
-    SOURCE_DIR fcitx5-qt-5.1.7
+    SOURCE_DIR fcitx5-qt-5.1.13
     INSTALL_DIR ${EXTPREFIX}
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE}
         -DENABLE_QT4=OFF

@@ -10,8 +10,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 if(UNIX)
     ExternalProject_Add(ext_pyqt-builder
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/0b/0a/e7684c054c3b85999354bb3be7ccbd6e6d9b751940cec8ecff5e7a8ea9f7/pyqt_builder-1.18.1.tar.gz
-        URL_HASH SHA256=3f7a3a2715947a293a97530a76fd59f1309fcb8e57a5830f45c79fe7249b3998
+        URL https://files.pythonhosted.org/packages/61/f6/f3b504b4d55a7c4d3393cb90378501f1f5fc7f233bd85c0375674f84d2af/pyqt_builder-1.19.1.tar.gz
+        URL_HASH SHA256=6af6646ba29668751b039bfdced51642cb510e300796b58a4d68b7f956a024d8
 
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
@@ -40,8 +40,8 @@ elseif(WIN32)
 
     ExternalProject_Add(ext_pyqt-builder
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/0b/0a/e7684c054c3b85999354bb3be7ccbd6e6d9b751940cec8ecff5e7a8ea9f7/pyqt_builder-1.18.1.tar.gz
-        URL_HASH SHA256=3f7a3a2715947a293a97530a76fd59f1309fcb8e57a5830f45c79fe7249b3998
+        URL https://files.pythonhosted.org/packages/61/f6/f3b504b4d55a7c4d3393cb90378501f1f5fc7f233bd85c0375674f84d2af/pyqt_builder-1.19.1.tar.gz
+        URL_HASH SHA256=6af6646ba29668751b039bfdced51642cb510e300796b58a4d68b7f956a024d8
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-support-for-MinGW-builds.patch
 

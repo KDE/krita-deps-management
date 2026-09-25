@@ -14,8 +14,8 @@ endif()
 ExternalProject_Add(
     ext_karchive
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/6.7/karchive-6.7.0.tar.xz
-    URL_HASH SHA256=eb4243e627f51f1224a99af5d0a6f8e309f9e5dbb7478f7a78e34e2b8541398a
+    URL https://download.kde.org/stable/frameworks/6.25/karchive-6.25.0.tar.xz
+    URL_HASH SHA256=123a268352ab63d548ba5e3c3e8fbf1d737025e4c5189821cf10e3328ab4de15
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX}
         -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE}

@@ -9,8 +9,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 ExternalProject_Add(
     ext_kwindowsystem
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://download.kde.org/stable/frameworks/6.7/kwindowsystem-6.7.0.tar.xz
-    URL_HASH SHA256=62c0f0b4a9507939d84aeeda55bbd4300b88c04e37953e5189b139003310a8f4
+    URL https://download.kde.org/stable/frameworks/6.25/kwindowsystem-6.25.0.tar.xz
+    URL_HASH SHA256=b51448a7669efa18190ab7fa8d6f5e0f77d8f9879cf457dadb4629b245a02434
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} -DBUILD_TESTING=OFF ${GLOBAL_PROFILE}
 

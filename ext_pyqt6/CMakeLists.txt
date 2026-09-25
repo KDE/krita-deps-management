@@ -20,8 +20,8 @@ if(UNIX)
 
     ExternalProject_Add( ext_pyqt6
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/ce/bf/ff284a136b39cb1873c18e4fca4a40a8847c84a1910c5fb38c6a77868968/pyqt6-6.8.1.tar.gz
-        URL_HASH SHA256=91d937d6166274fafd70f4dee11a8da6dbfdb0da53de05f5d62361ddf775e256
+        URL https://files.pythonhosted.org/packages/8b/47/b25c13eca5bebc6505394d0223e46d7ebf0c57dcac2ed908d7d19b18ab6b/pyqt6-6.11.0.tar.gz
+        URL_HASH SHA256=45dd60aa69976de1918b5ced6b4e7b6a25abd2a919ecef5fd5826ecc76718889
 
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env 
             "PYTHONPATH=${KRITA_PYTHONPATH}"
@@ -75,8 +75,8 @@ elseif(WIN32)
 
     ExternalProject_Add( ext_pyqt6
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/ce/bf/ff284a136b39cb1873c18e4fca4a40a8847c84a1910c5fb38c6a77868968/pyqt6-6.8.1.tar.gz
-        URL_HASH SHA256=91d937d6166274fafd70f4dee11a8da6dbfdb0da53de05f5d62361ddf775e256
+        URL https://files.pythonhosted.org/packages/8b/47/b25c13eca5bebc6505394d0223e46d7ebf0c57dcac2ed908d7d19b18ab6b/pyqt6-6.11.0.tar.gz
+        URL_HASH SHA256=45dd60aa69976de1918b5ced6b4e7b6a25abd2a919ecef5fd5826ecc76718889
 
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env 
             PYTHONPATH=${_krita_pythonpath}

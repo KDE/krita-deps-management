@@ -6,7 +6,7 @@ endif()
 project(ext_qt)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "02c1802943f5a2186ccdb24dd4bda354d77f37a5")
+set(QT_GIT_TAG "3a13b2dbfe3f369ff4f2bb2a519bb7a5c02d8123")
 
 if (MINGW)
   set(QT_BUILD_COMMAND   mingw32-make -j${SUBMAKE_JOBS})
@@ -62,7 +62,7 @@ if (WIN32)
     endif ()
 
     list(APPEND _QT_conf
-         -nomake examples -nomake tools -nomake benchmarks -nomake manual-tests -nomake minimal-static-tests
+         -nomake examples -nomake benchmarks -nomake manual-tests -nomake minimal-static-tests
         -no-dbus -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev
         -qt-sqlite
         -no-feature-assistant -no-feature-designer -feature-linguist -no-feature-androiddeployqt
@@ -90,6 +90,10 @@ if (WIN32)
         # look broken when used in Krita
         -DFEATURE_style_windowsvista=OFF
         -DFEATURE_style_windows11=OFF
+        # Qt's code for deploying SBOM files cannot install using DESTDIR
+        # variable on Windows, since it stupidly concatenates DESTDIR with
+        # CMAKE_INSTALL_PREFIX instead of properly removing the disk name
+        -DQT_GENERATE_SBOM=OFF
         #
         -DCMAKE_BUILD_TYPE=${QT_BUILD_TYPE}
         -DCMAKE_C_FLAGS_INIT="${EXTRA_C_FLAGS_ALL}"
@@ -103,7 +107,7 @@ if (WIN32)
   ExternalProject_Add(
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_REPOSITORY https://github.com/dimula73/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtwinextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
@@ -155,7 +159,7 @@ elseif (ANDROID)
       ext_qt
       DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
 
-      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_REPOSITORY https://github.com/dimula73/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects qtandroidextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools
@@ -169,8 +173,8 @@ elseif (ANDROID)
           <SOURCE_DIR>/configure -prefix ${EXTPREFIX} -opensource -confirm-license -verbose
           -android-sdk ${ANDROID_SDK_ROOT} -android-ndk ${CMAKE_ANDROID_NDK} -android-abis ${ANDROID_ABI}
           -xplatform android-clang -android-ndk-platform android-24
-          -make libs -qt-sqlite -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -system-zlib
-          -nomake examples -nomake tests -nomake tools -skip qt3d -skip qtactiveqt -skip qtcanvas3d
+          -qt-sqlite -openssl-linked OPENSSL_PREFIX=${EXTPREFIX} -system-zlib
+          -nomake examples -nomake tests -skip qt3d -skip qtactiveqt -skip qtcanvas3d
           -skip qtconnectivity -skip qtlocation -skip qtwayland -skip qtwebchannel -skip qtwebengine
           -skip qtwebsockets -skip qtwebview -skip qtserialport  -skip qtvirtualkeyboard -skip qtspeech
           -skip qtsensors  -skip qtscxml -skip qtremoteobjects -skip qtxmlpatterns -skip qtnetworkauth
@@ -269,7 +273,7 @@ elseif (NOT APPLE)
       # replace to avoid refetch on rebuilds
       #SOURCE_DIR ext_qt-prefix/src/ext_qt
 
-      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_REPOSITORY https://github.com/dimula73/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtwayland qtshadertools
@@ -311,7 +315,7 @@ else( APPLE )
         -skip qt3d -skip qtactiveqt -skip qtcanvas3d -skip qtconnectivity -skip qtdoc -skip qtlocation -skip qtsensors -skip qtserialport -skip qtwayland
         -skip qtwebchannel -skip qtwebsockets -skip qtwebview -skip qtwebengine -skip qtxmlpatterns
         -skip qtcharts -skip qtdatavis3d  -skip qtgamepad -skip qtnetworkauth
-        -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus -skip qtspeech -skip qtvirtualkeyboard -nomake examples -nomake tools
+        -skip qtpurchasing -skip qtremoteobjects -skip qtscxml -skip qtserialbus -skip qtspeech -skip qtvirtualkeyboard -nomake examples
         -no-dbus -no-qml-debug -no-libproxy -no-system-proxies -icu -no-mtdev
         -system-zlib -qt-pcre -qt-sqlite
         -no-feature-assistant -no-feature-designer -feature-linguist
@@ -332,7 +336,7 @@ else( APPLE )
     ExternalProject_Add(
       ext_qt
 
-      GIT_REPOSITORY https://invent.kde.org/dkazakov/qt5.git
+      GIT_REPOSITORY https://github.com/dimula73/qt5.git
       GIT_TAG ${QT_GIT_TAG}
       # TODO: still need to be recovered: qtgraphicaleffects qtmacextras
       GIT_SUBMODULES qtbase qtdeclarative qtimageformats qttools qtsvg qttranslations qt5compat qtshadertools

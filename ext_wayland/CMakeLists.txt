@@ -13,8 +13,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     MESON
 
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.23.1/downloads/wayland-1.23.1.tar.xz
-    URL_HASH SHA256=864fb2a8399e2d0ec39d56e9d9b753c093775beadc6022ce81f441929a81e5ed
+    URL https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.25.0/downloads/wayland-1.25.0.tar.xz
+    URL_HASH SHA256=c065f040afdff3177680600f249727e41a1afc22fccf27222f15f5306faa1f03
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             -Dtests=false

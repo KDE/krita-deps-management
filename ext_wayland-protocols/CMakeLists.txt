@@ -13,8 +13,8 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     MESON
 
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    URL https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/1.38/downloads/wayland-protocols-1.38.tar.xz
-    URL_HASH SHA256=ff17292c05159d2b20ce6cacfe42d7e31a28198fa1429a769b03af7c38581dbe
+    URL https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/1.48/downloads/wayland-protocols-1.48.tar.xz
+    URL_HASH SHA256=398036ac0eb6484982ddbde7ff86848d753231f9cdeeae983f06b52946625aa1
 
     CONFIGURE_ARGS --prefix=${EXTPREFIX}
             -Dtests=false

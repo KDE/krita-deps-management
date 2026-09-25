@@ -10,8 +10,8 @@ include(${CMAKE_SOURCE_DIR}/../cmake/krita_initialize_python.cmake)
 if(UNIX)
     ExternalProject_Add( ext_pyqt6-sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/90/18/0405c54acba0c8e276dd6f0601890e6e735198218d031a6646104870fe22/pyqt6_sip-13.10.0.tar.gz
-        URL_HASH SHA256=d6daa95a0bd315d9ec523b549e0ce97455f61ded65d5eafecd83ed2aa4ae5350
+        URL https://files.pythonhosted.org/packages/90/24/a753e1af94b9ae5b2da63d4598457308da3cdbf0838c959381db086ccc86/pyqt6_sip-13.11.1.tar.gz
+        URL_HASH SHA256=869c5b48afe38e55b1ee0dd72182b0886e968cc509b98023ff50010b013ce1be
 
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
@@ -34,8 +34,8 @@ elseif(WIN32)
 
     ExternalProject_Add( ext_pyqt6-sip
         DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-        URL https://files.pythonhosted.org/packages/90/18/0405c54acba0c8e276dd6f0601890e6e735198218d031a6646104870fe22/pyqt6_sip-13.10.0.tar.gz
-        URL_HASH SHA256=d6daa95a0bd315d9ec523b549e0ce97455f61ded65d5eafecd83ed2aa4ae5350
+        URL https://files.pythonhosted.org/packages/90/24/a753e1af94b9ae5b2da63d4598457308da3cdbf0838c959381db086ccc86/pyqt6_sip-13.11.1.tar.gz
+        URL_HASH SHA256=869c5b48afe38e55b1ee0dd72182b0886e968cc509b98023ff50010b013ce1be
 
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
