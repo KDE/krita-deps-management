@@ -65,6 +65,11 @@ if (WIN32)
         -no-feature-d3d12
         -no-feature-qdoc
         -no-direct2d
+
+        # disable building Windows Vista style, it looks broken
+        # when used in Krita
+        -no-style-windowsvista
+
         #
         -release -platform ${QT_CONFIG_PLATFORM} -prefix ${EXTPREFIX}
         QMAKE_LFLAGS_APP+=${SECURITY_EXE_LINKER_FLAGS}
@@ -189,6 +194,11 @@ elseif (ANDROID)
           -skip qtsensors  -skip qtscxml -skip qtremoteobjects -skip qtxmlpatterns -skip qtnetworkauth
           -skip qtcharts -skip qtdatavis3d -skip qtgamepad -skip qtpurchasing  -skip qtserialbus
           -icu
+
+          # disable building Android style, it looks broken
+          # when used in Krita
+          -no-style-android
+
           -I ${EXTPREFIX}/include
           -L ${EXTPREFIX}/lib
           ${QT_PAGE_ALIGNMENT_OPTION}
