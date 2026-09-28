@@ -112,7 +112,11 @@ stages:
     EXTERNALS_DOWNLOAD_DIR: "Z:\\krita-windows\\downloads"
     KDECI_GLOBAL_CONFIG_OVERRIDE_PATH: "$CI_PROJECT_DIR\\global-config.yml"
     KDECI_REPO_METADATA_PATH: "$CI_PROJECT_DIR\\repo-metadata"
-    KDECI_SIGN_BINARIES: True
+    
+    # TODO: Disable binary signing for testing branch!
+    #KDECI_SIGN_BINARIES: True
+    KDECI_SIGN_BINARIES: False
+    
     KRITACI_WINDOWS_SIGN_CONFIG: "$CI_PROJECT_DIR\\upstream-ci-utilities\\signing\\signwindowsbinaries.ini"
     KDECI_WORKDIR_PATH: "C:\\_"
     KDECI_CA_BUNDLE: "C:\\_\\_ca_bundle\\cacert.pem"
