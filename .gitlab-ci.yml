@@ -67,6 +67,12 @@ stages:
     # to link to each other's build prefix
     KDECI_REMOVE_INSTALL_FOLDERS_AFTER_BUILD: True
 
+.stage_deps_input_template:
+  inputs:
+    KRITA_STAGE_DEP:
+      default: base/unknown
+      description: A space-separated list of deps to build, e.g. `base/qt base/kconfig`
+
 .log_artifacts_windows:
   artifacts:
     when: always

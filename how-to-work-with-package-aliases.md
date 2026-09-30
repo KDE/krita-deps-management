@@ -44,9 +44,9 @@ Options:
 
     1) Open the pipeline job `custom_publish_<platform>` (click on the name, **not** on the "start" button)
 
-    2) On the job's page add an environment variable:
+    2) On the job's page set the job input:
 
-        * var: `KRITA_STAGE_DEP`
+        * input: `KRITA_STAGE_DEP`
         * value: `base/qt-myoption`
 
     3) Start the job
