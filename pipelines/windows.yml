@@ -65,11 +65,9 @@ custom_publish_windows:
   extends:
   - .seed_template
   - .windows_base
-  variables:
-    KRITA_STAGE_DEP:
-      value: "ext_unknown"
+  - .stage_deps_input_template
   script:
-    - python -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Windows --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+    - python -u ci-utilities/seed-multiple-projects.py -p "${{ job.inputs.KRITA_STAGE_DEP }}" --platform Windows --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 custom_local_cache_windows:
   extends:
@@ -82,7 +80,7 @@ dirty_publish_windows:
   extends:
     - custom_publish_windows
   script:
-  - python -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Windows --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
+  - python -u tools/seed-dirty-projects.py -p "${{ job.inputs.KRITA_STAGE_DEP }}" --platform Windows --branch $BRANCH_NAME_WINDOWS 2>&1 | Tee-Object -FilePath "seed-packages-win64.log"
 
 dirty_local_cache_windows:
   extends:
