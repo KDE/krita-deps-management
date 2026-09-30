@@ -26,12 +26,12 @@ All publicly available CI jobs have names in the following format:
 
 * `all` --- the job builds all the packages available in the repository, including the debug and asan versions of the packages
 
-* `custom` --- the job builds only the packages passed via the web gui. To pass the space-separated list of packages, click on the job and set up the following environment variable:
+* `custom` --- the job builds only the packages passed via the web gui. To pass the space-separated list of packages, click on the job and set up the following job input:
 
-    * var: `KRITA_STAGE_DEP`
+    * input: `KRITA_STAGE_DEP`
     * value: `base/qt base/mlt` (space-separated list)
 
-* `dirty` --- the job rebuilds a subtree of "dirty" packages. Basically, it rebuilds the passed packages and all their dependencies. The list is passed via `KRITA_STAGE_DEP` like for "custom" packages.
+* `dirty` --- the job rebuilds a subtree of "dirty" packages. Basically, it rebuilds the passed packages and all their dependencies. The list is passed via `KRITA_STAGE_DEP` input like for "custom" packages.
 
 `<build_type>` defines what happens with the package after the build is done. It may have the following values:
 
@@ -58,9 +58,9 @@ All publicly available CI jobs have names in the following format:
 
     Note: you need to use "local_cache" type of job, since publishing is not available from non-protected branches.
 
-5) On the job's page add an environment variable:
+5) On the job's page set the job input:
 
-    * var: `KRITA_STAGE_DEP`
+    * input: `KRITA_STAGE_DEP`
     * value: `base/foo base/bar` (space-separated list)
 
 6) After the environment variable is set, run the job to test if it builds fine.

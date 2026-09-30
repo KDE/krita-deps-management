@@ -48,11 +48,9 @@ custom_publish_linux:
   extends:
   - .seed_template
   - .appimage_base
-  variables:
-    KRITA_STAGE_DEP:
-      value: "ext_unknown"
+  - .stage_deps_input_template
   script:
-    - python3 -u ci-utilities/seed-multiple-projects.py -p $KRITA_STAGE_DEP --platform Linux --branch $BRANCH_NAME_LINUX 2>&1 | tee "seed-packages-linux.log"
+    - python3 -u ci-utilities/seed-multiple-projects.py -p "${{ job.inputs.KRITA_STAGE_DEP }}" --platform Linux --branch $BRANCH_NAME_LINUX 2>&1 | tee "seed-packages-linux.log"
 
 custom_local_cache_linux:
   extends:
@@ -63,7 +61,7 @@ dirty_publish_linux:
   extends:
     - custom_publish_linux
   script:
-    - python3 -u tools/seed-dirty-projects.py -p $KRITA_STAGE_DEP --platform Linux --branch $BRANCH_NAME_LINUX 2>&1 | tee "seed-packages-linux.log"
+    - python3 -u tools/seed-dirty-projects.py -p "${{ job.inputs.KRITA_STAGE_DEP }}" --platform Linux --branch $BRANCH_NAME_LINUX 2>&1 | tee "seed-packages-linux.log"
 
 dirty_local_cache_linux:
   extends:
