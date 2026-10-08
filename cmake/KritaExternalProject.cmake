@@ -1,10 +1,6 @@
 # SPDX-FileCopyrightText: 2023 Ivan Santa Maria <ghevan@gmail.com>
 # SPDX-License-Ref: BSD-3-Clause
 
-if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
-    cmake_policy(SET CMP0135 NEW)
-endif()
-
 include(ExternalProject)
 include(MacroBoolToOnOff)
 
