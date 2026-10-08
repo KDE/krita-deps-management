@@ -81,6 +81,7 @@ else:
 
 environmentUpdate['KDECI_BUILD_TYPE'] = 'Release'
 environmentUpdate['KDECI_COMPRESS_PACKAGES_ON_DOWNLOAD'] = '1'
+environmentUpdate['KDECI_ALLOW_PACKAGE_OVERRIDE_BY_CACHE'] = '1'
 environmentUpdate['KDECI_GLOBAL_CONFIG_OVERRIDE_PATH'] = os.path.join(repoBaseDirectory, 'global-config.yml')
 environmentUpdate['KDECI_REPO_METADATA_PATH'] = os.path.join(repoBaseDirectory, 'repo-metadata')
 
