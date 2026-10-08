@@ -1,7 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
-if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
-    cmake_policy(SET CMP0135 NEW)
-endif()
+cmake_minimum_required(VERSION 3.29)
 
 project(ext_ocio)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
@@ -16,7 +13,7 @@ ExternalProject_Add(
     INSTALL_DIR ${EXTPREFIX}
 
     PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0001-Fix-linking-to-self-built-deps-on-Windows-Clang.patch
-    	  COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/fix-clang21-ifstream.patch
+        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/fix-clang21-ifstream.patch
 
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} -DOCIO_BUILD_NUKE:BOOL=OFF -DOCIO_BUILD_DOCS:BOOL=OFF -DOCIO_BUILD_TESTS:BOOL=OFF -DOCIO_BUILD_GPU_TESTS:BOOL=OFF -DOCIO_BUILD_PYTHON:BOOL=OFF -DOCIO_INSTALL_EXT_PACKAGES=MISSING -DOCIO_BUILD_APPS=OFF
 

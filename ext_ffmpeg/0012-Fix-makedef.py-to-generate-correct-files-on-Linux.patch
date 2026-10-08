@@ -1,0 +1,29 @@
+From bdaf51bd03af6275012c5ddc59c19bc082fbe039 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Thu, 7 May 2026 14:27:33 +0200
+Subject: [PATCH 1/2] Fix makedef.py to generate correct files on Linux
+
+`-j` option is necessary for nm to dump the symbol
+names only. Otherwise it dumps them in format
+`<address> <type> <name>`, which cannot be parsed
+by the regexps below.
+---
+ compat/windows/makedef.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/compat/windows/makedef.py b/compat/windows/makedef.py
+index b42958ce73..ae5194b5cf 100644
+--- a/compat/windows/makedef.py
++++ b/compat/windows/makedef.py
+@@ -139,7 +139,7 @@ if __name__ == '__main__':
+         if s.returncode != 0:
+             # -U was added only in Binutils 2.39
+             s = subprocess.run(
+-                [args.nm, '--defined-only', '-g', libname],
++                [args.nm, '--defined-only', '-g', '-j', libname],
+                 stdout=subprocess.PIPE,
+                 stderr=subprocess.DEVNULL,
+                 universal_newlines=True,
+-- 
+2.34.1
+

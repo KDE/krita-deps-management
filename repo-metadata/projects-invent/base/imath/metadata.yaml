@@ -1,0 +1,7 @@
+description: A library of 2D and 3D vector, matrix, and math operations for computer graphics
+hasrepo: false
+identifier: ext_imath
+name: Imath
+projectpath: krita-deps/base/imath
+repoactive: false
+repopath: base/imath

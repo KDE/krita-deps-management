@@ -1,7 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
-if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
-    cmake_policy(SET CMP0135 NEW)
-endif()
+cmake_minimum_required(VERSION 3.29)
 
 project(ext_fftw3)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
@@ -24,6 +21,7 @@ ExternalProject_Add( ext_fftw3
         URL_HASH SHA256=56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467
 
         PATCH_COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/patch_mingw.patch
+              COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/cmake4.patch
 
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} -DCMAKE_BUILD_TYPE=${GLOBAL_BUILD_TYPE} ${GLOBAL_PROFILE} ${SSE_OPTIMIZATIONS_STRING} ${THREADING_OPTIONS} -DBUILD_TESTS=OFF
 

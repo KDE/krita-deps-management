@@ -1,37 +1,26 @@
-From e2a6f93f4640cef5ea516f5a3be97803055948a8 Mon Sep 17 00:00:00 2001
-From: Dmitry Kazakov <dimula73@gmail.com>
-Date: Fri, 8 Nov 2024 17:14:52 +0100
-Subject: [PATCH] Allow shared libraries everywhere
-
----
- meson.build | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
 diff --git a/meson.build b/meson.build
-index 3a023f00b..127a63124 100644
+index a1d04f876..fb2e9964f 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1568,13 +1568,13 @@ vpx_config_c = configure_file(
+@@ -1570,13 +1570,13 @@ endif
+ ### process_detect ###
  
- # libs.mk
- 
--if features.get('shared', false) and not ['linux', 'darwin', 'ios', 'iphonesimulator', 'android'].contains(tgt_os)
--	if features.get('gnu', false)
--		warn('Shared libraries are only supported on ELF; assuming this is OK')
+ # MSVC requires declspec on data symbols when importing from a shared library.
+-if features.get('shared', false) and not ['linux', 'solaris', 'darwin', 'ios', 'iphonesimulator'].contains(tgt_os) 
+-	if features.get('gcc', false) # Looks like a typo on upstream
+-		warning('Shared library build is only supported on ELF; assuming this is OK')
 -	else
--		error('Shared libraries are only supported on ELF, OS/2, and Darwin for now')
+- 		error('Shared library build is only supported on ELF and Darwin for now')
 -	endif
 -endif
-+#if features.get('shared', false) and not ['linux', 'darwin', 'ios', 'iphonesimulator', 'android'].contains(tgt_os)
-+#	if features.get('gnu', false)
-+#		warn('Shared libraries are only supported on ELF; assuming this is OK')
-+#	else
-+#		error('Shared libraries are only supported on ELF, OS/2, and Darwin for now')
-+#	endif
-+#endif
++# if features.get('shared', false) and not ['linux', 'solaris', 'darwin', 'ios', 'iphonesimulator'].contains(tgt_os)
++# 	if features.get('gcc', false) # Looks like a typo on upstream
++# 		warning('Shared library build is only supported on ELF; assuming this is OK')
++# 	else
++#  		error('Shared library build is only supported on ELF and Darwin for now')
++# 	endif
++# endif
  
- rtcd_exe = find_program('build/make/rtcd.py', required: true)
- 
--- 
-2.23.0.windows.1
+ features.set('unistd_h', c.has_header('unistd.h'))
+ if c.has_header('vpx/vpx_integer.h', include_directories: include_directories('.'))
 

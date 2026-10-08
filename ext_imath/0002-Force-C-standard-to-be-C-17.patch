@@ -1,0 +1,26 @@
+From d12d35d2e6573b520c65edf5357c6cb5445393ad Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Thu, 4 Jun 2026 17:36:25 +0200
+Subject: [PATCH] Force C++ standard to be C++17
+
+---
+ CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a497cce..3ee57b9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,6 +16,9 @@ endif()
+ 
+ project(Imath VERSION 3.2.2 LANGUAGES C CXX)
+ 
++set(CMAKE_CXX_STANDARD 17)
++set(CMAKE_CXX_STANDARD_REQUIRED ON)
++
+ set(IMATH_VERSION_RELEASE_TYPE "" CACHE STRING "Extra version tag string for Imath build, such as -dev, -beta1, etc.")
+ 
+ set(IMATH_VERSION ${Imath_VERSION})
+-- 
+2.49.0.windows.1
+

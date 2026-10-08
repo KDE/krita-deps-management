@@ -1,8 +1,4 @@
-
-cmake_minimum_required(VERSION 3.21)
-if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
-    cmake_policy(SET CMP0135 NEW)
-endif()
+cmake_minimum_required(VERSION 3.29)
 
 project(ext_strawberryperl)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
@@ -14,9 +10,8 @@ endif()
 ExternalProject_Add(
     ext_strawberryperl
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    # From https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip
-    URL https://files.kde.org/krita/build/dependencies/strawberry-perl-5.32.1.1-32bit-portable.zip
-    URL_HASH SHA1=28bca91cadd6651c2b2463db8587c170bf17f2fa
+    URL https://files.kde.org/krita/build/dependencies/strawberry-perl-5.42.2.1-64bit-portable.zip
+    URL_HASH SHA1=b3cf1ae1eb40cb1a5b9f598ec196cd0fbe68c3ee
 
     BUILD_COMMAND ""
     CONFIGURE_COMMAND ""

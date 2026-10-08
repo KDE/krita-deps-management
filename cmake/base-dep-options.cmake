@@ -13,17 +13,8 @@ if(DEFINED ENV{KRITACI_VERBOSE_MAKEFILE})
     set(CMAKE_VERBOSE_MAKEFILE $ENV{KRITACI_VERBOSE_MAKEFILE})
 endif()
 
-if(APPLE)
-        execute_process(COMMAND sysctl -n hw.optional.arm64 OUTPUT_VARIABLE apple_has_arm64_optional)
-        if(apple_has_arm64_optional)
-                message(STATUS "Building on macos arm")
-                cmake_minimum_required(VERSION 3.19.3)
-	else()
-        cmake_minimum_required(VERSION 3.7.2)
-	endif()
-else(APPLE)
-	cmake_minimum_required(VERSION 3.7.0 FATAL_ERROR)
-endif()
+# I think it's okay to keep this as a min version on all platforms
+cmake_minimum_required(VERSION 3.29 FATAL_ERROR)
 
 
 #

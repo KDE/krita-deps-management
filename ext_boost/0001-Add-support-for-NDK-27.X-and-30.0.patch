@@ -1,0 +1,25 @@
+From b7e65176bc92c82e191e5ec5afcb070e28774660 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Wed, 15 Apr 2026 15:03:36 +0200
+Subject: [PATCH] Add support for NDK 27.X and 30.0
+
+---
+ build-android.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build-android.sh b/build-android.sh
+index 3639a87..87afdc9 100755
+--- a/build-android.sh
++++ b/build-android.sh
+@@ -434,7 +434,7 @@ case "$NDK_RN" in
+ 		TOOLSET=clang
+ 		CONFIG_VARIANT=ndk19
+ 		;;
+-	"22.1"|"23.0"|"23.1"|"23.2"|"25.0"|"25.1"|"25.2"|"26.0"|"26.1"|"26.2"|"26.3"|"27.0")
++	"22.1"|"23.0"|"23.1"|"23.2"|"25.0"|"25.1"|"25.2"|"26.0"|"26.1"|"26.2"|"26.3"|"27.0"|"27.1"|"27.2"|"27.3"|"30.0")
+ 		TOOLCHAIN=${TOOLCHAIN:-llvm}
+ 		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/${PlatformOS}-x86_64/bin/clang++
+ 		TOOLSET=clang
+-- 
+2.43.0
+

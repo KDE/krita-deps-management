@@ -10,3 +10,4 @@ PythonEnv
 **/env_deactivate
 **/env.bat
 **/env_deactivate.bat
+*.swp

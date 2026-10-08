@@ -27,12 +27,12 @@ index 0000000..340296a
 --- /dev/null
 +++ b/CMakeLists.txt
 @@ -0,0 +1,18 @@
-+cmake_minimum_required(VERSION 3.5)
++cmake_minimum_required(VERSION 3.29)
 +
 +project(gettext)
 +
 +set(PACKAGE_VERSION_MAJOR 0)
-+set(PACKAGE_VERSION_MINOR 19)
++set(PACKAGE_VERSION_MINOR 21)
 +set(PACKAGE_VERSION_SUBMINOR 0)
 +
 +set(PACKAGE_VERSION_STRING "${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}")
@@ -51,7 +51,7 @@ index 0000000..8c6d22e
 --- /dev/null
 +++ b/gettext-runtime/CMakeLists.txt
 @@ -0,0 +1,162 @@
-+cmake_minimum_required(VERSION 3.5)
++cmake_minimum_required(VERSION 3.29)
 +project(gettext-runtime C)
 +
 +find_package(iconv REQUIRED)

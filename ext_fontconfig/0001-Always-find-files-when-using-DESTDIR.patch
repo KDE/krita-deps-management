@@ -1,20 +1,12 @@
-From b69cd1370d7b18b239c7f36ac6035fddd840f3f7 Mon Sep 17 00:00:00 2001
-From: Ivan Yossi <ghevan@gmail.com>
-Date: Mon, 17 Apr 2023 15:53:42 -0600
-Subject: [PATCH] Always find files when using DESTDIR
-
----
- conf.d/link_confs.py | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
 diff --git a/conf.d/link_confs.py b/conf.d/link_confs.py
-index 03608c6..4e11bc8 100644
+index f92e1c3b..66bedf29 100644
 --- a/conf.d/link_confs.py
 +++ b/conf.d/link_confs.py
-@@ -6,6 +6,23 @@ import argparse
+@@ -6,6 +6,25 @@ import argparse
  import platform
- import shutil
+ from pathlib import PurePath
  
++
 +def fix_path(path):
 +    if os.path.isabs(path):
 +        destdir = os.environ.get('DESTDIR')
@@ -32,17 +24,19 @@ index 03608c6..4e11bc8 100644
 +    return outpath
 +
 +
++
  if __name__=='__main__':
      parser = argparse.ArgumentParser()
      parser.add_argument('availpath')
-@@ -13,20 +26,14 @@ if __name__=='__main__':
+@@ -13,21 +32,14 @@ if __name__=='__main__':
      parser.add_argument('links', nargs='+')
      args = parser.parse_args()
  
 -    if os.path.isabs(args.confpath):
 -        destdir = os.environ.get('DESTDIR')
 -        if destdir:
--            confpath = os.path.join(destdir, args.confpath[1:])
+-            # c:\destdir + c:\prefix must produce c:\destdir\prefix
+-            confpath = str(PurePath(destdir, *PurePath(args.confpath).parts[1:]))
 -        else:
 -            confpath = args.confpath
 -    else:
@@ -59,6 +53,4 @@ index 03608c6..4e11bc8 100644
          dst = os.path.join(confpath, link)
          try:
              os.remove(dst)
--- 
-2.37.1 (Apple Git-137.1)
 

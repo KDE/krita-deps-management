@@ -1,7 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
-if(POLICY CMP0135) # remove if after cmake 3.23 is the minimum
-    cmake_policy(SET CMP0135 NEW)
-endif()
+cmake_minimum_required(VERSION 3.29)
 
 project(ext_appimagetool)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
@@ -10,9 +7,9 @@ set(BOOTSTRAP_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/bootstrap_prefix)
 
 ExternalProject_Add( ext_appimagetool-binary
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    # appimagetool does not have proper releases, so use a nightly snapshot
-    URL https://files.kde.org/krita/build/appimagetools-2025-04-17/appimagetool-x86_64.AppImage
-    URL_HASH SHA256=9e2a59f4c0fe13de7ffbc6d76ef2d301f99c7a9d8c12c7aa762bd4852e9fce30
+    # Release https://github.com/AppImage/appimagetool/releases/tag/1.9.1 (4 dec 2025)
+    URL https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
+    URL_HASH SHA256=ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0
     DOWNLOAD_NO_EXTRACT TRUE
 
     UPDATE_COMMAND ""
@@ -27,9 +24,8 @@ ExternalProject_Add( ext_appimagetool-binary
 
 ExternalProject_Add( ext_appimagetool-runtime
     DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
-    # appimagetool does not have proper releases, so use a nightly snapshot
-    URL https://files.kde.org/krita/build/appimagetools-2025-04-17/runtime-x86_64
-    URL_HASH SHA256=45756b96904baa7a9bb5be5416840258707dc11ebe645d3d5ef706dfe132fba6
+    URL https://github.com/AppImage/type2-runtime/releases/download/20251108/runtime-x86_64
+    URL_HASH SHA256=2fca8b443c92510f1483a883f60061ad09b46b978b2631c807cd873a47ec260d
     DOWNLOAD_NO_EXTRACT TRUE
 
     UPDATE_COMMAND ""

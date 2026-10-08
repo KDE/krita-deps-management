@@ -1,0 +1,25 @@
+From 42520cbb51bbea4ed64619a7fde0fba62b50652c Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Wed, 10 Jun 2026 11:36:47 +0200
+Subject: [PATCH] Add libintl_setlocate to the list of things we build
+
+It is required by fontconfig tools
+---
+ gettext-runtime/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/gettext-runtime/CMakeLists.txt b/gettext-runtime/CMakeLists.txt
+index 4e5ff88..32ae719 100644
+--- a/gettext-runtime/CMakeLists.txt
++++ b/gettext-runtime/CMakeLists.txt
+@@ -108,6 +108,7 @@ FILE(GLOB SOURCES
+     "intl/plural.c"
+     "intl/printf.c"
+     "intl/relocatable.c"
++    "intl/setlocale.c"
+     "intl/textdomain.c"
+     "intl/version.c"
+     if (MSVC)
+--
+2.49.0.windows.1
+

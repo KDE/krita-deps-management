@@ -1,16 +1,16 @@
-From 4722ec81754db474d185a2d05c77ed7f7eed4e8b Mon Sep 17 00:00:00 2001
+From e017770d9b2ec81fe059139942a2f477e8eeeec8 Mon Sep 17 00:00:00 2001
 From: "L. E. Segovia" <amy@amyspark.me>
 Date: Tue, 17 Nov 2020 22:57:09 +0000
-Subject: [PATCH 3/5] cmake: library versioning info for CMake itself
+Subject: [PATCH 3/6] cmake: library versioning info for CMake itself
 
 ---
  CMakeLists.txt             | 20 +++++++++++++++++++-
- libmypaint-Config.cmake.in | 11 +++++++++++
+ libmypaint-config.cmake.in | 11 +++++++++++
  2 files changed, 30 insertions(+), 1 deletion(-)
- create mode 100644 libmypaint-Config.cmake.in
+ create mode 100644 libmypaint-config.cmake.in
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index afba70b..882e20e 100644
+index f96da7f..ea6071b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -10,6 +10,7 @@ LIST (APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
@@ -23,7 +23,7 @@ index afba70b..882e20e 100644
  
 @@ -63,7 +64,12 @@ set(mypaint_HEADERS
  add_library(mypaint SHARED ${mypaint_SOURCES} ${mypaint_HEADERS})
- target_link_libraries(mypaint ${JSONC_LIBRARIES})
+ target_link_libraries(mypaint PRIVATE ${JSONC_LIBRARIES})
  set_property(TARGET mypaint PROPERTY C_STANDARD 11)
 -install(TARGETS mypaint RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib) 
 +install(TARGETS mypaint
@@ -69,5 +69,5 @@ index 0000000..752d388
 +
 +set(libmypaint_FOUND TRUE)
 -- 
-2.29.2.windows.1
+2.54.0
 

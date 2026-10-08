@@ -1,0 +1,22 @@
+From 3e41395f8fe36f7550a8830d8db5eb980f393386 Mon Sep 17 00:00:00 2001
+From: Luna Lovecraft <ciubix8514@gmail.com>
+Date: Mon, 18 May 2026 21:16:30 +0400
+Subject: [PATCH 6/6] Update to cmake 4
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0890f7c..beceac9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.29 FATAL_ERROR)
+ 
+ project(libmypaint
+     VERSION "1.6.1"
+-- 
+2.54.0
+

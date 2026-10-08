@@ -1,7 +1,7 @@
-From efc9d71eb3e40d21b2c6e9c633c775a345193c54 Mon Sep 17 00:00:00 2001
+From fc490ee85c29bd5f553f1e4965e97569912aa6c6 Mon Sep 17 00:00:00 2001
 From: Dmitry Kazakov <dimula73@gmail.com>
 Date: Mon, 14 Apr 2025 12:59:22 +0200
-Subject: [PATCH 2/4] Add options for SSP and CFGuard
+Subject: [PATCH 02/10] Add options for SSP and CFGuard
 
 ---
  meson.build       | 13 +++++++++++++
@@ -9,10 +9,10 @@ Subject: [PATCH 2/4] Add options for SSP and CFGuard
  2 files changed, 15 insertions(+)
 
 diff --git a/meson.build b/meson.build
-index 73e7ded5e1..e205747612 100644
+index f9fd42f9f8..9507aa6b2e 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -549,6 +549,19 @@ types_list = [
+@@ -581,6 +581,19 @@ types_list = [
    'struct_mfxConfigInterface',
  ]
  
@@ -33,16 +33,16 @@ index 73e7ded5e1..e205747612 100644
    add_global_arguments('-DDISABLE_AV_UNINIT_UB=1', language : 'c')
    add_global_arguments('-DDISABLE_AV_UNINIT_UB=1', language : 'cpp')
 diff --git a/meson_options.txt b/meson_options.txt
-index fd16f3c063..082e9cb32a 100644
+index 4fa1471213..0a8892fb4b 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -2486,3 +2486,5 @@ option('tests', type : 'feature', value : 'auto', description : 'Build tests', y
- option('large_tests', type : 'feature', value : 'disabled')
+@@ -2538,3 +2538,5 @@ option('large_tests', type : 'feature', value : 'disabled')
  option('assert_level', type: 'integer', min: 0, max: 2, value: 0)
+ option('suppress_warnings', type: 'boolean', value: false, description: 'Disable all compiler warnings. Only used when built as a subproject.')
  option('no_uninit_ub', type: 'boolean', value: false, description: 'Disable UB in av_uninit optimization')
 +option('enable-ssp', type: 'feature', value: 'enabled', description: 'Enable -fstack-protector-strong')
 +option('enable-cfguard', type: 'feature', value: 'auto', description: 'Enable control flow guard')
 \ No newline at end of file
 -- 
-2.25.1
+2.54.0
 

@@ -1,0 +1,36 @@
+From 76bbf8580f588d5a6982917409697f0f93238e84 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Fri, 5 Jun 2026 16:08:52 +0200
+Subject: [PATCH] [android] Remove windows-specifc symbols from linker-script
+ file
+
+TIFFOpenW and TIFFOpenWExt are available only on Windows and Android's
+toolchain file (as of r27d) explicitly sets `-Wl,--no-undefined-version`,
+which overrides an option added by the tiff's `-Wl,--undefined-version`.
+---
+ libtiff/libtiff.map | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/libtiff/libtiff.map b/libtiff/libtiff.map
+index 4564192..5e91bda 100644
+--- a/libtiff/libtiff.map
++++ b/libtiff/libtiff.map
+@@ -60,7 +60,6 @@ LIBTIFF_4.0 {
+     TIFFNumberOfStrips;
+     TIFFNumberOfTiles;
+     TIFFOpen;
+-    TIFFOpenW;
+     TIFFPrintDirectory;
+     TIFFRGBAImageBegin;
+     TIFFRGBAImageEnd;
+@@ -205,7 +204,6 @@ LIBTIFF_4.5 {
+     TIFFClientOpenExt;
+     TIFFFdOpenExt;
+     TIFFOpenExt;
+-    TIFFOpenWExt;
+     TIFFErrorExtR;
+     TIFFWarningExtR;
+     TIFFOpenOptionsAlloc;
+-- 
+2.43.0
+

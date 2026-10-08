@@ -1,0 +1,33 @@
+From 82b2cc5df6aa60de020079d4ec7ebf365bfa1ed9 Mon Sep 17 00:00:00 2001
+From: Dmitry Kazakov <dimula73@gmail.com>
+Date: Thu, 7 May 2026 14:30:18 +0200
+Subject: [PATCH 2/2] Fix build with -Dvaapi=disabled
+
+We should explicitly add `vaapi=0` into the config
+that we pass to depresolver.py, otherwise it will
+automatically activate the feature via the "suggest"
+field of `avutils`.
+---
+ meson.build | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/meson.build b/meson.build
+index 0c78c8710e..b2cd45a630 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1059,6 +1059,12 @@ if get_option('vaapi').allowed()
+       ['vaapi_x11', ['va/va_x11.h'], ['vaGetDisplay'], {'pkg': 'libva-x11'}],
+     ]
+   endif
++else
++  # when skipping checks for vaapi, we should also
++  # explicitly write that it is not available. Otherwise
++  # it will be weakly activated by depgraph.py, since it is
++  # "suggested" by `avutil`.
++  conf.set10('vaapi', false)
+ endif
+ 
+ foreach check : check_pkg_config
+-- 
+2.34.1
+
