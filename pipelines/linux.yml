@@ -12,7 +12,7 @@ all_publish_linux_dev_manual:
   stage: Dependencies
   extends:
   - .appimage_base
-  - .seed_template_auto
+  - .seed_template
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_LINUX
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Linux 2>&1 | tee "seed-packages-linux-dev.log"
@@ -24,6 +24,7 @@ all_publish_linux_dev:
   stage: Dependencies
   extends:
   - all_publish_linux_dev_manual
+  - .seed_template_auto
   needs:
     - job: all_publish_linux
       artifacts: false
