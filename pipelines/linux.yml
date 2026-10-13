@@ -8,7 +8,7 @@ all_publish_linux:
     - python3 -u tools/replace-branch-in-seed-file.py all-deps-to-build.yml --print --dst-branch $BRANCH_NAME_LINUX
     - python3 -u ci-utilities/seed-package-registry.py --seed-file all-deps-to-build.yml --platform Linux 2>&1 | tee "seed-packages-linux.log"
 
-all_publish_linux_dev:
+all_publish_linux_dev_manual:
   stage: Dependencies
   extends:
   - .appimage_base
@@ -16,6 +16,14 @@ all_publish_linux_dev:
   script:
     - python3 -u tools/replace-branch-in-seed-file.py latest/developer-packages.yml --print --dst-branch $BRANCH_NAME_LINUX
     - python3 -u ci-utilities/seed-package-registry.py --seed-file latest/developer-packages.yml --platform Linux 2>&1 | tee "seed-packages-linux-dev.log"
+  needs:
+    - job: all_publish_linux
+      artifacts: false
+
+all_publish_linux_dev:
+  stage: Dependencies
+  extends:
+  - all_publish_linux_dev_manual
   needs:
     - job: all_publish_linux
       artifacts: false
