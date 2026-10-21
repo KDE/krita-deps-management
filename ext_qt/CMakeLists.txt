@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.29)
 project(ext_qt)
 include(${CMAKE_SOURCE_DIR}/../cmake/base-dep-options.cmake)
 
-set(QT_GIT_TAG "fd9a6d102997e13436596143f9a10e074cf0f797")
+set(QT_GIT_TAG "31a0c967a2600475c20b717bd1fd2baaf151353d")
 
 if (MINGW)
   set(QT_BUILD_COMMAND   mingw32-make -j${SUBMAKE_JOBS})
