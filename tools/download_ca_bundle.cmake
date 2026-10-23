@@ -12,8 +12,8 @@ endif()
 
 message(STATUS "Downloading Mozilla CA certificate bundle to ${KDECI_CA_BUNDLE_ARG}...")
 file(DOWNLOAD
-    "https://curl.se/ca/cacert-2026-03-19.pem"
+    "https://curl.se/ca/cacert-2026-10-20.pem"
     "${KDECI_CA_BUNDLE_ARG}"
     TLS_VERIFY ON
-    EXPECTED_HASH SHA256=b6e66569cc3d438dd5abe514d0df50005d570bfc96c14dca8f768d020cb96171
+    EXPECTED_HASH SHA256=796f1389bfea13c0ed78f663b765baaff54a508e5483786bd6ece73c5e3e3cbe
 )
