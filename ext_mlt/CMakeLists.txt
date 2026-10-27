@@ -22,6 +22,9 @@ endif()
 kis_ExternalProject_Add_with_separate_builds_apple(
   ext_mlt
   DOWNLOAD_DIR ${EXTERNALS_DOWNLOAD_DIR}
+
+  # TODO: update actual URL after this patch is merged: https://github.com/mltframework/mlt/pull/1256
+  # don't forget GIT_SHALLOW and GIT_SUBMODULES_RECURSE, since MLT has modules
   URL https://github.com/mltframework/mlt/releases/download/v7.38.0/mlt-7.38.0.tar.gz
   URL_HASH SHA256=b8f0a23c89e9250edc5038d745537c382367bf2ad3dad5d5c7cd13b0fe1c4144
 
@@ -29,9 +32,6 @@ kis_ExternalProject_Add_with_separate_builds_apple(
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0002-MLT-check-pointers-before-dereferencing.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0003-Fix-installing-melt-manpage-when-DESTDIR-is-active.patch
         COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0004-Android-Add-an-option-to-skip-non-plugins-in-reposit.patch
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0013-Remove-dependency-on-libavdevice.patch
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0014-Revert-Fix-build-on-msys2-mingw64.patch
-        COMMAND ${PATCH_COMMAND} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/0015-win-Don-t-build-an-own-version-nanosleep-when-not-ne.patch
         ${ANDROID_EXTRA_PATCHES}
 
   CMAKE_ARGS ${GLOBAL_PROFILE}
@@ -61,11 +61,14 @@ kis_ExternalProject_Add_with_separate_builds_apple(
     -DMOD_QT=OFF
     -DMOD_QT6=OFF
     -DMOD_RESAMPLE=OFF
+    -DMOD_RNNOISE=OFF
     -DMOD_SOX=OFF
     -DMOD_SPATIALAUDIO=OFF
     -DMOD_VIDSTAB=OFF
     -DMOD_XINE=OFF
     -DMOD_XML=OFF
+
+    -DUSE_AVDEVICE=OFF
 
     ${WIN32_CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${EXTPREFIX} ${BUILD_EXTRA_OPTS}
   UPDATE_COMMAND ""
