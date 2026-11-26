@@ -4,3 +4,7 @@ Dependencies:
     'base/qt': '@same'
     'base/extra_cmake_modules': '@same'
     'base/ki18n': '@same'
+BuildDependencies:
+- 'on': ['Windows']
+  'require':
+    'base/patch': '@same'
